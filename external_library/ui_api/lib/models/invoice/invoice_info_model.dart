@@ -1,0 +1,68 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'package:ui_api/models/home/services_model.dart';
+import 'package:ui_api/models/invoice/cancel_reason_model.dart';
+import 'package:ui_api/models/invoice/expand_period_model.dart';
+
+part 'invoice_info_model.g.dart';
+
+@JsonSerializable()
+class InvoiceInfoModel {
+  int? id;
+  String? code;
+  @JsonKey(name: 'supplier_id')
+  int? supplierId;
+  @JsonKey(name: 'supplier_avatar', defaultValue: '')
+  String? supplierAvatar;
+  @JsonKey(name: 'supplier_name', defaultValue: '')
+  String? supplierName;
+  @JsonKey(name: 'working_form')
+  int? workingForm;
+  int? status;
+  ServiceModel? service;
+  @JsonKey(name: 'working_date', defaultValue: '')
+  String? workingDate;
+  @JsonKey(name: 'working_time', defaultValue: '')
+  String? workingTime;
+  int? hours;
+  @JsonKey(name: 'payment_type')
+  int? paymentType;
+  @JsonKey(name: 'traveling_costs')
+  double? travelingCosts;
+  @JsonKey(name: 'tmp_total')
+  double? tmpTotal;
+  double? voucher;
+  @JsonKey(name: 'expand_period')
+  List<ExpandPeriodModel>? expandPeriod;
+  double? total;
+  CancelReasonModel? cancel;
+  @JsonKey(name: 'created_at', defaultValue: '')
+  String? createdAt;
+  @JsonKey(name: 'is_fined')
+  int? isFined;
+
+  InvoiceInfoModel(
+      {this.id,
+      this.code,
+      this.supplierId,
+      this.supplierAvatar,
+      this.supplierName,
+      this.workingForm,
+      this.status,
+      this.service,
+      this.workingDate,
+      this.workingTime,
+      this.hours,
+      this.paymentType,
+      this.travelingCosts,
+      this.tmpTotal,
+      this.voucher,
+      this.expandPeriod,
+      this.total,
+      this.cancel,
+      this.createdAt,
+      this.isFined});
+  factory InvoiceInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$InvoiceInfoModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$InvoiceInfoModelToJson(this);
+}

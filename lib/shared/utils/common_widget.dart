@@ -1,0 +1,61 @@
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+
+class CommonWidget {
+  static AppBar appBar(BuildContext context, String title,
+      {void Function()? callback,
+      IconData? backIcon,
+      Color? color,
+      bool? automaticallyImplyLeading}) {
+    return AppBar(
+      automaticallyImplyLeading: automaticallyImplyLeading ?? false,
+      leading: backIcon == null
+          ? null
+          : IconButton(
+              icon: Icon(backIcon, color: color),
+              onPressed: () {
+                if (callback != null) {
+                  callback();
+                } else {
+                  Navigator.pop(context);
+                }
+              },
+            ),
+      title: Text(
+        title,
+        style: TextStyle(color: color ?? Colors.white, fontFamily: 'Rubik'),
+      ),
+      backgroundColor: Colors.green,
+      elevation: 0,
+    );
+  }
+
+  static SizedBox rowHeight({double height = 30}) {
+    return SizedBox(height: height);
+  }
+
+  static SizedBox rowWidth({double width = 30}) {
+    return SizedBox(width: width);
+  }
+
+  static Future<void> toast(String error) async {
+    await Fluttertoast.showToast(
+        msg: error,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+        fontSize: 16);
+  }
+
+  static Future<void> snackBar(String error) async {
+    Get.snackbar(
+      'error'.tr,
+      error,
+      backgroundColor: Colors.red,
+      snackPosition: SnackPosition.BOTTOM,
+    );
+  }
+}

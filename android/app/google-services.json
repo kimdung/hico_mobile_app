@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "17268526518",
+    "project_id": "hicoapp-73545",
+    "storage_bucket": "hicoapp-73545.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17268526518:android:608ca4284a188cc6eac517",
+        "android_client_info": {
+          "package_name": "com.wap.hico"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17268526518-sunc0r4r7am48epjga7jjgt31onp7vho.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wap.hico",
+            "certificate_hash": "bdee3e3ff9a7407a26234b736110458918b25976"
+          }
+        },
+        {
+          "client_id": "17268526518-ilther3s6u9mq7dfoo992d8du5copa97.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlJ0bVQkCtA0ebdwWD2xvJsGf9hQh9zqk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17268526518-ilther3s6u9mq7dfoo992d8du5copa97.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
