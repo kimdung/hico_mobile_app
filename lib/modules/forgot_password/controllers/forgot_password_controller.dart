@@ -73,6 +73,31 @@ class ForgotPasswordController extends BaseController {
     }
   }
 
+  Future<void> resendOtp() async {
+    try {
+      await _uiRepository
+          .forgetPassword(usernameController.text)
+          .then((response) {
+        EasyLoading.dismiss();
+        DialogUtil.showPopup(
+          dialogSize: DialogSize.Popup,
+          barrierDismissible: false,
+          backgroundColor: Colors.transparent,
+          child: NormalWidget(
+            icon: response.status == CommonConstants.statusOk
+                ? IconConstants.icSuccessOrder
+                : IconConstants.icFail,
+            title: response.message,
+          ),
+          onVaLue: (value) {},
+        );
+        return;
+      });
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
+
   Future<void> onConfirm(String v) async {
     code = v;
     await Get.toNamed(Routes.FORGOT_PASSWORD_CHANGE);

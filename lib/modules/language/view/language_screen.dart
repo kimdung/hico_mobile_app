@@ -52,7 +52,7 @@ class LanguageScreen extends GetView<LanguageController> {
                       ),
                       buildLanguageItem(
                         icon: ImageConstants.ukFlag,
-                        title: 'Enghlish',
+                        title: 'English',
                         code: LanguageCode.EN,
                         onPress: () => {
                           controller.currentLanguage.value = LanguageCode.EN

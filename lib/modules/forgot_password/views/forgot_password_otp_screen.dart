@@ -131,7 +131,11 @@ class ForgotPasswordOTPScreen extends GetView<ForgotPasswordController> {
                         style: TextAppStyle().secondTextStyle(),
                       ),
                       const SizedBox(width: 8),
-                      Text('register.resend'.tr),
+                      InkWell(
+                          onTap: () {
+                            controller.resendOtp();
+                          },
+                          child: Text('register.resend'.tr)),
                     ],
                   ),
                 )
