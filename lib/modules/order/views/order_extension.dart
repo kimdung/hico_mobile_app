@@ -515,41 +515,43 @@ extension OrderExtension on OrderScreen {
   }
 
   Widget _btnSuccessStatus() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        children: [
-          Expanded(
-            child: GeneralButton(
-              onPressed: () {
-                controller.onExtend();
-              },
-              borderRadius: BorderRadius.circular(24),
-              borderColor: AppColor.primaryColorLight,
-              child: Text(
-                'order.detail.extend'.tr,
-                style: TextAppStyle().normalTextPink(),
-              ),
-            ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: GeneralButton(
-              onPressed: () {
-                controller.onRating();
-              },
-              borderRadius: BorderRadius.circular(24),
-              borderColor: AppColor.primaryColorLight,
-              backgroundColor: AppColor.primaryColorLight,
-              child: Text(
-                'order.detail.rating'.tr,
-                style: TextAppStyle().normalTextWhite(),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+    return Container();
+
+    // Padding(
+    //   padding: const EdgeInsets.symmetric(horizontal: 20),
+    //   child: Row(
+    //     children: [
+    //       Expanded(
+    //         child: GeneralButton(
+    //           onPressed: () {
+    //             controller.onExtend();
+    //           },
+    //           borderRadius: BorderRadius.circular(24),
+    //           borderColor: AppColor.primaryColorLight,
+    //           child: Text(
+    //             'order.detail.extend'.tr,
+    //             style: TextAppStyle().normalTextPink(),
+    //           ),
+    //         ),
+    //       ),
+    //       const SizedBox(width: 10),
+    //       Expanded(
+    //         child: GeneralButton(
+    //           onPressed: () {
+    //             controller.onRating();
+    //           },
+    //           borderRadius: BorderRadius.circular(24),
+    //           borderColor: AppColor.primaryColorLight,
+    //           backgroundColor: AppColor.primaryColorLight,
+    //           child: Text(
+    //             'order.detail.rating'.tr,
+    //             style: TextAppStyle().normalTextWhite(),
+    //           ),
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 
   Widget buildCancelReason() {

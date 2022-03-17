@@ -132,7 +132,17 @@ class ProfileUpdateScreen extends GetView<ProfileController> {
                         _buildLabel(
                             title: 'profile.update.bank'.tr, required: 1),
                         const SizedBox(height: 8),
-                        _buildInputBankName(),
+                        buildSelectComponent(
+                          title: controller.bankName.value != ''
+                              ? controller.bankName.value
+                              : 'profile.update.bank_name'.tr,
+                          textColor: TextAppStyle().smallTextGrey(),
+                          prefixIcon: true,
+                          prefixImage:
+                              'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
+                          onPress: () => controller.getBank(context),
+                        ),
+                        //_buildInputBankName(),
                         const SizedBox(height: 16),
                         _buildInputBranchName(),
                         const SizedBox(height: 16),
@@ -151,7 +161,7 @@ class ProfileUpdateScreen extends GetView<ProfileController> {
                           borderColor: AppColor.primaryColorLight,
                           backgroundColor: AppColor.primaryColorLight,
                           child: Text(
-                            'continue'.tr,
+                            'profile.save'.tr,
                             style: TextAppStyle().titleButtonStyle(),
                           ),
                         ),

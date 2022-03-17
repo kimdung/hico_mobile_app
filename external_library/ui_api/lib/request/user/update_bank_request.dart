@@ -4,8 +4,8 @@ part 'update_bank_request.g.dart';
 
 @JsonSerializable()
 class UpdateBankRequest {
-  @JsonKey(name: 'bank_name', defaultValue: '')
-  final String? bankName;
+  @JsonKey(name: 'bank_id')
+  final int? bankId;
   @JsonKey(name: 'bank_branch_name', defaultValue: '')
   final String? bankBranchName;
   @JsonKey(name: 'bank_account_holder', defaultValue: '')
@@ -14,7 +14,7 @@ class UpdateBankRequest {
   final String? bankAccountNumber;
 
   UpdateBankRequest({
-    this.bankName,
+    this.bankId,
     this.bankBranchName,
     this.bankAccountHolder,
     this.bankAccountNumber,

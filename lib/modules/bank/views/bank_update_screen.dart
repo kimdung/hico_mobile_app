@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hico/modules/bank/controllers/bank_controller.dart';
 
-import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
-import '../../../shared/constants/common.dart';
 import '../../../shared/decoration/text_field_decoration.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/box_decoration/box_decoration.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
-import '../../../shared/widget_hico/image_widget/network_image.dart';
-import '../../../shared/widgets/button/gradient_border_button.dart';
-import '../../../shared/widgets/button/gradient_button.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
+import '../controllers/bank_controller.dart';
 
 part 'bank_update_extension.dart';
 
@@ -61,7 +55,17 @@ class BankUpdateScreen extends GetView<BankController> {
                     child: Column(
                       children: [
                         //bank
-                        _buildInputBankName(),
+                        buildSelectComponent(
+                          title: controller.bankName.value != ''
+                              ? controller.bankName.value
+                              : 'profile.update.bank_name'.tr,
+                          textColor: TextAppStyle().smallTextGrey(),
+                          prefixIcon: true,
+                          prefixImage:
+                              'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
+                          onPress: () => controller.getBank(context),
+                        ),
+                        //_buildInputBankName(),
                         const SizedBox(height: 16),
                         _buildInputBranchName(),
                         const SizedBox(height: 16),

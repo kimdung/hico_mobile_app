@@ -33,7 +33,7 @@ extension SupportExtension on SupportScreen {
       decoration: TextFieldDecoration.borderOutline(
         backgroundColor: AppColor.primaryBackgroundColorLight,
         borderColor: AppColor.sixTextColorLight,
-        hintText: 'support.hint_name'.tr,
+        hintText: ' ${'support.hint_name'.tr}',
         hintStype: TextAppStyle().normalTextGrey(),
         radius: 6,
       ),
@@ -52,7 +52,7 @@ extension SupportExtension on SupportScreen {
       decoration: TextFieldDecoration.borderOutline(
         backgroundColor: AppColor.primaryBackgroundColorLight,
         borderColor: AppColor.sixTextColorLight,
-        hintText: 'support.hint_email'.tr,
+        hintText: ' ${'support.hint_email'.tr}',
         hintStype: TextAppStyle().normalTextGrey(),
         radius: 6,
       ),
@@ -71,7 +71,7 @@ extension SupportExtension on SupportScreen {
       decoration: TextFieldDecoration.borderOutline(
         backgroundColor: AppColor.primaryBackgroundColorLight,
         borderColor: AppColor.sixTextColorLight,
-        hintText: 'support.hint_phone'.tr,
+        hintText: ' ${'support.hint_phone'.tr}',
         hintStype: TextAppStyle().normalTextGrey(),
         radius: 6,
       ),
@@ -91,7 +91,7 @@ extension SupportExtension on SupportScreen {
       decoration: TextFieldDecoration.borderOutline(
         backgroundColor: AppColor.primaryBackgroundColorLight,
         borderColor: AppColor.sixTextColorLight,
-        hintText: 'support.hint_content'.tr,
+        hintText: ' ${'support.hint_content'.tr}',
         hintStype: TextAppStyle().normalTextGrey(),
         radius: 6,
       ),

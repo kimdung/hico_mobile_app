@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hico/data/app_data_global.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '/resource/assets_constant/images_constants.dart';
@@ -119,7 +120,7 @@ class RegisterOtpScreen extends GetView<RegisterController> {
                       children: [
                         Text(
                           'register.miss_otp'.tr,
-                          style: TextAppStyle().secondTextStyle(),
+                          style: TextAppStyle().smallTextGrey(),
                         ),
                         const SizedBox(width: 8),
                         InkWell(
@@ -128,6 +129,14 @@ class RegisterOtpScreen extends GetView<RegisterController> {
                             },
                             child: Text('register.resend'.tr)),
                       ],
+                    ),
+                  ),
+                  const SizedBox(height: 80),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 64),
+                    child: Text(
+                      '${'register.contact'.tr}: ${AppDataGlobal.masterData!.supportEmail}',
+                      style: TextAppStyle().normalTextPink(),
                     ),
                   )
                 ],

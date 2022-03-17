@@ -10,8 +10,8 @@ class UpdateInfoRequest {
   final String? dateOfBirth;
   @JsonKey(name: 'phone_number', defaultValue: '')
   final String? phoneNumber;
-  @JsonKey(name: 'bank_name', defaultValue: '')
-  final String? bankName;
+  @JsonKey(name: 'bank_id')
+  final int? bankId;
   @JsonKey(name: 'bank_branch_name', defaultValue: '')
   final String? bankBranchName;
   @JsonKey(name: 'bank_account_holder', defaultValue: '')
@@ -24,7 +24,7 @@ class UpdateInfoRequest {
     this.gender,
     this.dateOfBirth,
     this.phoneNumber,
-    this.bankName,
+    this.bankId,
     this.bankBranchName,
     this.bankAccountHolder,
     this.bankAccountNumber,

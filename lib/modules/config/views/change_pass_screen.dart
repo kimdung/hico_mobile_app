@@ -96,7 +96,7 @@ class ChangePassScreen extends GetView<ConfigController> {
       decoration: TextFieldDecoration.borderLogin(
         backgroundColor: AppColor.primaryBackgroundColorLight,
         borderColor: AppColor.dividerColorLight,
-        hintText: 'old_pass'.tr,
+        hintText: ' ${'old_pass'.tr}',
         hintStype: TextAppStyle().normalTextGrey(),
         prefixIcon: Container(
           margin: const EdgeInsets.only(right: 12),
@@ -121,7 +121,7 @@ class ChangePassScreen extends GetView<ConfigController> {
       decoration: TextFieldDecoration.borderLogin(
         backgroundColor: AppColor.primaryBackgroundColorLight,
         borderColor: AppColor.dividerColorLight,
-        hintText: 'new_pass'.tr,
+        hintText: ' ${'new_pass'.tr}',
         hintStype: TextAppStyle().normalTextGrey(),
         prefixIcon: Container(
           margin: const EdgeInsets.only(right: 12),
@@ -146,7 +146,7 @@ class ChangePassScreen extends GetView<ConfigController> {
         decoration: TextFieldDecoration.borderLogin(
           backgroundColor: AppColor.primaryBackgroundColorLight,
           borderColor: AppColor.dividerColorLight,
-          hintText: 'confirm_new_pass'.tr,
+          hintText: ' ${'confirm_new_pass'.tr}',
           hintStype: TextAppStyle().normalTextGrey(),
           prefixIcon: Container(
             margin: const EdgeInsets.only(right: 12),

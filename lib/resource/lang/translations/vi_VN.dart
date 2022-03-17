@@ -4,7 +4,7 @@ const Map<String, String> vi_VN = {
   'register_otp': 'Xác thực mã OTP',
   'forgot_password': 'Quên mật khẩu?',
   'or': 'hoặc',
-  'login_with': 'dăng nhập với',
+  'login_with': 'đăng nhập với',
   'not_account': 'Bạn chưa có tài khoản?',
   'password': 'Mật khẩu',
   'confirm_password': 'Nhập lại mật khẩu',
@@ -44,6 +44,7 @@ const Map<String, String> vi_VN = {
   'register.comfirm_email': 'Mã xác thực được gửi đến địa chỉ email',
   'register.miss_otp': 'Không nhận được mã',
   'register.resend': 'Gửi lại',
+  'register.contact': 'Liên hệ hỗ trợ',
 
   //forgot_password
   'forgot_password.title': 'Quên Mật Khẩu',
@@ -135,6 +136,8 @@ const Map<String, String> vi_VN = {
       'Điền thông tin tại form dưới đây để trải nghiệm công việc thuận lợi nhất!',
   'profile.male': 'Nam',
   'profile.female': 'Nữ',
+  'profile.search_bank': 'Tìm kiếm ngân hàng',
+  'profile.save': 'Cập nhật thông tin',
 
   //account screen
   'account': 'Tài khoản',

@@ -139,26 +139,45 @@ extension ProfileUpdateExtension on ProfileUpdateScreen {
     );
   }
 
-  Widget _buildInputBankName() {
-    return TextFormField(
-      controller: controller.bankName,
-      keyboardType: TextInputType.text,
-      cursorColor: AppColor.fifthTextColorLight,
-
-      decoration: TextFieldDecoration.borderOutline(
-        backgroundColor: AppColor.primaryBackgroundColorLight,
-        borderColor: AppColor.sixTextColorLight,
-        labelText: 'profile.update.bank_name'.tr,
-        labelStype: TextAppStyle().smallTextGrey(),
-        //hintText: 'profile.update.bank_name'.tr,
-        // hintStype: TextAppStyle().secondTextStyle().copyWith(
-        //       color: AppColor.dividerColorLight,
-        //     ),
-        radius: 6,
+  Widget buildSelectComponent({
+    required String title,
+    bool prefixIcon = false,
+    String? prefixImage,
+    double? paddingRight,
+    bool shadow = false,
+    bool border = true,
+    TextStyle? textColor,
+    double? padding,
+    double? height,
+    Function()? onPress,
+  }) {
+    return BoxDecorationWidget(
+      height: 47,
+      border: Border.all(color: AppColor.sixTextColorLight),
+      radius: 6,
+      child: InkWell(
+        onTap: onPress,
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                width: Get.width,
+                padding: EdgeInsets.only(left: padding ?? 6),
+                child: Text(
+                  title,
+                  style: textColor ?? TextAppStyle().smallTextGrey(),
+                ),
+              ),
+            ),
+            if (prefixIcon)
+              FCoreImage(
+                prefixImage ?? IconConstants.icArrowDown,
+                width: 24,
+              ),
+            SizedBox(width: paddingRight ?? 10),
+          ],
+        ),
       ),
-      style: TextAppStyle().smallTextGrey(),
-      // validator: (value) =>
-      //     (value == null || value.isEmpty) ? 'data_requied'.tr : null,
     );
   }
 

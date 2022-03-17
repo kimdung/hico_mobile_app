@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:hico/shared/widget_hico/data_general/banks.dart';
+import 'package:hico/shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
+import 'package:ui_api/models/master_data/bank_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/user/update_bank_request.dart';
 
@@ -19,12 +22,15 @@ class BankController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
   final formBank = GlobalKey<FormState>();
 
-  final TextEditingController bankName = TextEditingController();
+  //final TextEditingController bankName = TextEditingController();
   final TextEditingController bankBranchName = TextEditingController();
   final TextEditingController bankAccountHolder = TextEditingController();
   final TextEditingController bankAccountNumber = TextEditingController();
   String code = '';
 
+  Rx<String> bankName = Rx('');
+  int? bankId;
+  List<BankLocalModel> lstBanks = [];
   BankController() {}
 
   @override
@@ -49,13 +55,46 @@ class BankController extends BaseController {
     }
   }
 
+  Future<void> getBank(BuildContext context) async {
+    try {
+      await EasyLoading.show();
+      await _uiRepository.banks().then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.data != null &&
+            response.data!.rows != null) {
+          lstBanks = response.data!.rows!;
+          return;
+        }
+      });
+      await ShowBottomSheet().showBottomSheet(
+        child: Container(
+          height: Get.height / 2,
+          child: BanksWidget(
+            banks: lstBanks,
+            currentId: bankId,
+          ),
+        ),
+        context: context,
+        onValue: (_value) {
+          if (_value != null && _value is BankLocalModel) {
+            bankId = _value.id;
+            bankName.value = _value.name ?? '';
+          }
+        },
+      );
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
+
   Future updated() async {
     try {
       if (formBank.currentState?.validate() ?? false) {
         await EasyLoading.show();
         await _uiRepository
             .updateBank(UpdateBankRequest(
-          bankName: bankName.text,
+          bankId: bankId,
           bankBranchName: bankBranchName.text,
           bankAccountHolder: bankAccountHolder.text,
           bankAccountNumber: bankAccountNumber.text,

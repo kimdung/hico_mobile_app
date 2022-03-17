@@ -9,13 +9,19 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:hico/shared/widget_hico/data_general/banks.dart';
 import 'package:hico/shared/widget_hico/data_general/date_picker.dart';
+import 'package:hico/shared/widget_hico/data_general/district.dart';
+import 'package:hico/shared/widget_hico/data_general/province.dart';
 import 'package:hico/shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ui_api/models/master_data/master_data_model.dart';
+import 'package:ui_api/models/master_data/provinces_model.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/user/avatar_request.dart';
 import 'package:ui_api/request/user/update_info_request.dart';
+import 'package:ui_api/models/master_data/bank_model.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
@@ -38,10 +44,14 @@ class ProfileController extends BaseController {
   final TextEditingController name = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController phone = TextEditingController();
-  final TextEditingController bankName = TextEditingController();
+  //final TextEditingController bankName = TextEditingController();
   final TextEditingController bankBranchName = TextEditingController();
   final TextEditingController bankAccountHolder = TextEditingController();
   final TextEditingController bankAccountNumber = TextEditingController();
+
+  Rx<String> bankName = Rx('');
+  int? bankId;
+  List<BankLocalModel> lstBanks = [];
 
   ProfileController() {
     _loadData();
@@ -77,7 +87,7 @@ class ProfileController extends BaseController {
     email.text = info.value.email ?? '';
     birthDay.value = info.value.dateOfBirth ?? '';
     phone.text = info.value.phoneNumber ?? '';
-    bankName.text = info.value.bankName ?? '';
+    bankName.value = info.value.bankName ?? '';
     bankBranchName.text = info.value.bankBranchName ?? '';
     bankAccountHolder.text = info.value.bankAccountHolder ?? '';
     bankAccountNumber.text = info.value.bankAccountNumber ?? '';
@@ -94,6 +104,39 @@ class ProfileController extends BaseController {
       //this.images.value = imageTemporary;
     } on PlatformException catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> getBank(BuildContext context) async {
+    try {
+      await EasyLoading.show();
+      await _uiRepository.banks().then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.data != null &&
+            response.data!.rows != null) {
+          lstBanks = response.data!.rows!;
+          return;
+        }
+      });
+      await ShowBottomSheet().showBottomSheet(
+        child: Container(
+          height: Get.height / 2,
+          child: BanksWidget(
+            banks: lstBanks,
+            currentId: bankId,
+          ),
+        ),
+        context: context,
+        onValue: (_value) {
+          if (_value != null && _value is BankLocalModel) {
+            bankId = _value.id;
+            bankName.value = _value.name ?? '';
+          }
+        },
+      );
+    } catch (e) {
+      await EasyLoading.dismiss();
     }
   }
 
@@ -165,7 +208,7 @@ class ProfileController extends BaseController {
           gender: genderId.value,
           dateOfBirth: birthDay.value,
           phoneNumber: phone.text,
-          bankName: bankName.text,
+          bankId: bankId,
           bankBranchName: bankBranchName.text,
           bankAccountHolder: bankAccountHolder.text,
           bankAccountNumber: bankAccountNumber.text,

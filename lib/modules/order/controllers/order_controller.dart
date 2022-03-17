@@ -41,6 +41,21 @@ class OrderController extends BaseController {
             response.data!.detail != null) {
           invoice.value = response.data!.detail!;
           return;
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: response.status == CommonConstants.statusOk
+                  ? IconConstants.icUserTag
+                  : IconConstants.icFail,
+              title: response.message,
+            ),
+            onVaLue: (value) {
+              Get.back();
+            },
+          );
         }
       });
     } catch (e) {

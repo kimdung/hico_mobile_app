@@ -21,7 +21,9 @@ MasterDataModel _$MasterDataModelFromJson(Map<String, dynamic> json) =>
       provinces: (json['provinces'] as List<dynamic>?)
           ?.map((e) => ProvincesModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-    )..paymentPolicy = json['payment_policy'] as String? ?? '';
+    )
+      ..paymentPolicy = json['payment_policy'] as String? ?? ''
+      ..supportEmail = json['support_email'] as String? ?? '';
 
 Map<String, dynamic> _$MasterDataModelToJson(MasterDataModel instance) =>
     <String, dynamic>{
@@ -30,6 +32,7 @@ Map<String, dynamic> _$MasterDataModelToJson(MasterDataModel instance) =>
       'privacy_policy': instance.privacyPolicy,
       'supplier_allowed_hours': instance.supplierAllowedHours,
       'terms_of_use': instance.termsOfUse,
+      'support_email': instance.supportEmail,
       'levels': instance.levels,
       'banks': instance.banks,
       'provinces': instance.provinces,

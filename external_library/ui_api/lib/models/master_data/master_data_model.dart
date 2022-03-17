@@ -15,6 +15,8 @@ class MasterDataModel {
   int? supplierAllowedHours;
   @JsonKey(name: 'terms_of_use', defaultValue: '')
   String? termsOfUse;
+  @JsonKey(name: 'support_email', defaultValue: '')
+  String? supportEmail;
 
   List<LevelModel>? levels;
   List<BankModel>? banks;

@@ -25,7 +25,8 @@ extension NotificationExtension on NotificationScreen {
   }) {
     return InkWell(
       onTap: () {
-        controller.viewDetail(item.id!);
+        controller.viewDetail(
+            item.id!, item.displayType ?? 1, item.invoiceId ?? 0);
       },
       child: Container(
         width: Get.width,

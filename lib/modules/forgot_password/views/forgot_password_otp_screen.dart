@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hico/data/app_data_global.dart';
 import 'package:hico/shared/styles/text_style/text_style.dart';
 import 'package:hico/shared/widgets/image_widget/fcore_image.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -18,7 +19,7 @@ class ForgotPasswordOTPScreen extends GetView<ForgotPasswordController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(
@@ -137,6 +138,14 @@ class ForgotPasswordOTPScreen extends GetView<ForgotPasswordController> {
                           },
                           child: Text('register.resend'.tr)),
                     ],
+                  ),
+                ),
+                const SizedBox(height: 80),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 64),
+                  child: Text(
+                    '${'register.contact'.tr}: ${AppDataGlobal.masterData!.supportEmail}',
+                    style: TextAppStyle().normalTextPink(),
                   ),
                 )
               ],

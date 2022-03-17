@@ -73,9 +73,14 @@ class NotificationController extends BaseController {
     }
   }
 
-  Future<void> viewDetail(int id) async {
-    await Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)
-        ?.then((value) => loadData());
+  Future<void> viewDetail(int id, int displayType, int? invoiceId) async {
+    if (displayType == 1) {
+      await Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)
+          ?.then((value) => loadData());
+    } else {
+      await Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+          ?.then((value) => loadData());
+    }
   }
 
   @override

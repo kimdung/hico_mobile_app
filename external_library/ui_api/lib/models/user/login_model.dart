@@ -6,6 +6,8 @@ part 'login_model.g.dart';
 class LoginModel {
   @JsonKey(name: 'access_token')
   String? accessToken;
+  @JsonKey(name: 'is_resend')
+  int? isResend;
   UserInfoModel? info;
 
   LoginModel({this.accessToken, this.info});

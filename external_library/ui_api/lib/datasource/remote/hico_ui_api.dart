@@ -14,6 +14,7 @@ import 'package:ui_api/request/user/update_bank_request.dart';
 import 'package:ui_api/request/user/update_info_request.dart';
 import 'package:ui_api/response/base_response.dart';
 import 'package:ui_api/response/general/address_response.dart';
+import 'package:ui_api/response/general/bank_response.dart';
 import 'package:ui_api/response/general/district_response.dart';
 import 'package:ui_api/response/general/master_data_response.dart';
 import 'package:ui_api/response/home/home_response.dart';
@@ -69,7 +70,13 @@ abstract class HicoUIAPI {
 
   //Register Otp
   @POST('/v1/customer/auth/active')
-  Future<BaseResponse> registerOtp(@Body() RegisterOtpRequest request);
+  Future<LoginResponse> registerOtp(@Body() RegisterOtpRequest request);
+
+  //resend Otp
+  @POST('/v1/customer/auth/resendActive')
+  Future<BaseResponse> resendOtp(
+    @Query('email') String email,
+  );
 
   //updateLangCode
   @POST('/v1/updateLangCode')
@@ -302,4 +309,8 @@ abstract class HicoUIAPI {
     @Query('email') String email,
     @Query('new_password') String password,
   );
+
+  //get bank list
+  @GET('/v1/bank/list/customer')
+  Future<BankResponse> banks();
 }

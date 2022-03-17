@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:hico/data/app_data_global.dart';
+import 'package:hico/shared/constants/storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/register/register_otp_request.dart';
 import 'package:ui_api/request/register/register_request.dart';
@@ -26,11 +29,20 @@ class RegisterController extends BaseController {
   Rx<String> emailHidden = Rx('');
   bool showPassword = false;
 
-  @override
-  Future<void> onInit() {
-    usernameController.text = '';
+  final storage = Get.find<SharedPreferences>();
+
+  RegisterController() {
+    usernameController.text = Get.arguments ?? '';
+    emailHidden.value = Get.arguments != null
+        ? usernameController.text
+            .replaceAll(RegExp('(?<=.)[^@](?=[^@]*?[^@]@)'), '*')
+        : '';
     passwordController.text = '';
     confirmPasswordController.text = '';
+  }
+
+  @override
+  Future<void> onInit() {
     return super.onInit();
   }
 
@@ -79,13 +91,7 @@ class RegisterController extends BaseController {
 
   Future<void> resendOtp() async {
     try {
-      await _uiRepository
-          .register(RegisterRequest(
-        usernameController.text,
-        passwordController.text,
-        confirmPasswordController.text,
-      ))
-          .then((response) {
+      await _uiRepository.resendOtp(usernameController.text).then((response) {
         EasyLoading.dismiss();
         DialogUtil.showPopup(
           dialogSize: DialogSize.Popup,
@@ -128,6 +134,16 @@ class RegisterController extends BaseController {
           ),
           onVaLue: (value) {
             if (response.status == CommonConstants.statusOk) {
+              storage.setString(
+                  StorageConstants.username, usernameController.text);
+              storage.setString(
+                  StorageConstants.password, passwordController.text);
+              storage.setBool(StorageConstants.isLogin, true);
+
+              AppDataGlobal.accessToken = response.loginModel!.accessToken!;
+              AppDataGlobal.userInfo = response.loginModel!.info!;
+              AppDataGlobal.isLogin = true;
+
               Get.toNamed(Routes.REGISTER_SUCCESS);
             }
           },
@@ -140,11 +156,11 @@ class RegisterController extends BaseController {
   }
 
   Future<void> registerSuccess() async {
-    await Get.offAllNamed(Routes.LOGIN);
+    await Get.offAllNamed(Routes.MAIN);
   }
 
   Future<void> onLogin() async {
-    await Get.offAllNamed(Routes.LOGIN);
+    await Get.offAllNamed(Routes.MAIN);
   }
 
   Future<void> privatePolicy() async {

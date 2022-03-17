@@ -11,6 +11,7 @@ import 'package:ui_api/request/user/update_bank_request.dart';
 import 'package:ui_api/request/user/update_info_request.dart';
 import 'package:ui_api/response/base_response.dart';
 import 'package:ui_api/response/general/address_response.dart';
+import 'package:ui_api/response/general/bank_response.dart';
 import 'package:ui_api/response/general/district_response.dart';
 import 'package:ui_api/response/general/master_data_response.dart';
 import 'package:ui_api/response/home/home_response.dart';
@@ -52,7 +53,10 @@ abstract class HicoUIRepository {
   Future<BaseResponse> register(RegisterRequest request);
 
   //Register Otp
-  Future<BaseResponse> registerOtp(RegisterOtpRequest request);
+  Future<LoginResponse> registerOtp(RegisterOtpRequest request);
+
+  //resend Otp
+  Future<BaseResponse> resendOtp(String email);
 
   //updateLangCode
   Future<BaseResponse> updateLangCode(String code);
@@ -192,4 +196,6 @@ abstract class HicoUIRepository {
   //check UserTime
   Future<BaseResponse> resetPassword(
       String code, String email, String password);
+  //bank list
+  Future<BankResponse> banks();
 }

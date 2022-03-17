@@ -67,13 +67,13 @@ class RegisterSuccessScreen extends GetView<RegisterController> {
                     horizontal: CommonConstants.paddingDefault),
                 child: GeneralButton(
                   onPressed: () {
-                    controller.onLogin();
+                    controller.registerSuccess();
                   },
                   borderRadius: BorderRadius.circular(24),
                   backgroundColor: AppColor.primaryColorLight,
                   borderColor: AppColor.primaryColorLight,
                   child: Text(
-                    'login'.tr,
+                    'back_home'.tr,
                     style: TextAppStyle().titleButtonStyle(),
                   ),
                 ),

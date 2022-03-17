@@ -11,10 +11,11 @@ LoginModel _$LoginModelFromJson(Map<String, dynamic> json) => LoginModel(
       info: json['info'] == null
           ? null
           : UserInfoModel.fromJson(json['info'] as Map<String, dynamic>),
-    );
+    )..isResend = json['is_resend'] as int?;
 
 Map<String, dynamic> _$LoginModelToJson(LoginModel instance) =>
     <String, dynamic>{
       'access_token': instance.accessToken,
+      'is_resend': instance.isResend,
       'info': instance.info,
     };

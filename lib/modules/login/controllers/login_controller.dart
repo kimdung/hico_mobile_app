@@ -81,6 +81,42 @@ class LoginController extends BaseController {
         usernameController.clear();
         passwordController.clear();
         Get.offAllNamed(Routes.MAIN);
+      } else if (response.loginModel != null &&
+          response.loginModel!.isResend == 1) {
+        DialogUtil.showPopup(
+          dialogSize: DialogSize.Popup,
+          barrierDismissible: false,
+          backgroundColor: Colors.transparent,
+          child: NormalWidget(
+            icon: response.status == CommonConstants.statusOk
+                ? IconConstants.icPassSuccess
+                : IconConstants.icFail,
+            title: response.message,
+            titleBtn: '${'register.resend'.tr} OTP',
+          ),
+          onVaLue: (value) {
+            _uiRepository.resendOtp(usernameController.text).then((response) {
+              if (response.status == CommonConstants.statusOk) {
+                Get.toNamed(Routes.REGISTER_OTP,
+                    arguments: usernameController.text);
+              } else {
+                EasyLoading.dismiss();
+                DialogUtil.showPopup(
+                  dialogSize: DialogSize.Popup,
+                  barrierDismissible: false,
+                  backgroundColor: AppColor.primaryBackgroundColorLight,
+                  child: NormalWidget(
+                    icon: IconConstants.icFail,
+                    title: response.message,
+                  ),
+                  onVaLue: (value) {},
+                );
+                return;
+              }
+            });
+          },
+        );
+        return;
       } else {
         DialogUtil.showPopup(
           dialogSize: DialogSize.Popup,
@@ -94,7 +130,6 @@ class LoginController extends BaseController {
           ),
           onVaLue: (value) {},
         );
-        return;
       }
     }).catchError(
       (onError) {

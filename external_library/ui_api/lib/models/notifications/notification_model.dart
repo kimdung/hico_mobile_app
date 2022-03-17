@@ -15,6 +15,10 @@ class NotificationModel {
   @JsonKey(name: 'is_read')
   int? isRead;
   String? content;
+  @JsonKey(name: 'display_type')
+  int? displayType;
+  @JsonKey(name: 'invoice_id')
+  int? invoiceId;
 
   NotificationModel(
       {this.id,
@@ -23,7 +27,9 @@ class NotificationModel {
       this.displayImage,
       this.createdAt,
       this.isRead,
-      this.content});
+      this.content,
+      this.displayType,
+      this.invoiceId});
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) =>
       _$NotificationModelFromJson(json);

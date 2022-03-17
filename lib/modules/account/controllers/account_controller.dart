@@ -49,7 +49,7 @@ class AccountController extends BaseController {
               storage.setBool(StorageConstants.isSocial, false);
               storage.setString(StorageConstants.token, '');
 
-              Get.offAndToNamed(Routes.LOGIN);
+              Get.offAllNamed(Routes.ONBOARDING);
             });
           }
         }
