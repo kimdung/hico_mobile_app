@@ -95,12 +95,13 @@ class LoginController extends BaseController {
             titleBtn: '${'register.resend'.tr} OTP',
           ),
           onVaLue: (value) {
+            EasyLoading.show();
             _uiRepository.resendOtp(usernameController.text).then((response) {
+              EasyLoading.dismiss();
               if (response.status == CommonConstants.statusOk) {
                 Get.toNamed(Routes.REGISTER_OTP,
                     arguments: usernameController.text);
               } else {
-                EasyLoading.dismiss();
                 DialogUtil.showPopup(
                   dialogSize: DialogSize.Popup,
                   barrierDismissible: false,
