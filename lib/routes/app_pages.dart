@@ -23,8 +23,6 @@ import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_change_screen.dart';
 import '../modules/forgot_password/views/forgot_password_otp_screen.dart';
 import '../modules/forgot_password/views/forgot_password_screen.dart';
-import '../modules/health_assistant/binding/health_assistant_binding.dart';
-import '../modules/health_assistant/view/health_assistant_screen.dart';
 import '../modules/language/binding/language_binding.dart';
 import '../modules/language/view/language_screen.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -135,12 +133,10 @@ final routePages = [
     binding: ForgotPasswordBinding(),
   ),
   GetPage(
-      name: Routes.HEALTH_ASSISTANT,
-      page: () => HealthAssistantScreen(),
-      binding: HealthAssistantBinding()),
-
-  GetPage(name: Routes.MAIN, page: () => MainScreen(), binding: MainBinding()),
-
+    name: Routes.MAIN,
+    page: () => MainScreen(),
+    binding: MainBinding(),
+  ),
   GetPage(
       name: Routes.ORDER_DETAIL,
       page: () => OrderScreen(),

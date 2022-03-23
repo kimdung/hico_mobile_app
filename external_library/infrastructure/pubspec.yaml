@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   data_infrastructure:
     path: data
-  dio: 4.0.1
+  dio: ^4.0.4
   openapi_generator_annotations: ^3.2.1
 
 dev_dependencies:

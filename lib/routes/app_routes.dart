@@ -13,8 +13,6 @@ abstract class Routes {
   static const FORGOT_PASSWORD_OTP = '/forgot_password_otp';
   static const FORGOT_PASSWORD_CHANGE = '/forgot_password_change';
 
-  static const HEALTH_ASSISTANT = '/health_assistant';
-
   static const MAIN = '/main';
 
   static const HOME = '/home';
