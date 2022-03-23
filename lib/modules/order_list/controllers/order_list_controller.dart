@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:hico/data/app_data_global.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/invoice/invoice_list_model.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
@@ -112,4 +113,46 @@ class OrderListController extends BaseController {
   Future<void> viewDetail(int id) async {
     await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
   }
+
+  Future<void> onChatAdmin() async {
+    if (AppDataGlobal.client == null) {
+      return;
+    }
+    final channel = AppDataGlobal.client!.channel('messaging',
+        id: AppDataGlobal.userInfo?.conversationInfo?.getAdminChannel() ?? '');
+
+    final _usersResponse = await AppDataGlobal.client?.queryUsers(
+      filter: Filter.autoComplete(
+          'id', AppDataGlobal.userInfo?.conversationInfo?.adminId ?? ''),
+    );
+
+    await Get.toNamed(Routes.CHAT, arguments: {
+      CommonConstants.CHANNEL: channel,
+      CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
+          ? AppDataGlobal.userInfo?.conversationInfo?.getAdmin()
+          : _usersResponse!.users.first,
+    });
+  }
+
+  Future<void> onChat(InvoiceHistoryModel invoice) async {
+    if (AppDataGlobal.client == null) {
+      return;
+    }
+    final channel = AppDataGlobal.client!
+        .channel('messaging', id: invoice.getChatChannel());
+    final _usersResponse = await AppDataGlobal.client?.queryUsers(
+      filter: Filter.autoComplete('id', invoice.serviceId.toString()),
+    );
+
+    await Get.toNamed(Routes.CHAT, arguments: {
+      CommonConstants.CHANNEL: channel,
+      CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
+          ? invoice.getProvider()
+          : _usersResponse!.users.first,
+    });
+  }
+
+  Future<void> onCall(InvoiceHistoryModel invoice) async {}
+
+  Future<void> onVideo(InvoiceHistoryModel invoice) async {}
 }

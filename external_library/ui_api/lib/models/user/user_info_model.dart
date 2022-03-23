@@ -1,9 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/user/address_model.dart';
 import 'package:ui_api/models/user/documents_certificate_model.dart';
 import 'package:ui_api/models/user/services_model.dart';
 import 'package:ui_api/models/user/user_time_model.dart';
 import 'package:ui_api/models/user/workplaces_model.dart';
+
+import '../chat/conversation_info_model.dart';
 part 'user_info_model.g.dart';
 
 @JsonSerializable()
@@ -44,6 +47,8 @@ class UserInfoModel {
   List<UserTimeModel>? userTime;
   @JsonKey(name: 'kyc_status')
   int? kycStatus;
+  @JsonKey(name: 'conversation_info')
+  ConversationInfoModel? conversationInfo;
 
   UserInfoModel(
       {this.id,
@@ -68,10 +73,19 @@ class UserInfoModel {
       this.services,
       this.workplaces,
       this.userTime,
-      this.kycStatus});
+      this.kycStatus,
+      this.conversationInfo});
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>
       _$UserInfoModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserInfoModelToJson(this);
+
+  User getChatUser() {
+    return User(
+      id: id.toString(),
+      name: name,
+      image: avatarImage,
+    );
+  }
 }

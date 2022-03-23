@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:hico/data/app_data_global.dart';
 import 'package:hico/shared/constants/storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+import 'package:ui_api/models/user/login_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/register/register_otp_request.dart';
 import 'package:ui_api/request/register/register_request.dart';
@@ -115,12 +117,11 @@ class RegisterController extends BaseController {
   Future<void> confirmOtp(String value) async {
     try {
       await EasyLoading.show();
-      await _uiRepository
-          .registerOtp(RegisterOtpRequest(
+      final request = RegisterOtpRequest(
         usernameController.text,
         value,
-      ))
-          .then((response) {
+      );
+      await _uiRepository.registerOtp(request).then((response) {
         EasyLoading.dismiss();
         DialogUtil.showPopup(
           dialogSize: DialogSize.Popup,
@@ -140,11 +141,7 @@ class RegisterController extends BaseController {
                   StorageConstants.password, passwordController.text);
               storage.setBool(StorageConstants.isLogin, true);
 
-              AppDataGlobal.accessToken = response.loginModel!.accessToken!;
-              AppDataGlobal.userInfo = response.loginModel!.info!;
-              AppDataGlobal.isLogin = true;
-
-              Get.toNamed(Routes.REGISTER_SUCCESS);
+              _loadData(response.loginModel!);
             }
           },
         );
@@ -157,11 +154,7 @@ class RegisterController extends BaseController {
 
   Future<void> registerSuccess() async {
     await Get.offAllNamed(Routes.MAIN);
-  }
-
-  Future<void> onLogin() async {
-    await Get.offAllNamed(Routes.MAIN);
-  }
+  } 
 
   Future<void> privatePolicy() async {
     await Get.toNamed(Routes.POLICY);
@@ -169,5 +162,32 @@ class RegisterController extends BaseController {
 
   Future<void> termsOfUse() async {
     await Get.toNamed(Routes.TERMS_OF_USE);
+  }
+
+  Future<void> _loadData(LoginModel loginModel) async {
+    AppDataGlobal.accessToken = loginModel.accessToken ?? '';
+    AppDataGlobal.userInfo = loginModel.info;
+    AppDataGlobal.isLogin = true;
+
+    if (loginModel.info?.conversationInfo?.token?.isEmpty ?? true) {
+      await _uiRepository.createChatToken().then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.data != null) {
+          AppDataGlobal.userInfo?.conversationInfo = response.data;
+        }
+      });
+    }
+
+    AppDataGlobal.client =
+        StreamChatClient('qrjjtnn5hv29', logLevel: Level.INFO);
+    await AppDataGlobal.client?.connectUser(
+      AppDataGlobal.userInfo!.getChatUser(),
+      AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
+    );
+
+    await EasyLoading.dismiss();
+
+    await Get.toNamed(Routes.REGISTER_SUCCESS);
   }
 }

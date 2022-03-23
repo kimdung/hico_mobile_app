@@ -18,12 +18,16 @@ class CommonConstants {
   static const int online = 1;
   static const int offline = 0;
 
-//star
+  //star
   static const int oneStar = 1;
   static const int twoStar = 2;
   static const int threeStar = 3;
   static const int fourStar = 4;
   static const int fiveStar = 5;
+
+  // Arguments key
+  static const String CHANNEL = 'CHANNEL';
+  static const String CHAT_USER = 'CHAT_USER';
 }
 
 const APP_NAME = 'Hico Supplier';

@@ -6,6 +6,8 @@ part of 'hico_ui_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 class _HicoUIAPI implements HicoUIAPI {
   _HicoUIAPI(this._dio, {this.baseUrl});
 
@@ -833,6 +835,22 @@ class _HicoUIAPI implements HicoUIAPI {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BankResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ChatTokenResponse> createChatToken() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ChatTokenResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/conversation/createToken',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ChatTokenResponse.fromJson(_result.data!);
     return value;
   }
 

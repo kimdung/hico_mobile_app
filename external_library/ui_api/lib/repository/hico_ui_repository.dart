@@ -33,6 +33,8 @@ import 'package:ui_api/response/user/user_response.dart';
 import 'package:ui_api/response/voucher/check_voucher_response.dart';
 import 'package:ui_api/response/voucher/voucher_response.dart';
 
+import '../response/chat/chat_token_response.dart';
+
 abstract class HicoUIRepository {
   /* User */
   Future<LoginResponse> login(LoginRequest loginRequest);
@@ -198,4 +200,7 @@ abstract class HicoUIRepository {
       String code, String email, String password);
   //bank list
   Future<BankResponse> banks();
+
+  // Create chat token
+  Future<ChatTokenResponse> createChatToken();
 }

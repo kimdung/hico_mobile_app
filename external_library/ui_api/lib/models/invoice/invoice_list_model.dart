@@ -1,4 +1,6 @@
+import 'package:hico/data/app_data_global.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/master_data/provinces_model.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
 part 'invoice_list_model.g.dart';
@@ -56,4 +58,16 @@ class InvoiceHistoryModel {
       _$InvoiceHistoryModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$InvoiceHistoryModelToJson(this);
+
+  String getChatChannel() {
+    return '$supplierId-${AppDataGlobal.userInfo?.id}';
+  }
+
+  User getProvider() {
+    return User(
+      id: serviceId.toString(),
+      name: serviceName,
+      image: supplierAvatar,
+    );
+  }
 }

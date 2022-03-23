@@ -35,6 +35,8 @@ import 'package:ui_api/response/user/login_response.dart';
 import 'package:ui_api/response/user/user_response.dart';
 import 'package:ui_api/response/voucher/check_voucher_response.dart';
 import 'package:ui_api/response/voucher/voucher_response.dart';
+
+import '../../response/chat/chat_token_response.dart';
 part 'hico_ui_api.g.dart';
 
 @RestApi()
@@ -313,4 +315,8 @@ abstract class HicoUIAPI {
   //get bank list
   @GET('/v1/bank/list/customer')
   Future<BankResponse> banks();
+
+  //Get Token
+  @POST('/v1/conversation/createToken')
+  Future<ChatTokenResponse> createChatToken();
 }

@@ -58,38 +58,38 @@ extension HomeComponents on HomeScreen {
               ),
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 15),
           InkWell(
-            onTap: () => controller.totalNotif.value = 3,
+            onTap: controller.onChatAdmin,
             child: Stack(
               children: [
                 Container(
                   padding: const EdgeInsets.only(top: 5),
-                  child: Image.asset(
+                  child: FCoreImage(
                     IconConstants.icChat,
                     width: 24,
                   ),
                 ),
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: Container(
-                    width: 15,
-                    height: 15,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        color: AppColor.primaryColorLight),
-                    child: Center(
-                      child: Text(
-                        controller.totalNotif.value.toString(),
-                        style: AppTextStyle.secondTextStyle.copyWith(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                )
+                // Positioned(
+                //   right: 0,
+                //   top: 0,
+                //   child: Container(
+                //     width: 15,
+                //     height: 15,
+                //     decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(14),
+                //         color: AppColor.primaryColorLight),
+                //     child: Center(
+                //       child: Text(
+                //         controller.totalNotif.value.toString(),
+                //         style: AppTextStyle.secondTextStyle.copyWith(
+                //             color: Colors.white,
+                //             fontSize: 10,
+                //             fontWeight: FontWeight.w500),
+                //       ),
+                //     ),
+                //   ),
+                // )
               ],
             ),
           )

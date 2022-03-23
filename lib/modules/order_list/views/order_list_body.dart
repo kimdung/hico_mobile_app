@@ -46,7 +46,7 @@ extension OrderListBody on OrderListScreen {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: controller.onChatAdmin,
             child: Stack(
               children: [
                 Container(
@@ -55,34 +55,34 @@ extension OrderListBody on OrderListScreen {
                     width: 30,
                   ),
                 ),
-                Positioned(
-                  right: 0,
-                  child: Container(
-                    width: 15,
-                    height: 15,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      color: AppColor.primaryColorLight,
-                      // gradient: const LinearGradient(
-                      //   begin: Alignment.centerLeft,
-                      //   end: Alignment.centerRight,
-                      //   colors: [
-                      //     AppColor.colorFF7AA3,
-                      //     AppColor.colorFF4880,
-                      //   ],
-                      // ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '2',
-                        style: AppTextStyle.secondTextStyle.copyWith(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                )
+                // Positioned(
+                //   right: 0,
+                //   child: Container(
+                //     width: 15,
+                //     height: 15,
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(14),
+                //       color: AppColor.primaryColorLight,
+                //       // gradient: const LinearGradient(
+                //       //   begin: Alignment.centerLeft,
+                //       //   end: Alignment.centerRight,
+                //       //   colors: [
+                //       //     AppColor.colorFF7AA3,
+                //       //     AppColor.colorFF4880,
+                //       //   ],
+                //       // ),
+                //     ),
+                //     child: Center(
+                //       child: Text(
+                //         '2',
+                //         style: AppTextStyle.secondTextStyle.copyWith(
+                //             color: Colors.white,
+                //             fontSize: 10,
+                //             fontWeight: FontWeight.w500),
+                //       ),
+                //     ),
+                //   ),
+                // )
               ],
             ),
           )
@@ -191,6 +191,9 @@ extension OrderListBody on OrderListScreen {
                     invoice: controller.list[index],
                     onPress: () =>
                         controller.viewDetail(controller.list[index].id!),
+                    onChat: () => controller.onChat(controller.list[index]),
+                    onCall: () => controller.onCall(controller.list[index]),
+                    onVideo: () => controller.onVideo(controller.list[index]),
                   ))
         ],
       ),

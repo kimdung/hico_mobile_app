@@ -52,4 +52,6 @@ abstract class Routes {
 
   static const CONSULTING = '/consulting';
   static const SEARCH = '/search';
+
+  static const CHAT = '/chat';
 }

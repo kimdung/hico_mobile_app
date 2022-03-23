@@ -22,7 +22,7 @@ extension OrderExtension on OrderScreen {
         children: [
           Expanded(
             child: GeneralButton(
-                onPressed: () {},
+                onPressed: controller.onCall,
                 height: 47,
                 backgroundColor: AppColor.greenColorLight,
                 borderColor: AppColor.greenColorLight,
@@ -43,7 +43,7 @@ extension OrderExtension on OrderScreen {
           const SizedBox(width: 16),
           Expanded(
             child: GeneralButton(
-                onPressed: () {},
+                onPressed: controller.onVideo,
                 height: 47,
                 backgroundColor: AppColor.blueColorLight,
                 borderColor: AppColor.blueColorLight,
@@ -64,7 +64,7 @@ extension OrderExtension on OrderScreen {
           const SizedBox(width: 16),
           Expanded(
             child: GeneralButton(
-                onPressed: () {},
+                onPressed: controller.onChat,
                 height: 47,
                 padding: 0,
                 backgroundColor: AppColor.primaryColorLight,

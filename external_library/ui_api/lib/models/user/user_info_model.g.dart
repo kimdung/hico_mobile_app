@@ -42,6 +42,10 @@ UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
           ?.map((e) => UserTimeModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       kycStatus: json['kyc_status'] as int?,
+      conversationInfo: json['conversation_info'] == null
+          ? null
+          : ConversationInfoModel.fromJson(
+              json['conversation_info'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>
@@ -69,4 +73,5 @@ Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>
       'workplaces': instance.workplaces,
       'user_time': instance.userTime,
       'kyc_status': instance.kycStatus,
+      'conversation_info': instance.conversationInfo,
     };

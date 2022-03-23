@@ -37,6 +37,7 @@ import 'package:ui_api/response/user/user_response.dart';
 import 'package:ui_api/response/voucher/check_voucher_response.dart';
 import 'package:ui_api/response/voucher/voucher_response.dart';
 
+import '../../response/chat/chat_token_response.dart';
 import '../hico_ui_repository.dart';
 
 class HicoUIRepositoryImpl extends HicoUIRepository {
@@ -325,5 +326,10 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   @override
   Future<BankResponse> banks() {
     return _api.banks();
+  }
+
+  @override
+  Future<ChatTokenResponse> createChatToken() {
+    return _api.createChatToken();
   }
 }

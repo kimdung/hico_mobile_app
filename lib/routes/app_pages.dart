@@ -13,6 +13,8 @@ import 'package:hico/modules/search/views/search_screen.dart';
 
 import '../modules/bank/bindings/bank_binding.dart';
 import '../modules/bank/views/bank_update_screen.dart';
+import '../modules/chat/bindings/chat_binding.dart';
+import '../modules/chat/views/chat_screen.dart';
 import '../modules/config/bindings/config_binding.dart';
 import '../modules/config/views/bank_screen.dart';
 import '../modules/config/views/change_pass_screen.dart';
@@ -281,5 +283,10 @@ final routePages = [
     name: Routes.SEARCH,
     page: () => SearchScreen(),
     binding: SearchBinding(),
+  ),
+  GetPage(
+    name: Routes.CHAT,
+    page: () => ChatScreen(),
+    binding: ChatBinding(),
   ),
 ];

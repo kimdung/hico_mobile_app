@@ -24,48 +24,57 @@ part 'home_components.dart';
 class HomeScreen extends GetView<HomeController> {
   @override
   final HomeController controller;
+
   HomeScreen(this.controller);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      color: AppColor.primaryBackgroundColorLight,
-      child: SafeArea(
+      backgroundColor: AppColor.secondBackgroundColorLight,
+      body: SafeArea(
         child: Obx(
-          () => SingleChildScrollView(
-            child: Column(
-              children: [
-                buildHeaderBar(),
-                const SizedBox(height: 20),
-                if (controller.homeModel.value.sliders != null)
-                  buildSlider(controller.homeModel.value.sliders!),
-                const SizedBox(height: 20),
-                buildServiceCategories(
-                  title: 'home.service_categories'.tr,
+          () => Column(
+            children: [
+              buildHeaderBar(),
+              Expanded(
+                child: Container(
+                  color: AppColor.primaryBackgroundColorLight,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        if (controller.homeModel.value.sliders != null)
+                          buildSlider(controller.homeModel.value.sliders!),
+                        const SizedBox(height: 20),
+                        buildServiceCategories(
+                          title: 'home.service_categories'.tr,
+                        ),
+                        const SizedBox(height: 24),
+                        buildServiceList(
+                            title: 'home.new_service'.tr,
+                            onPress: () => Get.toNamed(Routes.NEW_SERVICE),
+                            list: controller.homeModel.value.services),
+                        const SizedBox(height: 24),
+                        if (controller.homeModel.value.bannerHome != null &&
+                            controller.homeModel.value.bannerHome != '')
+                          buildBannerHome(),
+                        const SizedBox(height: 24),
+                        buildNewsList(),
+                        const SizedBox(height: 24),
+                        buildServiceList(
+                            title: 'home.viewed_service'.tr,
+                            onPress: () => Get.toNamed(Routes.RECENT_SERVICE),
+                            list: controller.homeModel.value.serviceViews),
+                        const SizedBox(height: 37),
+                      ],
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 24),
-                buildServiceList(
-                    title: 'home.new_service'.tr,
-                    onPress: () => Get.toNamed(Routes.NEW_SERVICE),
-                    list: controller.homeModel.value.services),
-                const SizedBox(height: 24),
-                if (controller.homeModel.value.bannerHome != null &&
-                    controller.homeModel.value.bannerHome != '')
-                  buildBannerHome(),
-                const SizedBox(height: 24),
-                buildNewsList(),
-                const SizedBox(height: 24),
-                buildServiceList(
-                    title: 'home.viewed_service'.tr,
-                    onPress: () => Get.toNamed(Routes.RECENT_SERVICE),
-                    list: controller.homeModel.value.serviceViews),
-                const SizedBox(height: 37),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
-    ));
+    );
   }
 }

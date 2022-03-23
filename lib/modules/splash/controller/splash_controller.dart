@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:hico/shared/services/firebase_cloud_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+import 'package:ui_api/models/user/login_model.dart';
+import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/login/login_request.dart';
 
@@ -46,12 +50,13 @@ class SplashController extends GetxController {
           if (response.status == CommonConstants.statusOk &&
               response.data != null &&
               response.data!.info != null) {
-            AppDataGlobal.userInfo = response.data!.info!;
-            Get.offAllNamed(Routes.MAIN);
+            _loadData(response.data!.info!);
             return;
           } else {
             Get.offAndToNamed(Routes.LANGUAGE);
           }
+        }).catchError((error) {
+          Get.offAndToNamed(Routes.LANGUAGE);
         });
       } catch (e) {
         await Get.offAndToNamed(Routes.LANGUAGE);
@@ -73,13 +78,14 @@ class SplashController extends GetxController {
       if (response.status == CommonConstants.statusOk &&
           response.loginModel != null &&
           response.loginModel!.info != null) {
-        AppDataGlobal.accessToken = response.loginModel!.accessToken!;
-        AppDataGlobal.userInfo = response.loginModel!.info!;
-        Get.offAllNamed(Routes.MAIN);
+        AppDataGlobal.accessToken = response.loginModel!.accessToken ?? '';
+        _loadData(response.loginModel!.info!);
       } else {
         storage.setBool(StorageConstants.isLogin.toString(), false);
-        _loadLanguage(storage);
+        Get.offAndToNamed(Routes.LANGUAGE);
       }
+    }).catchError((error) {
+      Get.offAndToNamed(Routes.LANGUAGE);
     });
   }
 
@@ -88,7 +94,6 @@ class SplashController extends GetxController {
     if (language == null) {
       AppDataGlobal.languageCode = VIETNAMESE_LANG;
       Get.updateLocale(const Locale('vi', 'VN'));
-      //Get.offAndToNamed(Routes.LANGUAGE);
       return;
     } else {
       AppDataGlobal.languageCode = language;
@@ -104,7 +109,6 @@ class SplashController extends GetxController {
       if (language == ENGLISH_LANG) {
         Get.updateLocale(const Locale('en', 'US'));
       }
-      //Get.offAndToNamed(Routes.LANGUAGE);
     }
   }
 
@@ -128,5 +132,31 @@ class SplashController extends GetxController {
         return;
       }
     });
+  }
+
+  Future<void> _loadData(UserInfoModel user) async {
+    AppDataGlobal.userInfo = user;
+    AppDataGlobal.isLogin = true;
+
+    if (user.conversationInfo?.token?.isEmpty ?? true) {
+      await _uiRepository.createChatToken().then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.data != null) {
+          AppDataGlobal.userInfo?.conversationInfo = response.data;
+        }
+      });
+    }
+
+    AppDataGlobal.client =
+        StreamChatClient('qrjjtnn5hv29', logLevel: Level.INFO);
+    await AppDataGlobal.client?.connectUser(
+      AppDataGlobal.userInfo!.getChatUser(),
+      AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
+    );
+
+    await EasyLoading.dismiss();
+
+    await Get.offAllNamed(Routes.MAIN);
   }
 }

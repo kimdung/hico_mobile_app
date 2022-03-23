@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:hico/resource/assets_constant/icon_constants.dart';
-import 'package:hico/resource/assets_constant/images_constants.dart';
-import 'package:hico/shared/constants/colors.dart';
-import 'package:hico/shared/constants/common.dart';
-import 'package:hico/shared/styles/text_style/text_style.dart';
-import 'package:hico/shared/widget_hico/box_decoration/box_decoration.dart';
-import 'package:hico/shared/widget_hico/button/general_button.dart';
-import 'package:hico/shared/widgets/image_widget/fcore_image.dart';
-import 'package:hico/shared/widget_hico/image_widget/network_image.dart';
 import 'package:ui_api/models/invoice/invoice_list_model.dart';
 
-class ItemOrderWidget extends StatelessWidget {
-  const ItemOrderWidget({Key? key, this.onPress, required this.invoice})
-      : super(key: key);
+import '../../../resource/assets_constant/icon_constants.dart';
+import '../../constants/colors.dart';
+import '../../constants/common.dart';
+import '../../styles/text_style/text_style.dart';
+import '../../widgets/image_widget/fcore_image.dart';
+import '../image_widget/network_image.dart';
 
+class ItemOrderWidget extends StatelessWidget {
   final InvoiceHistoryModel invoice;
   final Function()? onPress;
+
+  final Function() onChat;
+  final Function() onCall;
+  final Function() onVideo;
+
+  const ItemOrderWidget({
+    Key? key,
+    this.onPress,
+    required this.invoice,
+    required this.onChat,
+    required this.onCall,
+    required this.onVideo,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final task = invoice.taskCompleteNumber ?? 0;
@@ -157,9 +166,7 @@ class ItemOrderWidget extends StatelessWidget {
                         children: [
                           Expanded(
                             child: _buildActionButton(
-                                onPress: () {
-                                  print('chat');
-                                },
+                                onPress: onChat,
                                 icon: IconConstants.icChatColor,
                                 title: 'order.detail.chat'.tr,
                                 border: Border(
@@ -175,7 +182,7 @@ class ItemOrderWidget extends StatelessWidget {
                           ),
                           Expanded(
                             child: _buildActionButton(
-                                onPress: () {},
+                                onPress: onCall,
                                 icon: IconConstants.icCallColor,
                                 title: 'order.detail.call'.tr,
                                 border: Border(
@@ -191,7 +198,7 @@ class ItemOrderWidget extends StatelessWidget {
                           ),
                           Expanded(
                             child: _buildActionButton(
-                                onPress: () {},
+                                onPress: onVideo,
                                 icon: IconConstants.icVideoCallColor,
                                 title: 'order.detail.video'.tr,
                                 border: Border(

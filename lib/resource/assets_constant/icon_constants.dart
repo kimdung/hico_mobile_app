@@ -163,7 +163,7 @@ class IconConstants {
       'lib/resource/assets_resources/icons/ic_back.svg';
   static const String icKey = 'lib/resource/assets_resources/icons/ic_key.svg';
   static const String icChat =
-      'lib/resource/assets_resources/images/ic_chat.png';
+      'lib/resource/assets_resources/icons/ic_chat.svg';
   static const String icSearch =
       'lib/resource/assets_resources/icons/ic_search.png';
   static const String icSearchBlack =
@@ -180,8 +180,12 @@ class IconConstants {
   //icon action button
   static const String icChatColor =
       'lib/resource/assets_resources/icons/ic_chat_color.png';
+  static const String icCall =
+      'lib/resource/assets_resources/icons/ic_call.svg';
   static const String icCallColor =
       'lib/resource/assets_resources/icons/ic_call_color.png';
+  static const String icVideoCall =
+      'lib/resource/assets_resources/icons/ic_video_call.svg';
   static const String icVideoCallColor =
       'lib/resource/assets_resources/icons/ic_video_call.png';
   //icon menu bottom inactive
@@ -233,7 +237,12 @@ class IconConstants {
       'lib/resource/assets_resources/icons/ic_arrow_forward.svg';
   static const String icCopy =
       'lib/resource/assets_resources/icons/ic_copy.svg';
-  //profile icon
+  static const String icSend =
+      'lib/resource/assets_resources/icons/ic_send.svg';
+  static const String icImage =
+      'lib/resource/assets_resources/icons/ic_image.svg';
+
+  // profile icon
   static const String icProfileEdit =
       'lib/resource/assets_resources/icons/ic_profile_edit.svg';
   static const String icProfile =
