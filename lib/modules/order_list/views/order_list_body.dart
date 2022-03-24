@@ -50,7 +50,7 @@ extension OrderListBody on OrderListScreen {
             child: Stack(
               children: [
                 Container(
-                  child: Image.asset(
+                  child: FCoreImage(
                     IconConstants.icChat,
                     width: 30,
                   ),

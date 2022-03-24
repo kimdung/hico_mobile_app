@@ -12,6 +12,7 @@ import '../../../shared/styles/text_style/app_text_style.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
 import '../../../shared/widget_hico/order_widget/item_order_widget.dart';
+import '../../../shared/widgets/image_widget/fcore_image.dart';
 import '../controllers/order_list_controller.dart';
 
 part 'order_list_body.dart';
