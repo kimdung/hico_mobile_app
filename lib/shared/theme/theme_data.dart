@@ -52,7 +52,7 @@ class ThemeConfig {
       primaryColor: primaryColor,
       accentColor: accentColor,
       textSelectionTheme: TextSelectionThemeData(
-        cursorColor: accentColor,
+        cursorColor: thirdTextColor,
         selectionColor: accentColor,
         selectionHandleColor: accentColor,
       ),

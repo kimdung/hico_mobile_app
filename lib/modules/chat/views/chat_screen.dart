@@ -14,12 +14,13 @@ class ChatScreen extends GetView<ChatController> {
   Widget build(BuildContext context) {
     final customTheme = StreamChatThemeData.fromTheme(Get.theme).merge(
       StreamChatThemeData(
-        channelHeaderTheme: ChannelHeaderThemeData(),
+        channelHeaderTheme: const ChannelHeaderThemeData(),
         channelPreviewTheme: ChannelPreviewThemeData(
           avatarTheme: AvatarThemeData(
             borderRadius: BorderRadius.circular(8),
           ),
         ),
+        imageHeaderTheme: const GalleryHeaderThemeData(),
         messageListViewTheme: MessageListViewThemeData(
           backgroundColor: AppColor.secondBackgroundColorLight,
         ),
@@ -44,14 +45,26 @@ class ChatScreen extends GetView<ChatController> {
       ),
     );
 
-    return StreamChat(
-      streamChatThemeData: customTheme,
-      client: AppDataGlobal.client!,
-      child: StreamChannel(
+    return MaterialApp(
+      builder: (context, widget) => StreamChat(
+        streamChatThemeData: customTheme,
+        client: AppDataGlobal.client!,
+        child: widget,
+      ),
+      home: StreamChannel(
         channel: controller.channel,
         child: _buildBodyContent(),
       ),
     );
+
+    // StreamChat(
+    //   streamChatThemeData: customTheme,
+    //   client: AppDataGlobal.client!,
+    //   child: StreamChannel(
+    //     channel: controller.channel,
+    //     child: _buildBodyContent(),
+    //   ),
+    // );
   }
 
   Widget _buildBodyContent() {
