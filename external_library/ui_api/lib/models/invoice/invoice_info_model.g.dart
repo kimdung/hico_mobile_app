@@ -20,7 +20,7 @@ InvoiceInfoModel _$InvoiceInfoModelFromJson(Map<String, dynamic> json) =>
           : ServiceModel.fromJson(json['service'] as Map<String, dynamic>),
       workingDate: json['working_date'] as String? ?? '',
       workingTime: json['working_time'] as String? ?? '',
-      hours: json['hours'] as int?,
+      hours: (json['hours'] as num?)?.toDouble(),
       paymentType: json['payment_type'] as int?,
       travelingCosts: (json['traveling_costs'] as num?)?.toDouble(),
       tmpTotal: (json['tmp_total'] as num?)?.toDouble(),

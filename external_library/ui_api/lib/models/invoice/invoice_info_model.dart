@@ -25,7 +25,7 @@ class InvoiceInfoModel {
   String? workingDate;
   @JsonKey(name: 'working_time', defaultValue: '')
   String? workingTime;
-  int? hours;
+  double? hours;
   @JsonKey(name: 'payment_type')
   int? paymentType;
   @JsonKey(name: 'traveling_costs')

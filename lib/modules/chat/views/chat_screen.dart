@@ -46,6 +46,7 @@ class ChatScreen extends GetView<ChatController> {
     );
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       builder: (context, widget) => StreamChat(
         streamChatThemeData: customTheme,
         client: AppDataGlobal.client!,
