@@ -141,7 +141,7 @@ class OrderListController extends BaseController {
     final channel = AppDataGlobal.client!
         .channel('messaging', id: invoice.getChatChannel());
     final _usersResponse = await AppDataGlobal.client?.queryUsers(
-      filter: Filter.autoComplete('id', invoice.serviceId.toString()),
+      filter: Filter.autoComplete('id', invoice.supplierId.toString()),
     );
 
     await Get.toNamed(Routes.CHAT, arguments: {

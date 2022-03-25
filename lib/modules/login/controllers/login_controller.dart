@@ -42,9 +42,6 @@ class LoginController extends BaseController {
     usernameController.text = '';
     passwordController.text = '';
 
-    usernameController.text = 'Cuong.nguyen@blueboltsoftware.com';
-    passwordController.text = '123123';
-
     final error = Get.arguments;
 
     if (error is String && error.isNotEmpty) {
