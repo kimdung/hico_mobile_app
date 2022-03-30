@@ -12,7 +12,7 @@ class SplashScreen extends StatelessWidget {
         children: [
           Center(
             child: FCoreImage(
-              ImageConstants.appIcon,
+              ImageConstants.appLogo,
               height: 64,
               fit: BoxFit.fitWidth,
             ),

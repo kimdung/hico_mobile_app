@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
@@ -47,10 +48,54 @@ class ChatScreen extends GetView<ChatController> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      // supportedLocales: const [
+      //   // Locale('vi', 'VN'),
+      //   Locale('ja', 'JP'),
+      //   Locale('en', 'US')
+      // ],
+      // locale: const Locale('ja'),
       builder: (context, widget) => StreamChat(
         streamChatThemeData: customTheme,
         client: AppDataGlobal.client!,
         child: widget,
+        onBackgroundEventReceived: (event) async {
+          final currentUserId = AppDataGlobal.client?.state.currentUser?.id;
+          if (![EventType.messageNew, EventType.notificationMessageNew]
+                  .contains(event.type) ||
+              event.user?.id == currentUserId) {
+            return;
+          }
+          if (event.message == null) {
+            return;
+          }
+          final flutterLocalNotificationsPlugin =
+              FlutterLocalNotificationsPlugin();
+          const initializationSettings = InitializationSettings(
+            android: AndroidInitializationSettings('app_icon'),
+            iOS: IOSInitializationSettings(),
+          );
+          await flutterLocalNotificationsPlugin
+              .initialize(initializationSettings);
+          final id = event.message?.id.hashCode;
+          if (id == null) {
+            return;
+          }
+          await flutterLocalNotificationsPlugin.show(
+            id,
+            event.message?.user?.name,
+            event.message?.text,
+            const NotificationDetails(
+              android: AndroidNotificationDetails(
+                'message channel',
+                'Message channel',
+                channelDescription: 'Channel used for showing messages',
+                priority: Priority.high,
+                importance: Importance.high,
+              ),
+              iOS: IOSNotificationDetails(),
+            ),
+          );
+        },
       ),
       home: StreamChannel(
         channel: controller.channel,

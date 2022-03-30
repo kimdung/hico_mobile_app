@@ -52,7 +52,7 @@ class LoginScreen extends GetView<LoginController> {
                     Padding(
                       padding: const EdgeInsets.only(top: 80),
                       child: FCoreImage(
-                        ImageConstants.appIcon,
+                        ImageConstants.appLogo,
                         fit: BoxFit.fill,
                         height: 51,
                       ),

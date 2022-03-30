@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:stream_chat/stream_chat.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../data/app_data_global.dart';
 import '../../../shared/constants/common.dart';
 
 class ChatController extends BaseController {
@@ -17,7 +18,12 @@ class ChatController extends BaseController {
     channel = arguments[CommonConstants.CHANNEL];
     user = arguments[CommonConstants.CHAT_USER];
     await channel.watch();
-    await channel.addMembers([user.id]);
+
+    final addMembers = [user.id];
+    if (AppDataGlobal.userInfo?.id != null) {
+      addMembers.add(AppDataGlobal.userInfo!.id!.toString());
+    }
+    await channel.addMembers(addMembers);
 
     return super.onInit();
   }

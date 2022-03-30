@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:ui_api/models/invoice/invoice_list_model.dart';
+import 'package:ui_api/models/invoice/invoice_status.dart';
 
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../constants/colors.dart';
@@ -159,7 +160,7 @@ class ItemOrderWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 15),
-                  if (invoice.status == InvoiceStatus.Accepted.index)
+                  if (invoice.status == InvoiceStatus.accepted.id)
                     Container(
                       height: 50,
                       child: Row(

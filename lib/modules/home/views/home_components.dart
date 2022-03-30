@@ -54,7 +54,7 @@ extension HomeComponents on HomeScreen {
               padding: const EdgeInsets.only(top: 5),
               child: FCoreImage(
                 IconConstants.icSearchBlack,
-                width: 24,
+                height: 24,
               ),
             ),
           ),
@@ -64,32 +64,34 @@ extension HomeComponents on HomeScreen {
             child: Stack(
               children: [
                 Container(
-                  padding: const EdgeInsets.only(top: 5),
+                  padding: const EdgeInsets.only(top: 5, right: 5),
                   child: FCoreImage(
                     IconConstants.icChat,
-                    width: 24,
+                    height: 24,
                   ),
                 ),
-                // Positioned(
-                //   right: 0,
-                //   top: 0,
-                //   child: Container(
-                //     width: 15,
-                //     height: 15,
-                //     decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.circular(14),
-                //         color: AppColor.primaryColorLight),
-                //     child: Center(
-                //       child: Text(
-                //         controller.totalNotif.value.toString(),
-                //         style: AppTextStyle.secondTextStyle.copyWith(
-                //             color: Colors.white,
-                //             fontSize: 10,
-                //             fontWeight: FontWeight.w500),
-                //       ),
-                //     ),
-                //   ),
-                // )
+                controller.totalNotif.value == 0
+                    ? Container()
+                    : Positioned(
+                        right: 0,
+                        top: 0,
+                        child: Container(
+                          width: 15,
+                          height: 15,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              color: AppColor.primaryColorLight),
+                          child: Center(
+                            child: Text(
+                              controller.totalNotif.value.toString(),
+                              style: AppTextStyle.secondTextStyle.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ),
+                      )
               ],
             ),
           )

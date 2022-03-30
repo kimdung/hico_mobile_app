@@ -1,7 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hico/shared/widget_hico/box_decoration/box_decoration.dart';
 import 'package:ui_api/models/home/service_category_model.dart';
 import 'package:ui_api/models/home/services_model.dart';
 import 'package:ui_api/models/home/slider_model.dart';
@@ -13,6 +11,7 @@ import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/styles/text_style/app_text_style.dart';
 import '../../../shared/styles/text_style/text_style.dart';
+import '../../../shared/widget_hico/box_decoration/box_decoration.dart';
 import '../../../shared/widget_hico/image_widget/network_image.dart';
 import '../../../shared/widgets/carousel/slider_widget.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';

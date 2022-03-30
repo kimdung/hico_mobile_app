@@ -44,9 +44,10 @@ dependencies:
 
   # Notification
   firebase_core: ^1.12.0
-  flutter_local_notifications: ^9.2.0
+  firebase_analytics: ^9.1.2
   firebase_messaging: ^11.2.6
-  
+  flutter_local_notifications: ^9.4.0
+
   #login
   flutter_line_sdk: ^2.1.0
   firebase_auth: ^3.3.6
@@ -66,6 +67,7 @@ dependencies:
   cached_network_image: ^3.2.0
   flutter_html: ^3.0.0-alpha.2 
 
+  collection: ^1.15.0
   open_file: ^3.2.1
   uuid: ^3.0.5
   mime: ^1.0.1
@@ -87,6 +89,7 @@ dependencies:
   # Chat  
   stream_chat_flutter: ^3.5.1
   stream_chat_localizations: ^2.1.0 
+  stream_chat_persistence: ^3.1.0
 
 dev_dependencies:
   flutter_test:

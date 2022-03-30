@@ -153,9 +153,7 @@ class IconConstants {
   static const String icArrowRight =
       'lib/resource/assets_resources/icons/arrow_right.svg';
   static const String iconCLose =
-      'lib/resource/assets_resources/icons/icon_close.svg';
-  static const String pathIconBookOnline =
-      'lib/resource/assets_resources/images/service_book_online';
+      'lib/resource/assets_resources/icons/icon_close.svg'; 
 
   static const String icShape = 'lib/resource/assets_resources/icons/shape.svg';
   static const String icLock = 'lib/resource/assets_resources/icons/lock.svg';

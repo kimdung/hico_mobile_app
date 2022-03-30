@@ -50,42 +50,37 @@ extension OrderListBody on OrderListScreen {
             child: Stack(
               children: [
                 Container(
+                  padding: const EdgeInsets.only(top: 5, right: 5),
                   child: FCoreImage(
                     IconConstants.icChat,
-                    width: 30,
+                    height: 24,
                   ),
                 ),
-                // Positioned(
-                //   right: 0,
-                //   child: Container(
-                //     width: 15,
-                //     height: 15,
-                //     decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(14),
-                //       color: AppColor.primaryColorLight,
-                //       // gradient: const LinearGradient(
-                //       //   begin: Alignment.centerLeft,
-                //       //   end: Alignment.centerRight,
-                //       //   colors: [
-                //       //     AppColor.colorFF7AA3,
-                //       //     AppColor.colorFF4880,
-                //       //   ],
-                //       // ),
-                //     ),
-                //     child: Center(
-                //       child: Text(
-                //         '2',
-                //         style: AppTextStyle.secondTextStyle.copyWith(
-                //             color: Colors.white,
-                //             fontSize: 10,
-                //             fontWeight: FontWeight.w500),
-                //       ),
-                //     ),
-                //   ),
-                // )
+                controller.totalNotif.value == 0
+                    ? Container()
+                    : Positioned(
+                        right: 0,
+                        top: 0,
+                        child: Container(
+                          width: 15,
+                          height: 15,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              color: AppColor.primaryColorLight),
+                          child: Center(
+                            child: Text(
+                              controller.totalNotif.value.toString(),
+                              style: AppTextStyle.secondTextStyle.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ),
+                      )
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -123,17 +118,16 @@ extension OrderListBody on OrderListScreen {
                 borderRadius: BorderRadius.circular(40),
               ),
               child: TextField(
-                onSubmitted: (value) {
-                  controller.search(value);
-                },
+                onSubmitted: controller.onSearch,
                 cursorColor: AppColor.primaryColorLight,
                 style: TextAppStyle().smallTextPink(),
                 decoration: InputDecoration(
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    hintText: 'order.search_title'.tr,
-                    prefixIcon: Image.asset(IconConstants.icSearch),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 10)),
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  hintText: 'order.search_title'.tr,
+                  prefixIcon: Image.asset(IconConstants.icSearch),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 6),
+                ),
               ),
             ),
           ),
@@ -144,41 +138,44 @@ extension OrderListBody on OrderListScreen {
 
   Widget _buildOrderStatus() {
     return Container(
-        color: Colors.white,
-        padding: const EdgeInsets.only(bottom: 10),
-        child: SizedBox(
-          height: 35,
-          width: Get.width,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: controller.invoiceStatus.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Obx(() => Container(
-                    margin: const EdgeInsets.only(left: 20),
-                    child: ButtonScale(
-                      onPressed: () {
-                        controller.selectStatus(index);
-                      },
-                      borderRadius: BorderRadius.circular(40),
-                      borderColor: AppColor.primaryColorLight,
-                      backgroundColor: index == controller.currentStatus.value
-                          ? AppColor.primaryColorLight
-                          : AppColor.primaryBackgroundColorLight,
-                      height: 35,
-                      child: Text(
-                        controller.invoiceStatus[index].name,
-                        style: TextAppStyle().titleButtonStyle().copyWith(
-                              fontSize: 14,
-                              color: index == controller.currentStatus.value
-                                  ? Colors.white
-                                  : AppColor.primaryTextColorLight,
-                              fontWeight: FontWeight.w500,
-                            ),
-                      ),
-                    )));
-              }),
-        ));
+      color: Colors.white,
+      padding: const EdgeInsets.only(bottom: 10),
+      child: SizedBox(
+        height: 35,
+        width: Get.width,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: controller.invoiceStatus.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Obx(() {
+                final status = controller.invoiceStatus[index];
+                return Container(
+                  margin: const EdgeInsets.only(left: 20),
+                  child: ButtonScale(
+                    onPressed: () => controller.selectStatus(status),
+                    borderRadius: BorderRadius.circular(40),
+                    borderColor: AppColor.primaryColorLight,
+                    backgroundColor: status == controller.currentStatus.value
+                        ? AppColor.primaryColorLight
+                        : AppColor.primaryBackgroundColorLight,
+                    height: 35,
+                    child: Text(
+                      controller.invoiceStatus[index].name.tr,
+                      style: TextAppStyle().titleButtonStyle().copyWith(
+                            fontSize: 14,
+                            color: status == controller.currentStatus.value
+                                ? Colors.white
+                                : AppColor.primaryTextColorLight,
+                            fontWeight: FontWeight.w500,
+                          ),
+                    ),
+                  ),
+                );
+              });
+            }),
+      ),
+    );
   }
 
   Widget _buildListOrder() {

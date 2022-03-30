@@ -25,7 +25,7 @@ const Map<String, String> vi_VN = {
   'error_mess': 'Kết nối thất bại. Vui lòng thử lại',
   'all': 'Tất cả',
 
-//onboard
+  //onboard
   'onboard.title1': 'Welcome to Hico',
   'onboard.title2': 'Dịch vụ tận tình - chu đáo',
   'onboard.title3': 'Kết nối đa phương tiện',
@@ -35,11 +35,11 @@ const Map<String, String> vi_VN = {
       'Giúp bạn tiết kiệm nhất với những phương án dịch vụ, giá cả chúng tôi cung cấp',
   'onboard.description3':
       'Chat, gọi trực tiếp với thông dịch viên của bạn. An toàn trải nghiệm dù ở bất cứ đâu.',
-//general trans
+  //general trans
   'data_requied': 'Dữ liệu bắt buộc',
   'data_not_match': 'Nhập lại không khớp',
 
-//register
+  //register
   'register.comfirm': 'Xác thực tài khoản',
   'register.comfirm_email': 'Mã xác thực được gửi đến địa chỉ email',
   'register.miss_otp': 'Không nhận được mã',
@@ -65,6 +65,7 @@ const Map<String, String> vi_VN = {
   'confirm_new_pass': 'Nhập lại mật khẩu mới',
   'incorrect_confirm_pass': 'Mật khẩu mới không chính xác',
   'refund_policy': 'Điều kiện hoàn tiền của Hico',
+
   //home
   'home.home': 'Trang chủ',
   'home.order': 'Đơn hàng',
@@ -262,6 +263,11 @@ const Map<String, String> vi_VN = {
   'invoice.misson': 'Nhiệm vụ đã hoàn thành',
   'invoice.service': 'Dịch vụ:',
   'invoice.hours': 'Giờ',
+  'invoice.all': 'Tất cả',
+  'invoice.requested': 'Đã yêu cầu',
+  'invoice.accepted': 'PDV đồng ý',
+  'invoice.successed': 'Hoàn thành',
+  'invoice.canceled': 'Hoàn thành',
 
   //invoice detail
   'invoice.detail.supplier': 'Phiên dịch viên',
@@ -297,7 +303,7 @@ const Map<String, String> vi_VN = {
   'booking.bank_update_title':
       'Cung cấp thông tin tài khoản ngân hàng của bạn để quá trình sử dụng dịch vụ thuận tiện hơn.',
 
-//consulting
+  //consulting
   'consulting.title': 'Đăng ký tư vấn',
   'consulting.note':
       'Điền thông tin vào form dưới đây để được liên hệ tư vấn Bệnh viện - Phòng khám phù hợp.',

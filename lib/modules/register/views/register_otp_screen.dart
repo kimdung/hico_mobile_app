@@ -45,7 +45,7 @@ class RegisterOtpScreen extends GetView<RegisterController> {
                   Padding(
                     padding: const EdgeInsets.only(top: 55),
                     child: FCoreImage(
-                      ImageConstants.appIcon,
+                      ImageConstants.appLogo,
                       fit: BoxFit.fill,
                       height: 51,
                     ),

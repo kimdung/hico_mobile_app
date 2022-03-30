@@ -154,7 +154,7 @@ class RegisterController extends BaseController {
 
   Future<void> registerSuccess() async {
     await Get.offAllNamed(Routes.MAIN);
-  } 
+  }
 
   Future<void> privatePolicy() async {
     await Get.toNamed(Routes.POLICY);
@@ -186,6 +186,12 @@ class RegisterController extends BaseController {
       AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
     );
 
+    await AppDataGlobal.client
+        ?.addDevice(AppDataGlobal.firebaseToken, PushProvider.firebase);
+    AppDataGlobal.client?.on(
+      EventType.messageNew,
+      EventType.notificationMessageNew,
+    );
     await EasyLoading.dismiss();
 
     await Get.toNamed(Routes.REGISTER_SUCCESS);

@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:ui_api/models/invoice/invoice_status.dart';
 
 import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
@@ -62,7 +63,7 @@ class OrderScreen extends GetView<OrderController> {
                   ),
                   const SizedBox(height: 20),
                   if (controller.invoice.value.status ==
-                      InvoiceStatus.Accepted.index)
+                      InvoiceStatus.accepted.id)
                     buildActionButton(),
                   const SizedBox(height: 14),
                   buildOrderInfo(),
@@ -88,11 +89,10 @@ class OrderScreen extends GetView<OrderController> {
                   const SizedBox(height: 14),
                   buildOrderDetail(),
                   if (controller.invoice.value.status ==
-                      InvoiceStatus.Canceled.index)
+                      InvoiceStatus.canceled.id)
                     buildCancelReason(),
                   const SizedBox(height: 32),
-                  buildActionBtnBottom(InvoiceStatus
-                      .values[controller.invoice.value.status ?? 0]),
+                  buildActionBtnBottom(controller.invoice.value.status),
                   const SizedBox(height: 20),
                 ],
               ),

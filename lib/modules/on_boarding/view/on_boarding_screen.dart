@@ -20,7 +20,7 @@ class OnBoardingScreen extends GetView<OnBoardingController> {
               Padding(
                 padding: const EdgeInsets.only(top: 30),
                 child: Image.asset(
-                  ImageConstants.appIcon,
+                  ImageConstants.appLogo,
                   height: 42,
                 ),
               ),

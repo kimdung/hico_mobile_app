@@ -42,6 +42,9 @@ class LoginController extends BaseController {
     usernameController.text = '';
     passwordController.text = '';
 
+    // usernameController.text = 'Cuong.nguyen@blueboltsoftware.com';
+    // passwordController.text = '123123';
+
     final error = Get.arguments;
 
     if (error is String && error.isNotEmpty) {
@@ -75,9 +78,6 @@ class LoginController extends BaseController {
         storage.setString(StorageConstants.username, usernameController.text);
         storage.setString(StorageConstants.password, passwordController.text);
         storage.setBool(StorageConstants.isLogin, true);
-
-        usernameController.clear();
-        passwordController.clear();
 
         _loadData(response.loginModel!);
       } else if (response.loginModel != null &&
@@ -295,6 +295,24 @@ class LoginController extends BaseController {
       AppDataGlobal.userInfo!.getChatUser(),
       AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
     );
+
+    await AppDataGlobal.client
+        ?.addDevice(AppDataGlobal.firebaseToken, PushProvider.firebase);
+    AppDataGlobal.client?.on(
+      EventType.messageNew,
+      EventType.notificationMessageNew,
+    );
+    //  await AppDataGlobal.client?
+    //     .on(
+    //   EventType.messageNew,
+    //   EventType.notificationMessageNew,
+    // )
+    //     .listen((event) {
+    //   if (event.message?.user?.id == client.state.currentUser?.id) {
+    //     return;
+    //   }
+    //   showLocalNotification(event, client.state.currentUser!.id, context);
+    // });
 
     await EasyLoading.dismiss();
 

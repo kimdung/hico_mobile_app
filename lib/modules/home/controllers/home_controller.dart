@@ -1,6 +1,5 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:hico/modules/main/controllers/main_controller.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/home/home_model.dart';
 import 'package:ui_api/models/home/services_model.dart';
@@ -13,23 +12,24 @@ import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 
 class HomeController extends BaseController {
-  final Rx<int> currentStatus = Rx(0);
-  final Rx<int> totalNotif = Rx(2);
-  final Rx<int> bottomIndex = Rx(0);
   final _uiRepository = Get.find<HicoUIRepository>();
+
+  final Rx<int> currentStatus = Rx(0);
+  final Rx<int> totalNotif = Rx(0);
+  final Rx<int> bottomIndex = Rx(0);
+
   final homeModel = Rx(HomeModel());
+
   BookingPrepareRequest request = BookingPrepareRequest();
 
-  //final mainController = MainController();
+  final Channel adminChatChannel;
 
-  HomeController() {
-    //onInit();
+  HomeController(this.adminChatChannel) {
     loadData();
   }
 
   @override
   Future<void> onInit() async {
-    await loadData();
     await super.onInit();
   }
 
@@ -80,8 +80,6 @@ class HomeController extends BaseController {
     if (AppDataGlobal.client == null) {
       return;
     }
-    final channel = AppDataGlobal.client!.channel('messaging',
-        id: AppDataGlobal.userInfo?.conversationInfo?.getAdminChannel() ?? '');
 
     final _usersResponse = await AppDataGlobal.client?.queryUsers(
       filter: Filter.autoComplete(
@@ -89,7 +87,7 @@ class HomeController extends BaseController {
     );
 
     await Get.toNamed(Routes.CHAT, arguments: {
-      CommonConstants.CHANNEL: channel,
+      CommonConstants.CHANNEL: adminChatChannel,
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? AppDataGlobal.userInfo?.conversationInfo?.getAdmin()
           : _usersResponse!.users.first,

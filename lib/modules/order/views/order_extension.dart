@@ -135,9 +135,7 @@ extension OrderExtension on OrderScreen {
             icon: IconConstants.icOrderStatus,
             title: 'order.detail.order_status'.tr,
             type: OrderInfoViewType.Status,
-            value: controller.invoice.value.status != null
-                ? InvoiceStatus.values[controller.invoice.value.status!].name
-                : '',
+            value: (controller.invoice.value.getStatus()?.name ?? '').tr,
           ),
         ],
       ),
@@ -447,17 +445,15 @@ extension OrderExtension on OrderScreen {
     );
   }
 
-  Widget buildActionBtnBottom(InvoiceStatus? status) {
-    switch (status) {
-      case InvoiceStatus.Accepted:
-        return _btnAcceptedStatus();
-      case InvoiceStatus.Canceled:
-        return _btnCancelStatus();
-      case InvoiceStatus.Successed:
-        return _btnSuccessStatus();
-      default:
-        return Container();
+  Widget buildActionBtnBottom(int? status) {
+    if (status == InvoiceStatus.accepted.id) {
+      return _btnAcceptedStatus();
+    } else if (status == InvoiceStatus.canceled.id) {
+      return _btnCancelStatus();
+    } else if (status == InvoiceStatus.successed.id) {
+      return _btnSuccessStatus();
     }
+    return Container();
   }
 
   Widget _btnCancelStatus() {

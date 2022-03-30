@@ -1,7 +1,10 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
+import '../data/app_data_global.dart';
 import '../data/interceptors/listen_error_graphql_interceptor.dart';
 import '../shared/dialog_manager/data_models/request/common_dialog_request.dart';
 import '../shared/dialog_manager/services/dialog_service.dart';
@@ -31,6 +34,44 @@ class BaseController extends GetxController
       if (message.notification != null) {
         print('Message also contained a notification: ${message.notification}');
       }
+    });
+
+    AppDataGlobal.client
+        ?.on(EventType.messageNew, EventType.notificationMessageNew)
+        .listen((event) async {
+      if (event.message?.user?.id ==
+          AppDataGlobal.client?.state.currentUser?.id) {
+        return;
+      }
+
+      if (event.message == null) {
+        return;
+      }
+      final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+      const initializationSettings = InitializationSettings(
+        android: AndroidInitializationSettings('app_icon'),
+        iOS: IOSInitializationSettings(),
+      );
+      await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+      final id = event.message?.id.hashCode;
+      if (id == null) {
+        return;
+      }
+      await flutterLocalNotificationsPlugin.show(
+        id,
+        event.message?.user?.name,
+        event.message?.text,
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'message channel',
+            'Message channel',
+            channelDescription: 'Channel used for showing messages',
+            priority: Priority.high,
+            importance: Importance.high,
+          ),
+          iOS: IOSNotificationDetails(),
+        ),
+      );
     });
   }
 

@@ -1,9 +1,12 @@
+import 'package:collection/collection.dart';
 import 'package:hico/data/app_data_global.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/home/services_model.dart';
 import 'package:ui_api/models/invoice/cancel_reason_model.dart';
 import 'package:ui_api/models/invoice/expand_period_model.dart';
+
+import 'invoice_status.dart';
 
 part 'invoice_info_model.g.dart';
 
@@ -63,10 +66,16 @@ class InvoiceInfoModel {
       this.cancel,
       this.createdAt,
       this.isFined});
+
   factory InvoiceInfoModel.fromJson(Map<String, dynamic> json) =>
       _$InvoiceInfoModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$InvoiceInfoModelToJson(this);
+
+  InvoiceStatus? getStatus() {
+    return InvoiceStatus.status
+        .firstWhereOrNull((element) => element.id == status);
+  }
 
   String getChatChannel() {
     return '$supplierId-${AppDataGlobal.userInfo?.id}';

@@ -2,38 +2,37 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:hico/data/app_data_global.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/invoice/invoice_list_model.dart';
+import 'package:ui_api/models/invoice/invoice_status.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../data/app_data_global.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 
 class OrderListController extends BaseController {
-  final Rx<int> currentStatus = Rx(0);
   final _uiRepository = Get.find<HicoUIRepository>();
+  final Channel adminChatChannel;
+
   Rx<UserInfoModel> info = Rx(UserInfoModel());
-  var scrollController = ScrollController();
+
+  final Rx<int> totalNotif = Rx(0);
+
+  String keyword = '';
+
+  final Rx<InvoiceStatus> currentStatus = Rx(InvoiceStatus.requested);
+  final List<InvoiceStatus> invoiceStatus = InvoiceStatus.status;
+
+  final RxList<InvoiceHistoryModel> list = RxList<InvoiceHistoryModel>();
+
+  final ScrollController scrollController = ScrollController();
   int limit = 4;
   int offset = 0;
-  String keyword = '';
-  int statusId = InvoiceStatus.Requested.index;
 
-  RxList<InvoiceHistoryModel> list = RxList<InvoiceHistoryModel>();
-
-  final List<InvoiceStatus> invoiceStatus = [
-    InvoiceStatus.Requested,
-    InvoiceStatus.Accepted,
-    InvoiceStatus.Successed,
-    InvoiceStatus.Canceled
-  ];
-
-  OrderListController() {
-    loadList(keyword, statusId);
-  }
+  OrderListController(this.adminChatChannel);
 
   @override
   Future<void> onInit() async {
@@ -46,35 +45,29 @@ class OrderListController extends BaseController {
           // offset = 0;
           // _loadNewsList();
         } else {
-          _loadMore(keyword, statusId);
+          _loadMore();
         }
       }
     });
   }
 
-  Future<void> selectStatus(int status) async {
+  Future<void> selectStatus(InvoiceStatus status) async {
     currentStatus.value = status;
-    statusId = status + 1;
-    print(status);
-    await EasyLoading.show();
-    await loadList(keyword, statusId);
-    await EasyLoading.dismiss();
+    await loadList();
   }
 
-  Future<void> search(String text) async {
+  Future<void> onSearch(String text) async {
     keyword = text;
-    await EasyLoading.show();
-    await loadList(keyword, statusId);
-    await EasyLoading.dismiss();
+    await loadList();
   }
 
-  Future<void> loadList(String keyword, int status) async {
+  Future<void> loadList() async {
     try {
       await EasyLoading.show();
       info.value = AppDataGlobal.userInfo!;
       offset = 0;
       await _uiRepository
-          .invoiceHistory(keyword, status, limit, offset)
+          .invoiceHistory(keyword, currentStatus.value.id, limit, offset)
           .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
@@ -89,11 +82,11 @@ class OrderListController extends BaseController {
     }
   }
 
-  Future<void> _loadMore(String keyword, int status) async {
+  Future<void> _loadMore() async {
     try {
       await EasyLoading.show();
       await _uiRepository
-          .invoiceHistory(keyword, status, limit, offset)
+          .invoiceHistory(keyword, currentStatus.value.id, limit, offset)
           .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
