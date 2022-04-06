@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:getwidget/components/border/gf_border.dart';
+import 'package:getwidget/getwidget.dart';
 
 import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
@@ -127,6 +129,35 @@ class ProfileUpdateScreen extends GetView<ProfileController> {
                         const SizedBox(height: 8),
                         _buildInputPhone(),
 
+                        Container(
+                          child: Column(
+                            children: [
+                              _buildLabel(
+                                  title: 'profile.update.address'.tr,
+                                  required: 1),
+                              //address
+                              const SizedBox(height: 14),
+                              _buildInputAddressCode(),
+                              if (controller.showSuggest.value != 0)
+                                buildSuggestAddress(),
+                              const SizedBox(height: 16),
+                              _buildInputTemplate(
+                                  textEditng: controller.province,
+                                  focusNode: AlwaysDisabledFocusNode(),
+                                  title: 'profile.update.provice'.tr),
+                              const SizedBox(height: 16),
+                              _buildInputTemplate(
+                                  textEditng: controller.district,
+                                  focusNode: AlwaysDisabledFocusNode(),
+                                  title: 'profile.update.district'.tr),
+                              const SizedBox(height: 16),
+                              _buildInputTextArea(
+                                  textEditng: controller.address,
+                                  title: 'profile.update.address_block'.tr),
+                            ],
+                          ),
+                        ),
+
                         //bank
                         const SizedBox(height: 14),
                         _buildLabel(
@@ -175,4 +206,9 @@ class ProfileUpdateScreen extends GetView<ProfileController> {
       )),
     );
   }
+}
+
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
 }

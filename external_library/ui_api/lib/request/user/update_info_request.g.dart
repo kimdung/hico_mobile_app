@@ -16,6 +16,8 @@ UpdateInfoRequest _$UpdateInfoRequestFromJson(Map<String, dynamic> json) =>
       bankBranchName: json['bank_branch_name'] as String? ?? '',
       bankAccountHolder: json['bank_account_holder'] as String? ?? '',
       bankAccountNumber: json['bank_account_number'] as String? ?? '',
+      addressId: json['address_id'] as int?,
+      address: json['address'] as String?,
     );
 
 Map<String, dynamic> _$UpdateInfoRequestToJson(UpdateInfoRequest instance) =>
@@ -28,4 +30,6 @@ Map<String, dynamic> _$UpdateInfoRequestToJson(UpdateInfoRequest instance) =>
       'bank_branch_name': instance.bankBranchName,
       'bank_account_holder': instance.bankAccountHolder,
       'bank_account_number': instance.bankAccountNumber,
+      'address_id': instance.addressId,
+      'address': instance.address,
     };

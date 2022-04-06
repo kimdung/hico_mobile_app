@@ -21,6 +21,8 @@ class UserInfoModel {
   String? email;
   @JsonKey(name: 'phone_number', defaultValue: '')
   String? phoneNumber;
+  @JsonKey(name: 'bank_id')
+  int? bankId;
   @JsonKey(name: 'bank_name', defaultValue: '')
   String? bankName;
   @JsonKey(name: 'bank_branch_name', defaultValue: '')

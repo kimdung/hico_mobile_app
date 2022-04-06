@@ -17,6 +17,7 @@ import 'package:hico/shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ui_api/models/master_data/master_data_model.dart';
 import 'package:ui_api/models/master_data/provinces_model.dart';
+import 'package:ui_api/models/user/address_model.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/user/avatar_request.dart';
@@ -48,6 +49,15 @@ class ProfileController extends BaseController {
   final TextEditingController bankBranchName = TextEditingController();
   final TextEditingController bankAccountHolder = TextEditingController();
   final TextEditingController bankAccountNumber = TextEditingController();
+
+  final TextEditingController zipCode = TextEditingController();
+  final TextEditingController province = TextEditingController();
+  final TextEditingController district = TextEditingController();
+  final TextEditingController address = TextEditingController();
+
+  Rx<int> showSuggest = Rx<int>(0);
+  RxList<AddressModel> addressList = RxList<AddressModel>();
+  int addressId = 0;
 
   Rx<String> bankName = Rx('');
   int? bankId;
@@ -81,16 +91,64 @@ class ProfileController extends BaseController {
     }
   }
 
+  Future<void> loadAddress(String keyword) async {
+    try {
+      province.text = '';
+      district.text = '';
+      if (keyword != '') {
+        await _uiRepository.addressList(20, 0, keyword).then((response) {
+          if (response.status == CommonConstants.statusOk &&
+              response.data != null &&
+              response.data!.rows != null &&
+              response.data!.rows!.isNotEmpty) {
+            addressList.value = response.data!.rows!;
+            showSuggest.value = 1;
+          }
+        });
+      }
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
+
+  void closeSuggest() {
+    showSuggest.value = 0;
+  }
+
+  Future<void> selectAddress(AddressModel item) async {
+    try {
+      zipCode.text = item.code!;
+      province.text = item.provinceName!;
+      district.text = item.districtName!;
+      addressId = item.id!;
+      showSuggest.value = 0;
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
+
   Future _prepareData() async {
     name.text = info.value.name ?? '';
     genderId.value = info.value.gender ?? CommonConstants.male;
     email.text = info.value.email ?? '';
     birthDay.value = info.value.dateOfBirth ?? '';
     phone.text = info.value.phoneNumber ?? '';
+    bankId = info.value.bankId;
     bankName.value = info.value.bankName ?? '';
     bankBranchName.text = info.value.bankBranchName ?? '';
     bankAccountHolder.text = info.value.bankAccountHolder ?? '';
     bankAccountNumber.text = info.value.bankAccountNumber ?? '';
+    addressId = info.value.address != null ? info.value.address!.id! : 0;
+    zipCode.text =
+        info.value.address != null ? info.value.address!.code ?? '' : '';
+    province.text = info.value.address != null
+        ? info.value.address!.provinceName ?? ''
+        : '';
+    district.text = info.value.address != null
+        ? info.value.address!.districtName ?? ''
+        : '';
+    address.text =
+        info.value.address != null ? info.value.address!.address ?? '' : '';
   }
 
   Future pickImage(ImageSource source) async {
@@ -212,6 +270,8 @@ class ProfileController extends BaseController {
           bankBranchName: bankBranchName.text,
           bankAccountHolder: bankAccountHolder.text,
           bankAccountNumber: bankAccountNumber.text,
+          addressId: addressId,
+          address: address.text,
         ))
             .then((response) {
           EasyLoading.dismiss();

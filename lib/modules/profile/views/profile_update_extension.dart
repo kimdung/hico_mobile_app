@@ -247,6 +247,141 @@ extension ProfileUpdateExtension on ProfileUpdateScreen {
     );
   }
 
+  Widget _buildInputAddressCode() {
+    return TextFormField(
+      controller: controller.zipCode,
+      onChanged: (value) {
+        controller.loadAddress(value);
+      },
+      keyboardType: TextInputType.text,
+      cursorColor: AppColor.fifthTextColorLight,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      decoration: TextFieldDecoration.borderOutline(
+        backgroundColor: AppColor.primaryBackgroundColorLight,
+        borderColor: AppColor.sixTextColorLight,
+        labelText: 'profile.update.address_code'.tr,
+        labelStype: TextAppStyle().smallTextGrey(),
+        radius: 6,
+      ),
+      style: TextAppStyle().smallTextBlack(),
+      validator: (value) =>
+          (value == null || value.isEmpty) ? 'data_requied'.tr : null,
+    );
+  }
+
+  Widget _buildInputTemplate({
+    required TextEditingController textEditng,
+    required String title,
+    FocusNode? focusNode,
+  }) {
+    return TextFormField(
+      controller: textEditng,
+      focusNode: focusNode,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.text,
+      cursorColor: AppColor.fifthTextColorLight,
+      decoration: TextFieldDecoration.borderOutline(
+        backgroundColor: AppColor.primaryBackgroundColorLight,
+        borderColor: AppColor.sixTextColorLight,
+        labelText: title,
+        labelStype: TextAppStyle().smallTextGrey(),
+        radius: 6,
+      ),
+      style: TextAppStyle().smallTextBlack(),
+      validator: (value) =>
+          (value == null || value.isEmpty) ? 'data_requied'.tr : null,
+    );
+  }
+
+  Widget _buildInputTextArea({
+    required TextEditingController textEditng,
+    required String title,
+  }) {
+    return Container(
+      child: GFBorder(
+        dashedLine: const [4, 6],
+        radius: const Radius.circular(6),
+        strokeWidth: 2,
+        type: GFBorderType.rect,
+        color: AppColor.borderGrayColorLight,
+        child: TextFormField(
+          controller: textEditng,
+          keyboardType: TextInputType.text,
+          cursorColor: AppColor.fifthTextColorLight,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          maxLines: 3,
+          decoration: InputDecoration(
+            hintText: title,
+            hintStyle: TextAppStyle().normalTextGrey(),
+            border: InputBorder.none,
+          ),
+          style: TextAppStyle().normalTextStype(),
+          validator: (value) =>
+              (value == null || value.isEmpty) ? 'data_requied'.tr : null,
+        ),
+      ),
+    );
+  }
+
+  Widget buildSuggestAddress() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 2,
+              blurRadius: 7,
+              offset: const Offset(0, 3)),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 4),
+                child: Text(
+                  'booking.suggest'.tr,
+                  style: TextAppStyle()
+                      .smallTextBlack()
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 4),
+                child: InkWell(
+                    onTap: () {
+                      controller.closeSuggest();
+                    },
+                    child: FCoreImage(IconConstants.iconCLose)),
+              ),
+            ],
+          ),
+          ...List.generate(
+            controller.addressList.length,
+            (int index) => InkWell(
+              onTap: () {
+                controller.selectAddress(controller.addressList[index]);
+              },
+              child: Container(
+                width: Get.width * 0.8,
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                child: Text(
+                  controller.addressList[index].fullAddress!,
+                  style: TextAppStyle().smallTextBlack(),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildInputRadio() {
     return Obx(
       () => Row(
