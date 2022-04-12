@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -41,8 +40,6 @@ class LoginController extends BaseController {
 
   @override
   Future<void> onInit() {
-    passwordController.text = '';
-
     final error = Get.arguments;
 
     if (error is String && error.isNotEmpty) {
@@ -50,6 +47,13 @@ class LoginController extends BaseController {
     }
 
     return super.onInit();
+  }
+
+  @override
+  Future<void> onReady() {
+    usernameController.text = storage.getString(StorageConstants.username)!;
+    passwordController.text = '';
+    return super.onReady();
   }
 
   @override
@@ -287,19 +291,20 @@ class LoginController extends BaseController {
       });
     }
 
-    AppDataGlobal.client =
-        StreamChatClient('qrjjtnn5hv29', logLevel: Level.INFO);
-    await AppDataGlobal.client?.connectUser(
-      AppDataGlobal.userInfo!.getChatUser(),
-      AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
-    );
+    // AppDataGlobal.client =
+    //     StreamChatClient('qrjjtnn5hv29', logLevel: Level.INFO);
+    // await AppDataGlobal.client?.connectUser(
+    //   AppDataGlobal.userInfo!.getChatUser(),
+    //   AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
+    // );
 
-    await AppDataGlobal.client
-        ?.addDevice(AppDataGlobal.firebaseToken, PushProvider.firebase);
-    AppDataGlobal.client?.on(
-      EventType.messageNew,
-      EventType.notificationMessageNew,
-    );
+    // await AppDataGlobal.client
+    //     ?.addDevice(AppDataGlobal.firebaseToken, PushProvider.firebase);
+    // AppDataGlobal.client?.on(
+    //   EventType.messageNew,
+    //   EventType.notificationMessageNew,
+    // );
+
     //  await AppDataGlobal.client?
     //     .on(
     //   EventType.messageNew,
@@ -319,6 +324,6 @@ class LoginController extends BaseController {
 
   void hideShowPassword() {
     showPassword.value = !showPassword.value;
-    log('Value:${showPassword.value}');
+    log('Value: ${showPassword.value}');
   }
 }

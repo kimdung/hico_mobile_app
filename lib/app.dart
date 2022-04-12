@@ -16,7 +16,7 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       enableLog: true,
-      initialRoute: Routes.SPLASH,
+      initialRoute: Routes.LANGUAGE,
       defaultTransition: Transition.fade,
       getPages: routePages,
       initialBinding: AppBinding(),
