@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,17 +35,13 @@ class LoginController extends BaseController {
   UserProfile? _userProfile;
   StoredAccessToken? accessToken;
 
-  bool showPassword = false;
+  RxBool showPassword = false.obs;
 
   final storage = Get.find<SharedPreferences>();
 
   @override
   Future<void> onInit() {
-    usernameController.text = '';
     passwordController.text = '';
-
-    // usernameController.text = 'Cuong.nguyen@blueboltsoftware.com';
-    // passwordController.text = '123123';
 
     final error = Get.arguments;
 
@@ -317,5 +315,10 @@ class LoginController extends BaseController {
     await EasyLoading.dismiss();
 
     await Get.offAllNamed(Routes.MAIN);
+  }
+
+  void hideShowPassword() {
+    showPassword.value = !showPassword.value;
+    log('Value:${showPassword.value}');
   }
 }

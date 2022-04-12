@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:data_infrastructure/data_infrastructure.dart';
@@ -65,11 +66,6 @@ class ProfileController extends BaseController {
 
   ProfileController() {
     _loadData();
-  }
-
-  @override
-  Future<void> onInit() {
-    return super.onInit();
   }
 
   Future _loadData() async {

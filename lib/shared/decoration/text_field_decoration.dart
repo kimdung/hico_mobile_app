@@ -11,7 +11,7 @@ class TextFieldDecoration {
       TextStyle? hintStype,
       Color? backgroundColor,
       Color borderColor = Colors.grey,
-      Widget? prefixIcon}) {
+      Widget? prefixIcon, Widget? suffixIcon}) {
     return InputDecoration(
       hintText: hintText,
       filled: backgroundColor != null,
@@ -47,6 +47,7 @@ class TextFieldDecoration {
       ),
       prefixIcon: prefixIcon,
       prefixIconConstraints: const BoxConstraints(minHeight: 18, minWidth: 18),
+      suffixIcon: suffixIcon,
     );
   }
 

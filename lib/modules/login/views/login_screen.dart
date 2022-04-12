@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../shared/constants/storage.dart';
 import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
@@ -37,10 +40,10 @@ class LoginScreen extends GetView<LoginController> {
         elevation: 1,
         backgroundColor: Colors.white,
       ),
-      body: SafeArea(
+      body: Obx(() => SafeArea(
         child: GestureDetector(
           onTap: () {
-            print('123');
+            log('123');
             FocusScope.of(context).unfocus();
           },
           child: SingleChildScrollView(
@@ -183,7 +186,7 @@ class LoginScreen extends GetView<LoginController> {
             ),
           ),
         ),
-      ),
+      ),),
     );
   }
 }

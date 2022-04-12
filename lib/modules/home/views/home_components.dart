@@ -14,13 +14,18 @@ extension HomeComponents on HomeScreen {
               height: 50,
               child: Row(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(42),
-                    child: NetWorkImage(
-                      image: AppDataGlobal.userInfo!.avatarImage!,
-                      width: 42,
-                      height: 42,
-                      fit: BoxFit.cover,
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(Routes.PROFILE);
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(42),
+                      child: NetWorkImage(
+                        image: AppDataGlobal.userInfo!.avatarImage!,
+                        width: 42,
+                        height: 42,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   Padding(
