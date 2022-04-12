@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hico/shared/constants/common.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';

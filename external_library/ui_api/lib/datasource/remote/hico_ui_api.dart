@@ -299,13 +299,13 @@ abstract class HicoUIAPI {
     @Query('symptom') String symptom,
   );
   //Forgotpass
-  @POST('/v1/password/forget')
+  @POST('/api/v1/customer/password/forget')
   Future<BaseResponse> forgetPassword(
     @Query('email') String email,
   );
 
   //ResetPass
-  @POST('/v1/password/reset')
+  @POST('/api/v1/customer/password/reset')
   Future<BaseResponse> resetPassword(
     @Query('code') String code,
     @Query('email') String email,

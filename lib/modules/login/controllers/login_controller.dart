@@ -291,19 +291,19 @@ class LoginController extends BaseController {
       });
     }
 
-    // AppDataGlobal.client =
-    //     StreamChatClient('qrjjtnn5hv29', logLevel: Level.INFO);
-    // await AppDataGlobal.client?.connectUser(
-    //   AppDataGlobal.userInfo!.getChatUser(),
-    //   AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
-    // );
+    AppDataGlobal.client =
+        StreamChatClient('qrjjtnn5hv29', logLevel: Level.INFO);
+    await AppDataGlobal.client?.connectUser(
+      AppDataGlobal.userInfo!.getChatUser(),
+      AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
+    );
 
-    // await AppDataGlobal.client
-    //     ?.addDevice(AppDataGlobal.firebaseToken, PushProvider.firebase);
-    // AppDataGlobal.client?.on(
-    //   EventType.messageNew,
-    //   EventType.notificationMessageNew,
-    // );
+    await AppDataGlobal.client
+        ?.addDevice(AppDataGlobal.firebaseToken, PushProvider.firebase);
+    AppDataGlobal.client?.on(
+      EventType.messageNew,
+      EventType.notificationMessageNew,
+    );
 
     //  await AppDataGlobal.client?
     //     .on(
