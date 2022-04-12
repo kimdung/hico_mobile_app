@@ -42,13 +42,11 @@ class VoiceCallController extends BaseController {
 
   @override
   Future<void> onInit() async {
-    await super.onInit();
-
     if (isCaller) {
       _timer = Timer.periodic(
         const Duration(seconds: 1),
         (Timer timer) {
-          if (callingTimer.value <= 0) {
+          if (callingTimer.value == 0) {
             _timer?.cancel();
             onEndCall();
           } else {
@@ -60,6 +58,7 @@ class VoiceCallController extends BaseController {
     } else {
       callingTimer.value = 0;
     }
+    await super.onInit();
 
     _addPostFrameCallback();
     await _initEngine();

@@ -45,11 +45,15 @@ class MainController extends BaseController {
   Future<void> onInit() async {
     await super.onInit();
 
-    await channel?.watch();
-    channel?.state?.unreadCountStream.listen((event) {
-      homeController.totalNotif.value = event;
-      orderListController.totalNotif.value = event;
-    });
+    try {
+      await channel?.watch();
+      channel?.state?.unreadCountStream.listen((event) {
+        homeController.totalNotif.value = event;
+        orderListController.totalNotif.value = event;
+      });
+    } catch (e) {
+      printError(info: e.toString());
+    }
   }
 
   Future<void> changeIndex(int _index) async {
