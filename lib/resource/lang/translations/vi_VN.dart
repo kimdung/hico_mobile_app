@@ -24,6 +24,7 @@ const Map<String, String> vi_VN = {
   'service': 'Dịch vụ',
   'error_mess': 'Kết nối thất bại. Vui lòng thử lại',
   'all': 'Tất cả',
+  'calling': 'Đang gọi...',
 
   //onboard
   'onboard.title1': 'Welcome to Hico',

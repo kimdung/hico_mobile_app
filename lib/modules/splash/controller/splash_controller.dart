@@ -12,6 +12,7 @@ import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/constants/storage.dart';
 import '../../../shared/services/firebase_cloud_messaging.dart';
+import '../../../shared/utils/chat_util.dart';
 
 class SplashController extends GetxController {
   final _uiRepository = Get.find<HicoUIRepository>();
@@ -138,7 +139,6 @@ class SplashController extends GetxController {
 
     if (user.conversationInfo?.token?.isEmpty ?? true) {
       await _uiRepository.createChatToken().then((response) {
-        EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           AppDataGlobal.userInfo?.conversationInfo = response.data;
@@ -146,19 +146,7 @@ class SplashController extends GetxController {
       });
     }
 
-    AppDataGlobal.client =
-        StreamChatClient('qrjjtnn5hv29', logLevel: Level.INFO);
-
-    await AppDataGlobal.client?.connectUser(
-      AppDataGlobal.userInfo!.getChatUser(),
-      AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
-    );  
-
-    await AppDataGlobal.client
-        ?.addDevice(AppDataGlobal.firebaseToken, PushProvider.firebase); 
-
-    await EasyLoading.dismiss();
-
+    ChatUtil.initChat();
     await Get.offAllNamed(Routes.MAIN);
   }
 }

@@ -16,6 +16,7 @@ import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
+import '../../../shared/utils/chat_util.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
@@ -179,19 +180,7 @@ class RegisterController extends BaseController {
       });
     }
 
-    AppDataGlobal.client =
-        StreamChatClient('qrjjtnn5hv29', logLevel: Level.INFO);
-    await AppDataGlobal.client?.connectUser(
-      AppDataGlobal.userInfo!.getChatUser(),
-      AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
-    );
-
-    await AppDataGlobal.client
-        ?.addDevice(AppDataGlobal.firebaseToken, PushProvider.firebase);
-    AppDataGlobal.client?.on(
-      EventType.messageNew,
-      EventType.notificationMessageNew,
-    );
+    ChatUtil.initChat();
     await EasyLoading.dismiss();
 
     await Get.toNamed(Routes.REGISTER_SUCCESS);

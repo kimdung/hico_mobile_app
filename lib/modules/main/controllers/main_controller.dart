@@ -19,7 +19,7 @@ import '../../order_list/views/order_list_screen.dart';
 class MainController extends BaseController {
   Rx<int> index = Rx(0);
 
-  final channel = AppDataGlobal.client!.channel('messaging',
+  final channel = AppDataGlobal.client?.channel('messaging',
       id: AppDataGlobal.userInfo?.conversationInfo?.getAdminChannel() ?? '');
 
   List<Widget> tabs = [];
@@ -45,8 +45,8 @@ class MainController extends BaseController {
   Future<void> onInit() async {
     await super.onInit();
 
-    await channel.watch();
-    channel.state?.unreadCountStream.listen((event) {
+    await channel?.watch();
+    channel?.state?.unreadCountStream.listen((event) {
       homeController.totalNotif.value = event;
       orderListController.totalNotif.value = event;
     });

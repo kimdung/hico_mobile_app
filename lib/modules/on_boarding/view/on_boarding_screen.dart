@@ -5,7 +5,7 @@ import '../../../resource/assets_constant/images_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
-import '../../../shared/widgets/appbar_slider/appbar_slider_widget.dart';
+import '../../../shared/widgets/carousel/slider_widget.dart';
 import '../controller/on_boarding_controller.dart';
 
 class OnBoardingScreen extends GetView<OnBoardingController> {
@@ -67,5 +67,23 @@ class OnBoardingScreen extends GetView<OnBoardingController> {
         ),
       ),
     );
+  }
+
+  Widget buildSlider(List<SliderModel> promotions) {
+    if (promotions.isNotEmpty) {
+      return Container(
+        child: SliderWidget(
+          showIndicator: true,
+          items: promotions
+              .map((e) => SliderItem(
+                    image: e.image!,
+                    title: e.title ?? '',
+                    description: e.description ?? '',
+                  ))
+              .toList(),
+        ),
+      );
+    }
+    return Container();
   }
 }

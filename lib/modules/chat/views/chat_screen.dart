@@ -150,20 +150,22 @@ class ChatScreen extends GetView<ChatController> {
           ],
         ),
         subtitle: Container(),
-        actions: [
-          IconButton(
-            icon: SvgPicture.asset(
-              IconConstants.icCall,
-            ),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: SvgPicture.asset(
-              IconConstants.icVideoCall,
-            ),
-            onPressed: () {},
-          ),
-        ],
+        actions: controller.isNotCall
+            ? []
+            : [
+                IconButton(
+                  icon: SvgPicture.asset(
+                    IconConstants.icCall,
+                  ),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: SvgPicture.asset(
+                    IconConstants.icVideoCall,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
       ),
       body: Column(
         children: <Widget>[

@@ -63,6 +63,10 @@ class InvoiceHistoryModel {
     return '$supplierId-${AppDataGlobal.userInfo?.id}';
   }
 
+  String getCallChannel() {
+    return '$supplierId-${AppDataGlobal.userInfo?.id}';
+  }
+
   User getProvider() {
     return User(
       id: serviceId.toString(),

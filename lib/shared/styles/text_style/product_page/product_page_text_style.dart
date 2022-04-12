@@ -47,15 +47,7 @@ extension ProductPageStyle on TextAppStyle {
       fontSize: 12,
       fontWeight: FontWeight.w400,
     );
-  }
-
-  TextStyle textPackageStyle() {
-    return TextStyle(
-      color: AppColor.textNotActiveButtonPackagePacColor,
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-    );
-  }
+  } 
 
   TextStyle textPackageActiveStyle() {
     return TextStyle(
@@ -86,14 +78,6 @@ extension ProductPageStyle on TextAppStyle {
       color: AppColor.primaryHintColorLight,
       fontSize: 14,
       fontWeight: FontWeight.w400,
-    );
-  }
-
-  TextStyle textContractInfoValueStyle() {
-    return TextStyle(
-      color: AppColor.cursorColorLight,
-      fontSize: 14,
-      fontWeight: FontWeight.w600,
     );
   }
 

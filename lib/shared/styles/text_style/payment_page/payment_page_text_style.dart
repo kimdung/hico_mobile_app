@@ -128,15 +128,7 @@ extension PaymentPageStyle on TextAppStyle {
       fontSize: 14,
       fontWeight: FontWeight.w400,
     );
-  }
-
-  TextStyle activeButtonPackageStyle() {
-    return TextStyle(
-      color: AppColor.textActiveButtonMonthColor,
-      fontSize: 12,
-      fontWeight: FontWeight.w600,
-    );
-  }
+  } 
 
   TextStyle notActiveButtonPackageStyle() {
     return TextStyle(

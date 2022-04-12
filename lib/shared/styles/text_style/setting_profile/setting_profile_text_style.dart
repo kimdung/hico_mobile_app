@@ -39,15 +39,7 @@ extension SettingScreenStyle on TextAppStyle {
       fontSize: 14,
       fontWeight: FontWeight.w600,
     );
-  }
-
-  TextStyle textButtonEditFormtStyle() {
-    return TextStyle(
-      color: AppColor.buttonOnchangeFormColor,
-      fontSize: 12,
-      fontWeight: FontWeight.w400,
-    );
-  }
+  } 
 
   TextStyle textLableFormtStyle() {
     return TextStyle(

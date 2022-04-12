@@ -81,6 +81,10 @@ class InvoiceInfoModel {
     return '$supplierId-${AppDataGlobal.userInfo?.id}';
   }
 
+  String getCallChannel() {
+    return '$supplierId-${AppDataGlobal.userInfo?.id}';
+  }
+
   User getProvider() {
     return User(
       id: supplierId.toString(),

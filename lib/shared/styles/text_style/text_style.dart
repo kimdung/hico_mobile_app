@@ -13,172 +13,173 @@ part 'health_assistant_page/health_assistant_style.dart';
 
 /// Define color at theme_data.dart
 class TextAppStyle {
-  static const String appFont = 'Mulish';
+  // static const String appFont = 'Mulish';
 
-  TextStyle versionTextStyle() {
-    return Get.theme.textTheme.headline5!;
-  }
+  // TextStyle versionTextStyle() {
+  //   return Get.theme.textTheme.headline5!;
+  // }
 
-  TextStyle versionContentTextStyle() {
-    /// headline4 Color: fourthTextColor -> Green
-    return Get.theme.textTheme.headline4!;
-  }
+  // TextStyle versionContentTextStyle() {
+  //   /// headline4 Color: fourthTextColor -> Green
+  //   return Get.theme.textTheme.headline4!;
+  // }
 
-  TextStyle textEnableButtonStyle() {
-    /// headline2 Color: secondTextColor -> White
-    return TextStyle(
-      color: Get.theme.textTheme.headline2!.color,
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-    );
-  }
+  // TextStyle textEnableButtonStyle() {
+  //   /// headline2 Color: secondTextColor -> White
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline2!.color,
+  //     fontSize: 16,
+  //     fontWeight: FontWeight.w600,
+  //   );
+  // }
 
-  TextStyle textDisableButtonStyle() {
-    /// headline4 Color: fourthTextColor -> Green
-    return TextStyle(
-      color: Get.theme.textTheme.headline4!.color,
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-    );
-  }
+  // TextStyle textDisableButtonStyle() {
+  //   /// headline4 Color: fourthTextColor -> Green
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline4!.color,
+  //     fontSize: 16,
+  //     fontWeight: FontWeight.w500,
+  //   );
+  // }
 
-  TextStyle labelTextFormFieldStyle() {
-    /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-    return TextStyle(
-      color: Get.theme.textTheme.headline1!.color,
-      fontSize: 12,
-      fontWeight: FontWeight.normal,
-    );
-  }
+  // TextStyle labelTextFormFieldStyle() {
+  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline1!.color,
+  //     fontSize: 12,
+  //     fontWeight: FontWeight.normal,
+  //   );
+  // }
 
-  TextStyle hintTextFormFieldStyle() {
-    /// headline5 Color: fifthTextColor -> Gray
-    return TextStyle(
-      color: Get.theme.textTheme.headline5!.color,
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
-    );
-  }
+  // TextStyle hintTextFormFieldStyle() {
+  //   /// headline5 Color: fifthTextColor -> Gray
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline5!.color,
+  //     fontSize: 14,
+  //     fontWeight: FontWeight.normal,
+  //   );
+  // }
 
-  TextStyle greyTextFormFieldStyle() {
-    /// headline5 Color: fifthTextColor -> Gray
-    return TextStyle(
-      color: Get.theme.textTheme.headline5!.color!.withOpacity(0.5),
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
-    );
-  }
+  // TextStyle greyTextFormFieldStyle() {
+  //   /// headline5 Color: fifthTextColor -> Gray
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline5!.color!.withOpacity(0.5),
+  //     fontSize: 14,
+  //     fontWeight: FontWeight.normal,
+  //   );
+  // }
 
-  TextStyle textInputFormFieldStyle() {
-    /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-    return TextStyle(
-      color: Get.theme.textTheme.headline1!.color,
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
-    );
-  }
+  // TextStyle textInputFormFieldStyle() {
+  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline1!.color,
+  //     fontSize: 14,
+  //     fontWeight: FontWeight.normal,
+  //   );
+  // }
 
-  TextStyle titlePageTextStyle() {
-    /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-    return TextStyle(
-      color: Get.theme.textTheme.headline1!.color,
-      fontSize: 24,
-      fontWeight: FontWeight.w600,
-    );
-  }
+  // TextStyle titlePageTextStyle() {
+  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline1!.color,
+  //     fontSize: 24,
+  //     fontWeight: FontWeight.w600,
+  //   );
+  // }
 
-  TextStyle titlePage2TextStyle() {
-    /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-    return TextStyle(
-      color: Get.theme.textTheme.headline1!.color,
-      fontSize: 20,
-      fontWeight: FontWeight.bold,
-    );
-  }
+  // TextStyle titlePage2TextStyle() {
+  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline1!.color,
+  //     fontSize: 20,
+  //     fontWeight: FontWeight.bold,
+  //   );
+  // }
 
-  TextStyle contentPageTextStyle() {
-    /// headline5 Color: fifthTextColor -> Gray
-    return TextStyle(
-      color: Get.theme.textTheme.headline5!.color,
-      fontSize: 13,
-      fontWeight: FontWeight.normal,
-    );
-  }
+  // TextStyle contentPageTextStyle() {
+  //   /// headline5 Color: fifthTextColor -> Gray
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline5!.color,
+  //     fontSize: 13,
+  //     fontWeight: FontWeight.normal,
+  //   );
+  // }
 
-  TextStyle contentPage2TextStyle() {
-    /// headline5 Color: fifthTextColor -> Gray
-    return TextStyle(
-      color: Get.theme.textTheme.headline5!.color,
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
-    );
-  }
+  // TextStyle contentPage2TextStyle() {
+  //   /// headline5 Color: fifthTextColor -> Gray
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline5!.color,
+  //     fontSize: 14,
+  //     fontWeight: FontWeight.normal,
+  //   );
+  // }
 
-  TextStyle textClickColorStyle() {
-    /// headline4 Color: fourthTextColor -> Green
-    return TextStyle(
-      color: Get.theme.textTheme.headline4!.color,
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
-    );
-  }
+  // TextStyle textClickColorStyle() {
+  //   /// headline4 Color: fourthTextColor -> Green
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline4!.color,
+  //     fontSize: 14,
+  //     fontWeight: FontWeight.normal,
+  //   );
+  // }
 
-  TextStyle titleQrCodeColorStyle() {
-    /// headline2 Color: secondTextColor -> White
-    return TextStyle(
-      color: Get.theme.textTheme.headline2!.color,
-      fontSize: 28,
-      fontWeight: FontWeight.bold,
-    );
-  }
+  // TextStyle titleQrCodeColorStyle() {
+  //   /// headline2 Color: secondTextColor -> White
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline2!.color,
+  //     fontSize: 28,
+  //     fontWeight: FontWeight.bold,
+  //   );
+  // }
 
-  TextStyle textPriceColorStyle() {
-    /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-    return TextStyle(
-      color: Get.theme.textTheme.headline1!.color,
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-    );
-  }
+  // TextStyle textPriceColorStyle() {
+  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline1!.color,
+  //     fontSize: 16,
+  //     fontWeight: FontWeight.w600,
+  //   );
+  // }
 
-  TextStyle textTitleNameColorStyle() {
-    /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-    return TextStyle(
-      color: Get.theme.textTheme.headline1!.color,
-      fontSize: 16,
-      fontWeight: FontWeight.w700,
-    );
-  }
+  // TextStyle textTitleNameColorStyle() {
+  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline1!.color,
+  //     fontSize: 16,
+  //     fontWeight: FontWeight.w700,
+  //   );
+  // }
 
-  TextStyle titlePriceColorStyle() {
-    /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-    return TextStyle(
-      color: Get.theme.textTheme.headline1!.color,
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
-      fontFamily: 'Montserrat',
-    );
-  }
+  // TextStyle titlePriceColorStyle() {
+  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline1!.color,
+  //     fontSize: 14,
+  //     fontWeight: FontWeight.normal,
+  //     fontFamily: 'Montserrat',
+  //   );
+  // }
 
-  TextStyle textAppBarColorStyle() {
-    /// headline2 Color: secondTextColor -> White
-    return TextStyle(
-      color: Get.theme.textTheme.headline2!.color,
-      fontSize: 17,
-      fontWeight: FontWeight.w600,
-      fontFamily: 'Montserrat',
-    );
-  }
+  // TextStyle textAppBarColorStyle() {
+  //   /// headline2 Color: secondTextColor -> White
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline2!.color,
+  //     fontSize: 17,
+  //     fontWeight: FontWeight.w600,
+  //     fontFamily: 'Montserrat',
+  //   );
+  // }
 
-  TextStyle titleCardViewColorStyle() {
-    /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-    return TextStyle(
-      color: Get.theme.textTheme.headline1!.color,
-      fontSize: 14,
-      fontWeight: FontWeight.w600,
-      fontFamily: 'Montserrat',
-    );
-  }
+  // TextStyle titleCardViewColorStyle() {
+  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
+  //   return TextStyle(
+  //     color: Get.theme.textTheme.headline1!.color,
+  //     fontSize: 14,
+  //     fontWeight: FontWeight.w600,
+  //     fontFamily: 'Montserrat',
+  //   );
+  // }
+//   static TextStyle get textStyle => Get.theme.textTheme.bodyText1!;
 
   TextStyle titleButtonStyle() {
     /// headline1 Color: primaryTextColor -> Black Gray (#333333)
