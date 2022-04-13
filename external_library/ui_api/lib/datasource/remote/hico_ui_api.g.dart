@@ -795,7 +795,7 @@ class _HicoUIAPI implements HicoUIAPI {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BaseResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/password/forget',
+                .compose(_dio.options, '/v1/customer/password/forget',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BaseResponse.fromJson(_result.data!);
@@ -815,7 +815,7 @@ class _HicoUIAPI implements HicoUIAPI {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BaseResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/password/reset',
+                .compose(_dio.options, '/v1/customer/password/reset',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BaseResponse.fromJson(_result.data!);
