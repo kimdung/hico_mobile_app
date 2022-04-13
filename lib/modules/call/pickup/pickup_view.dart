@@ -62,7 +62,7 @@ class PickupView extends StatelessWidget {
         const SizedBox(height: 15),
         Text(
           call.getName() ?? '',
-          style: TextAppStyle().normalTextStype().copyWith(
+          style: TextAppStyle().mediumTextStype().copyWith(
                 fontSize: 18,
               ),
         ),

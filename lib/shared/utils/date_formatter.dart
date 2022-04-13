@@ -27,4 +27,10 @@ class DateFormatter {
     final formatter = DateFormat(CommonConstants.dateFormat);
     return formatter.parse(inputString).toLocal();
   }
+
+  static String formatSecondsToTime(int secs) {
+    final minutes = ((secs % 3600) ~/ 60).toString().padLeft(2, '0');
+    final seconds = (secs % 60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
+  }
 }

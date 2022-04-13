@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../shared/constants/colors.dart';
 import '../../../../shared/styles/text_style/text_style.dart';
+import '../../../../shared/utils/date_formatter.dart';
 import '../controllers/voice_call_controller.dart';
 
 class VoiceCallView extends GetView<VoiceCallController> {
@@ -11,7 +12,6 @@ class VoiceCallView extends GetView<VoiceCallController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Expanded(
             child: Column(
@@ -20,10 +20,10 @@ class VoiceCallView extends GetView<VoiceCallController> {
               children: [
                 Obx(
                   () => Text(
-                    controller.dutationCall.value == 0 ? 'calling'.tr : '',
-                    style: TextAppStyle().genaralTextStyle().copyWith(
-                          color: AppColor.sixTextColorLight,
-                        ),
+                    (!controller.isRemoted.value && controller.isCaller)
+                        ? 'calling'.tr
+                        : '',
+                    style: TextAppStyle().normalTextGrey(),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -55,17 +55,18 @@ class VoiceCallView extends GetView<VoiceCallController> {
                 const SizedBox(height: 15),
                 Text(
                   controller.call.getName() ?? '',
-                  style: TextAppStyle().normalTextStype().copyWith(
+                  style: TextAppStyle().mediumTextStype().copyWith(
                         fontSize: 18,
                       ),
                 ),
                 Obx(
                   () => Text(
-                    controller.dutationCall.value > 0
-                        ? controller.formatTime(controller.dutationCall.value)
+                    (controller.isRemoted.value)
+                        ? DateFormatter.formatSecondsToTime(
+                            controller.dutationCall.value)
                         : '',
-                    style: TextAppStyle().genaralTextStyle().copyWith(
-                          color: AppColor.sixTextColorLight,
+                    style: TextAppStyle().titleAppBarStyle().copyWith(
+                          color: AppColor.primaryColorLight,
                         ),
                   ),
                 ),
@@ -91,8 +92,8 @@ class VoiceCallView extends GetView<VoiceCallController> {
               onPressed: controller.switchSpeakerphone,
               child: Icon(
                 controller.enableSpeakerphone.value
-                    ? Icons.volume_off
-                    : Icons.volume_up,
+                    ? Icons.volume_up
+                    : Icons.volume_off,
                 size: 25,
                 color: AppColor.sixTextColorLight,
               ),
