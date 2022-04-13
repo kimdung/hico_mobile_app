@@ -43,7 +43,7 @@ class LoginController extends BaseController {
     passwordController.text = '';
 
     usernameController.text = 'Cuong.nguyen@blueboltsoftware.com';
-    passwordController.text = '123123';
+    passwordController.text = '123456';
 
     final error = Get.arguments;
 
@@ -289,7 +289,7 @@ class LoginController extends BaseController {
       });
     }
 
-    ChatUtil.initChat(); 
+    ChatUtil.initChat(AppDataGlobal.userInfo?.conversationInfo?.apiKey ?? '');
     await EasyLoading.dismiss();
 
     await Get.offAllNamed(Routes.MAIN);
