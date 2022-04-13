@@ -36,6 +36,7 @@ import 'package:ui_api/response/user/user_response.dart';
 import 'package:ui_api/response/voucher/check_voucher_response.dart';
 import 'package:ui_api/response/voucher/voucher_response.dart';
 
+import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
 part 'hico_ui_api.g.dart';
 
@@ -319,4 +320,8 @@ abstract class HicoUIAPI {
   //Get Token
   @POST('/v1/conversation/createToken')
   Future<ChatTokenResponse> createChatToken();
+
+  //Get Token
+  @POST('/v1/agoraCall/createToken')
+  Future<CallTokenResponse> getCallToken(@Query('channel') String channel);
 }

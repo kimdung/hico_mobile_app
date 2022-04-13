@@ -8,6 +8,7 @@ import '../data/app_data_global.dart';
 import '../data/interceptors/listen_error_graphql_interceptor.dart';
 import '../shared/dialog_manager/data_models/request/common_dialog_request.dart';
 import '../shared/dialog_manager/services/dialog_service.dart';
+import '../shared/methods/call_methods.dart';
 import '../shared/network/constants/constants.dart';
 import '../shared/network/managers/network_manager.dart';
 
@@ -18,6 +19,8 @@ class BaseController extends GetxController
   Stream<bool> get hasNetworkStream => _hasNetworkSubject.stream;
 
   Sink<bool> get hasNetworkSink => _hasNetworkSubject.sink;
+
+  final CallMethods callMethods = CallMethods();
 
   @override
   Future<void> onInit() async {
@@ -73,11 +76,6 @@ class BaseController extends GetxController
         ),
       );
     });
-  }
-
-  @override
-  Future<void> onReady() async {
-    super.onReady();
   }
 
   Future<void> checkConnectNetwork() async {

@@ -22,7 +22,7 @@ class HomeController extends BaseController {
 
   BookingPrepareRequest request = BookingPrepareRequest();
 
-  final Channel adminChatChannel;
+  Channel? adminChatChannel;
 
   HomeController(this.adminChatChannel) {
     loadData();
@@ -35,9 +35,7 @@ class HomeController extends BaseController {
 
   Future<void> loadData() async {
     try {
-      //await EasyLoading.show();
       await _uiRepository.home().then((response) {
-        //EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.homeModel != null) {
           homeModel.value = response.homeModel!;
@@ -91,6 +89,7 @@ class HomeController extends BaseController {
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? AppDataGlobal.userInfo?.conversationInfo?.getAdmin()
           : _usersResponse!.users.first,
+      CommonConstants.IS_NOT_CALL: true,
     });
   }
 }

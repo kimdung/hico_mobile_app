@@ -4,9 +4,9 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:hico/shared/constants/colors.dart';
 import 'package:hico/shared/constants/common.dart';
-import 'package:hico/shared/widget_hico/button/general_button.dart';
 
 import '../../styles/text_style/text_style.dart';
+import '../button/general_button.dart';
 
 class DatePickerWidget extends StatefulWidget {
   const DatePickerWidget({

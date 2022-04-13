@@ -153,7 +153,7 @@ class IconConstants {
   static const String icArrowRight =
       'lib/resource/assets_resources/icons/arrow_right.svg';
   static const String iconCLose =
-      'lib/resource/assets_resources/icons/icon_close.svg'; 
+      'lib/resource/assets_resources/icons/icon_close.svg';
 
   static const String icShape = 'lib/resource/assets_resources/icons/shape.svg';
   static const String icLock = 'lib/resource/assets_resources/icons/lock.svg';
@@ -343,4 +343,9 @@ class IconConstants {
       'lib/resource/assets_resources/icons/ic_card.png';
   static const String icCardOnline =
       'lib/resource/assets_resources/icons/ic_card_online.png';
+
+  static const String icSpeaker =
+      'lib/resource/assets_resources/icons/ic_speaker.svg';
+  static const String icPhoneCall =
+      'lib/resource/assets_resources/icons/ic_phone_call.svg';
 }

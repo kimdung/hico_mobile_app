@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/components/border/gf_border.dart';
 import 'package:getwidget/getwidget.dart';
 
 import '/resource/assets_constant/images_constants.dart';
@@ -14,7 +13,6 @@ import '../../../shared/widget_hico/box_decoration/box_decoration.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
 import '../../../shared/widget_hico/image_widget/network_image.dart';
 import '../../../shared/widgets/button/gradient_border_button.dart';
-import '../../../shared/widgets/button/gradient_button.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
 import '../controllers/profile_controller.dart';
 

@@ -9,6 +9,7 @@ class ThemeConfig {
     required Brightness brightness,
     required Color primaryColor,
     required Color accentColor,
+    required Color cursorColor,
     required Color primaryTextColor,
     required Color secondTextColor,
     required Color thirdTextColor,
@@ -52,7 +53,7 @@ class ThemeConfig {
       primaryColor: primaryColor,
       accentColor: accentColor,
       textSelectionTheme: TextSelectionThemeData(
-        cursorColor: thirdTextColor,
+        cursorColor: cursorColor,
         selectionColor: accentColor,
         selectionHandleColor: accentColor,
       ),
@@ -216,11 +217,12 @@ class ThemeConfig {
         fifthTextColor: AppColor.fifthTextColorLight,
         hintText: AppColor.primaryHintColorLight,
         accentColor: AppColor.accentColorLight,
+        cursorColor: AppColor.cursorColor,
         divider: AppColor.dividerColorLight,
         disabled: AppColor.disabledColorLight,
         shadowColor: AppColor.shadowColorLight,
         primaryBorderColor: AppColor.primaryBorderColorLight,
-        error: AppColor.errorColorLight,
+        error: AppColor.errorColor,
       );
 
 // static ThemeData get darkTheme => createTheme(

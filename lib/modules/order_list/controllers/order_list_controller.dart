@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/models/invoice/invoice_list_model.dart';
 import 'package:ui_api/models/invoice/invoice_status.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
@@ -10,12 +11,14 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
+import '../../../resource/config/config_agora.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
+import '../../../shared/utils/call_utilities.dart';
 
 class OrderListController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
-  final Channel adminChatChannel;
+  Channel? adminChatChannel;
 
   Rx<UserInfoModel> info = Rx(UserInfoModel());
 
@@ -124,6 +127,7 @@ class OrderListController extends BaseController {
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? AppDataGlobal.userInfo?.conversationInfo?.getAdmin()
           : _usersResponse!.users.first,
+      CommonConstants.IS_NOT_CALL: true,
     });
   }
 
@@ -145,7 +149,59 @@ class OrderListController extends BaseController {
     });
   }
 
-  Future<void> onCall(InvoiceHistoryModel invoice) async {}
+  Future<void> onCall(InvoiceHistoryModel invoice) async {
+    final channelId = invoice.getCallChannel();
+    try {
+      await EasyLoading.show();
+      await _uiRepository.getCallToken(channelId).then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.data != null) {
+          // Get.toNamed(Routes.VOICE_CALL, arguments: response.data);
+          final call = CallModel(
+            callerId: AppDataGlobal.userInfo?.id,
+            callerName: AppDataGlobal.userInfo?.name ?? '',
+            callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',
+            receiverId: invoice.supplierId,
+            receiverName: invoice.supplierName ?? '',
+            receiverPic: invoice.supplierAvatar ?? '',
+            channelId: channelId,
+            hasDialled: true,
+            isVideo: false,
+          );
+          CallUtils.dial(callMethods, call, response.data?.token ?? '');
+        }
+      });
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
 
-  Future<void> onVideo(InvoiceHistoryModel invoice) async {}
+  Future<void> onVideo(InvoiceHistoryModel invoice) async {
+    final channelId = invoice.getCallChannel();
+    try {
+      await EasyLoading.show();
+      await _uiRepository.getCallToken(channelId).then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.data != null) {
+          // Get.toNamed(Routes.VOICE_CALL, arguments: response.data);
+          final call = CallModel(
+            callerId: AppDataGlobal.userInfo?.id,
+            callerName: AppDataGlobal.userInfo?.name ?? '',
+            callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',
+            receiverId: invoice.supplierId,
+            receiverName: invoice.supplierName ?? '',
+            receiverPic: invoice.supplierAvatar ?? '',
+            channelId: channelId,
+            hasDialled: true,
+            isVideo: true,
+          );
+          CallUtils.dial(callMethods, call, response.data?.token ?? '');
+        }
+      });
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
 }

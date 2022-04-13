@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -12,6 +11,7 @@ import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
 import '../../../shared/widget_hico/image_widget/network_image.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
+import '../../call/pickup/picker_layout.dart';
 import '../controllers/order_controller.dart';
 
 part 'order_extension.dart';

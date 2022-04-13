@@ -436,11 +436,10 @@ extension ProfileUpdateExtension on ProfileUpdateScreen {
   }
 
   Widget _buildButtonGradient({required String title, Function()? onPress}) {
-    return AppGradientButton(
+    return GeneralButton(
       onPressed: onPress,
       borderRadius: BorderRadius.circular(4),
-      height: 31,
-      shadow: 0,
+      height: 31, 
       child: Text(
         title,
         style: TextAppStyle().titleButtonStyle(),

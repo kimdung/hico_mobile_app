@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/models/invoice/invoice_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/rating_request.dart';
@@ -12,6 +13,7 @@ import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
+import '../../../shared/utils/call_utilities.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 import '../../../shared/widget_hico/dialog/rating_widget.dart';
@@ -148,9 +150,67 @@ class OrderController extends BaseController {
     });
   }
 
-  Future<void> onCall() async {}
+  Future<void> onCall() async {
+    if (AppDataGlobal.userInfo == null) {
+      return;
+    }
+    final channelId = invoice.value.getCallChannel();
 
-  Future<void> onVideo() async {}
+    try {
+      await EasyLoading.show();
+      await _uiRepository.getCallToken(channelId).then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.data != null) {
+          // Get.toNamed(Routes.VOICE_CALL, arguments: response.data);
+          final call = CallModel(
+            callerId: AppDataGlobal.userInfo?.id,
+            callerName: AppDataGlobal.userInfo?.name ?? '',
+            callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',
+            receiverId: invoice.value.supplierId,
+            receiverName: invoice.value.supplierName ?? '',
+            receiverPic: invoice.value.supplierAvatar ?? '',
+            channelId: channelId,
+            hasDialled: true,
+            isVideo: false,
+          );
+          CallUtils.dial(callMethods, call, response.data?.token ?? '');
+        } else if (response.message?.isNotEmpty ?? false) {
+          EasyLoading.showToast(response.message ?? '');
+        }
+      });
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
+
+  Future<void> onVideo() async {
+    final channelId = invoice.value.getCallChannel();
+    try {
+      await EasyLoading.show();
+      await _uiRepository.getCallToken(channelId).then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.data != null) {
+          // Get.toNamed(Routes.VOICE_CALL, arguments: response.data);
+          final call = CallModel(
+            callerId: AppDataGlobal.userInfo?.id,
+            callerName: AppDataGlobal.userInfo?.name ?? '',
+            callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',
+            receiverId: invoice.value.supplierId,
+            receiverName: invoice.value.supplierName ?? '',
+            receiverPic: invoice.value.supplierAvatar ?? '',
+            channelId: channelId,
+            hasDialled: true,
+            isVideo: true,
+          );
+          CallUtils.dial(callMethods, call, response.data?.token ?? '');
+        }
+      });
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
 
   Future<void> onExtend() async {}
 
@@ -248,4 +308,6 @@ class OrderController extends BaseController {
 
   @override
   void onClose() {}
+
+  tr(String s) {}
 }

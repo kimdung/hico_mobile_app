@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hico/resource/assets_constant/icon_constants.dart';
-import 'package:hico/resource/assets_constant/images_constants.dart';
-import 'package:hico/shared/styles/text_style/text_style.dart';
-import 'package:hico/shared/widgets/image_widget/fcore_image.dart';
 
 import '../constants/colors.dart';
 import '../styles/text_style/app_text_style.dart';
+import '../styles/text_style/text_style.dart';
 
 enum DialogSize { FullWidth, HalfWidth, Popup }
 

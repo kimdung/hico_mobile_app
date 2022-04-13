@@ -28,9 +28,13 @@ class CommonConstants {
   // Arguments key
   static const String CHANNEL = 'CHANNEL';
   static const String CHAT_USER = 'CHAT_USER';
+  static const String IS_NOT_CALL = 'IS_NOT_CALL';
+  static const String IS_CALLER = 'IS_CALLER';
+  static const String CALL_MODEL = 'CALL_MODEL';
+  static const String CALL_TOKEN = 'CALL_TOKEN';
 }
 
-const APP_NAME = 'Hico Supplier';
+const APP_NAME = 'Hico';
 
 const IMAGE_ASSET = 'lib/resource/images/';
 
@@ -60,27 +64,6 @@ const ClientAPIDomain = 'ClientAPIDomain';
 const URL_ANDROID =
     'https://play.google.com/store/apps/details?id=com.zhiliaoapp.musically&hl=vi&gl=US';
 const URL_IOS = 'https://apps.apple.com/vn/app/tiktok/id1235601864?l=vi';
-
-// enum InvoiceStatus { All, Requested, Accepted, Successed, Canceled }
-
-// extension InvoiceName on InvoiceStatus {
-//   String get name {
-//     switch (this) {
-//       case InvoiceStatus.All:
-//         return 'Tất cả';
-//       case InvoiceStatus.Requested:
-//         return 'Đã yêu cầu';
-//       case InvoiceStatus.Accepted:
-//         return 'PDV đồng ý';
-//       case InvoiceStatus.Successed:
-//         return 'Hoàn thành';
-//       case InvoiceStatus.Canceled:
-//         return 'Đã hủy';
-//       default:
-//         return '';
-//     }
-//   }
-// }
 
 enum PaymentMethod { All, Banking, Online }
 

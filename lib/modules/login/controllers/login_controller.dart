@@ -6,7 +6,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/user/login_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/login/login_request.dart';
@@ -19,6 +18,7 @@ import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/constants/storage.dart';
 import '../../../shared/services/login_social_services.dart';
+import '../../../shared/utils/chat_util.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
@@ -50,7 +50,7 @@ class LoginController extends BaseController {
   }
 
   @override
-  Future<void> onReady() {
+  void onReady() {
     usernameController.text = storage.getString(StorageConstants.username)!;
     passwordController.text = '';
     return super.onReady();
@@ -291,32 +291,7 @@ class LoginController extends BaseController {
       });
     }
 
-    AppDataGlobal.client =
-        StreamChatClient('qrjjtnn5hv29', logLevel: Level.INFO);
-    await AppDataGlobal.client?.connectUser(
-      AppDataGlobal.userInfo!.getChatUser(),
-      AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
-    );
-
-    await AppDataGlobal.client
-        ?.addDevice(AppDataGlobal.firebaseToken, PushProvider.firebase);
-    AppDataGlobal.client?.on(
-      EventType.messageNew,
-      EventType.notificationMessageNew,
-    );
-
-    //  await AppDataGlobal.client?
-    //     .on(
-    //   EventType.messageNew,
-    //   EventType.notificationMessageNew,
-    // )
-    //     .listen((event) {
-    //   if (event.message?.user?.id == client.state.currentUser?.id) {
-    //     return;
-    //   }
-    //   showLocalNotification(event, client.state.currentUser!.id, context);
-    // });
-
+    ChatUtil.initChat(); 
     await EasyLoading.dismiss();
 
     await Get.offAllNamed(Routes.MAIN);

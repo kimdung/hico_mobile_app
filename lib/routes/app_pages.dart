@@ -1,18 +1,11 @@
 import 'package:get/get.dart';
-import 'package:hico/modules/config/views/payment_policy_screen.dart';
-import 'package:hico/modules/config/views/terms_of_use_screen.dart';
-import 'package:hico/modules/consulting/bindings/consulting_binding.dart';
-import 'package:hico/modules/consulting/views/consulting_screen.dart';
-import 'package:hico/modules/news/views/news_screen.dart';
-import 'package:hico/modules/news_list/bindings/news_list_binding.dart';
-import 'package:hico/modules/news_list/views/news_list_screen.dart';
-import 'package:hico/modules/payment_method/bindings/payment_method_binding.dart';
-import 'package:hico/modules/payment_method/views/payment_method_screen.dart';
-import 'package:hico/modules/search/bindings/search_binding.dart';
-import 'package:hico/modules/search/views/search_screen.dart';
 
 import '../modules/bank/bindings/bank_binding.dart';
 import '../modules/bank/views/bank_update_screen.dart';
+import '../modules/call/video_call/bindings/video_call_binding.dart';
+import '../modules/call/video_call/views/video_call_view.dart';
+import '../modules/call/voice_call/bindings/voice_call_binding.dart';
+import '../modules/call/voice_call/views/voice_call_view.dart';
 import '../modules/chat/bindings/chat_binding.dart';
 import '../modules/chat/views/chat_screen.dart';
 import '../modules/config/bindings/config_binding.dart';
@@ -20,7 +13,11 @@ import '../modules/config/views/bank_screen.dart';
 import '../modules/config/views/change_pass_screen.dart';
 import '../modules/config/views/config_screen.dart';
 import '../modules/config/views/contact_screen.dart';
+import '../modules/config/views/payment_policy_screen.dart';
 import '../modules/config/views/policy_screen.dart';
+import '../modules/config/views/terms_of_use_screen.dart';
+import '../modules/consulting/bindings/consulting_binding.dart';
+import '../modules/consulting/views/consulting_screen.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_change_screen.dart';
 import '../modules/forgot_password/views/forgot_password_otp_screen.dart';
@@ -33,12 +30,16 @@ import '../modules/main/bindings/main_binding.dart';
 import '../modules/main/views/main_screen.dart';
 import '../modules/news_detail/bindings/news_detail_binding.dart';
 import '../modules/news_detail/views/news_detail_screen.dart';
+import '../modules/news_list/bindings/news_list_binding.dart';
+import '../modules/news_list/views/news_list_screen.dart';
 import '../modules/notification_detail/bindings/notification_detail_binding.dart';
 import '../modules/notification_detail/views/notification_detail_screen.dart';
 import '../modules/on_boarding/binding/on_boarding_binding.dart';
 import '../modules/on_boarding/view/on_boarding_screen.dart';
 import '../modules/order/bindings/order_binding.dart';
 import '../modules/order/views/order_screen.dart';
+import '../modules/payment_method/bindings/payment_method_binding.dart';
+import '../modules/payment_method/views/payment_method_screen.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_screen.dart';
 import '../modules/profile/views/profile_update_screen.dart';
@@ -46,6 +47,8 @@ import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_otp_screen.dart';
 import '../modules/register/views/register_screen.dart';
 import '../modules/register/views/register_success_screen.dart';
+import '../modules/search/bindings/search_binding.dart';
+import '../modules/search/views/search_screen.dart';
 import '../modules/service/bindings/new_service_binding.dart';
 import '../modules/service/bindings/recent_service_binding.dart';
 import '../modules/service/bindings/service_binding.dart';
@@ -288,5 +291,15 @@ final routePages = [
     name: Routes.CHAT,
     page: () => ChatScreen(),
     binding: ChatBinding(),
+  ),
+  GetPage(
+    name: Routes.VOICE_CALL,
+    page: () => VoiceCallView(),
+    binding: VoiceCallBinding(),
+  ),
+  GetPage(
+    name: Routes.VIDEO_CALL,
+    page: () => VideoCallView(),
+    binding: VideoCallBinding(),
   ),
 ];

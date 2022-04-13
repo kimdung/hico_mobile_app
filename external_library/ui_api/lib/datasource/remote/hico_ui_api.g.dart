@@ -854,6 +854,22 @@ class _HicoUIAPI implements HicoUIAPI {
     return value;
   }
 
+  @override
+  Future<CallTokenResponse> getCallToken(channel) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'channel': channel};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CallTokenResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/agoraCall/createToken',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CallTokenResponse.fromJson(_result.data!);
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

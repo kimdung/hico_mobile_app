@@ -3,21 +3,6 @@ import '../constants/colors.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class ThemeDecoration {
-  static BoxDecoration get appGradient => const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            AppColor.color45C152,
-            AppColor.color0ADC90,
-          ],
-          // stops: [
-          //   0.0,
-          //   1.0,
-          // ],
-        ),
-      );
-
   static BoxDecoration get textShadow => BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.centerRight,
@@ -58,15 +43,4 @@ class ThemeDecoration {
   static InputDecoration get inputNoneBorder => const InputDecoration(
         border: InputBorder.none,
       );
-  static TextStyle get textLabelForm => const TextStyle(
-      fontWeight: FontWeight.normal,
-      fontSize: 14,
-      color: AppColor.textBlack,
-      height: 1.2);
-
-  static TextStyle get labelStyleGrayColor => const TextStyle(
-      fontWeight: FontWeight.normal,
-      fontSize: 12,
-      color: AppColor.gray1,
-      height: 1.2);
 }

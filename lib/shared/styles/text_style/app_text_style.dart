@@ -21,9 +21,6 @@ class AppTextStyle {
   static TextStyle get textBoldStyle =>
       Get.theme.textTheme.bodyText1!.copyWith(fontWeight: FontWeight.bold);
 
-  static TextStyle get textHintStyle =>
-      Get.theme.textTheme.bodyText1!.copyWith(color: AppColor.primaryHintColor);
-
   static TextStyle get textErrorStyle =>
       Get.theme.textTheme.bodyText1!.copyWith(color: AppColor.errorColor);
 
@@ -50,11 +47,6 @@ class AppTextStyle {
       Get.theme.textTheme.headline2!.copyWith(
         color: AppColor.secondTextColorLight,
         fontWeight: FontWeight.bold,
-      );
-
-  static TextStyle get titleHomeListNameStyle =>
-      Get.theme.textTheme.overline!.copyWith(
-        color: AppColor.primaryHintColor,
       );
 
   // Choose staff
