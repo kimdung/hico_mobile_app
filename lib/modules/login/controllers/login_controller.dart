@@ -39,15 +39,8 @@ class LoginController extends BaseController {
   final storage = Get.find<SharedPreferences>();
 
   @override
-  Future<void> onInit() { 
-    usernameController.text = '';
-    passwordController.text = '';
-
-    usernameController.text = 'Cuong.nguyen@blueboltsoftware.com';
-    passwordController.text = '123456';
-
+  Future<void> onInit() {
     final error = Get.arguments;
-
     if (error is String && error.isNotEmpty) {
       EasyLoading.showToast(error);
     }
