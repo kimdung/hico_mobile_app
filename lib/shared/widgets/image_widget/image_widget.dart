@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hico/base/base_controller.dart';
-import 'package:hico/shared/styles/text_style/text_style.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../base/base_controller.dart';
+import '../../styles/text_style/text_style.dart';
 
 class ImageWidgetController extends BaseController {
   Future<ImageSource?> showImageSource(BuildContext context) async {

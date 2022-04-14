@@ -1,10 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/user/login_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/login/login_request.dart';
@@ -33,25 +34,25 @@ class LoginController extends BaseController {
   UserProfile? _userProfile;
   StoredAccessToken? accessToken;
 
-  bool showPassword = false;
+  RxBool showPassword = false.obs;
 
   final storage = Get.find<SharedPreferences>();
 
   @override
   Future<void> onInit() {
-    usernameController.text = '';
-    passwordController.text = '';
-
-    usernameController.text = 'Cuong.nguyen@blueboltsoftware.com';
-    passwordController.text = '123456';
-
     final error = Get.arguments;
-
     if (error is String && error.isNotEmpty) {
       EasyLoading.showToast(error);
     }
 
     return super.onInit();
+  }
+
+  @override
+  void onReady() {
+    usernameController.text = storage.getString(StorageConstants.username)!;
+    passwordController.text = '';
+    return super.onReady();
   }
 
   @override
@@ -293,5 +294,10 @@ class LoginController extends BaseController {
     await EasyLoading.dismiss();
 
     await Get.offAllNamed(Routes.MAIN);
+  }
+
+  void hideShowPassword() {
+    showPassword.value = !showPassword.value;
+    log('Value: ${showPassword.value}');
   }
 }

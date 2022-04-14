@@ -157,7 +157,7 @@ extension ProfileExtension on ProfileScreen {
                               width: (Get.width - 40) / 2)),
                     ],
                   )
-                : null,
+                : const SizedBox(),
           ),
         ],
       ),

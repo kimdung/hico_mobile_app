@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:extended_image/extended_image.dart';
@@ -35,7 +36,6 @@ class FCoreImage extends StatelessWidget {
     if (source.isEmpty) {
       return const Placeholder();
     }
-
     if (source.contains('http')) {
       final cacheFile = _cacheImageController.imageCacheDAO.getByUrl(source);
       if (cacheFile == null) {
