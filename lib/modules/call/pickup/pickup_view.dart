@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
 
 import 'package:ui_api/models/call/call_model.dart';
@@ -12,11 +13,29 @@ import '../../../shared/constants/common.dart';
 import '../../../shared/methods/call_methods.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 
-class PickupView extends StatelessWidget {
+class PickupView extends StatefulWidget {
   final CallModel call;
-  final CallMethods callMethods = CallMethods();
 
   PickupView({required this.call});
+
+  @override
+  State<PickupView> createState() => _PickupViewState();
+}
+
+class _PickupViewState extends State<PickupView> {
+  final CallMethods callMethods = CallMethods();
+
+  @override
+  void initState() {
+    FlutterRingtonePlayer.playRingtone();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    FlutterRingtonePlayer.stop();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +60,7 @@ class PickupView extends StatelessWidget {
           child: CachedNetworkImage(
             width: 140,
             height: 140,
-            imageUrl: call.getImage() ?? '',
+            imageUrl: widget.call.getImage() ?? '',
             imageBuilder: (context, imageProvider) => Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(70),
@@ -61,7 +80,7 @@ class PickupView extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         Text(
-          call.getName() ?? '',
+          widget.call.getName() ?? '',
           style: TextAppStyle().mediumTextStype().copyWith(
                 fontSize: 18,
               ),
@@ -92,7 +111,7 @@ class PickupView extends StatelessWidget {
             backgroundColor: AppColor.greenColorLight,
             onPressed: onAcceptCall,
             child: Icon(
-              (call.isVideo ?? false) ? Icons.videocam : Icons.call,
+              (widget.call.isVideo ?? false) ? Icons.videocam : Icons.call,
               size: 25,
               color: AppColor.primaryBackgroundColorLight,
             ),
@@ -103,28 +122,28 @@ class PickupView extends StatelessWidget {
   }
 
   Future<void> onAcceptCall() async {
-    if (call.channelId == null) {
-      await callMethods.endCall(call: call);
+    if (widget.call.channelId == null) {
+      await callMethods.endCall(call: widget.call);
       return;
     }
     final _uiRepository = Get.find<HicoUIRepository>();
     try {
       await EasyLoading.show();
-      await _uiRepository.getCallToken(call.channelId!).then((response) {
+      await _uiRepository.getCallToken(widget.call.channelId!).then((response) {
         EasyLoading.dismiss();
 
         if (response.status == CommonConstants.statusOk &&
             response.data?.token != null) {
-          if (call.isVideo ?? false) {
+          if (widget.call.isVideo ?? false) {
             Get.toNamed(Routes.VIDEO_CALL, arguments: {
               CommonConstants.IS_CALLER: false,
-              CommonConstants.CALL_MODEL: call,
+              CommonConstants.CALL_MODEL: widget.call,
               CommonConstants.CALL_TOKEN: response.data!.token!,
             });
           } else {
             Get.toNamed(Routes.VOICE_CALL, arguments: {
               CommonConstants.IS_CALLER: false,
-              CommonConstants.CALL_MODEL: call,
+              CommonConstants.CALL_MODEL: widget.call,
               CommonConstants.CALL_TOKEN: response.data!.token!,
             });
           }
@@ -136,6 +155,6 @@ class PickupView extends StatelessWidget {
   }
 
   Future<void> onDeniedCall() async {
-    await callMethods.endCall(call: call);
+    await callMethods.endCall(call: widget.call);
   }
 }
