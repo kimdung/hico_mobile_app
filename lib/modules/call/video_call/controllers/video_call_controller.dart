@@ -6,6 +6,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ui_api/models/call/call_model.dart';
+import 'package:wakelock/wakelock.dart';
 
 import '../../../../base/base_controller.dart';
 import '../../../../data/app_data_global.dart';
@@ -13,18 +14,17 @@ import '../../../../data/app_data_global.dart';
 class VideoCallController extends BaseController {
   final appId = 'fae0cb7e3f5c4c688ca32056eaa146b4';
 
-  RxnInt remoteUid = RxnInt();
-  // RxBool localUserJoined = RxBool(false);
-  RxBool isJoined = RxBool(false);
   late RtcEngine _engine;
-  StreamSubscription? callStreamSubscription;
+  StreamSubscription? _callStreamSubscription;
+
+  RxnInt remoteUid = RxnInt();
+  RxBool isJoined = RxBool(false);
+
+  RxBool muteLocalAudio = RxBool(false);
 
   final bool isCaller;
   final String token;
   final CallModel call;
-
-  Timer? _timer;
-  final RxInt callingTimer = RxInt(120);
 
   Timer? _durationTimer;
   final RxInt dutationCall = RxInt(0);
@@ -34,34 +34,24 @@ class VideoCallController extends BaseController {
   @override
   Future<void> onInit() async {
     await super.onInit();
-    if (isCaller) {
-      _timer = Timer.periodic(
-        const Duration(seconds: 1),
-        (Timer timer) {
-          if (callingTimer.value == 0) {
-            _timer?.cancel();
-            onEndCall();
-          } else {
-            callingTimer.value--;
-          }
-        },
-      );
-    } else {
-      callingTimer.value = 0;
-    }
+
+    await Wakelock.enabled;
 
     _addPostFrameCallback();
     await _initAgora();
+    await _joinChannel();
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void onClose() {
     onEndCall();
+    _engine.leaveChannel();
     _engine.destroy();
-    callStreamSubscription?.cancel();
-    _timer?.cancel();
     _durationTimer?.cancel();
+    _callStreamSubscription?.cancel();
+    Wakelock.disable();
+
+    super.onClose();
   }
 
   void _addPostFrameCallback() {
@@ -69,7 +59,7 @@ class VideoCallController extends BaseController {
       if (AppDataGlobal.userInfo?.id == null) {
         return;
       }
-      callStreamSubscription = callMethods
+      _callStreamSubscription = callMethods
           .callStream(uid: AppDataGlobal.userInfo!.id.toString())
           .listen((DocumentSnapshot ds) {
         if (ds.data() == null) {
@@ -80,29 +70,12 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> _initAgora() async {
-    // retrieve permissions
+    // Get permissions
     await [Permission.microphone, Permission.camera].request();
 
     //create the engine
-    _engine = await RtcEngine.create(appId);
+    _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
     await _engine.enableVideo();
-    // _engine.setEventHandler(
-    //   RtcEngineEventHandler(
-    //     joinChannelSuccess: (String channel, int uid, int elapsed) {
-    //       printInfo(info: 'local user $uid joined');
-    //       localUserJoined = true.obs;
-    //     },
-    //     userJoined: (int uid, int elapsed) {
-    //       printInfo(info: 'remote user $uid joined');
-    //       remoteUid.value = uid;
-    //     },
-    //     userOffline: (int uid, UserOfflineReason reason) {
-    //       printInfo(info: 'remote user $uid left channel');
-    //       remoteUid.value = null;
-    //     },
-    //   ),
-    // );
-
     _engine.setEventHandler(RtcEngineEventHandler(
       warning: (warningCode) {
         printError(info: 'warning $warningCode');
@@ -113,38 +86,49 @@ class VideoCallController extends BaseController {
       userJoined: (uid, elapsed) {
         printInfo(info: 'userJoined $uid $elapsed');
         remoteUid.value = uid;
-        if (isCaller && _durationTimer == null) {
-          _durationTimer = Timer.periodic(
-            const Duration(seconds: 1),
-            (Timer timer) {
-              dutationCall.value++;
-            },
-          );
-        } else {
-          callingTimer.value = 0;
-        }
+        _durationTimer ??= Timer.periodic(
+          const Duration(seconds: 1),
+          (Timer timer) {
+            dutationCall.value++;
+          },
+        );
+      },
+      userOffline: (int uid, UserOfflineReason reason) {
+        printInfo(info: 'remote user $uid left channel');
+        remoteUid.value = null;
       },
       joinChannelSuccess: (channel, uid, elapsed) {
         printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
         isJoined.value = true;
-        if (!isCaller && _durationTimer == null) {
-          _durationTimer = Timer.periodic(
-            const Duration(seconds: 1),
-            (Timer timer) {
-              dutationCall.value++;
-            },
-          );
-        } else {
-          callingTimer.value = 0;
-        }
       },
       leaveChannel: (stats) async {
         printError(info: 'leaveChannel ${stats.toJson()}');
         isJoined.value = false;
       },
     ));
+  }
 
-    await _engine.joinChannel(token, call.channelId ?? '', null, 0);
+  Future<void> _joinChannel() async {
+    await _engine
+        .joinChannel(token, call.channelId ?? '', null, call.getId() ?? 0)
+        .catchError((onError) {
+      printError(info: 'error ${onError.toString()}');
+      Future.delayed(Duration.zero, Get.back);
+    });
+  }
+
+  Future<void> onToggleMute() async {
+    await _engine.muteLocalAudioStream(!muteLocalAudio.value).then((value) {
+      muteLocalAudio.value = !muteLocalAudio.value;
+    }).catchError((err) {
+      printError(info: 'muteLocalAudio $err');
+    });
+  }
+
+  Future<void> onSwitchCamera() async {
+    await _engine.switchCamera().catchError((err) {
+      printError(info: 'onSwitchCamera $err');
+    });
   }
 
   Future<void> onEndCall() async {

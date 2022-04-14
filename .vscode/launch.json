@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "GoPos dev",
+            "name": "HICO Customer dev",
             "request": "launch",
             "type": "dart",
             "program": "lib/main.dart",
@@ -15,7 +15,7 @@
             ]
         },
         {
-            "name": "GoPos uat",
+            "name": "HICO Customer uat",
             "request": "launch",
             "type": "dart",
             "program": "lib/main_uat.dart",
@@ -25,7 +25,7 @@
             ]
         },
         {
-            "name": "GoPos prod",
+            "name": "HICO Customer prod",
             "request": "launch",
             "type": "dart",
             "program": "lib/main_prod.dart",

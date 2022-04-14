@@ -28,6 +28,17 @@ class ThemeConfig {
         : Typography.whiteMountainView;
 
     return ThemeData(
+      appBarTheme: AppBarTheme(
+        // brightness: brightness,
+        color: primaryColor,
+        // textTheme: TextTheme(
+        //   bodyText1: baseTextTheme.bodyText1!.copyWith(
+        //     color: secondTextColor,
+        //     fontSize: 18,
+        //   ),
+        // ),
+        iconTheme: IconThemeData(color: secondTextColor ),
+      ),
       brightness: brightness,
       buttonColor: primaryColor,
       canvasColor: primaryBackgroundColor,
@@ -58,19 +69,6 @@ class ThemeConfig {
         selectionHandleColor: accentColor,
       ),
       toggleableActiveColor: accentColor,
-      appBarTheme: AppBarTheme(
-        brightness: brightness,
-        color: primaryColor,
-        textTheme: TextTheme(
-          bodyText1: baseTextTheme.bodyText1!.copyWith(
-            color: secondTextColor,
-            fontSize: 18,
-          ),
-        ),
-        iconTheme: IconThemeData(
-          color: secondTextColor,
-        ),
-      ),
       iconTheme: IconThemeData(
         color: secondTextColor,
         size: 16,

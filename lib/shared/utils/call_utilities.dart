@@ -6,7 +6,8 @@ import '../constants/common.dart';
 import '../methods/call_methods.dart';
 
 class CallUtils {
-  static dial(CallMethods callMethods, CallModel call, String token) async {
+  static Future<void> dial(
+      CallMethods callMethods, CallModel call, String token) async {
     final callMade = await callMethods.makeCall(call: call);
     call.hasDialled = true;
 

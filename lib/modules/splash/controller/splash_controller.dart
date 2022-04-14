@@ -144,7 +144,7 @@ class SplashController extends GetxController {
       });
     }
 
-    ChatUtil.initChat();
+    ChatUtil.initChat(AppDataGlobal.userInfo?.conversationInfo?.apiKey ?? '');
     await Get.offAllNamed(Routes.MAIN);
   }
 }

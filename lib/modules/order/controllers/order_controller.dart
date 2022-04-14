@@ -162,7 +162,6 @@ class OrderController extends BaseController {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
-          // Get.toNamed(Routes.VOICE_CALL, arguments: response.data);
           final call = CallModel(
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
@@ -192,7 +191,6 @@ class OrderController extends BaseController {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
-          // Get.toNamed(Routes.VOICE_CALL, arguments: response.data);
           final call = CallModel(
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
@@ -205,6 +203,8 @@ class OrderController extends BaseController {
             isVideo: true,
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
+        } else if (response.message?.isNotEmpty ?? false) {
+          EasyLoading.showToast(response.message ?? '');
         }
       });
     } catch (e) {
