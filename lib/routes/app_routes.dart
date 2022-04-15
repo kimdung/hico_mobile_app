@@ -56,4 +56,6 @@ abstract class Routes {
   static const CHAT = '/chat';
   static const VOICE_CALL = '/voice-call';
   static const VIDEO_CALL = '/video-call';
+  static const TIME_EXTENSION = '/time_extension';
+  static const BOOKING_DETAIL = '/booking_detail';
 }

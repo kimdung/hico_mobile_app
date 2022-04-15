@@ -9,10 +9,12 @@ class ConversationInfoModel {
   String? image;
   @JsonKey(name: 'admin_id', defaultValue: '')
   String? adminId;
+  @JsonKey(name: 'api_key', defaultValue: '')
+  String? apiKey;
   String? token;
 
   ConversationInfoModel(
-      {this.id, this.name, this.image, this.adminId, this.token});
+      {this.id, this.name, this.image, this.adminId, this.apiKey, this.token});
 
   factory ConversationInfoModel.fromJson(Map<String, dynamic> json) =>
       _$ConversationInfoModelFromJson(json);

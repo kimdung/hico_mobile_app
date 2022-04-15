@@ -18,6 +18,7 @@ class VoiceCallController extends BaseController {
   StreamSubscription? _callStreamSubscription;
   late final RtcEngine _engine;
 
+  RxBool isRemoted = RxBool(false);
   RxBool isJoined = RxBool(false);
   RxBool openMicrophone = RxBool(true);
   RxBool enableSpeakerphone = RxBool(true);
@@ -32,8 +33,8 @@ class VoiceCallController extends BaseController {
   final String token;
   final CallModel call;
 
-  Timer? _timer;
-  final RxInt callingTimer = RxInt(120);
+  // Timer? _timer;
+  // final RxInt callingTimer = RxInt(120);
 
   Timer? _durationTimer;
   final RxInt dutationCall = RxInt(0);
@@ -42,22 +43,24 @@ class VoiceCallController extends BaseController {
 
   @override
   Future<void> onInit() async {
-    if (isCaller) {
-      _timer = Timer.periodic(
-        const Duration(seconds: 1),
-        (Timer timer) {
-          if (callingTimer.value == 0) {
-            _timer?.cancel();
-            onEndCall();
-          } else {
-            printInfo(info: 'callingTimer ${callingTimer.value}');
-            callingTimer.value--;
-          }
-        },
-      );
-    } else {
-      callingTimer.value = 0;
-    }
+    // if (isCaller) {
+    //   _timer = Timer.periodic(
+    //     const Duration(seconds: 1),
+    //     (Timer timer) {
+    //       if (callingTimer.value <= 0) {
+    //         _timer?.cancel();
+    //         if (!isRemoted.value) {
+    //           onEndCall();
+    //         }
+    //       } else {
+    //         printInfo(info: 'callingTimer ${callingTimer.value}');
+    //         callingTimer.value--;
+    //       }
+    //     },
+    //   );
+    // } else {
+    //   callingTimer.value = 0;
+    // }
     await super.onInit();
 
     _addPostFrameCallback();
@@ -66,14 +69,15 @@ class VoiceCallController extends BaseController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
+    super.onClose();
+
     callMethods.endCall(call: call);
     _engine.leaveChannel();
     _engine.destroy();
     _callStreamSubscription?.cancel();
-    _timer?.cancel();
+    // _timer?.cancel();
     _durationTimer?.cancel();
-    super.dispose();
   }
 
   void _addPostFrameCallback() {
@@ -110,23 +114,26 @@ class VoiceCallController extends BaseController {
               dutationCall.value++;
             },
           );
-        } else {
-          callingTimer.value = 0;
         }
+        // else {
+        //   callingTimer.value = 0;
+        // }
       },
       joinChannelSuccess: (channel, uid, elapsed) {
         printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
         isJoined.value = true;
         if (!isCaller && _durationTimer == null) {
+          // callingTimer.value = 0;
           _durationTimer = Timer.periodic(
             const Duration(seconds: 1),
             (Timer timer) {
               dutationCall.value++;
             },
           );
-        } else {
-          callingTimer.value = 0;
         }
+        // else {
+        //   callingTimer.value = 0;
+        // }
       },
       leaveChannel: (stats) async {
         printError(info: 'leaveChannel ${stats.toJson()}');
@@ -135,8 +142,8 @@ class VoiceCallController extends BaseController {
     ));
 
     await _engine.enableAudio();
-    await _engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    await _engine.setClientRole(ClientRole.Broadcaster);
+    // await _engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
+    // await _engine.setClientRole(ClientRole.Broadcaster);
   }
 
   Future<void> _joinChannel() async {
@@ -148,7 +155,7 @@ class VoiceCallController extends BaseController {
         .joinChannel(token, call.channelId ?? '', null, call.getId() ?? 0)
         .catchError((onError) {
       printError(info: 'error ${onError.toString()}');
-      Get.back();
+      Future.delayed(Duration.zero, Get.back);
     });
   }
 

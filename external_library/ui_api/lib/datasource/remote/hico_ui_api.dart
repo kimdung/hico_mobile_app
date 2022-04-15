@@ -8,7 +8,6 @@ import 'package:ui_api/request/invoice/rating_request.dart';
 import 'package:ui_api/request/login/login_request.dart';
 import 'package:ui_api/request/register/register_otp_request.dart';
 import 'package:ui_api/request/register/register_request.dart';
-import 'package:ui_api/request/user/avatar_request.dart';
 import 'package:ui_api/request/user/changepass_request.dart';
 import 'package:ui_api/request/user/update_bank_request.dart';
 import 'package:ui_api/request/user/update_info_request.dart';
@@ -42,6 +41,7 @@ part 'hico_ui_api.g.dart';
 
 @RestApi()
 abstract class HicoUIAPI {
+
   factory HicoUIAPI(Dio dio) = _HicoUIAPI;
   //master data
   @GET('/v1/masterData')

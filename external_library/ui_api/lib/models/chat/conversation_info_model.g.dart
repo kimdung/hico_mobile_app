@@ -13,6 +13,7 @@ ConversationInfoModel _$ConversationInfoModelFromJson(
       name: json['name'] as String?,
       image: json['image'] as String?,
       adminId: json['admin_id'] as String? ?? '',
+      apiKey: json['api_key'] as String? ?? '',
       token: json['token'] as String?,
     );
 
@@ -23,5 +24,6 @@ Map<String, dynamic> _$ConversationInfoModelToJson(
       'name': instance.name,
       'image': instance.image,
       'admin_id': instance.adminId,
+      'api_key': instance.apiKey,
       'token': instance.token,
     };

@@ -40,6 +40,7 @@ class LoginController extends BaseController {
 
   @override
   Future<void> onInit() {
+    
     final error = Get.arguments;
 
     if (error is String && error.isNotEmpty) {
@@ -291,7 +292,7 @@ class LoginController extends BaseController {
       });
     }
 
-    ChatUtil.initChat(); 
+    ChatUtil.initChat(AppDataGlobal.userInfo?.conversationInfo?.apiKey ?? '');
     await EasyLoading.dismiss();
 
     await Get.offAllNamed(Routes.MAIN);

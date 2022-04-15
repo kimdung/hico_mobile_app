@@ -179,9 +179,9 @@ class RegisterController extends BaseController {
         }
       });
     }
-
-    ChatUtil.initChat();
     await EasyLoading.dismiss();
+
+    ChatUtil.initChat(AppDataGlobal.userInfo?.conversationInfo?.apiKey ?? '');
 
     await Get.toNamed(Routes.REGISTER_SUCCESS);
   }

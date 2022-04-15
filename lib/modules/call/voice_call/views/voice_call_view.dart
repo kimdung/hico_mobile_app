@@ -20,7 +20,7 @@ class VoiceCallView extends GetView<VoiceCallController> {
               children: [
                 Obx(
                   () => Text(
-                    controller.callingTimer.value > 0 ? 'calling'.tr : '',
+                    controller.dutationCall.value == 0 ? 'calling'.tr : '',
                     style: TextAppStyle().genaralTextStyle().copyWith(
                           color: AppColor.sixTextColorLight,
                         ),
