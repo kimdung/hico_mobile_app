@@ -166,7 +166,6 @@ class RegisterController extends BaseController {
   }
 
   Future<void> _loadData(LoginModel loginModel) async {
-    AppDataGlobal.accessToken = loginModel.accessToken ?? '';
     AppDataGlobal.userInfo = loginModel.info;
     AppDataGlobal.isLogin = true;
 
@@ -179,9 +178,9 @@ class RegisterController extends BaseController {
         }
       });
     }
+    await ChatUtil.initChat(
+        AppDataGlobal.userInfo?.conversationInfo?.apiKey ?? '');
     await EasyLoading.dismiss();
-
-    ChatUtil.initChat(AppDataGlobal.userInfo?.conversationInfo?.apiKey ?? '');
 
     await Get.toNamed(Routes.REGISTER_SUCCESS);
   }

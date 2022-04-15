@@ -30,9 +30,9 @@ class SplashController extends GetxController {
   }
 
   Future<void> loadInitSplashScreen() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
+    // await Future.delayed(const Duration(milliseconds: 1000));
     _loadTheme(storage);
-    _loadMasterData();
+    await _loadMasterData();
     _loadLanguage(storage);
 
     final isLogin = storage.getBool(StorageConstants.isLogin);
@@ -121,8 +121,8 @@ class SplashController extends GetxController {
     storage.setString(StorageConstants.theme, DARK_THEME);
   }
 
-  void _loadMasterData() {
-    _uiRepository.masterData().then((response) {
+  Future<void> _loadMasterData() async {
+    await _uiRepository.masterData().then((response) {
       if (response.status == CommonConstants.statusOk &&
           response.masterDataModel != null) {
         AppDataGlobal.masterData = response.masterDataModel!;
@@ -144,7 +144,8 @@ class SplashController extends GetxController {
       });
     }
 
-    ChatUtil.initChat(AppDataGlobal.userInfo?.conversationInfo?.apiKey ?? '');
+    await ChatUtil.initChat(
+        AppDataGlobal.userInfo?.conversationInfo?.apiKey ?? '');
     await Get.offAllNamed(Routes.MAIN);
   }
 }

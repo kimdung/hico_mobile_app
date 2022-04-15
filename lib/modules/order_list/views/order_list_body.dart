@@ -14,13 +14,30 @@ extension OrderListBody on OrderListScreen {
               children: [
                 if (controller.info.value.avatarImage != null &&
                     controller.info.value.avatarImage != '')
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(42),
-                    child: NetWorkImage(
-                      image: AppDataGlobal.userInfo!.avatarImage!,
-                      width: 42,
-                      height: 42,
-                      fit: BoxFit.cover,
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(Routes.PROFILE);
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(25),
+                      child: CachedNetworkImage(
+                        width: 42,
+                        height: 42,
+                        imageUrl: AppDataGlobal.userInfo?.avatarImage ?? '',
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(21),
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
                     ),
                   ),
                 Padding(

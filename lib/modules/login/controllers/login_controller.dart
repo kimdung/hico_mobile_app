@@ -50,7 +50,8 @@ class LoginController extends BaseController {
 
   @override
   void onReady() {
-    usernameController.text = storage.getString(StorageConstants.username)!;
+    usernameController.text =
+        storage.getString(StorageConstants.username) ?? '';
     passwordController.text = '';
     return super.onReady();
   }
@@ -290,7 +291,8 @@ class LoginController extends BaseController {
       });
     }
 
-    ChatUtil.initChat(AppDataGlobal.userInfo?.conversationInfo?.apiKey ?? '');
+    await ChatUtil.initChat(
+        AppDataGlobal.userInfo?.conversationInfo?.apiKey ?? '');
     await EasyLoading.dismiss();
 
     await Get.offAllNamed(Routes.MAIN);

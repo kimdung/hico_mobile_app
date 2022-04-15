@@ -10,10 +10,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await DependencyInjection.init(DEV_ENVIRONMENT);
-
-  await LineSDK.instance.setup('1656878196').then((_) {
-    print('LineSDK Prepared');
-  });
+  await LineSDK.instance.setup('1656878196');
+  
   runApp(App());
   configLoading();
 }

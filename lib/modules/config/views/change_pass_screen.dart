@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../call/pickup/picker_layout.dart';
 import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
@@ -14,70 +15,74 @@ import '../controllers/config_controller.dart';
 class ChangePassScreen extends GetView<ConfigController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            IconConstants.icBack,
-            width: 11,
+    return PickupLayout(
+      controller.callMethods,
+      scaffold: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          centerTitle: true,
+          leading: IconButton(
+            icon: SvgPicture.asset(
+              IconConstants.icBack,
+              width: 11,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-          onPressed: () => Navigator.of(context).pop(),
+          title: Text(
+            'change_password'.tr,
+            style: TextAppStyle().titleAppBarStyle(),
+          ),
+          elevation: 4,
+          backgroundColor: Colors.white,
+          shadowColor: AppColor.appbarColorLight.withOpacity(0.8),
         ),
-        title: Text(
-          'change_password'.tr,
-          style: TextAppStyle().titleAppBarStyle(),
-        ),
-        elevation: 4,
-        backgroundColor: Colors.white,
-        shadowColor: AppColor.appbarColorLight.withOpacity(0.8),
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        height: Get.height,
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: [
-                const SizedBox(height: 30),
-                Center(child: Image.asset(ImageConstants.forgotPasswordChange)),
-                const SizedBox(height: 24),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 92),
-                  child: Text(
-                    'change_pass_title'.tr,
-                    textAlign: TextAlign.center,
-                    style: TextAppStyle().normalTextStype(),
+        body: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          height: Get.height,
+          child: SingleChildScrollView(
+            child: Container(
+              child: Column(
+                children: [
+                  const SizedBox(height: 30),
+                  Center(
+                      child: Image.asset(ImageConstants.forgotPasswordChange)),
+                  const SizedBox(height: 24),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 92),
+                    child: Text(
+                      'change_pass_title'.tr,
+                      textAlign: TextAlign.center,
+                      style: TextAppStyle().normalTextStype(),
+                    ),
                   ),
-                ),
-                Form(
-                  key: controller.changePassForm,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(height: 14),
-                      _buildOldPassword(),
-                      const SizedBox(height: 4),
-                      _buildPassword(),
-                      const SizedBox(height: 4),
-                      _buildConfirmPassword(),
-                    ],
+                  Form(
+                    key: controller.changePassForm,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const SizedBox(height: 14),
+                        _buildOldPassword(),
+                        const SizedBox(height: 4),
+                        _buildPassword(),
+                        const SizedBox(height: 4),
+                        _buildConfirmPassword(),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 40),
-                GeneralButton(
-                  onPressed: () => controller.changePassword(),
-                  borderRadius: BorderRadius.circular(24),
-                  backgroundColor: AppColor.primaryColorLight,
-                  borderColor: AppColor.primaryColorLight,
-                  child: Text(
-                    'confirm'.tr,
-                    style: TextAppStyle().titleButtonStyle(),
+                  const SizedBox(height: 40),
+                  GeneralButton(
+                    onPressed: () => controller.changePassword(),
+                    borderRadius: BorderRadius.circular(24),
+                    backgroundColor: AppColor.primaryColorLight,
+                    borderColor: AppColor.primaryColorLight,
+                    child: Text(
+                      'confirm'.tr,
+                      style: TextAppStyle().titleButtonStyle(),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 24),
-              ],
+                  const SizedBox(height: 24),
+                ],
+              ),
             ),
           ),
         ),
