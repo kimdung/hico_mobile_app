@@ -13,6 +13,7 @@ import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
+import '../../../shared/widget_hico/dialog/time_extend_widget.dart';
 import '../../../shared/utils/call_utilities.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
@@ -34,6 +35,12 @@ class OrderController extends BaseController {
 
     id = Get.arguments;
     await _loadData();
+  }
+
+  @override
+  Future<void> onReady() async {
+    super.onReady();
+    await showDialogNotification();
   }
 
   Future<void> _loadData() async {
@@ -310,4 +317,13 @@ class OrderController extends BaseController {
   void onClose() {}
 
   tr(String s) {}
+
+  Future<void> showDialogNotification() async {
+    await DialogUtil.showPopup(
+      dialogSize: DialogSize.Popup,
+      barrierDismissible: false,
+      backgroundColor: Colors.transparent,
+      child: const TimeExtendWidget(),
+    );
+  }
 }

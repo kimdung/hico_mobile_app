@@ -100,7 +100,6 @@ class DialogUtil {
           ),
           titlePadding: EdgeInsets.zero,
           contentPadding: EdgeInsets.zero,
-          //content: child,
           content: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             curve: Curves.easeIn,

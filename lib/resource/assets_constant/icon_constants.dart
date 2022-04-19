@@ -348,4 +348,14 @@ class IconConstants {
       'lib/resource/assets_resources/icons/ic_speaker.svg';
   static const String icPhoneCall =
       'lib/resource/assets_resources/icons/ic_phone_call.svg';
+  static const String timeCircle =
+      'lib/resource/assets_resources/icons/time_circle.svg';
+  static const String syncRetry =
+      'lib/resource/assets_resources/icons/sync_retry.svg';
+  static const String userTag =
+      'lib/resource/assets_resources/icons/user_tag.svg';
+  static const String documentHistory =
+      'lib/resource/assets_resources/icons/document_history.svg';
+  static const String iconMoney =
+      'lib/resource/assets_resources/icons/icon_money.svg';
 }

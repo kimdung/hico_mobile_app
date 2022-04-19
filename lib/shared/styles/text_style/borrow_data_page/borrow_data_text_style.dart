@@ -36,4 +36,13 @@ extension BorrowDataStyle on TextAppStyle {
       fontWeight: FontWeight.normal,
     );
   }
+
+  TextStyle textOrderInforStyle() {
+    return const TextStyle(
+      fontSize: 14.0,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+      fontFamily: 'SVN-Jeko',
+    );
+  }
 }

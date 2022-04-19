@@ -309,6 +309,7 @@ const Map<String, String> vi_VN = {
   'booking.bank_update_title':
       'Cung cấp thông tin tài khoản ngân hàng của bạn để quá trình sử dụng dịch vụ thuận tiện hơn.',
 
+
   //consulting
   'consulting.title': 'Đăng ký tư vấn',
   'consulting.note':
@@ -319,4 +320,16 @@ const Map<String, String> vi_VN = {
   'consulting.hint_content': 'Ghi chi tiết triệu chứng bạn đang gặp phải',
   'consulting.symptom': 'Triệu chứng',
   'consulting.success': 'Đăng ký tư vấn thành công!',
+
+  //extend screen
+  'extend.header': 'Chọn thời gian bạn muốn gia hạn cho buổi làm việc với PDV',
+  'extend.title': 'Gia hạn thời gian',
+
+  //booking detail
+  'booking.detail.order_infor' : 'Thông tin đơn hàng',
+  'booking.detail.confirm': 'Xác Nhận Gia Hạn',
+  'booking.detail.interpreters' : 'Phiên dịch viên',
+  'booking.detail.serivce_infor' : 'Thông tin dịch vụ',
+  'booking.detail.time_work' : 'Thời gian làm việc',
+  'booking.detail.payment_method' : 'Phương thức thanh toán',
 };

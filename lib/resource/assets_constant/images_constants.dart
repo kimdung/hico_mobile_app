@@ -21,8 +21,7 @@ class ImageConstants {
       'lib/resource/assets_resources/images/tp_bank.png';
 
   //Login screen
-  static const appLogo =
-      'lib/resource/assets_resources/images/app_logo.png';
+  static const appLogo = 'lib/resource/assets_resources/images/app_logo.png';
 
   //bh banner
   static const String bhMotoBanner =
@@ -83,4 +82,6 @@ class ImageConstants {
       'lib/resource/assets_resources/images/service_empty.png';
   static const String emptyImage =
       'lib/resource/assets_resources/images/user_empty.jpg';
+  static const String medical =
+      'lib/resource/assets_resources/images/medical.png';
 }

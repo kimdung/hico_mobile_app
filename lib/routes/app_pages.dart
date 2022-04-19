@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/bank/bindings/bank_binding.dart';
 import '../modules/bank/views/bank_update_screen.dart';
+import '../modules/booking_detail/binding/booking_detail_binding.dart';
+import '../modules/booking_detail/view/booking_detail_screen.dart';
 import '../modules/call/video_call/bindings/video_call_binding.dart';
 import '../modules/call/video_call/views/video_call_view.dart';
 import '../modules/call/voice_call/bindings/voice_call_binding.dart';
@@ -18,6 +20,8 @@ import '../modules/config/views/policy_screen.dart';
 import '../modules/config/views/terms_of_use_screen.dart';
 import '../modules/consulting/bindings/consulting_binding.dart';
 import '../modules/consulting/views/consulting_screen.dart';
+import '../modules/extend/binding/time_extension_binding.dart';
+import '../modules/extend/view/time_extension_screen.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_change_screen.dart';
 import '../modules/forgot_password/views/forgot_password_otp_screen.dart';
@@ -301,5 +305,15 @@ final routePages = [
     name: Routes.VIDEO_CALL,
     page: () => VideoCallView(),
     binding: VideoCallBinding(),
+  ),
+  GetPage(
+    name: Routes.TIME_EXTENSION,
+    page: () => const TimeExtensionScreen(),
+    binding: TimeExtensionBinding(),
+  ),
+  GetPage(
+    name: Routes.BOOKING_DETAIL,
+    page: () => const BookingDetailScreen(),
+    binding: BookingDetailBinding(),
   ),
 ];
