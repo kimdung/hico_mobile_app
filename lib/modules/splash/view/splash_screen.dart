@@ -6,9 +6,9 @@ import '../../../shared/widgets/image_widget/fcore_image.dart';
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColor.primaryBackgroundColorLight,
-      child: Stack(
+    return Scaffold(
+      backgroundColor: AppColor.primaryBackgroundColorLight,
+      body: Stack(
         children: [
           Center(
             child: FCoreImage(

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../../shared/constants/storage.dart';
 import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
@@ -40,153 +39,145 @@ class LoginScreen extends GetView<LoginController> {
         elevation: 1,
         backgroundColor: Colors.white,
       ),
-      body: Obx(() => SafeArea(
-        child: GestureDetector(
-          onTap: () {
-            log('123');
-            FocusScope.of(context).unfocus();
-          },
-          child: SingleChildScrollView(
-            child: Container(
-              child: Form(
-                key: controller.formLogin,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 80),
-                      child: FCoreImage(
-                        ImageConstants.appLogo,
-                        fit: BoxFit.fill,
-                        height: 51,
+      body: Obx(
+        () => SafeArea(
+          child: GestureDetector(
+            onTap: () {
+              log('123');
+              FocusScope.of(context).unfocus();
+            },
+            child: SingleChildScrollView(
+              child: Container(
+                child: Form(
+                  key: controller.formLogin,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 80),
+                        child: FCoreImage(
+                          ImageConstants.appLogo,
+                          fit: BoxFit.fill,
+                          height: 51,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 66),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 20),
-                          _buildUsername(),
-                          const SizedBox(height: 20),
-                          _buildPassword(),
-                          const SizedBox(height: 20),
-                          Container(
-                            alignment: Alignment.topRight,
-                            child: InkWell(
-                              onTap: () => controller.forgorPassword(),
-                              child: Text(
-                                'forgot_password'.tr,
-                                style: TextAppStyle()
-                                    .secondTextStyle()
-                                    .copyWith(
-                                        color: AppColor.primaryTextColorLight),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          GeneralButton(
-                            onPressed: () => controller.onLogin(),
-                            borderRadius: BorderRadius.circular(24),
-                            borderColor: AppColor.primaryColorLight,
-                            backgroundColor: AppColor.primaryColorLight,
-                            child: Text(
-                              'login'.tr,
-                              style: TextAppStyle().titleButtonStyle(),
-                            ),
-                          ),
-                          const SizedBox(height: 28),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  color: AppColor.dividerColorLight,
-                                  child: Text(''),
-                                  height: 1,
+                      const SizedBox(width: 66),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 20),
+                            _buildUsername(),
+                            const SizedBox(height: 20),
+                            _buildPassword(),
+                            const SizedBox(height: 20),
+                            Container(
+                              alignment: Alignment.topRight,
+                              child: InkWell(
+                                onTap: () => controller.forgorPassword(),
+                                child: Text(
+                                  'forgot_password'.tr,
+                                  style: TextAppStyle()
+                                      .secondTextStyle()
+                                      .copyWith(
+                                          color:
+                                              AppColor.primaryTextColorLight),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 22),
+                            ),
+                            const SizedBox(height: 20),
+                            GeneralButton(
+                              onPressed: () => controller.onLogin(),
+                              borderRadius: BorderRadius.circular(24),
+                              borderColor: AppColor.primaryColorLight,
+                              backgroundColor: AppColor.primaryColorLight,
+                              child: Text(
+                                'login'.tr,
+                                style: TextAppStyle().titleButtonStyle(),
+                              ),
+                            ),
+                            const SizedBox(height: 28),
+                            Row(
+                              children: [
+                                const Expanded(child: Divider()),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 22),
+                                  child: Text(
+                                    'or'.tr,
+                                    style: TextAppStyle().secondTextStyle(),
+                                  ),
+                                ),
+                                const Expanded(child: Divider()),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(
                                 child: Text(
-                                  'or'.tr,
+                                  'login_with'.tr,
                                   style: TextAppStyle().secondTextStyle(),
                                 ),
                               ),
-                              Expanded(
-                                child: Container(
-                                  color: AppColor.dividerColorLight,
-                                  child: Text(''),
-                                  height: 1,
-                                ),
-                              )
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                              child: Text(
-                                'login_with'.tr,
-                                style: TextAppStyle().secondTextStyle(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 83, vertical: 28),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  _buildSocialBtn(controller.loginFB,
+                                      ImageConstants.facebook),
+                                  _buildSocialBtn(
+                                    controller.loginLine,
+                                    ImageConstants.line,
+                                  ),
+                                  _buildSocialBtn(controller.loginGG,
+                                      ImageConstants.google),
+                                ],
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 83, vertical: 28),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                _buildSocialBtn(controller.loginFB,
-                                    ImageConstants.facebook),
-                                _buildSocialBtn(
-                                  controller.loginLine,
-                                  ImageConstants.line,
-                                ),
-                                _buildSocialBtn(
-                                    controller.loginGG, ImageConstants.google),
-                              ],
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8),
-                                child: Text(
-                                  'not_account'.tr,
-                                  style: const TextStyle(
-                                    color: Color(0xFF3B3B3B),
-                                    fontSize: 14,
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Text(
+                                    'not_account'.tr,
+                                    style: const TextStyle(
+                                      color: Color(0xFF3B3B3B),
+                                      fontSize: 14,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              InkWell(
-                                onTap: () => controller.signin(),
-                                child: Text(
-                                  'register'.tr,
-                                  style: TextAppStyle()
-                                      .genaralTextStyle()
-                                      .copyWith(
-                                        color: AppColor.primaryTextColorLight,
-                                        fontWeight: FontWeight.bold,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
+                                InkWell(
+                                  onTap: () => controller.signin(),
+                                  child: Text(
+                                    'register'.tr,
+                                    style: TextAppStyle()
+                                        .genaralTextStyle()
+                                        .copyWith(
+                                          color: AppColor.primaryTextColorLight,
+                                          fontWeight: FontWeight.bold,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 50),
-                  ],
+                      const SizedBox(width: 50),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         ),
-      ),),
+      ),
     );
   }
 }

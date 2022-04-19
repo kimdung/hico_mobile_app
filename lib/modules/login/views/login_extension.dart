@@ -30,7 +30,7 @@ extension _LoginExtension on LoginScreen {
     return TextFormField(
       controller: controller.passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      obscureText: controller.showPassword.value,
+      obscureText: !controller.showPassword.value,
       cursorColor: AppColor.fifthTextColorLight,
       style: TextAppStyle().genaralTextStyle(),
       decoration: TextFieldDecoration.borderLogin(

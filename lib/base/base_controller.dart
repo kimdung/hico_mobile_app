@@ -11,6 +11,7 @@ import '../shared/dialog_manager/services/dialog_service.dart';
 import '../shared/methods/call_methods.dart';
 import '../shared/network/constants/constants.dart';
 import '../shared/network/managers/network_manager.dart';
+import '../shared/services/firebase_cloud_messaging.dart';
 
 class BaseController extends GetxController
     with NetworkManager, ListenErrorGraphQL {
@@ -20,6 +21,7 @@ class BaseController extends GetxController
 
   Sink<bool> get hasNetworkSink => _hasNetworkSubject.sink;
 
+  FirebaseMessageConfig firebaseMessageConfig = FirebaseMessageConfig();
   final CallMethods callMethods = CallMethods();
 
   @override
@@ -29,53 +31,44 @@ class BaseController extends GetxController
     // check network
     await checkConnectNetwork();
 
-    //listening firebase
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
+    await firebaseMessageConfig.handleMessage();
+    // AppDataGlobal.client
+    //     ?.on(EventType.messageNew, EventType.notificationMessageNew)
+    //     .listen((event) async {
+    //   if (event.message?.user?.id ==
+    //       AppDataGlobal.client?.state.currentUser?.id) {
+    //     return;
+    //   }
 
-      if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
-      }
-    });
-
-    AppDataGlobal.client
-        ?.on(EventType.messageNew, EventType.notificationMessageNew)
-        .listen((event) async {
-      if (event.message?.user?.id ==
-          AppDataGlobal.client?.state.currentUser?.id) {
-        return;
-      }
-
-      if (event.message == null) {
-        return;
-      }
-      final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-      const initializationSettings = InitializationSettings(
-        android: AndroidInitializationSettings('app_icon'),
-        iOS: IOSInitializationSettings(),
-      );
-      await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-      final id = event.message?.id.hashCode;
-      if (id == null) {
-        return;
-      }
-      await flutterLocalNotificationsPlugin.show(
-        id,
-        event.message?.user?.name,
-        event.message?.text,
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-            'message channel',
-            'Message channel',
-            channelDescription: 'Channel used for showing messages',
-            priority: Priority.high,
-            importance: Importance.high,
-          ),
-          iOS: IOSNotificationDetails(),
-        ),
-      );
-    });
+    //   if (event.message == null || event.type != 'message.new') {
+    //     return;
+    //   }
+    //   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    //   const initializationSettings = InitializationSettings(
+    //     android: AndroidInitializationSettings('app_icon'),
+    //     iOS: IOSInitializationSettings(),
+    //   );
+    //   await flutterLocalNotificationsPlugin
+    //       .initialize(initializationSettings);
+    //   final id = event.message?.id.hashCode;
+    //   if (id == null) {
+    //     return;
+    //   }
+    //   await flutterLocalNotificationsPlugin.show(
+    //     id,
+    //     event.message?.user?.name,
+    //     event.message?.text,
+    //     NotificationDetails(
+    //       android: AndroidNotificationDetails(
+    //         event.channelId ?? '',
+    //         'HICO-Channel-Name',
+    //         priority: Priority.high,
+    //         importance: Importance.high,
+    //       ),
+    //       iOS: const IOSNotificationDetails(),
+    //     ),
+    //   );
+    // });
   }
 
   Future<void> checkConnectNetwork() async {

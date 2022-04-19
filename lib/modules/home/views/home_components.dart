@@ -19,12 +19,24 @@ extension HomeComponents on HomeScreen {
                       Get.toNamed(Routes.PROFILE);
                     },
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(42),
-                      child: NetWorkImage(
-                        image: AppDataGlobal.userInfo!.avatarImage!,
+                      borderRadius: BorderRadius.circular(25),
+                      child: CachedNetworkImage(
                         width: 42,
                         height: 42,
-                        fit: BoxFit.cover,
+                        imageUrl: AppDataGlobal.userInfo?.avatarImage ?? '',
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(21),
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
                     ),
                   ),
@@ -56,20 +68,20 @@ extension HomeComponents on HomeScreen {
               Get.toNamed(Routes.SEARCH);
             },
             child: Container(
-              padding: const EdgeInsets.only(top: 5),
+              margin: const EdgeInsets.all(10),
               child: FCoreImage(
                 IconConstants.icSearchBlack,
                 height: 24,
               ),
             ),
           ),
-          const SizedBox(width: 15),
+          const SizedBox(width: 5),
           InkWell(
             onTap: controller.onChatAdmin,
             child: Stack(
               children: [
                 Container(
-                  padding: const EdgeInsets.only(top: 5, right: 5),
+                  margin: const EdgeInsets.all(10),
                   child: FCoreImage(
                     IconConstants.icChat,
                     height: 24,
@@ -78,8 +90,8 @@ extension HomeComponents on HomeScreen {
                 controller.totalNotif.value == 0
                     ? Container()
                     : Positioned(
-                        right: 0,
-                        top: 0,
+                        right: 5,
+                        top: 5,
                         child: Container(
                           width: 15,
                           height: 15,

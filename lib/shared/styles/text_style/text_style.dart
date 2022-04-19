@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hico/shared/constants/common.dart';
 import '../../constants/colors.dart';
+import '../../constants/common.dart';
 
 part 'borrow_data_page/borrow_data_text_style.dart';
 part 'home_page/home_page_text_style.dart';
@@ -13,173 +13,7 @@ part 'health_assistant_page/health_assistant_style.dart';
 
 /// Define color at theme_data.dart
 class TextAppStyle {
-  // static const String appFont = 'Mulish';
-
-  // TextStyle versionTextStyle() {
-  //   return Get.theme.textTheme.headline5!;
-  // }
-
-  // TextStyle versionContentTextStyle() {
-  //   /// headline4 Color: fourthTextColor -> Green
-  //   return Get.theme.textTheme.headline4!;
-  // }
-
-  // TextStyle textEnableButtonStyle() {
-  //   /// headline2 Color: secondTextColor -> White
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline2!.color,
-  //     fontSize: 16,
-  //     fontWeight: FontWeight.w600,
-  //   );
-  // }
-
-  // TextStyle textDisableButtonStyle() {
-  //   /// headline4 Color: fourthTextColor -> Green
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline4!.color,
-  //     fontSize: 16,
-  //     fontWeight: FontWeight.w500,
-  //   );
-  // }
-
-  // TextStyle labelTextFormFieldStyle() {
-  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline1!.color,
-  //     fontSize: 12,
-  //     fontWeight: FontWeight.normal,
-  //   );
-  // }
-
-  // TextStyle hintTextFormFieldStyle() {
-  //   /// headline5 Color: fifthTextColor -> Gray
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline5!.color,
-  //     fontSize: 14,
-  //     fontWeight: FontWeight.normal,
-  //   );
-  // }
-
-  // TextStyle greyTextFormFieldStyle() {
-  //   /// headline5 Color: fifthTextColor -> Gray
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline5!.color!.withOpacity(0.5),
-  //     fontSize: 14,
-  //     fontWeight: FontWeight.normal,
-  //   );
-  // }
-
-  // TextStyle textInputFormFieldStyle() {
-  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline1!.color,
-  //     fontSize: 14,
-  //     fontWeight: FontWeight.normal,
-  //   );
-  // }
-
-  // TextStyle titlePageTextStyle() {
-  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline1!.color,
-  //     fontSize: 24,
-  //     fontWeight: FontWeight.w600,
-  //   );
-  // }
-
-  // TextStyle titlePage2TextStyle() {
-  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline1!.color,
-  //     fontSize: 20,
-  //     fontWeight: FontWeight.bold,
-  //   );
-  // }
-
-  // TextStyle contentPageTextStyle() {
-  //   /// headline5 Color: fifthTextColor -> Gray
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline5!.color,
-  //     fontSize: 13,
-  //     fontWeight: FontWeight.normal,
-  //   );
-  // }
-
-  // TextStyle contentPage2TextStyle() {
-  //   /// headline5 Color: fifthTextColor -> Gray
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline5!.color,
-  //     fontSize: 14,
-  //     fontWeight: FontWeight.normal,
-  //   );
-  // }
-
-  // TextStyle textClickColorStyle() {
-  //   /// headline4 Color: fourthTextColor -> Green
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline4!.color,
-  //     fontSize: 14,
-  //     fontWeight: FontWeight.normal,
-  //   );
-  // }
-
-  // TextStyle titleQrCodeColorStyle() {
-  //   /// headline2 Color: secondTextColor -> White
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline2!.color,
-  //     fontSize: 28,
-  //     fontWeight: FontWeight.bold,
-  //   );
-  // }
-
-  // TextStyle textPriceColorStyle() {
-  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline1!.color,
-  //     fontSize: 16,
-  //     fontWeight: FontWeight.w600,
-  //   );
-  // }
-
-  // TextStyle textTitleNameColorStyle() {
-  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline1!.color,
-  //     fontSize: 16,
-  //     fontWeight: FontWeight.w700,
-  //   );
-  // }
-
-  // TextStyle titlePriceColorStyle() {
-  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline1!.color,
-  //     fontSize: 14,
-  //     fontWeight: FontWeight.normal,
-  //     fontFamily: 'Montserrat',
-  //   );
-  // }
-
-  // TextStyle textAppBarColorStyle() {
-  //   /// headline2 Color: secondTextColor -> White
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline2!.color,
-  //     fontSize: 17,
-  //     fontWeight: FontWeight.w600,
-  //     fontFamily: 'Montserrat',
-  //   );
-  // }
-
-  // TextStyle titleCardViewColorStyle() {
-  //   /// headline1 Color: primaryTextColor -> Black Gray (#333333)
-  //   return TextStyle(
-  //     color: Get.theme.textTheme.headline1!.color,
-  //     fontSize: 14,
-  //     fontWeight: FontWeight.w600,
-  //     fontFamily: 'Montserrat',
-  //   );
-  // }
-//   static TextStyle get textStyle => Get.theme.textTheme.bodyText1!;
+  static const String appFont = 'SVN-Jeko';
 
   TextStyle titleButtonStyle() {
     /// headline1 Color: primaryTextColor -> Black Gray (#333333)
@@ -187,7 +21,7 @@ class TextAppStyle {
       color: AppColor.secondTextColorLight,
       fontSize: 16,
       fontWeight: FontWeight.w700,
-      fontFamily: 'SVN-Jeko',
+      fontFamily: appFont,
     );
   }
 
@@ -197,7 +31,7 @@ class TextAppStyle {
       color: AppColor.primaryTextColorLight,
       fontSize: 16,
       fontWeight: FontWeight.w700,
-      fontFamily: 'SVN-Jeko',
+      fontFamily: appFont,
     );
   }
 
@@ -207,7 +41,7 @@ class TextAppStyle {
       color: AppColor.primaryTextColorLight,
       fontSize: 18,
       fontWeight: FontWeight.bold,
-      fontFamily: 'SVN-Jeko',
+      fontFamily: appFont,
     );
   }
 
@@ -217,7 +51,7 @@ class TextAppStyle {
       color: AppColor.thirdTextColorLight,
       fontSize: 16,
       fontWeight: FontWeight.w500,
-      fontFamily: 'SVN-Jeko',
+      fontFamily: appFont,
     );
   }
 
@@ -227,7 +61,7 @@ class TextAppStyle {
       color: AppColor.fifthTextColorLight,
       fontSize: 14,
       fontWeight: FontWeight.normal,
-      fontFamily: 'SVN-Jeko',
+      fontFamily: appFont,
     );
   }
 
@@ -237,7 +71,7 @@ class TextAppStyle {
       color: AppColor.thirdTextColorLight,
       fontSize: 14,
       fontWeight: FontWeight.normal,
-      fontFamily: 'SVN-Jeko',
+      fontFamily: appFont,
     );
   }
 
@@ -247,7 +81,7 @@ class TextAppStyle {
       color: AppColor.fifthTextColorLight,
       fontSize: 12,
       fontWeight: FontWeight.normal,
-      fontFamily: 'SVN-Jeko',
+      fontFamily: appFont,
     );
   }
 
@@ -257,7 +91,7 @@ class TextAppStyle {
       color: AppColor.menuTextColorLight,
       fontSize: 10,
       fontWeight: FontWeight.w700,
-      fontFamily: 'SVN-Jeko',
+      fontFamily: appFont,
     );
   }
 
@@ -268,7 +102,7 @@ class TextAppStyle {
       color: AppColor.fifthTextColorLight,
       fontSize: CommonConstants.miniText,
       fontWeight: FontWeight.w500,
-      fontFamily: 'SVN-Jeko',
+      fontFamily: appFont,
     );
   }
 
@@ -279,7 +113,7 @@ class TextAppStyle {
       color: AppColor.fifthTextColorLight,
       fontSize: CommonConstants.smallText,
       fontWeight: FontWeight.w500,
-      fontFamily: 'SVN-Jeko',
+      fontFamily: appFont,
     );
   }
 
@@ -308,7 +142,7 @@ class TextAppStyle {
       color: Colors.black,
       fontSize: CommonConstants.normalText,
       fontWeight: FontWeight.w500,
-      fontFamily: 'SVN-Jeko',
+      fontFamily: appFont,
     );
   }
 
@@ -330,6 +164,16 @@ class TextAppStyle {
     );
   }
 
+  //medium text
+  TextStyle mediumTextStype() {
+    return const TextStyle(
+      color: Colors.black,
+      fontSize: CommonConstants.normalText,
+      fontWeight: FontWeight.w500,
+      fontFamily: appFont,
+    );
+  }
+
   //large text
   TextStyle largeTextStype() {
     /// headline1 Color: primaryTextColor -> Black Gray (#333333)
@@ -337,7 +181,7 @@ class TextAppStyle {
       color: Colors.black,
       fontSize: CommonConstants.largeText,
       fontWeight: FontWeight.w500,
-      fontFamily: 'SVN-Jeko',
+      fontFamily: appFont,
     );
   }
 

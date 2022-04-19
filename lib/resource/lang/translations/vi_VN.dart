@@ -36,9 +36,14 @@ const Map<String, String> vi_VN = {
       'Giúp bạn tiết kiệm nhất với những phương án dịch vụ, giá cả chúng tôi cung cấp',
   'onboard.description3':
       'Chat, gọi trực tiếp với thông dịch viên của bạn. An toàn trải nghiệm dù ở bất cứ đâu.',
+
   //general trans
   'data_requied': 'Dữ liệu bắt buộc',
   'data_not_match': 'Nhập lại không khớp',
+
+  // error
+  'error': 'Có lỗi xẩy ra',
+  'error.expires': 'Phiên làm việc hết hạn!',
 
   //register
   'register.comfirm': 'Xác thực tài khoản',

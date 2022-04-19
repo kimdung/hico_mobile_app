@@ -8,80 +8,84 @@ import '../../../shared/constants/colors.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
+import '../../call/pickup/picker_layout.dart';
 import '../controllers/config_controller.dart';
 
 class ConfigScreen extends GetView<ConfigController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            IconConstants.icBack,
-            width: 11,
-          ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Text(
-          'setting'.tr,
-          style: TextAppStyle().titleAppBarStyle(),
-        ),
-        elevation: 1,
-        backgroundColor: Colors.white,
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Obx(() => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildLanguageItem(
-                        icon: ImageConstants.japanFlag,
-                        title: '日本語',
-                        code: LanguageCode.JA,
-                        onPress: () => {
-                          controller.currentLanguage.value = LanguageCode.JA
-                        },
-                      ),
-                      buildLanguageItem(
-                        icon: ImageConstants.vietnamFlag,
-                        title: 'Việt Nam',
-                        code: LanguageCode.VN,
-                        onPress: () => {
-                          controller.currentLanguage.value = LanguageCode.VN
-                        },
-                      ),
-                      buildLanguageItem(
-                        icon: ImageConstants.ukFlag,
-                        title: 'English',
-                        code: LanguageCode.EN,
-                        onPress: () => {
-                          controller.currentLanguage.value = LanguageCode.EN
-                        },
-                      )
-                    ],
-                  )),
+    return PickupLayout(
+      controller.callMethods,
+      scaffold: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          centerTitle: true,
+          leading: IconButton(
+            icon: SvgPicture.asset(
+              IconConstants.icBack,
+              width: 11,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24),
-              child: GeneralButton(
-                onPressed: () => controller.confirmLanguage(),
-                borderRadius: BorderRadius.circular(24),
-                borderColor: AppColor.primaryColorLight,
-                backgroundColor: AppColor.primaryColorLight,
-                child: Text(
-                  'config'.tr,
-                  style: TextAppStyle().titleButtonStyle(),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          title: Text(
+            'setting'.tr,
+            style: TextAppStyle().titleAppBarStyle(),
+          ),
+          elevation: 1,
+          backgroundColor: Colors.white,
+        ),
+        body: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Obx(() => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildLanguageItem(
+                          icon: ImageConstants.japanFlag,
+                          title: '日本語',
+                          code: LanguageCode.JA,
+                          onPress: () => {
+                            controller.currentLanguage.value = LanguageCode.JA
+                          },
+                        ),
+                        buildLanguageItem(
+                          icon: ImageConstants.vietnamFlag,
+                          title: 'Việt Nam',
+                          code: LanguageCode.VN,
+                          onPress: () => {
+                            controller.currentLanguage.value = LanguageCode.VN
+                          },
+                        ),
+                        buildLanguageItem(
+                          icon: ImageConstants.ukFlag,
+                          title: 'English',
+                          code: LanguageCode.EN,
+                          onPress: () => {
+                            controller.currentLanguage.value = LanguageCode.EN
+                          },
+                        )
+                      ],
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 24),
+                child: GeneralButton(
+                  onPressed: () => controller.confirmLanguage(),
+                  borderRadius: BorderRadius.circular(24),
+                  borderColor: AppColor.primaryColorLight,
+                  backgroundColor: AppColor.primaryColorLight,
+                  child: Text(
+                    'config'.tr,
+                    style: TextAppStyle().titleButtonStyle(),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

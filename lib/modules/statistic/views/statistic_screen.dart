@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ui_api/models/statistic/statistic_invoice_model.dart';
 
+import '../../call/pickup/picker_layout.dart';
 import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
@@ -17,51 +18,54 @@ part 'statistic_extension.dart';
 class StatisticScreen extends GetView<StatisticController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            IconConstants.icBack,
-            width: 11,
+    return PickupLayout(
+      controller.callMethods,
+      scaffold: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          centerTitle: true,
+          leading: IconButton(
+            icon: SvgPicture.asset(
+              IconConstants.icBack,
+              width: 11,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-          onPressed: () => Navigator.of(context).pop(),
+          title: Text(
+            'statistic'.tr,
+            style: TextAppStyle().titleAppBarStyle(),
+          ),
+          elevation: 4,
+          backgroundColor: Colors.white,
+          shadowColor: AppColor.appbarColorLight.withOpacity(0.8),
         ),
-        title: Text(
-          'statistic'.tr,
-          style: TextAppStyle().titleAppBarStyle(),
-        ),
-        elevation: 4,
-        backgroundColor: Colors.white,
-        shadowColor: AppColor.appbarColorLight.withOpacity(0.8),
-      ),
-      body: SingleChildScrollView(
-        controller: controller.scrollController,
-        child: Container(
-          width: Get.width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              buildStatusNavBar(),
-              buildTotalWithStatus(),
-              const SizedBox(height: 20),
-              buildSearchField(),
-              const SizedBox(height: 20),
-              buildSearchDate(context),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'statistic.order_finish'.tr,
-                  style: TextAppStyle().genaralTextStyle().copyWith(
-                      color: Colors.black, fontWeight: FontWeight.w500),
+        body: SingleChildScrollView(
+          controller: controller.scrollController,
+          child: Container(
+            width: Get.width,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                buildStatusNavBar(),
+                buildTotalWithStatus(),
+                const SizedBox(height: 20),
+                buildSearchField(),
+                const SizedBox(height: 20),
+                buildSearchDate(context),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    'statistic.order_finish'.tr,
+                    style: TextAppStyle().genaralTextStyle().copyWith(
+                        color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              buildOrderList(),
-            ],
+                const SizedBox(height: 16),
+                buildOrderList(),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:hico/data/app_data_global.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
-import '/shared/constants/app_constant.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+
+import '../../data/app_data_global.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -57,6 +58,8 @@ class FirebaseMessageConfig {
         provisional: true,
         sound: true,
       );
+
+      // Hiển thị notification khi bật app cho ios
       if (Platform.isIOS) {
         await _firebaseMessaging.setForegroundNotificationPresentationOptions(
           alert: true,
@@ -65,11 +68,8 @@ class FirebaseMessageConfig {
         );
       }
       await _firebaseMessaging.setAutoInitEnabled(true);
-      await _firebaseMessaging.getToken().then((String? token) async {
-        debugPrint('Push Messaging Token: $token');
-        AppDataGlobal.firebaseToken = token!;
-        await AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
-      });
+
+      await _handleTokenFirebase();
     } catch (e) {
       debugPrint('$e');
     }
@@ -99,10 +99,9 @@ class FirebaseMessageConfig {
             //   ),
             // );
           }
-          
         },
       );
-      
+
       final initializationSettings = InitializationSettings(
         android: initialzationSettingsAndroid,
         iOS: initializationSettingsIOS,
@@ -179,10 +178,15 @@ class FirebaseMessageConfig {
   }
 
   void _showNotification(RemoteMessage message) {
+    debugPrint('Got a message whilst in the foreground!');
+    debugPrint('Message data: ${message.data}');
+
     try {
       debugPrint('FirebaseMessageConfig RemoteMessage $message');
       final remoteNotification = message.notification;
-      if (remoteNotification != null) {
+      final android = message.notification?.android;
+
+      if (remoteNotification != null && android != null) {
         _flutterLocalNotificationsPlugin.show(
           remoteNotification.hashCode,
           remoteNotification.title,
@@ -191,9 +195,9 @@ class FirebaseMessageConfig {
             android: AndroidNotificationDetails(
               _androidNotificationChannel.id,
               _androidNotificationChannel.name,
-              importance: Importance.max,
+              importance: Importance.high,
               visibility: NotificationVisibility.public,
-              priority: Priority.max,
+              priority: Priority.high,
               playSound: true,
               enableLights: true,
               enableVibration: true,
@@ -232,12 +236,20 @@ class FirebaseMessageConfig {
     await _firebaseMessaging.deleteToken();
   }
 
-  Future<void> handleTokenFirebase() async {
-    await _firebaseMessaging.getToken().then((String? token) {
+  Future<void> _handleTokenFirebase() async {
+    await _firebaseMessaging.getToken().then((String? token) async {
       debugPrint('FIREBASE TOKEN: $token');
+      if (token != null) {
+        AppDataGlobal.firebaseToken = token;
+        await AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
+      }
     });
     _firebaseMessaging.onTokenRefresh.listen((token) {
       debugPrint('TOKEN FIREBASE CHANGE: $token');
+      if (token != null) {
+        AppDataGlobal.firebaseToken = token;
+        AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
+      }
     });
   }
 }

@@ -79,11 +79,12 @@ class HomeController extends BaseController {
       return;
     }
 
+    await EasyLoading.show();
     final _usersResponse = await AppDataGlobal.client?.queryUsers(
       filter: Filter.autoComplete(
           'id', AppDataGlobal.userInfo?.conversationInfo?.adminId ?? ''),
     );
-
+    await EasyLoading.dismiss();
     await Get.toNamed(Routes.CHAT, arguments: {
       CommonConstants.CHANNEL: adminChatChannel,
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)

@@ -7,6 +7,7 @@ import 'package:ui_api/models/news/news_model.dart';
 
 import '../../../shared/constants/colors.dart';
 import '../../../shared/styles/text_style/text_style.dart';
+import '../../call/pickup/picker_layout.dart';
 import '../controllers/news_list_controller.dart';
 
 part 'news_list_extension.dart';
@@ -14,36 +15,39 @@ part 'news_list_extension.dart';
 class NewsListScreen extends GetView<NewsListController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'news.title'.tr,
-          style: TextAppStyle()
-              .titleAppBarStyle()
-              .copyWith(color: AppColor.primaryColorLight),
-        ),
-        elevation: 4,
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            IconConstants.icBack,
-            width: 11,
+    return PickupLayout(
+      controller.callMethods,
+      scaffold: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            'news.title'.tr,
+            style: TextAppStyle()
+                .titleAppBarStyle()
+                .copyWith(color: AppColor.primaryColorLight),
           ),
-          onPressed: () => Navigator.of(context).pop(),
+          elevation: 4,
+          leading: IconButton(
+            icon: SvgPicture.asset(
+              IconConstants.icBack,
+              width: 11,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          backgroundColor: Colors.white,
+          shadowColor: AppColor.appbarColorLight.withOpacity(0.8),
         ),
-        backgroundColor: Colors.white,
-        shadowColor: AppColor.appbarColorLight.withOpacity(0.8),
+        body: Obx(() => Container(
+              child: ListView.builder(
+                  controller: controller.scrollController,
+                  itemCount: controller.newsList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return buildItemNews(item: controller.newsList[index]);
+                  }),
+            )),
       ),
-      body: Obx(() => Container(
-            child: ListView.builder(
-                controller: controller.scrollController,
-                itemCount: controller.newsList.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return buildItemNews(item: controller.newsList[index]);
-                }),
-          )),
     );
   }
 }

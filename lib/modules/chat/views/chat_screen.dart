@@ -8,6 +8,7 @@ import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/styles/text_style/text_style.dart';
+import '../../call/pickup/picker_layout.dart';
 import '../controllers/chat_controller.dart';
 
 class ChatScreen extends GetView<ChatController> {
@@ -46,71 +47,65 @@ class ChatScreen extends GetView<ChatController> {
       ),
     );
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // supportedLocales: const [
-      //   // Locale('vi', 'VN'),
-      //   Locale('ja', 'JP'),
-      //   Locale('en', 'US')
-      // ],
-      // locale: const Locale('ja'),
-      builder: (context, widget) => StreamChat(
-        streamChatThemeData: customTheme,
-        client: AppDataGlobal.client!,
-        child: widget,
-        onBackgroundEventReceived: (event) async {
-          final currentUserId = AppDataGlobal.client?.state.currentUser?.id;
-          if (![EventType.messageNew, EventType.notificationMessageNew]
-                  .contains(event.type) ||
-              event.user?.id == currentUserId) {
-            return;
-          }
-          if (event.message == null) {
-            return;
-          }
-          final flutterLocalNotificationsPlugin =
-              FlutterLocalNotificationsPlugin();
-          const initializationSettings = InitializationSettings(
-            android: AndroidInitializationSettings('app_icon'),
-            iOS: IOSInitializationSettings(),
-          );
-          await flutterLocalNotificationsPlugin
-              .initialize(initializationSettings);
-          final id = event.message?.id.hashCode;
-          if (id == null) {
-            return;
-          }
-          await flutterLocalNotificationsPlugin.show(
-            id,
-            event.message?.user?.name,
-            event.message?.text,
-            const NotificationDetails(
-              android: AndroidNotificationDetails(
-                'message channel',
-                'Message channel',
-                channelDescription: 'Channel used for showing messages',
-                priority: Priority.high,
-                importance: Importance.high,
+    return PickupLayout(
+      controller.callMethods,
+      scaffold: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        // supportedLocales: const [
+        //   // Locale('vi', 'VN'),
+        //   Locale('ja', 'JP'),
+        //   Locale('en', 'US')
+        // ],
+        // locale: const Locale('ja'),
+        builder: (context, widget) => StreamChat(
+          streamChatThemeData: customTheme,
+          client: AppDataGlobal.client!,
+          child: widget,
+          onBackgroundEventReceived: (event) async {
+            final currentUserId = AppDataGlobal.client?.state.currentUser?.id;
+            if (![EventType.messageNew, EventType.notificationMessageNew]
+                    .contains(event.type) ||
+                event.user?.id == currentUserId) {
+              return;
+            }
+            if (event.message == null) {
+              return;
+            }
+            final flutterLocalNotificationsPlugin =
+                FlutterLocalNotificationsPlugin();
+            const initializationSettings = InitializationSettings(
+              android: AndroidInitializationSettings('app_icon'),
+              iOS: IOSInitializationSettings(),
+            );
+            await flutterLocalNotificationsPlugin
+                .initialize(initializationSettings);
+            final id = event.message?.id.hashCode;
+            if (id == null) {
+              return;
+            }
+            await flutterLocalNotificationsPlugin.show(
+              id,
+              event.message?.user?.name,
+              event.message?.text,
+              const NotificationDetails(
+                android: AndroidNotificationDetails(
+                  'message channel',
+                  'Message channel',
+                  channelDescription: 'Channel used for showing messages',
+                  priority: Priority.high,
+                  importance: Importance.high,
+                ),
+                iOS: IOSNotificationDetails(),
               ),
-              iOS: IOSNotificationDetails(),
-            ),
-          );
-        },
-      ),
-      home: StreamChannel(
-        channel: controller.channel,
-        child: _buildBodyContent(),
+            );
+          },
+        ),
+        home: StreamChannel(
+          channel: controller.channel,
+          child: _buildBodyContent(),
+        ),
       ),
     );
-
-    // StreamChat(
-    //   streamChatThemeData: customTheme,
-    //   client: AppDataGlobal.client!,
-    //   child: StreamChannel(
-    //     channel: controller.channel,
-    //     child: _buildBodyContent(),
-    //   ),
-    // );
   }
 
   Widget _buildBodyContent() {
@@ -157,13 +152,13 @@ class ChatScreen extends GetView<ChatController> {
                   icon: SvgPicture.asset(
                     IconConstants.icCall,
                   ),
-                  onPressed: () {},
+                  onPressed: controller.onCall,
                 ),
                 IconButton(
                   icon: SvgPicture.asset(
                     IconConstants.icVideoCall,
                   ),
-                  onPressed: () {},
+                  onPressed: controller.onVideo,
                 ),
               ],
       ),

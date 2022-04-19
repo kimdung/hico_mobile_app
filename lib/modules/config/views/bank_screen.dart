@@ -10,43 +10,47 @@ import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
+import '../../call/pickup/picker_layout.dart';
 import '../controllers/config_controller.dart';
 
 class BankScreen extends GetView<ConfigController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            IconConstants.icBack,
-            width: 11,
-          ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Text(
-          'bank_info'.tr,
-          style: TextAppStyle().titleAppBarStyle(),
-        ),
-        elevation: 4,
-        backgroundColor: Colors.white,
-        shadowColor: AppColor.appbarColorLight.withOpacity(0.8),
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: CommonConstants.paddingDefault),
-        child: Column(
-          children: [
-            const SizedBox(height: 24),
-            ...List.generate(
-              AppDataGlobal.masterData!.banks!.length,
-              (index) => buildItem(
-                bank: AppDataGlobal.masterData!.banks![index],
-              ),
+    return PickupLayout(
+      controller.callMethods,
+      scaffold: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          centerTitle: true,
+          leading: IconButton(
+            icon: SvgPicture.asset(
+              IconConstants.icBack,
+              width: 11,
             ),
-          ],
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          title: Text(
+            'bank_info'.tr,
+            style: TextAppStyle().titleAppBarStyle(),
+          ),
+          elevation: 4,
+          backgroundColor: Colors.white,
+          shadowColor: AppColor.appbarColorLight.withOpacity(0.8),
+        ),
+        body: Container(
+          padding: const EdgeInsets.symmetric(
+              horizontal: CommonConstants.paddingDefault),
+          child: Column(
+            children: [
+              const SizedBox(height: 24),
+              ...List.generate(
+                AppDataGlobal.masterData!.banks!.length,
+                (index) => buildItem(
+                  bank: AppDataGlobal.masterData!.banks![index],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
