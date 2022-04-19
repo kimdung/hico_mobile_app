@@ -112,9 +112,6 @@ class BookingDetailScreen extends GetView<BookingDetailController> {
               const SizedBox(),
               AppColor.blueTextColor,
             ),
-            const SizedBox(
-              height: 18.0,
-            ),
             const Divider(
               color: Color(0xFFEEEEEE),
             ),
@@ -167,14 +164,13 @@ class BookingDetailScreen extends GetView<BookingDetailController> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 18.0,
-            ),
-            Divider(
+            Container(
+              width: Get.width,
               height: 4.0,
-              color: AppColor.fourthTextColorLight.withOpacity(0.5),
+              color: AppColor.fourthTextColorLight.withOpacity(0.2),
             ),
             _buildIntoMoney(),
+            const SizedBox(height: 34.0),
           ],
         ),
       ),

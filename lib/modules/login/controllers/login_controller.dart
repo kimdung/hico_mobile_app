@@ -40,9 +40,7 @@ class LoginController extends BaseController {
 
   @override
   Future<void> onInit() {
-    
     final error = Get.arguments;
-
     if (error is String && error.isNotEmpty) {
       EasyLoading.showToast(error);
     }

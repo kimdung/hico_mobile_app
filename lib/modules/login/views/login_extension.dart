@@ -30,7 +30,7 @@ extension _LoginExtension on LoginScreen {
     return TextFormField(
       controller: controller.passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      obscureText: controller.showPassword.value,
+      obscureText: !controller.showPassword.value,
       cursorColor: AppColor.fifthTextColorLight,
       style: TextAppStyle().genaralTextStyle(),
       decoration: TextFieldDecoration.borderLogin(
@@ -40,8 +40,8 @@ extension _LoginExtension on LoginScreen {
         hintStype: TextAppStyle().genaralTextStyle(),
         suffixIcon: InkWell(
             child: Icon(controller.showPassword.value
-                ? Icons.visibility
-                : Icons.visibility_off),
+                ? Icons.visibility_off
+                : Icons.visibility),
             onTap: () {
               controller.hideShowPassword();
             }),

@@ -221,14 +221,16 @@ extension BookingDetailChildren on BookingDetailScreen {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Thành tiền',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.w400,
-                  color: AppColor.textBlack,
-                  fontFamily: 'SVN-Jeko',
+              Expanded(
+                child: Text(
+                  'Thành tiền',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.textBlack,
+                    fontFamily: 'SVN-Jeko',
+                  ),
                 ),
               ),
               Text(
