@@ -14,7 +14,7 @@ android {
         }
         uat {
             dimension "app"
-            applicationIdSuffix ".uat"
+            // applicationIdSuffix ".uat"
             versionNameSuffix "-uat"
         }
     }
