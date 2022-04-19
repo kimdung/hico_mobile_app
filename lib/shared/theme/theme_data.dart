@@ -31,16 +31,16 @@ class ThemeConfig {
       appBarTheme: AppBarTheme(
         // brightness: brightness,
         color: primaryColor,
+        titleSpacing: 0,
         // textTheme: TextTheme(
         //   bodyText1: baseTextTheme.bodyText1!.copyWith(
         //     color: secondTextColor,
         //     fontSize: 18,
         //   ),
         // ),
-        iconTheme: IconThemeData(color: secondTextColor ),
+        iconTheme: IconThemeData(color: secondTextColor),
       ),
       brightness: brightness,
-      buttonColor: primaryColor,
       canvasColor: primaryBackgroundColor,
       cardColor: primaryBackgroundColor,
       dividerColor: divider,
@@ -62,7 +62,6 @@ class ThemeConfig {
       ),
       backgroundColor: primaryBackgroundColor,
       primaryColor: primaryColor,
-      accentColor: accentColor,
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: cursorColor,
         selectionColor: accentColor,
@@ -79,9 +78,7 @@ class ThemeConfig {
         colorScheme: ColorScheme(
           brightness: brightness,
           primary: primaryColor,
-          primaryVariant: accentColor,
           secondary: accentColor,
-          secondaryVariant: accentColor,
           surface: primaryBackgroundColor,
           background: primaryColor,
           error: error,

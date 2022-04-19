@@ -1,3 +1,4 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 import '../../../base/base_controller.dart';
@@ -6,8 +7,12 @@ import '../../../routes/app_pages.dart';
 
 class OnBoardingController extends BaseController {
   @override
-  Future<void> onInit() {
-    return super.onInit();
+  Future<void> onInit() async {
+    final error = Get.arguments;
+    if (error is String && error.isNotEmpty) {
+      await EasyLoading.showToast(error);
+    }
+    await super.onInit();
   }
 
   final lstSlider = [
