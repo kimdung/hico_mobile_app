@@ -79,6 +79,8 @@ import '../modules/support/bindings/support_binding.dart';
 import '../modules/support/views/support_screen.dart';
 import '../modules/voucher/bindings/voucher_binding.dart';
 import '../modules/voucher/views/voucher_screen.dart';
+import '../modules/wallet/wallet/bindings/wallet_binding.dart';
+import '../modules/wallet/wallet/views/wallet_screen.dart';
 
 part 'app_routes.dart';
 
@@ -315,5 +317,10 @@ final routePages = [
     name: Routes.BOOKING_DETAIL,
     page: () => const BookingDetailScreen(),
     binding: BookingDetailBinding(),
+  ),
+  GetPage(
+    name: Routes.WALLET,
+    page: () => WalletScreen(),
+    binding: WalletBinding(),
   ),
 ];

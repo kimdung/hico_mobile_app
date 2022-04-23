@@ -37,11 +37,11 @@ import 'package:ui_api/response/voucher/voucher_response.dart';
 
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/wallet/topup_history_response.dart';
 part 'hico_ui_api.g.dart';
 
 @RestApi()
 abstract class HicoUIAPI {
-
   factory HicoUIAPI(Dio dio) = _HicoUIAPI;
   //master data
   @GET('/v1/masterData')
@@ -324,4 +324,11 @@ abstract class HicoUIAPI {
   //Get Token
   @POST('/v1/agoraCall/createToken')
   Future<CallTokenResponse> getCallToken(@Query('channel') String channel);
+
+  /* Wallet */
+  @GET('/v1/payIn/list')
+  Future<TopupHistoryResponse> topupHistory(
+    @Query('limit') int limit,
+    @Query('offset') int offset,
+  );
 }

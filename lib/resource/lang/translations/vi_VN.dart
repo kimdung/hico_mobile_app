@@ -152,6 +152,7 @@ const Map<String, String> vi_VN = {
   'services': 'Dịch vụ đang cung cấp',
   'statistic': 'Thống kê',
   'setting': 'Cài đặt',
+  'topup': 'Nạp tiền',
   'change_password': 'Đổi mật khẩu',
   'contact': 'Liên hệ',
   'bank_info': 'Thông tin ngân hàng',
@@ -162,6 +163,23 @@ const Map<String, String> vi_VN = {
   'branch': 'Chi nhánh:',
   'account_holder': 'Chủ tải khoản:',
   'account_number': 'Số tải khoản:',
+
+  // topup
+  'topup.title': 'Thông tin nạp tiền',
+  'topup.history': 'Lịch sử nạp tiền',
+  'topup.confirm': 'Xác Nhận Nạp Tiền',
+  'topup.waitting': 'Chờ xác nhận',
+  'topup.confirmed': 'Đã xác nhận',
+  'topup.balance': 'Số dư ví: ',
+  'topup.amount': 'Số tiền cần nạp (JPY)',
+  'topup.amount.hint': 'Nhập số tiền cần nạp',
+  'topup.method.title': 'Hình thức nạp tiền',
+  'topup.bank': 'Chuyển khoản ngân hàng',
+  'topup.bank.description': 'Chuyển khoản ngân hàng TK Hico',
+  'topup.komoju': 'komoju',
+  'topup.komoju.description': 'Chuyển thanh toán cho cổng thanh toán Komoju',
+  'topup.stripe': 'Thanh toán Stripe',
+  'topup.stripe.description': 'Chuyển thanh toán cho cổng thanh toán Stripe',
 
   //statistic screen
   'statistic.order_finish': 'Đơn hàng đã hoàn thành',
@@ -309,7 +327,6 @@ const Map<String, String> vi_VN = {
   'booking.bank_update_title':
       'Cung cấp thông tin tài khoản ngân hàng của bạn để quá trình sử dụng dịch vụ thuận tiện hơn.',
 
-
   //consulting
   'consulting.title': 'Đăng ký tư vấn',
   'consulting.note':
@@ -326,10 +343,10 @@ const Map<String, String> vi_VN = {
   'extend.title': 'Gia hạn thời gian',
 
   //booking detail
-  'booking.detail.order_infor' : 'Thông tin đơn hàng',
+  'booking.detail.order_infor': 'Thông tin đơn hàng',
   'booking.detail.confirm': 'Xác Nhận Gia Hạn',
-  'booking.detail.interpreters' : 'Phiên dịch viên',
-  'booking.detail.serivce_infor' : 'Thông tin dịch vụ',
-  'booking.detail.time_work' : 'Thời gian làm việc',
-  'booking.detail.payment_method' : 'Phương thức thanh toán',
+  'booking.detail.interpreters': 'Phiên dịch viên',
+  'booking.detail.serivce_infor': 'Thông tin dịch vụ',
+  'booking.detail.time_work': 'Thời gian làm việc',
+  'booking.detail.payment_method': 'Phương thức thanh toán',
 };

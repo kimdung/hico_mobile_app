@@ -11,7 +11,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:data_infrastructure/src/model/hospital_summary_dtos.dart';
 
 class HospitalsApi {
-
   final Dio _dio;
 
   final Serializers _serializers;
@@ -19,7 +18,7 @@ class HospitalsApi {
   const HospitalsApi(this._dio, this._serializers);
 
   /// apiHospitalsGet
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -31,7 +30,7 @@ class HospitalsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<HospitalSummaryDtos>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<BuiltList<HospitalSummaryDtos>>> apiHospitalsGet({ 
+  Future<Response<BuiltList<HospitalSummaryDtos>>> apiHospitalsGet({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -63,12 +62,12 @@ class HospitalsApi {
     BuiltList<HospitalSummaryDtos> _responseData;
 
     try {
-      const _responseType = FullType(BuiltList, [FullType(HospitalSummaryDtos)]);
+      const _responseType =
+          FullType(BuiltList, [FullType(HospitalSummaryDtos)]);
       _responseData = _serializers.deserialize(
         _response.data!,
         specifiedType: _responseType,
       ) as BuiltList<HospitalSummaryDtos>;
-
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
@@ -91,10 +90,10 @@ class HospitalsApi {
   }
 
   /// apiHospitalsIDGet
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [ID] 
+  /// * [ID]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -104,7 +103,7 @@ class HospitalsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [HospitalSummaryDtos] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<HospitalSummaryDtos>> apiHospitalsIDGet({ 
+  Future<Response<HospitalSummaryDtos>> apiHospitalsIDGet({
     required String ID,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -113,7 +112,8 @@ class HospitalsApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/Hospitals/{ID}'.replaceAll('{' r'ID' '}', ID.toString());
+    final _path =
+        r'/api/Hospitals/{ID}'.replaceAll('{' r'ID' '}', ID.toString());
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -142,7 +142,6 @@ class HospitalsApi {
         _response.data!,
         specifiedType: _responseType,
       ) as HospitalSummaryDtos;
-
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
@@ -163,5 +162,4 @@ class HospitalsApi {
       extra: _response.extra,
     );
   }
-
 }

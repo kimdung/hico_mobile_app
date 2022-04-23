@@ -87,6 +87,12 @@ class AccountScreen extends GetView<AccountController> {
                 ),
                 const SizedBox(height: 14),
                 buildItem(
+                  icon: IconConstants.icWallet,
+                  title: 'topup'.tr,
+                  onPress: () => Get.toNamed(Routes.WALLET),
+                ),
+                const SizedBox(height: 14),
+                buildItem(
                   icon: IconConstants.icProfilePass,
                   title: 'change_password'.tr,
                   onPress: () => Get.toNamed(Routes.CHANGE_PASS),

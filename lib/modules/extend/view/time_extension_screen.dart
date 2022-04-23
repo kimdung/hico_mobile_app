@@ -37,7 +37,9 @@ class TimeExtensionScreen extends GetView<TimeExtensionController> {
       body: Column(
         children: [
           _buildHeader(),
-          const SizedBox(height: 28.0,),
+          const SizedBox(
+            height: 28.0,
+          ),
           _buildExtendList(),
         ],
       ),

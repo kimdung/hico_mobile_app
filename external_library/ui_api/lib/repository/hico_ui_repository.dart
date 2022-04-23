@@ -35,6 +35,7 @@ import 'package:ui_api/response/voucher/voucher_response.dart';
 
 import '../response/call/call_token_response.dart';
 import '../response/chat/chat_token_response.dart';
+import '../response/wallet/topup_history_response.dart';
 
 abstract class HicoUIRepository {
   /* User */
@@ -207,4 +208,8 @@ abstract class HicoUIRepository {
 
   // Create call token
   Future<CallTokenResponse> getCallToken(String channel);
+
+  /* Wallet */
+
+  Future<TopupHistoryResponse> topupHistory(int limit, int offset);
 }

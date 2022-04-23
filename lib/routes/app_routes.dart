@@ -58,4 +58,5 @@ abstract class Routes {
   static const VIDEO_CALL = '/video-call';
   static const TIME_EXTENSION = '/time_extension';
   static const BOOKING_DETAIL = '/booking_detail';
+  static const WALLET = '/wallet/wallet';
 }

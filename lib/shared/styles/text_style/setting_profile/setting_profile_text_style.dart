@@ -39,7 +39,7 @@ extension SettingScreenStyle on TextAppStyle {
       fontSize: 14,
       fontWeight: FontWeight.w600,
     );
-  } 
+  }
 
   TextStyle textLableFormtStyle() {
     return TextStyle(
@@ -65,35 +65,39 @@ extension SettingScreenStyle on TextAppStyle {
     );
   }
 
-    TextStyle textCheckStyle() {
+  TextStyle textCheckStyle() {
     return TextStyle(
       color: AppColor.primaryTextColorLight,
       fontSize: 10,
       fontWeight: FontWeight.w400,
     );
   }
-    TextStyle textOrderCodeStyle() {
+
+  TextStyle textOrderCodeStyle() {
     return TextStyle(
       color: AppColor.primaryTextColorLight,
       fontSize: 14,
       fontWeight: FontWeight.w700,
     );
   }
-   TextStyle textAddressStyle() {
+
+  TextStyle textAddressStyle() {
     return TextStyle(
       color: AppColor.primaryHintColorLight,
       fontSize: 12,
       fontWeight: FontWeight.w600,
     );
   }
+
   // histỏy
-      TextStyle textTitleHistoryStyle() {
+  TextStyle textTitleHistoryStyle() {
     return TextStyle(
       color: AppColor.primaryTextColorLight,
       fontSize: 24,
       fontWeight: FontWeight.w700,
     );
   }
+
   TextStyle textTitleExpantedStyle() {
     return TextStyle(
       color: AppColor.primaryTextColorLight,

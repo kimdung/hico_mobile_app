@@ -289,6 +289,14 @@ class IconConstants {
       'lib/resource/assets_resources/icons/ic_calendar_w.png';
   static const String icBankIcon =
       'lib/resource/assets_resources/icons/ic_bank_icon.png';
+  static const String icWallet =
+      'lib/resource/assets_resources/icons/ic_profile_wallet.svg';
+  static const String icWallet1 =
+      'lib/resource/assets_resources/icons/ic_wallet.svg';
+  static const String icKomaju =
+      'lib/resource/assets_resources/icons/ic_komaju.png';
+  static const String icStripe =
+      'lib/resource/assets_resources/icons/ic_stripe.png';
 
   //contact icon
   static const String icCtHotline =

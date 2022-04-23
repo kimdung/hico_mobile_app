@@ -2,13 +2,10 @@ import 'dart:io';
 
 import 'package:ui_api/datasource/remote/hico_ui_api.dart';
 import 'package:ui_api/request/general/contact_request.dart';
-import 'package:ui_api/request/general/filter_request.dart';
 import 'package:ui_api/request/invoice/booking_request.dart';
 import 'package:ui_api/request/login/login_request.dart';
 import 'package:ui_api/request/register/register_otp_request.dart';
 import 'package:ui_api/request/register/register_request.dart';
-import 'package:ui_api/request/supplier/supplier_request.dart';
-import 'package:ui_api/request/user/avatar_request.dart';
 import 'package:ui_api/request/user/changepass_request.dart';
 import 'package:ui_api/request/user/update_bank_request.dart';
 import 'package:ui_api/request/user/update_info_request.dart';
@@ -16,7 +13,6 @@ import 'package:ui_api/response/base_response.dart';
 import 'package:ui_api/response/general/address_response.dart';
 import 'package:ui_api/response/general/bank_response.dart';
 import 'package:ui_api/response/general/district_response.dart';
-import 'package:ui_api/response/general/general_response.dart';
 import 'package:ui_api/response/general/master_data_response.dart';
 import 'package:ui_api/response/home/home_response.dart';
 import 'package:ui_api/response/invoice/booking_response.dart';
@@ -39,6 +35,7 @@ import 'package:ui_api/response/voucher/voucher_response.dart';
 
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/wallet/topup_history_response.dart';
 import '../hico_ui_repository.dart';
 
 class HicoUIRepositoryImpl extends HicoUIRepository {
@@ -337,5 +334,10 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   @override
   Future<CallTokenResponse> getCallToken(String channel) {
     return _api.getCallToken(channel);
+  }
+
+  @override
+  Future<TopupHistoryResponse> topupHistory(int limit, int offset) {
+    return _api.topupHistory(limit, offset);
   }
 }
