@@ -31,3 +31,15 @@ class TopupHistoryModel {
 
   Map<String, dynamic> toJson() => _$TopupHistoryModelToJson(this);
 }
+
+@JsonSerializable()
+class TopupHistoryData {
+  TopupHistoryModel? row;
+
+  TopupHistoryData({this.row});
+
+  factory TopupHistoryData.fromJson(Map<String, dynamic> json) =>
+      _$TopupHistoryDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TopupHistoryDataToJson(this);
+}

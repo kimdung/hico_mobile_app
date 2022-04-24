@@ -29,3 +29,15 @@ Map<String, dynamic> _$TopupHistoryModelToJson(TopupHistoryModel instance) =>
       'image': instance.image,
       'created_at': instance.createdAt,
     };
+
+TopupHistoryData _$TopupHistoryDataFromJson(Map<String, dynamic> json) =>
+    TopupHistoryData(
+      row: json['row'] == null
+          ? null
+          : TopupHistoryModel.fromJson(json['row'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$TopupHistoryDataToJson(TopupHistoryData instance) =>
+    <String, dynamic>{
+      'row': instance.row,
+    };

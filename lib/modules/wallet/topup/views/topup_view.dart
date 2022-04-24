@@ -184,12 +184,17 @@ class TopupView extends GetView<TopupController> {
                   ),
             ),
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: controller.paymentMethods.length,
-            itemBuilder: (context, index) =>
-                _buildPaymentMethodCell(index, controller.selectedMethod.value),
+          Obx(
+            () {
+              final selectedMethod = controller.selectedMethod.value;
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: controller.paymentMethods.length,
+                itemBuilder: (context, index) =>
+                    _buildPaymentMethodCell(index, selectedMethod),
+              );
+            },
           ),
         ],
       ),
@@ -224,7 +229,7 @@ class TopupView extends GetView<TopupController> {
     return InkWell(
       onTap: () => controller.onSelectPaymentMethod(index),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
         child: Row(
           children: [
             FCoreImage(
@@ -234,32 +239,34 @@ class TopupView extends GetView<TopupController> {
               width: 16,
             ),
             const SizedBox(width: 18),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    FCoreImage(
-                      paymentMethod.icon,
-                      height: 18,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      paymentMethod.title.tr,
-                      style: TextAppStyle().genaralTextStyle().copyWith(
-                            color: AppColor.fifthTextColorLight,
-                          ),
-                    ),
-                  ],
-                ),
-                Text(
-                  paymentMethod.description.tr,
-                  style: TextAppStyle().genaralTextStyle().copyWith(
-                        color: AppColor.fifthTextColorLight,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      FCoreImage(
+                        paymentMethod.icon,
+                        height: 18,
                       ),
-                ),
-              ],
-            )
+                      const SizedBox(width: 8),
+                      Text(
+                        paymentMethod.title.tr,
+                        style: TextAppStyle().genaralTextStyle().copyWith(
+                              color: AppColor.fifthTextColorLight,
+                            ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    paymentMethod.description.tr,
+                    style: TextAppStyle().genaralTextStyle().copyWith(
+                          color: AppColor.fifthTextColorLight,
+                        ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

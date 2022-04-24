@@ -212,4 +212,6 @@ abstract class HicoUIRepository {
   /* Wallet */
 
   Future<TopupHistoryResponse> topupHistory(int limit, int offset);
+
+  Future<TopupHistoryResponse> topupBank(double amount);
 }

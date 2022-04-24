@@ -79,6 +79,8 @@ import '../modules/support/bindings/support_binding.dart';
 import '../modules/support/views/support_screen.dart';
 import '../modules/voucher/bindings/voucher_binding.dart';
 import '../modules/voucher/views/voucher_screen.dart';
+import '../modules/wallet/topup_bank/bindings/topup_bank_binding.dart';
+import '../modules/wallet/topup_bank/views/topup_bank_screen.dart';
 import '../modules/wallet/wallet/bindings/wallet_binding.dart';
 import '../modules/wallet/wallet/views/wallet_screen.dart';
 
@@ -322,5 +324,10 @@ final routePages = [
     name: Routes.WALLET,
     page: () => WalletScreen(),
     binding: WalletBinding(),
+  ),
+  GetPage(
+    name: Routes.TOPUP_BANK,
+    page: () => TopupBankScreen(),
+    binding: TopupBankBinding(),
   ),
 ];

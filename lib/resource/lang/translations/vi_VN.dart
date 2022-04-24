@@ -25,6 +25,9 @@ const Map<String, String> vi_VN = {
   'error_mess': 'Kết nối thất bại. Vui lòng thử lại',
   'all': 'Tất cả',
   'calling': 'Đang gọi...',
+  'copied': 'Đã sao chép',
+  'comment': 'Ghi chú',
+  'camera': 'Hình ảnh',
 
   //onboard
   'onboard.title1': 'Welcome to Hico',
@@ -160,6 +163,7 @@ const Map<String, String> vi_VN = {
   'payment_policy': 'Chính sách thanh toán',
 
   'support': 'Hỗ trợ & góp ý',
+  'bank': 'Ngân hàng:',
   'branch': 'Chi nhánh:',
   'account_holder': 'Chủ tải khoản:',
   'account_number': 'Số tải khoản:',
@@ -180,6 +184,16 @@ const Map<String, String> vi_VN = {
   'topup.komoju.description': 'Chuyển thanh toán cho cổng thanh toán Komoju',
   'topup.stripe': 'Thanh toán Stripe',
   'topup.stripe.description': 'Chuyển thanh toán cho cổng thanh toán Stripe',
+
+  'topup.bank.info': 'Thông tin chuyển khoản',
+  'topup.bank.number': 'STK - %s',
+  'topup.bank.content.title': 'Nội dung chuyển khoản',
+  'topup.bank.content.cap':
+      'Vui lòng sao chép hoặc ghi chính xác nội dung chuyển khoản phía dưới',
+  'topup.bank.content': 'HICO %s',
+  'topup.bank.content.note':
+      'Sau khi chuyển khoản thành công, vui lòng ghi chú và update ảnh chuyển tiền lên hệ thống',
+  'topup.bank.bill': 'Ảnh chuyển tiền',
 
   //statistic screen
   'statistic.order_finish': 'Đơn hàng đã hoàn thành',
