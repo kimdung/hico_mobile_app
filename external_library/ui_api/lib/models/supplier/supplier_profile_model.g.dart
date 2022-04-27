@@ -20,6 +20,10 @@ SupplierProfileModel _$SupplierProfileModelFromJson(
           ?.map((e) =>
               DocumentsCertificateModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      interExpDetail: json['interpretation_experience_detail'] as String?,
+      interExp: json['interpretation_experience'] as int?,
+      transExpDetail: json['translation_experience_detail'] as String?,
+      transExp: json['translation_experience'] as int?,
     );
 
 Map<String, dynamic> _$SupplierProfileModelToJson(
@@ -33,4 +37,8 @@ Map<String, dynamic> _$SupplierProfileModelToJson(
       'education': instance.education,
       'experience': instance.experience,
       'files': instance.files,
+      'interpretation_experience_detail': instance.interExpDetail,
+      'interpretation_experience': instance.interExp,
+      'translation_experience_detail': instance.transExpDetail,
+      'translation_experience': instance.transExp,
     };

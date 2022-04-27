@@ -58,8 +58,18 @@ class SupplierDetailScreen extends GetView<SupplierDetailController> {
                   const SizedBox(height: 8),
                   buildItem(
                     icon: 'lib/resource/assets_resources/images/diploma.png',
-                    title: 'profile.experience'.tr,
-                    description: controller.profile.value.experience ?? '',
+                    title: 'supplier.detail.interpretation_experience'.tr,
+                    description: controller.profile.value.interExp.toString() +
+                            'year'.tr,
+                    description2: controller.profile.value.interExpDetail ?? '',
+                  ),
+                  const SizedBox(height: 12),
+                  buildItem(
+                    icon: 'lib/resource/assets_resources/images/diploma.png',
+                    title: 'supplier.detail.translation_experience'.tr,
+                    description: controller.profile.value.transExp.toString() +
+                            'year'.tr,
+                    description2: controller.profile.value.transExpDetail ?? '',
                   ),
                   const SizedBox(height: 12),
                   buildImageGrid(

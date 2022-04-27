@@ -264,6 +264,8 @@ const Map<String, String> vi_VN = {
   'supplier.detail.customer': 'Khách hàng',
   'supplier.detail.degree': 'Bằng cấp',
   'supplier.detail.booking': 'Đặt lịch',
+  'supplier.detail.interpretation_experience' : 'Kinh nghiệm phiên dịch',
+  'supplier.detail.translation_experience' : 'Kinh nghiệm biên dịch',
 
   //invoice
   'invoice.misson': 'Nhiệm vụ đã hoàn thành',
@@ -332,4 +334,6 @@ const Map<String, String> vi_VN = {
   'booking.detail.serivce_infor' : 'Thông tin dịch vụ',
   'booking.detail.time_work' : 'Thời gian làm việc',
   'booking.detail.payment_method' : 'Phương thức thanh toán',
+
+  'year' : 'năm',
 };

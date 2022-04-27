@@ -1,7 +1,7 @@
 part of 'supplier_detail_screen.dart';
 
 extension SupplierDetailComponents on SupplierDetailScreen {
-  Widget buildGeneralInfo() {
+  Widget  buildGeneralInfo() {
     return Row(
       children: [
         if (controller.profile.value.avatarImage != null)

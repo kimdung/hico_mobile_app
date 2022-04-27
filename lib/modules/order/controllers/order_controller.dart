@@ -13,12 +13,12 @@ import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
-import '../../../shared/widget_hico/dialog/time_extend_widget.dart';
 import '../../../shared/utils/call_utilities.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 import '../../../shared/widget_hico/dialog/rating_widget.dart';
 import '../../../shared/widget_hico/dialog/text_field_widget.dart';
+import '../../../shared/widget_hico/dialog/time_extend_widget.dart';
 import '../../../shared/widget_hico/invoice/cancel_invoice_widget.dart';
 
 enum OrderInfoViewType { Text, Button, Status }

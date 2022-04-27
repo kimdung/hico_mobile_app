@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
@@ -232,6 +234,7 @@ class SupplierFilterController extends BaseController {
     request.limit = 20;
     request.offset = 0;
     bookingPrepare.supplierRequest = request;
+    log('Log: ${bookingPrepare.supplierRequest.toString()}');
 
     var hours = tmpToTime.difference(tmpFromTime).inHours.toDouble();
     final minutes = tmpToTime.difference(tmpFromTime).inMinutes;
