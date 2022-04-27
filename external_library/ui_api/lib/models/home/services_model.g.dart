@@ -18,6 +18,9 @@ ServiceModel _$ServiceModelFromJson(Map<String, dynamic> json) => ServiceModel(
               json['service_category'] as Map<String, dynamic>),
       description: json['description'] as String?,
       price: json['price'] as int?,
+      minHours: json['min_hours'] as int?,
+      offlinePriceMin: json['offline_price_min'] as int?,
+      hours: json['hours'] as int?,
     );
 
 Map<String, dynamic> _$ServiceModelToJson(ServiceModel instance) =>
@@ -30,4 +33,7 @@ Map<String, dynamic> _$ServiceModelToJson(ServiceModel instance) =>
       'service_category': instance.serviceCategory,
       'description': instance.description,
       'price': instance.price,
+      'min_hours': instance.minHours,
+      'offline_price_min': instance.offlinePriceMin,
+      'hours': instance.hours,
     };

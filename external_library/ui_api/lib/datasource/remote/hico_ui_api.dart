@@ -37,6 +37,7 @@ import 'package:ui_api/response/voucher/voucher_response.dart';
 
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/invoice/extend_period_response.dart';
 part 'hico_ui_api.g.dart';
 
 @RestApi()
@@ -316,6 +317,10 @@ abstract class HicoUIAPI {
   //get bank list
   @GET('/v1/bank/list/customer')
   Future<BankResponse> banks();
+
+  //get extend perid list
+  @GET('/v1/listExtendPeriod')
+  Future<ExtendPeriodResponse> extendPeriod();
 
   //Get Token
   @POST('/v1/conversation/createToken')

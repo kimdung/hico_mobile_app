@@ -39,6 +39,7 @@ import 'package:ui_api/response/voucher/voucher_response.dart';
 
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/invoice/extend_period_response.dart';
 import '../hico_ui_repository.dart';
 
 class HicoUIRepositoryImpl extends HicoUIRepository {
@@ -327,6 +328,11 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   @override
   Future<BankResponse> banks() {
     return _api.banks();
+  }
+
+  @override
+  Future<ExtendPeriodResponse> extendPeriod() {
+    return _api.extendPeriod();
   }
 
   @override

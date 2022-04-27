@@ -15,6 +15,11 @@ class ServiceModel {
   ServiceCategoryModel? serviceCategory;
   String? description;
   int? price;
+  @JsonKey(name: 'min_hours')
+  int? minHours;
+  @JsonKey(name: 'offline_price_min')
+  int? offlinePriceMin;
+  int? hours;
 
   ServiceModel(
       {this.id,
@@ -24,7 +29,11 @@ class ServiceModel {
       this.categoryName,
       this.serviceCategory,
       this.description,
-      this.price});
+      this.price,
+      this.minHours,
+      this.offlinePriceMin,
+      this.hours,
+      });
 
   factory ServiceModel.fromJson(Map<String, dynamic> json) =>
       _$ServiceModelFromJson(json);
