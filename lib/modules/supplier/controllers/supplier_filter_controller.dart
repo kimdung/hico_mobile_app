@@ -184,6 +184,7 @@ class SupplierFilterController extends BaseController {
         height: Get.height / 2,
         child: LevelWidget(
           levels: AppDataGlobal.masterData!.levels!,
+          //AppDataGlobal.masterData!.levels!
           currentLevel: request.filterLevelId,
         ),
       ),
@@ -251,11 +252,7 @@ class SupplierFilterController extends BaseController {
     if (fromTime.value == '' || toTime.value == '') {
       validater = true;
       message = 'supplier.filter.time_required'.tr;
-    } else if (request.filterLevelId == null) {
-      validater = true;
-      message = 'supplier.filter.level_required'.tr;
-    }
-    if (validater) {
+    } else if (validater) {
       await DialogUtil.showPopup(
         dialogSize: DialogSize.Popup,
         barrierDismissible: false,

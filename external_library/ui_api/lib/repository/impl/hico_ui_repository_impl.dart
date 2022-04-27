@@ -195,18 +195,29 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     int limit,
     int offset,
   ) {
-    return _api.supplierList(
-      serviceId,
-      filterDate,
-      filterTimeSlot,
-      filterIsOnline,
-      filterLocationProvinceId,
-      filterLocationDistrictId,
-      filterLevelId,
-      filterNumberStar,
-      limit,
-      offset,
-    );
+    return filterLevelId != 0
+        ? _api.supplierList(
+            serviceId,
+            filterDate,
+            filterTimeSlot,
+            filterIsOnline,
+            filterLocationProvinceId,
+            filterLocationDistrictId,
+            filterLevelId,
+            filterNumberStar,
+            limit,
+            offset,
+          )
+        : _api.supplierAllList(
+            serviceId,
+            filterDate,
+            filterTimeSlot,
+            filterIsOnline,
+            filterLocationProvinceId,
+            filterLocationDistrictId,
+            filterNumberStar,
+            limit,
+            offset);
   }
 
   @override

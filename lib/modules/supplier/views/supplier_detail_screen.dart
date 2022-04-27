@@ -56,21 +56,29 @@ class SupplierDetailScreen extends GetView<SupplierDetailController> {
                     description: controller.profile.value.education ?? '',
                   ),
                   const SizedBox(height: 8),
-                  buildItem(
-                    icon: 'lib/resource/assets_resources/images/diploma.png',
-                    title: 'supplier.detail.interpretation_experience'.tr,
-                    description: controller.profile.value.interExp.toString() +
-                            'year'.tr,
-                    description2: controller.profile.value.interExpDetail ?? '',
-                  ),
+                  controller.profile.value.interExp != 0 &&
+                          controller.profile.value.interExpDetail != null
+                      ? buildItem(
+                          icon:
+                              'lib/resource/assets_resources/images/diploma.png',
+                          title: 'supplier.detail.interpretation_experience'.tr,
+                          description:
+                              controller.profile.value.interExp.toString(),
+                          description2: controller.profile.value.interExpDetail,
+                        )
+                      : const SizedBox(),
                   const SizedBox(height: 12),
-                  buildItem(
-                    icon: 'lib/resource/assets_resources/images/diploma.png',
-                    title: 'supplier.detail.translation_experience'.tr,
-                    description: controller.profile.value.transExp.toString() +
-                            'year'.tr,
-                    description2: controller.profile.value.transExpDetail ?? '',
-                  ),
+                  controller.profile.value.transExp != 0 &&
+                          controller.profile.value.transExpDetail != null
+                      ? buildItem(
+                          icon:
+                              'lib/resource/assets_resources/images/diploma.png',
+                          title: 'supplier.detail.translation_experience'.tr,
+                          description:
+                              controller.profile.value.transExp.toString(),
+                          description2: controller.profile.value.transExpDetail,
+                        )
+                      : const SizedBox(),
                   const SizedBox(height: 12),
                   buildImageGrid(
                     icon:

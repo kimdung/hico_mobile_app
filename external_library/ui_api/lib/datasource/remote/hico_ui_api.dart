@@ -180,7 +180,7 @@ abstract class HicoUIAPI {
     @Query('service_id') int id,
   );
 
-  //filter supplier
+  //filter supplier 
   @GET('/v1/customer/service/suppliers')
   Future<SupplierResponse> supplierList(
     @Query('service_id') int serviceId,
@@ -190,6 +190,20 @@ abstract class HicoUIAPI {
     @Query('filter_location_province_id') int filterLocationProvinceId,
     @Query('filter_location_district_id') int filterLocationDistrictId,
     @Query('filter_level_id') int filterLevelId,
+    @Query('filter_number_star') int? filterNumberStar,
+    @Query('limit') int limit,
+    @Query('offset') int offset,
+  );
+
+  // get all supplier
+  @GET('/v1/customer/service/suppliers')
+  Future<SupplierResponse> supplierAllList(
+    @Query('service_id') int serviceId,
+    @Query('filter_date') String filterDate,
+    @Query('filter_time_slot') String filterTimeSlot,
+    @Query('filter_is_online') int filterIsOnline,
+    @Query('filter_location_province_id') int filterLocationProvinceId,
+    @Query('filter_location_district_id') int filterLocationDistrictId,
     @Query('filter_number_star') int? filterNumberStar,
     @Query('limit') int limit,
     @Query('offset') int offset,

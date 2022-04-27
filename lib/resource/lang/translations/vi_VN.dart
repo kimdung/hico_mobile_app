@@ -25,6 +25,7 @@ const Map<String, String> vi_VN = {
   'error_mess': 'Kết nối thất bại. Vui lòng thử lại',
   'all': 'Tất cả',
   'calling': 'Đang gọi...',
+  'year' : 'năm',
 
   //onboard
   'onboard.title1': 'Welcome to Hico',
@@ -334,6 +335,4 @@ const Map<String, String> vi_VN = {
   'booking.detail.serivce_infor' : 'Thông tin dịch vụ',
   'booking.detail.time_work' : 'Thời gian làm việc',
   'booking.detail.payment_method' : 'Phương thức thanh toán',
-
-  'year' : 'năm',
 };

@@ -67,7 +67,7 @@ extension SupplierDetailComponents on SupplierDetailScreen {
         color: Colors.white,
         border: Border(
           bottom: BorderSide(
-            color: AppColor.borderGrayColorLight,
+            color: AppColor.primaryColorLight,
             width: 1,
           ),
         ),
