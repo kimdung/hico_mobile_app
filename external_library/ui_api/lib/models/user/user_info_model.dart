@@ -51,6 +51,8 @@ class UserInfoModel {
   int? kycStatus;
   @JsonKey(name: 'conversation_info')
   ConversationInfoModel? conversationInfo;
+  @JsonKey(name: 'account_balance')
+  int? accountBalance;
 
   UserInfoModel(
       {this.id,

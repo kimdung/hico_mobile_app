@@ -121,6 +121,9 @@ const Map<String, String> vi_VN = {
   'order.detail.rating': 'Đánh giá',
   'order.detail.rating_title': 'Đánh giá phiên dịch viên',
 
+  //order extend
+  'order.extend.title': 'Đánh giá phiên dịch viên',
+
   //order
   'order.hello': 'Xin chào,',
   'order.search_title': 'Tìm kiếm đơn hàng',
@@ -326,7 +329,8 @@ const Map<String, String> vi_VN = {
   'invoice.requested': 'Đã yêu cầu',
   'invoice.accepted': 'PDV đồng ý',
   'invoice.successed': 'Hoàn thành',
-  'invoice.canceled': 'Hoàn thành',
+  'invoice.canceled': 'Đã huỷ',
+  'invoice.incurred': 'Phát sinh',
 
   //invoice detail
   'invoice.detail.supplier': 'Phiên dịch viên',

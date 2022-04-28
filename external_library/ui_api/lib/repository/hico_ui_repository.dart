@@ -39,6 +39,7 @@ import '../response/chat/chat_token_response.dart';
 import '../response/wallet/topup_history_response.dart';
 import '../response/wallet/topup_komaju_response.dart';
 import '../response/wallet/topup_response.dart';
+import '../response/invoice/extend_period_response.dart';
 
 abstract class HicoUIRepository {
   /* User */
@@ -205,6 +206,9 @@ abstract class HicoUIRepository {
       String code, String email, String password);
   //bank list
   Future<BankResponse> banks();
+
+  //extend period
+  Future<ExtendPeriodResponse> extendPeriod();
 
   // Create chat token
   Future<ChatTokenResponse> createChatToken();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:ui_api/models/invoice/extend_period_model.dart';
 
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
@@ -34,16 +35,26 @@ class TimeExtensionScreen extends GetView<TimeExtensionController> {
           style: TextAppStyle().titleAppBarStyle(),
         ),
       ),
-      body: Column(
+      body: Obx(() => Column(
         children: [
           _buildHeader(),
-          const SizedBox(
-            height: 28.0,
+          const SizedBox(height: 28.0,),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  ...List.generate(controller.extendPeriodList.length, (index) => 
+                    buildExtendItem(controller.extendPeriodList[index]),
+                  )
+                ],
+              ),
+            ),
           ),
-          _buildExtendList(),
+          //_buildExtendList(),
+          _buildExtendButton()
         ],
-      ),
-      bottomSheet: _buildExtendButton(),
+      )) ,
+      //bottomSheet: _buildExtendButton(),
     );
   }
 }
