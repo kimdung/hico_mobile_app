@@ -21,7 +21,7 @@ class TopupView extends GetView<TopupController> {
     return Scaffold(
       body: _buildBodyContent(),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
         child: GeneralButton(
           onPressed: controller.onConfirm,
           borderRadius: BorderRadius.circular(24),
@@ -49,7 +49,7 @@ class TopupView extends GetView<TopupController> {
 
   Widget _buildInputTopup() {
     return Container(
-      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       decoration: BoxDecoration(
         color: AppColor.primaryBackgroundColorLight,
@@ -158,7 +158,7 @@ class TopupView extends GetView<TopupController> {
   Widget _buildPaymentMethod() {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
         color: AppColor.primaryBackgroundColorLight,

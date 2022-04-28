@@ -11,7 +11,7 @@ import '../controllers/topup_history_controller.dart';
 
 class TopupHistoryView extends GetView<TopupHistoryController> {
   @override
-  final TopupHistoryController controller; 
+  final TopupHistoryController controller;
 
   TopupHistoryView(this.controller);
 
@@ -20,6 +20,7 @@ class TopupHistoryView extends GetView<TopupHistoryController> {
     return Scaffold(
       body: Obx(() {
         return ListView.builder(
+          padding: const EdgeInsets.only(top: 20),
           controller: controller.scrollController,
           itemCount: controller.topupHistories.length,
           shrinkWrap: true,
@@ -31,7 +32,9 @@ class TopupHistoryView extends GetView<TopupHistoryController> {
   }
 
   Widget _buildTopupHistoryCell(TopupHistoryModel topupHistory) {
-    return Container(
+    return InkWell(
+      onTap: () => controller.onTopupDetail(topupHistory),
+      child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,6 +79,7 @@ class TopupHistoryView extends GetView<TopupHistoryController> {
           ),
         ],
       ),
+    ),
     );
   }
 }

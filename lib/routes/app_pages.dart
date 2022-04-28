@@ -81,6 +81,12 @@ import '../modules/voucher/bindings/voucher_binding.dart';
 import '../modules/voucher/views/voucher_screen.dart';
 import '../modules/wallet/topup_bank/bindings/topup_bank_binding.dart';
 import '../modules/wallet/topup_bank/views/topup_bank_screen.dart';
+import '../modules/wallet/topup_detail/bindings/topup_detail_binding.dart';
+import '../modules/wallet/topup_detail/views/topup_detail_screen.dart';
+import '../modules/wallet/topup_komoju/bindings/topup_komoju_binding.dart';
+import '../modules/wallet/topup_komoju/views/topup_komoju_screen.dart';
+import '../modules/wallet/topup_stripe/bindings/topup_stripe_binding.dart';
+import '../modules/wallet/topup_stripe/views/topup_stripe_screen.dart';
 import '../modules/wallet/wallet/bindings/wallet_binding.dart';
 import '../modules/wallet/wallet/views/wallet_screen.dart';
 
@@ -329,5 +335,20 @@ final routePages = [
     name: Routes.TOPUP_BANK,
     page: () => TopupBankScreen(),
     binding: TopupBankBinding(),
+  ),
+  GetPage(
+    name: Routes.TOPUP_STRIPE,
+    page: () => TopupStripeScreen(),
+    binding: TopupStripeBinding(),
+  ),
+  GetPage(
+    name: Routes.TOPUP_DETAIL,
+    page: () => TopupDetailScreen(),
+    binding: TopupDetailBinding(),
+  ),
+  GetPage(
+    name: Routes.TOPUP_KOMOJU,
+    page: () => TopupKomojuScreen(),
+    binding: TopupKomojuBinding(),
   ),
 ];

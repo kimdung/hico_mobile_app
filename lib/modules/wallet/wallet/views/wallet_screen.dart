@@ -48,17 +48,17 @@ class WalletScreen extends GetView<WalletController> {
           child: Obx(
             () => controller.indexPage.value == 0
                 ? TopupView(TopupController())
-                : TopupHistoryView(TopupHistoryController()),
+                : TopupHistoryView(TopupHistoryController(controller)),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildStatusNavBar() {
+  Widget _buildStatusNavBar() { 
     return Container(
       height: 44,
-      margin: const EdgeInsets.fromLTRB(20, 16, 20, 20),
+      margin: const EdgeInsets.fromLTRB(20, 16, 20, 0),
       decoration: BoxDecoration(
         color: AppColor.secondBackgroundColorLight,
         borderRadius: const BorderRadius.all(Radius.circular(48)),

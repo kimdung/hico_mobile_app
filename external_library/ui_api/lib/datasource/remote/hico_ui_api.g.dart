@@ -889,6 +889,80 @@ class _HicoUIAPI implements HicoUIAPI {
     return value;
   }
 
+  @override
+  Future<TopupResponse> topupBank(amount) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'amount': amount};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TopupResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/payIn/createPayInCode',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TopupResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TopupResponse> topupBankConfirm(imageBill, payInCode, note) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'pay_in_code': payInCode,
+      r'note': note
+    };
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.files.add(MapEntry(
+        'image',
+        MultipartFile.fromFileSync(imageBill.path,
+            filename: imageBill.path.split(Platform.pathSeparator).last)));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TopupResponse>(Options(
+                method: 'POST',
+                headers: _headers,
+                extra: _extra,
+                contentType: 'multipart/form-data')
+            .compose(_dio.options, '/v1/payIn/createPayInBank',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TopupResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TopupKomajuResponse> topupKomaju(amount) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'amount': amount};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TopupKomajuResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/payIn/createPayInKomoju',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TopupKomajuResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TopupResponse> topupKomojuResult(sessionId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'session_id': sessionId};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TopupResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/ipnKomoju',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TopupResponse.fromJson(_result.data!);
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cross_file/src/types/interface.dart';
 import 'package:ui_api/datasource/remote/hico_ui_api.dart';
 import 'package:ui_api/request/general/contact_request.dart';
 import 'package:ui_api/request/invoice/booking_request.dart';
@@ -36,6 +37,8 @@ import 'package:ui_api/response/voucher/voucher_response.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
 import '../../response/wallet/topup_history_response.dart';
+import '../../response/wallet/topup_komaju_response.dart';
+import '../../response/wallet/topup_response.dart';
 import '../hico_ui_repository.dart';
 
 class HicoUIRepositoryImpl extends HicoUIRepository {
@@ -339,5 +342,26 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   @override
   Future<TopupHistoryResponse> topupHistory(int limit, int offset) {
     return _api.topupHistory(limit, offset);
+  }
+
+  @override
+  Future<TopupResponse> topupBank(double amount) {
+    return _api.topupBank(amount);
+  }
+
+  @override
+  Future<TopupKomajuResponse> topupKomaju(double amount) {
+    return _api.topupKomaju(amount);
+  }
+
+  @override
+  Future<TopupResponse> topupBankConfirm(
+      File imageBill, String payInCode, String note) {
+    return _api.topupBankConfirm(imageBill, payInCode, note);
+  }
+
+  @override
+  Future<TopupResponse> topupKomojuResult(String sessionId) {
+    return _api.topupKomojuResult(sessionId);
   }
 }

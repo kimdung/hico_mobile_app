@@ -60,4 +60,7 @@ abstract class Routes {
   static const BOOKING_DETAIL = '/booking_detail';
   static const WALLET = '/wallet/wallet';
   static const TOPUP_BANK = '/wallet/topup-bank';
+  static const TOPUP_STRIPE = '/wallet/topup-stripe';
+  static const TOPUP_DETAIL = '/wallet/topup-detail';
+  static const TOPUP_KOMOJU = '/wallet/topup-komoju';
 }

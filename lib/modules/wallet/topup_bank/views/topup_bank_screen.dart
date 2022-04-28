@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
@@ -209,7 +208,8 @@ class TopupBankScreen extends GetView<TopupBankController> {
                     Expanded(
                       flex: 1,
                       child: Text(
-                        'topup.bank.content'.trArgs([controller.code]),
+                        'topup.bank.content'
+                            .trArgs([controller.topup.code ?? '']),
                         style: TextAppStyle().titleStyle(),
                       ),
                     ),
@@ -290,7 +290,7 @@ class TopupBankScreen extends GetView<TopupBankController> {
           Container(
             margin: const EdgeInsets.only(top: 8),
             child: TextField(
-              // controller: textEditng,
+              controller: controller.noteController,
               keyboardType: TextInputType.text,
               cursorColor: AppColor.fifthTextColorLight,
               maxLines: 4,
@@ -347,9 +347,9 @@ class TopupBankScreen extends GetView<TopupBankController> {
           InkWell(
             onTap: controller.onSelectImageBill,
             child: Obx(
-              () => controller.avatar.value != null
+              () => controller.imageBill.value != null
                   ? Image.file(
-                      File(controller.avatar.value!.path),
+                      File(controller.imageBill.value!.path),
                       width: double.infinity,
                       fit: BoxFit.fitWidth,
                     )

@@ -180,7 +180,7 @@ const Map<String, String> vi_VN = {
   'topup.method.title': 'Hình thức nạp tiền',
   'topup.bank': 'Chuyển khoản ngân hàng',
   'topup.bank.description': 'Chuyển khoản ngân hàng TK Hico',
-  'topup.komoju': 'komoju',
+  'topup.komoju': 'Thanh toán Komoju',
   'topup.komoju.description': 'Chuyển thanh toán cho cổng thanh toán Komoju',
   'topup.stripe': 'Thanh toán Stripe',
   'topup.stripe.description': 'Chuyển thanh toán cho cổng thanh toán Stripe',
@@ -194,6 +194,27 @@ const Map<String, String> vi_VN = {
   'topup.bank.content.note':
       'Sau khi chuyển khoản thành công, vui lòng ghi chú và update ảnh chuyển tiền lên hệ thống',
   'topup.bank.bill': 'Ảnh chuyển tiền',
+
+  'topup.stripe.title': 'Thông tin thẻ',
+
+  'topup.detail.title': 'Chi Tiết Nạp Tiền',
+  'topup.card.name': 'Chủ tài khoản',
+  'topup.card.number': 'Số thẻ',
+  'topup.card.date': 'Ngày hết hạn (MM/YY)',
+  'topup.card.cvv': 'CVV',
+
+  'topup.wallet': 'Nạp tiền vào ví',
+  'topup.code': 'Mã giao dịch: ',
+  'topup.image.bill.valid': 'Ảnh chuyển tiền là bắt buộc',
+
+  'topup.money': 'Số tiền',
+  'topup.date': 'Thời gian',
+  'topup.method': 'Hình thức nạp tiền',
+  'topup.note': 'Ghi chú',
+  'topup.recharge': 'Nạp thêm',
+
+  'topup.error': 'Có lỗi xẩy ra trong quá trình nạp tiền!',
+  'topup.failure': 'Nạp tiền thất bại!',
 
   //statistic screen
   'statistic.order_finish': 'Đơn hàng đã hoàn thành',

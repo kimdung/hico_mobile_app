@@ -4,10 +4,13 @@ import 'package:get/get.dart';
 import 'package:ui_api/models/wallet/topup_history_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
+import '../../../../routes/app_pages.dart';
 import '../../../../shared/constants/common.dart';
+import '../../wallet/controllers/wallet_controller.dart';
 
 class TopupHistoryController extends GetxController {
   final _uiRepository = Get.find<HicoUIRepository>();
+  final WalletController walletController;
 
   final ScrollController scrollController = ScrollController();
   final topupHistories = RxList<TopupHistoryModel>();
@@ -15,7 +18,7 @@ class TopupHistoryController extends GetxController {
   int _offset = 0;
   bool _hasReachedMax = false;
 
-  TopupHistoryController() {
+  TopupHistoryController(this.walletController) {
     printInfo(info: 'init TopupHistoryController');
     _loadList();
   }
@@ -81,5 +84,14 @@ class TopupHistoryController extends GetxController {
     } catch (e) {
       await EasyLoading.dismiss();
     }
+  }
+
+  /* Action */
+  Future onTopupDetail(TopupHistoryModel topup) async {
+    await Get.toNamed(Routes.TOPUP_DETAIL, arguments: topup)?.then((value) {
+      if (value is bool && value) {
+        this.walletController.indexPage.value = 0;
+      }
+    });
   }
 }
