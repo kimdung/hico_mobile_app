@@ -8,13 +8,15 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../base/base_controller.dart';
 import '../../../../resource/assets_constant/icon_constants.dart';
+import '../../../../resource/config/config_environment.dart';
 import '../../../../routes/app_pages.dart';
-import '../../../../shared/constants/common.dart';
+import '../../../../shared/constants/common.dart'; 
 import '../../../../shared/utils/dialog_util.dart';
 import '../../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class TopupKomojuController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
+  final _evnConfig = Get.find<EnvConfiguration>();
 
   final String payUrl;
 
@@ -27,6 +29,20 @@ class TopupKomojuController extends BaseController {
   Future<void> onInit() async {
     await super.onInit();
   }
+
+  /* Function */
+  NavigationDecision navigationDelegate(NavigationRequest request) {
+    final domain =
+        _evnConfig.value[UIAPIDomain] ?? 'https://hico.dev.bluebolt.software/';
+    if (request.url.startsWith(domain)) {
+      reponsePayment(request.url);
+      return NavigationDecision.prevent;
+    }
+    printInfo(info: 'allowing navigation to $request');
+    return NavigationDecision.navigate;
+  }
+
+  /* API */
 
   Future<void> reponsePayment(String url) async {
     final sessionId = Uri.parse(url).queryParameters['session_id'];

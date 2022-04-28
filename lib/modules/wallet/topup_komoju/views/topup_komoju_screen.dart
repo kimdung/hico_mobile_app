@@ -41,15 +41,8 @@ class TopupKomojuScreen extends GetView<TopupKomojuController> {
             javascriptChannels: <JavascriptChannel>{
               _toasterJavascriptChannel(context),
             },
-            navigationDelegate: (NavigationRequest request) {
-              if (request.url
-                  .startsWith('https://hico.dev.bluebolt.software/')) {
-                controller.reponsePayment(request.url);
-                return NavigationDecision.prevent;
-              }
-              print('allowing navigation to $request');
-              return NavigationDecision.navigate;
-            },
+            navigationDelegate: (NavigationRequest request) =>
+                controller.navigationDelegate(request),
             onPageStarted: (String url) {
               print('Page started loading: $url');
             },
