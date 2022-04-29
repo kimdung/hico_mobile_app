@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
@@ -32,7 +33,13 @@ class TopupStripeScreen extends GetView<TopupStripeController> {
             elevation: 1,
             backgroundColor: Colors.white,
           ),
-          body: _buildBodyContent(),
+          body: WidgetTouchHideKeyBoard(
+            child: Container(
+              height: double.infinity,
+              padding: const EdgeInsets.all(20),
+              child: _buildBodyContent(),
+            ),
+          ),
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.all(20),
             child: GeneralButton(
@@ -52,60 +59,66 @@ class TopupStripeScreen extends GetView<TopupStripeController> {
   }
 
   Widget _buildBodyContent() {
-    return WidgetTouchHideKeyBoard(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Column(
-              children: [
-                Container(
-                  color: AppColor.greyBackgroundColor,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Row(
-                    children: [
-                      Container(
-                          margin: const EdgeInsets.only(right: 15),
-                          child: FCoreImage(IconConstants.icProfileBank)),
-                      Expanded(
-                        child: Text(
-                          'booking.bank_update_title'.tr,
-                          style: TextAppStyle().smallTextBlack(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Form(
-                  key: controller.formState,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        _buildInputAccountHolder(),
-                        _buildInputBankNumber(),
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: _buildInputValidDate(),
-                            ),
-                            const SizedBox(width: 20),
-                            Expanded(
-                              flex: 1,
-                              child: _buildInputCVV(),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+    // return WidgetTouchHideKeyBoard(
+    //   child: SingleChildScrollView(
+    //     child: Column(
+    //       children: [
+    //         Column(
+    //           children: [
+    //             Container(
+    //               color: AppColor.greyBackgroundColor,
+    //               padding:
+    //                   const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+    //               child: Row(
+    //                 children: [
+    //                   Container(
+    //                       margin: const EdgeInsets.only(right: 15),
+    //                       child: FCoreImage(IconConstants.icProfileBank)),
+    //                   Expanded(
+    //                     child: Text(
+    //                       'booking.bank_update_title'.tr,
+    //                       style: TextAppStyle().smallTextBlack(),
+    //                     ),
+    //                   ),
+    //                 ],
+    //               ),
+    //             ),
+    //             Form(
+    //               key: controller.formState,
+    //               child: Container(
+    //                 padding: const EdgeInsets.symmetric(horizontal: 20),
+    //                 child: Column(
+    //                   children: [
+    //                     _buildInputAccountHolder(),
+    //                     _buildInputBankNumber(),
+    //                     Row(
+    //                       children: [
+    //                         Expanded(
+    //                           flex: 3,
+    //                           child: _buildInputValidDate(),
+    //                         ),
+    //                         const SizedBox(width: 20),
+    //                         Expanded(
+    //                           flex: 1,
+    //                           child: _buildInputCVV(),
+    //                         )
+    //                       ],
+    //                     ),
+    //                   ],
+    //                 ),
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
+    return CardFormField(
+      controller: controller.cardEditController,
+      onCardChanged: (card) {
+        controller.card = card;
+      },
     );
   }
 

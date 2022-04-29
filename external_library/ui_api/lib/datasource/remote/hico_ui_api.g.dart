@@ -948,9 +948,9 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
-  Future<TopupKomajuResponse> topupKomaju(amount) async {
+  Future<TopupKomajuResponse> topupKomaju(amount, type) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'amount': amount};
+    final queryParameters = <String, dynamic>{r'amount': amount, r'type': type};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -973,6 +973,26 @@ class _HicoUIAPI implements HicoUIAPI {
         _setStreamType<TopupResponse>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/v1/ipnKomoju',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TopupResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TopupResponse> createPayInStripe(paymentMethodId, name, amount) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'payment_method_id': paymentMethodId,
+      r'name': name,
+      r'amount': amount
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TopupResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/createPayInStripe',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = TopupResponse.fromJson(_result.data!);

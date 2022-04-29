@@ -353,9 +353,18 @@ abstract class HicoUIAPI {
   );
 
   @POST('/v1/payIn/createPayInKomoju')
-  Future<TopupKomajuResponse> topupKomaju(@Query('amount') double amount);
+  Future<TopupKomajuResponse> topupKomaju(
+    @Query('amount') double amount,
+    @Query('type') int type,
+  );
 
   @GET('/v1/ipnKomoju')
   Future<TopupResponse> topupKomojuResult(
       @Query('session_id') String sessionId);
+
+  @POST('/v1/createPayInStripe')
+  Future<TopupResponse> createPayInStripe(
+      @Query('payment_method_id') String paymentMethodId,
+      @Query('name') String name,
+      @Query('amount') double amount);
 }

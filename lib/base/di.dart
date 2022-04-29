@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_line_sdk/flutter_line_sdk.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ui_api/datasource/remote/hico_ui_api.dart';
@@ -22,6 +24,9 @@ class DependencyInjection {
     Get.put(() => config);
     await Get.putAsync(() => StorageService().init());
     await Get.putAsync(() => LocateService().init());
+
+    await LineSDK.instance.setup(config.value[LineChannelId]!);
+    Stripe.publishableKey = config.value[StripePublishableKey]!;
 
     final _dioUIAPI =
         await DioClient.setup(baseUrl: config.value[UIAPIDomain]!);

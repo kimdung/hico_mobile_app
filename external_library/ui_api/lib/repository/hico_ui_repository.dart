@@ -225,7 +225,11 @@ abstract class HicoUIRepository {
   Future<TopupResponse> topupBankConfirm(
       File imageBill, String payInCode, String note);
 
-  Future<TopupKomajuResponse> topupKomaju(double amount);
+  Future<TopupKomajuResponse> topupKomaju(double amount, int type);
 
   Future<TopupResponse> topupKomojuResult(String sessionId);
+
+  Future<TopupResponse> topupStripe(
+      String paymentMethodId, String name, double amount);
 }
+ 

@@ -52,9 +52,11 @@ class TopupHistoryModel {
 
 @JsonSerializable()
 class TopupHistoryData {
+  bool? requiresAction;
+  @JsonKey(name: 'requires_action')
   TopupHistoryModel? row;
 
-  TopupHistoryData({this.row});
+  TopupHistoryData({this.requiresAction, this.row});
 
   factory TopupHistoryData.fromJson(Map<String, dynamic> json) =>
       _$TopupHistoryDataFromJson(json);

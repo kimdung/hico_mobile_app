@@ -50,11 +50,13 @@ class TopupController extends GetxController {
         await _topupBank(amount);
         break;
       case 1:
-        await _topupKomaju(amount);
+        await _topupKomaju(amount, 1);
         break;
       case 2:
-        final paymentMethod = await Stripe.instance
-            .createPaymentMethod(PaymentMethodParams.card());
+        await _topupKomaju(amount, 2);
+        break;
+      case 3:
+        await Get.toNamed(Routes.TOPUP_STRIPE, arguments: amount);
         break;
       default:
         break;
@@ -72,7 +74,7 @@ class TopupController extends GetxController {
 
   /* API */
 
-  Future<void> _topupBank(double amount) async { 
+  Future<void> _topupBank(double amount) async {
     try {
       await EasyLoading.show();
       await _uiRepository.topupBank(amount).then((response) {
@@ -88,10 +90,10 @@ class TopupController extends GetxController {
     }
   }
 
-  Future<void> _topupKomaju(double amount) async {
+  Future<void> _topupKomaju(double amount, int type) async {
     try {
       await EasyLoading.show();
-      await _uiRepository.topupKomaju(amount).then((response) {
+      await _uiRepository.topupKomaju(amount, type).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
@@ -101,12 +103,6 @@ class TopupController extends GetxController {
       });
     } catch (e) {
       await EasyLoading.dismiss();
-    }
-  }
-
-  Future _payment(String payUrl) async {
-    if (payUrl.isNotEmpty && await canLaunch(payUrl)) {
-      await launch(payUrl);
     }
   }
 }

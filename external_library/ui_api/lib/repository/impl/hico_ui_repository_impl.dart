@@ -356,8 +356,8 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   }
 
   @override
-  Future<TopupKomajuResponse> topupKomaju(double amount) {
-    return _api.topupKomaju(amount);
+  Future<TopupKomajuResponse> topupKomaju(double amount, int type) {
+    return _api.topupKomaju(amount, type);
   }
 
   @override
@@ -369,5 +369,11 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   @override
   Future<TopupResponse> topupKomojuResult(String sessionId) {
     return _api.topupKomojuResult(sessionId);
+  }
+
+  @override
+  Future<TopupResponse> topupStripe(
+      String paymentMethodId, String name, double amount) {
+    return _api.createPayInStripe(paymentMethodId, name, amount);
   }
 }

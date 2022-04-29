@@ -184,7 +184,10 @@ const Map<String, String> vi_VN = {
   'topup.bank': 'Chuyển khoản ngân hàng',
   'topup.bank.description': 'Chuyển khoản ngân hàng TK Hico',
   'topup.komoju': 'Thanh toán Komoju',
-  'topup.komoju.description': 'Chuyển thanh toán cho cổng thanh toán Komoju',
+  'topup.komoju1': 'コンビニ決済 - KOMOJU',
+  'topup.komoju2': 'スマホ決済 - KOMOJU',
+  'topup.komoju.description1': 'Thanh toán tại Mini Stop,...',
+  'topup.komoju.description2': 'Thanh toán bằng Line Pay,...',
   'topup.stripe': 'Thanh toán Stripe',
   'topup.stripe.description': 'Chuyển thanh toán cho cổng thanh toán Stripe',
 
