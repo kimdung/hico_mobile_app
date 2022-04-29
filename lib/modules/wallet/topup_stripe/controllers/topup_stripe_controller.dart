@@ -35,12 +35,28 @@ class TopupStripeController extends BaseController {
   /* Action */
 
   Future<void> onConfirm() async {
-    // if (!cardEditController.details.complete) {
-    //   return;
-    // }
+    if (!cardEditController.details.complete) {
+      return;
+    }
     try {
-      final paymentMethod = await Stripe.instance.createPaymentMethod(
-        const PaymentMethodParams.card(),
+      final paymentMethod = await Stripe.instance
+          .createPaymentMethod(const PaymentMethodParams.card())
+          .catchError(
+        (onError) async {
+          printInfo(info: onError.toString());
+          await DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: 'topup.failure'.tr,
+            ),
+            onVaLue: (value) {
+              Get.back();
+            },
+          );
+        },
       );
       await _requestPayment(paymentMethod);
     } on StripeError catch (error) {
