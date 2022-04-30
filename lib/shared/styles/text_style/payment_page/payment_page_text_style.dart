@@ -128,7 +128,7 @@ extension PaymentPageStyle on TextAppStyle {
       fontSize: 14,
       fontWeight: FontWeight.w400,
     );
-  } 
+  }
 
   TextStyle notActiveButtonPackageStyle() {
     return TextStyle(

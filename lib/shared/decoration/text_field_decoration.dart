@@ -11,7 +11,8 @@ class TextFieldDecoration {
       TextStyle? hintStype,
       Color? backgroundColor,
       Color borderColor = Colors.grey,
-      Widget? prefixIcon, Widget? suffixIcon}) {
+      Widget? prefixIcon,
+      Widget? suffixIcon}) {
     return InputDecoration(
       hintText: hintText,
       filled: backgroundColor != null,

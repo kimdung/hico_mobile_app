@@ -59,6 +59,8 @@ const MediaApiEnvironment = 'MediaApiEnvironment';
 const DefaultLanguageCode = 'DefaultLanguageCode';
 const UIAPIDomain = 'UIAPIDomain';
 const ClientAPIDomain = 'ClientAPIDomain';
+const LineChannelId = 'LineChannelId';
+const StripePublishableKey = 'StripePublishableKey';
 
 // URL DOWNLOAD APP
 const URL_ANDROID =

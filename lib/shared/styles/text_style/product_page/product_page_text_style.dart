@@ -47,7 +47,7 @@ extension ProductPageStyle on TextAppStyle {
       fontSize: 12,
       fontWeight: FontWeight.w400,
     );
-  } 
+  }
 
   TextStyle textPackageActiveStyle() {
     return TextStyle(

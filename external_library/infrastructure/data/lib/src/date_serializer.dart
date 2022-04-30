@@ -7,7 +7,6 @@ import 'package:built_value/serializer.dart';
 import 'package:data_infrastructure/src/model/date.dart';
 
 class DateSerializer implements PrimitiveSerializer<Date> {
-
   const DateSerializer();
 
   @override
