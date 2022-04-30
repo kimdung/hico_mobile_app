@@ -9,6 +9,7 @@ import 'package:ui_api/models/wallet/topup_item.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../data/app_data_global.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../shared/constants/common.dart';
 
@@ -18,7 +19,7 @@ class TopupController extends GetxController {
   List<TopupItem> get topupItems => TopupItem.topupItems;
   RxInt selectedMoneyIndex = RxInt(0);
 
-  final balance = RxDouble(200000);
+  final balance = RxInt(AppDataGlobal.userInfo?.accountBalance ?? 0);
 
   final formState = GlobalKey<FormState>();
   final moneyController = TextEditingController()

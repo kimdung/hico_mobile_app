@@ -15,6 +15,7 @@ UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
       dateOfBirth: json['date_of_birth'] as String? ?? '',
       email: json['email'] as String?,
       phoneNumber: json['phone_number'] as String? ?? '',
+      bankId: json['bank_id'] as int?,
       bankName: json['bank_name'] as String? ?? '',
       bankBranchName: json['bank_branch_name'] as String? ?? '',
       bankAccountHolder: json['bank_account_holder'] as String? ?? '',
@@ -46,9 +47,8 @@ UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
           ? null
           : ConversationInfoModel.fromJson(
               json['conversation_info'] as Map<String, dynamic>),
-    )
-      ..bankId = json['bank_id'] as int?
-      ..accountBalance = json['account_balance'] as int?;
+      accountBalance: json['account_balance'] as int?,
+    );
 
 Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>
     <String, dynamic>{
