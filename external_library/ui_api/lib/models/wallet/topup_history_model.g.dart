@@ -32,15 +32,14 @@ Map<String, dynamic> _$TopupHistoryModelToJson(TopupHistoryModel instance) =>
 
 TopupHistoryData _$TopupHistoryDataFromJson(Map<String, dynamic> json) =>
     TopupHistoryData(
-      requiresAction: json['requiresAction'] as bool?,
-      row: json['requires_action'] == null
+      requiresAction: json['requires_action'] as bool?,
+      row: json['row'] == null
           ? null
-          : TopupHistoryModel.fromJson(
-              json['requires_action'] as Map<String, dynamic>),
+          : TopupHistoryModel.fromJson(json['row'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$TopupHistoryDataToJson(TopupHistoryData instance) =>
     <String, dynamic>{
-      'requiresAction': instance.requiresAction,
-      'requires_action': instance.row,
+      'requires_action': instance.requiresAction,
+      'row': instance.row,
     };

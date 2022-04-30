@@ -52,8 +52,8 @@ class TopupHistoryModel {
 
 @JsonSerializable()
 class TopupHistoryData {
-  bool? requiresAction;
   @JsonKey(name: 'requires_action')
+  bool? requiresAction;
   TopupHistoryModel? row;
 
   TopupHistoryData({this.requiresAction, this.row});
