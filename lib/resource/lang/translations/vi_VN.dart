@@ -28,6 +28,7 @@ const Map<String, String> vi_VN = {
   'copied': 'Đã sao chép',
   'comment': 'Ghi chú',
   'camera': 'Hình ảnh',
+  'year' : 'năm',
 
   //onboard
   'onboard.title1': 'Welcome to Hico',
@@ -323,6 +324,8 @@ const Map<String, String> vi_VN = {
   'supplier.detail.customer': 'Khách hàng',
   'supplier.detail.degree': 'Bằng cấp',
   'supplier.detail.booking': 'Đặt lịch',
+  'supplier.detail.interpretation_experience' : 'Kinh nghiệm phiên dịch',
+  'supplier.detail.translation_experience' : 'Kinh nghiệm biên dịch',
 
   //invoice
   'invoice.misson': 'Nhiệm vụ đã hoàn thành',

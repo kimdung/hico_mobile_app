@@ -508,6 +508,42 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
+  Future<SupplierResponse> supplierAllList(
+      serviceId,
+      filterDate,
+      filterTimeSlot,
+      filterIsOnline,
+      filterLocationProvinceId,
+      filterLocationDistrictId,
+      filterNumberStar,
+      limit,
+      offset) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'service_id': serviceId,
+      r'filter_date': filterDate,
+      r'filter_time_slot': filterTimeSlot,
+      r'filter_is_online': filterIsOnline,
+      r'filter_location_province_id': filterLocationProvinceId,
+      r'filter_location_district_id': filterLocationDistrictId,
+      r'filter_number_star': filterNumberStar,
+      r'limit': limit,
+      r'offset': offset
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<SupplierResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/customer/service/suppliers',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SupplierResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<SupplierProfileResponse> supplierDetail(memberCode) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'member_code': memberCode};

@@ -16,16 +16,29 @@ class SupplierProfileModel {
   String? education;
   String? experience;
   List<DocumentsCertificateModel>? files;
+  @JsonKey(name: 'interpretation_experience_detail')
+  String? interExpDetail;
+  @JsonKey(name: 'interpretation_experience')
+  int? interExp;
+  @JsonKey(name: 'translation_experience_detail')
+  String? transExpDetail;
+  @JsonKey(name: 'translation_experience')
+  int? transExp;
 
-  SupplierProfileModel(
-      {this.name,
-      this.avatarImage,
-      this.avgRating,
-      this.taskCompleteNumber,
-      this.totalCustomer,
-      this.education,
-      this.experience,
-      this.files});
+  SupplierProfileModel({
+    this.name,
+    this.avatarImage,
+    this.avgRating,
+    this.taskCompleteNumber,
+    this.totalCustomer,
+    this.education,
+    this.experience,
+    this.files,
+    this.interExpDetail,
+    this.interExp,
+    this.transExpDetail,
+    this.transExp,
+  });
 
   factory SupplierProfileModel.fromJson(Map<String, dynamic> json) =>
       _$SupplierProfileModelFromJson(json);
