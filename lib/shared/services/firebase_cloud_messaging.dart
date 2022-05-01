@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:hico/shared/services/navigation_service.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 import '../../data/app_data_global.dart';
@@ -183,8 +184,17 @@ class FirebaseMessageConfig {
 
     try {
       debugPrint('FirebaseMessageConfig RemoteMessage $message');
+
       final remoteNotification = message.notification;
       final android = message.notification?.android;
+        if (message.data.isNotEmpty) {
+            final displayType = message.data['display_type'];
+            if(displayType.toString() == '4'){
+              print('extend');
+              
+            }
+          }
+
 
       if (remoteNotification != null && android != null) {
         _flutterLocalNotificationsPlugin.show(

@@ -923,6 +923,7 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
+
   Future<TopupHistoryResponse> topupHistory(limit, offset) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -1032,6 +1033,21 @@ class _HicoUIAPI implements HicoUIAPI {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = TopupResponse.fromJson(_result.data!);
+
+  Future<BaseResponse> extendInvoice(request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/customer/invoice/extendPeriod',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseResponse.fromJson(_result.data!);
+
     return value;
   }
 
@@ -1047,4 +1063,5 @@ class _HicoUIAPI implements HicoUIAPI {
     }
     return requestOptions;
   }
+}
 }

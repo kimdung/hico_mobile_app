@@ -44,26 +44,15 @@ extension TimeExtensionChildren on TimeExtensionScreen {
       ),
     );
   }
-  Widget _buildExtendList() {
-    return Obx(
-      () => ListView.builder(
-        shrinkWrap: true,
-        itemCount: controller.extendList.length,
-        itemBuilder: (context, index) {
-          return ItemExtendWidget(index: index);
-        },
-      ),
-    );
-  }
 
   Widget buildExtendItem(ExtendPeriodModel item){
     return InkWell(
         onTap: () {
-          controller.selectExtend(item.id!);
+          controller.selectExtend(item);
         },
         child: Container(
           decoration: BoxDecoration(
-            color: controller.currentIndex.value == item.id
+            color: controller.currentIndex.value.id == item.id
                 ? AppColor.secondBackgroundColorLight
                 : Colors.white,
             borderRadius: BorderRadius.circular(8.0),

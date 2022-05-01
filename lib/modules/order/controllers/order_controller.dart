@@ -42,7 +42,7 @@ class OrderController extends BaseController {
   @override
   Future<void> onReady() async {
     super.onReady();
-    await showDialogNotification();
+    //await showDialogNotification();
   }
 
   Future<void> _loadData() async {

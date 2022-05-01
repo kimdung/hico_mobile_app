@@ -12,27 +12,18 @@ import '../../../shared/constants/common.dart';
 import '../extend_model.dart';
 
 class TimeExtensionController extends BaseController {
-  final extendList = List<ExtendModel>.from(dataExtendList);
-  int preIndex = 0;
   ExtendModel? model;
   int? id;
   final _uiRepository = Get.find<HicoUIRepository>();
   RxList<ExtendPeriodModel> extendPeriodList = RxList<ExtendPeriodModel>();
-  Rx<int> currentIndex = Rx(0);
-  ExtendPeriodRequest extendRequest = ExtendPeriodRequest();
+  Rx<ExtendPeriodModel> currentIndex = Rx(ExtendPeriodModel());
+  ExtendPrepareModel extendRPrepare = ExtendPrepareModel();
   
   TimeExtensionController(){
     id = Get.arguments;
     loadData();
   }
 
-  @override
-  Future<void> onInit() {
-    extendList.forEach((element) {
-      log('${element.timeExtend} minute - ${element.money} JPY');
-    });
-    return super.onInit();
-  }
 
 Future<void> loadData() async {
     try {
@@ -49,23 +40,14 @@ Future<void> loadData() async {
     }
   }
 
-  void selectExtend(int id){
+  Future<void> selectExtend(ExtendPeriodModel id) async {
     currentIndex.value = id;
   }
-
-  void onChooseItemExtend(int currentIndex) {
-    extendList[currentIndex].isChoose = true;
-    extendList[preIndex].isChoose = !extendList[currentIndex].isChoose;
-    preIndex = currentIndex;
-    model = extendList[currentIndex];
-    log('Value: ${extendList[currentIndex].isChoose}');
-    update();
-  }
-
+  
   void onHandleExtendButton() {
-    extendRequest.invoiceId = id;
-    extendRequest.extendPeriodId = currentIndex.value;
+    extendRPrepare.invoiceId = id;
+    extendRPrepare.extendPeriod = currentIndex.value;
     //log('Message: ${model!.timeExtend} - ${model!.money}');
-    Get.toNamed(Routes.BOOKING_DETAIL, arguments: extendRequest);
+    Get.toNamed(Routes.BOOKING_DETAIL, arguments: extendRPrepare);
   }
 }

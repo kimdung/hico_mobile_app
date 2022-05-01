@@ -1,252 +1,299 @@
 part of 'booking_detail_screen.dart';
 
 extension BookingDetailChildren on BookingDetailScreen {
-  Widget _buildExtendConfirmButton() {
+  Widget _buildTitleSection({required String title}) {
     return Container(
-      margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0),
-      child: Expanded(
-        child: GeneralButton(
-          backgroundColor: AppColor.primaryColorLight,
-          onPressed: () {},
-          borderRadius: BorderRadius.circular(24),
-          borderColor: AppColor.primaryColorLight,
-          child: Text(
-            'booking.detail.confirm'.tr,
-            style: TextAppStyle().titleButtonStyle(),
-          ),
-        ),
+      alignment: Alignment.centerLeft,
+      child: Text(
+        title,
+        style: TextAppStyle().genaralTextStyle().copyWith(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
       ),
     );
   }
 
-  Widget _buildOrderInfor() {
+  Widget buildCustomerInfo() {
     return Container(
-      height: 75.0,
-      color: Colors.white,
-      margin: const EdgeInsets.only(
-        left: 20.0,
-        right: 20.0,
-        top: 16.0,
-        bottom: 18.0,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      //alignment: Alignment.centerLeft,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'booking.detail.order_infor'.tr,
-            style: TextAppStyle().textOrderInforStyle(),
-          ),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: SvgPicture.asset(IconConstants.syncRetry),
-            title: const Text(
-              'Hình thức',
-              style: TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-                fontFamily: 'SVN-Jeko',
+          _buildTitleSection(title: 'invoice.detail.supplier'.tr),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(right: 14),
+                child: FCoreImage(
+                  IconConstants.icUserTag,
+                  width: 24,
+                ),
               ),
+              Text(
+                controller.invoice.value.supplierName ?? '',
+                style: TextAppStyle().genaralTextStyle().copyWith(
+                      color: AppColor.blueTextColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget buildOrderInfo() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      //alignment: Alignment.centerLeft,
+      child: Column(
+        children: [
+          _buildTitleSection(title: 'order.detail.info_title'.tr),
+          _buildOrderInfoItem(
+            icon: IconConstants.icOrderMethod,
+            title: 'order.detail.order_type'.tr,
+            type: OrderInfoViewType.Button,
+            value: controller.invoice.value.workingForm.toString(),
+          ),    
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOrderInfoItem(
+      {required String icon,
+      required String title,
+      Color? titleColor,
+      FontWeight? titleFontWeight,
+      OrderInfoViewType type = OrderInfoViewType.Text,
+      required String value}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            child: Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(right: 14),
+                  child: FCoreImage(
+                    icon,
+                    width: 24,
+                  ),
+                ),
+                Text(
+                  title,
+                  style: TextAppStyle().genaralTextStyle().copyWith(
+                        color: titleColor ?? Colors.black,
+                        fontWeight: titleFontWeight ?? FontWeight.w400,
+                      ),
+                ),
+              ],
             ),
-            trailing: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 2.0, horizontal: 12.0),
-              decoration: BoxDecoration(
-                color: const Color(0xFF27AE60),
-                borderRadius: BorderRadius.circular(18.0),
-              ),
-              child: const Text(
-                'Online',
-                style: TextStyle(
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w500,
+          ),
+          _buildValueContent(type: type, value: value),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildValueContent(
+      {required OrderInfoViewType type, required String value}) {
+    switch (type) {
+      case OrderInfoViewType.Text:
+        return Text(
+          value,
+          textAlign: TextAlign.right,
+          style: TextAppStyle().normalTextGrey(),
+        );
+      case OrderInfoViewType.Button:
+        return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+                color:
+                    value == '1' ? AppColor.onlineColor : AppColor.offlineColor,
+                borderRadius: BorderRadius.circular(18)),
+            child: Text(
+              value == '1' ? 'Online' : 'Offline',
+              style: TextAppStyle().normalTextWhite(),
+            ));
+      case OrderInfoViewType.Status:
+        return Text(
+          value,
+          textAlign: TextAlign.right,
+          style: TextAppStyle().normalTextGrey(),
+        );
+      default:
+        return Container();
+    }
+  }
+
+  Widget buildServiceInfo() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          horizontal: CommonConstants.paddingDefault),
+      child: Column(
+        children: [
+          _buildTitleSection(title: 'order.detail.service_title'.tr),
+          const SizedBox(height: 8),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(right: 23),
+                padding: const EdgeInsets.all(9),
+                decoration: BoxDecoration(
                   color: Colors.white,
-                  fontFamily: 'SVN-Jeko',
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColor.secondColorLight.withOpacity(0.2),
+                      spreadRadius: 1,
+                      blurRadius: 2,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
+                child: (controller.invoice.value.service!.displayImage != null)
+                    ? NetWorkImage(
+                        image: controller.invoice.value.service!.displayImage!,
+                        width: 58,
+                        height: 58,
+                      )
+                    : Image.asset(
+                        ImageConstants.serviceDefault,
+                      ),
               ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildForm(
-    Widget header,
-    String icon,
-    String content,
-    Widget trailing,
-    Color textColor,
-  ) {
-    return Container(
-      color: Colors.white,
-      margin: const EdgeInsets.only(
-        left: 20.0,
-        right: 20.0,
-        top: 16.0,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          header,
-          ListTile(
-            dense: false,
-            contentPadding: EdgeInsets.zero,
-            leading: SvgPicture.asset(icon),
-            minLeadingWidth: 24.0,
-            title: Text(
-              content,
-              style: TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.w500,
-                color: textColor,
-                fontFamily: 'SVN-Jeko',
-              ),
-            ),
-            trailing: trailing,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildServiceInfor() {
-    return Container(
-      margin: const EdgeInsets.only(
-        left: 20.0,
-        right: 20.0,
-        top: 16.0,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'booking.detail.serivce_infor'.tr,
-            style: TextAppStyle().textOrderInforStyle(),
-          ),
-          const SizedBox(height: 14.0),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: Container(
-              width: 58.0,
-              height: 58.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8.0),
-                boxShadow: [
-                  BoxShadow(
-                    offset: const Offset(0.0, 2.0),
-                    blurRadius: 8.0,
-                    spreadRadius: 0.0,
-                    color: const Color(0xFFFF7DA5).withOpacity(0.3),
-                  ),
-                ],
-              ),
-              child: Image.asset(ImageConstants.medical),
-            ),
-            title: Text(
-              'Y tế',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.w400,
-                color: AppColor.textBlack,
-                fontFamily: 'SVN-Jeko',
-              ),
-            ),
-            subtitle: Text(
-              'Khoa Xương khớp',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.w400,
-                color: AppColor.textBlack,
-                fontFamily: 'SVN-Jeko',
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildIntoMoney() {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.only(
-        top: 18.0,
-        left: 20.0,
-        right: 20.0,
-        bottom: 34.0,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Expanded(
-                child: Text(
-                  'Tiền đơn hàng (Tạm tính)',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF717171),
-                    fontFamily: 'SVN-Jeko',
-                  ),
-                ),
-              ),
-              Text(
-                '${controller.result.money} JPY',
-                textAlign: TextAlign.right,
-                style: const TextStyle(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xFF717171),
-                  fontFamily: 'SVN-Jeko',
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 6.0,
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
               Expanded(
-                child: Text(
-                  'Thành tiền',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.textBlack,
-                    fontFamily: 'SVN-Jeko',
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        controller.invoice.value.service!.name ?? '',
+                        style: TextAppStyle().genaralTextStyle().copyWith(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      Text(
+                          '${'booking.department'.tr}: ${controller.invoice.value.service!.categoryName ?? ''}',
+                          style: TextAppStyle().genaralTextStyle().copyWith(
+                                color: Colors.black,
+                              )),
+                      
+                    ],
                   ),
                 ),
-              ),
-              Text(
-                '${controller.result.money} JPY',
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.blueTextColor,
-                  fontFamily: 'SVN-Jeko',
-                ),
-              ),
+              )
             ],
-          ),
+          )
         ],
       ),
     );
   }
+
+  Widget buildWorkingTime() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildTitleSection(title: 'order.detail.work_time'.tr),
+            Text(controller.invoice.value.workingDate ?? '',
+                style: TextAppStyle().normalTextStype())
+          ],
+        ),
+        _buildOrderInfoItem(
+            icon: IconConstants.icOrderCode,
+            title:
+                ' ${controller.result.value.extendPeriod!.minutes} ${'invoice.minutes'.tr}',
+            titleColor: AppColor.blueTextColor,
+            titleFontWeight: FontWeight.w500,
+            type: OrderInfoViewType.Text,
+            value: ''), 
+      ]),
+    );
+  }
+
+  Widget buildPaymentMethod() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+                child: _buildTitleSection(
+                    title: 'booking.wallet'.tr)),
+            Expanded(
+              child: Text(
+                  '${AppDataGlobal.userInfo!.accountBalance} JPY',
+                  textAlign: TextAlign.right,
+                  style: TextAppStyle().normalTextStype()),
+            )
+          ],
+        ),
+      ]),
+    );
+  }
+
+  Widget buildOrderDetail() {
+    return Obx(() => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              _buildDetailItem(
+                  title: 'order.detail.total_pay'.tr,
+                  value: '${controller.result.value.extendPeriod!.price!} JPY',
+                  type: OrderInfoViewType.Text),
+              _buildDetailItem(
+                  title: 'order.detail.pay_value'.tr,
+                  sizeTitle: 14,
+                  colorTitle: Colors.black,
+                  value: '${controller.result.value.extendPeriod!.price!} JPY',
+                  fweightValue: FontWeight.bold,
+                  colorValue: AppColor.blueTextColor,
+                  type: OrderInfoViewType.Text),
+            ],
+          ),
+        ));
+  }
+
+  Widget _buildDetailItem(
+      {required String title,
+      double? sizeTitle,
+      Color? colorTitle,
+      required String value,
+      double? sizeValue,
+      Color? colorValue,
+      FontWeight? fweightValue,
+      required OrderInfoViewType type}) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title,
+              style: TextAppStyle().secondTextStyle().copyWith(
+                    color: colorTitle ?? AppColor.sixTextColorLight,
+                    fontWeight: FontWeight.w500,
+                    fontSize: sizeTitle ?? 12,
+                  )),
+          Text(value,
+                  style: TextAppStyle().genaralTextStyle().copyWith(
+                        color: colorValue ?? AppColor.sixTextColorLight,
+                        fontWeight: fweightValue ?? FontWeight.w500,
+                        fontSize: sizeValue ?? 14,
+                      ))
+        ],
+      ),
+    );
+  }
+  
 }

@@ -37,6 +37,7 @@ import 'package:ui_api/response/user/user_response.dart';
 import 'package:ui_api/response/voucher/check_voucher_response.dart';
 import 'package:ui_api/response/voucher/voucher_response.dart';
 
+import '../../request/invoice/extend_period_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
 import '../../response/wallet/topup_history_response.dart';
@@ -381,4 +382,8 @@ abstract class HicoUIAPI {
       @Query('payment_method_id') String paymentMethodId,
       @Query('name') String name,
       @Query('amount') double amount);
+
+  //post extend 
+  @POST('/v1/customer/invoice/extendPeriod')
+  Future<BaseResponse> extendInvoice(@Body() ExtendPeriodRequest request);
 }

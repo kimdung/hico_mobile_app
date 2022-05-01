@@ -43,7 +43,7 @@ class SupplierFilterController extends BaseController {
   Rx<String> toTime = Rx('');
   Rx<String> province = Rx('');
   Rx<String> district = Rx('');
-  Rx<String> level = Rx('');
+  Rx<String> level = Rx('${'supplier.filter.level_title'.tr}: ${'all'.tr}');
   Rx<int> star = Rx(0);
   Rx<int> isOnline = Rx(CommonConstants.online);
   List<DistrictsModel> lstDistrict = [];
@@ -53,6 +53,8 @@ class SupplierFilterController extends BaseController {
     request.serviceId = bookingPrepare.service?.id;
     date.value = TextEditingValue(text: DateFormatter.formatDate(fromDate));
     request.filterIsOnline = isOnline.value;
+    request.filterLevelId = 0;
+    
   }
 
   @override
@@ -63,7 +65,7 @@ class SupplierFilterController extends BaseController {
   Future<void> selectFromDate(BuildContext context) async {
     await ShowBottomSheet().showBottomSheet(
       child: Container(
-        height: Get.height / 1.5,
+        height: Get.height / 1.2,
         child: DatePickerWidget(
           currentDate: fromDate,
         ),

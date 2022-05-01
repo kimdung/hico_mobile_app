@@ -331,6 +331,7 @@ const Map<String, String> vi_VN = {
   'invoice.misson': 'Nhiệm vụ đã hoàn thành',
   'invoice.service': 'Dịch vụ:',
   'invoice.hours': 'Giờ',
+  'invoice.minutes': 'Phút',
   'invoice.all': 'Tất cả',
   'invoice.requested': 'Đã yêu cầu',
   'invoice.accepted': 'PDV đồng ý',
@@ -372,6 +373,9 @@ const Map<String, String> vi_VN = {
   'booking.bank_update_title':
       'Cung cấp thông tin tài khoản ngân hàng của bạn để quá trình sử dụng dịch vụ thuận tiện hơn.',
 
+  'booking.wallet': 'Số dư ví Hico',
+  'booking.wallet_not_enough': 'Số dư ví của bạn không đủ. Vui lòng nạp thêm!',
+
   //consulting
   'consulting.title': 'Đăng ký tư vấn',
   'consulting.note':
@@ -386,6 +390,8 @@ const Map<String, String> vi_VN = {
   //extend screen
   'extend.header': 'Chọn thời gian bạn muốn gia hạn cho buổi làm việc với PDV',
   'extend.title': 'Gia hạn thời gian',
+  'extend.title.appbar': 'Chi tiết đặt lịch',
+  'extend.title.button': 'Xác Nhận Gia Hạn',
 
   //booking detail
   'booking.detail.order_infor': 'Thông tin đơn hàng',

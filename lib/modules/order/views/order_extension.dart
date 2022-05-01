@@ -359,14 +359,15 @@ extension OrderExtension on OrderScreen {
             titleFontWeight: FontWeight.w500,
             type: OrderInfoViewType.Text,
             value: controller.invoice.value.workingTime ?? ''),
-        _buildOrderInfoItem(
-            icon: IconConstants.icOrderCode,
-            title:
-                '${'invoice.incurred'.tr} ${controller.invoice.value.hours.toString()} ${'invoice.hours'.tr}',
-            titleColor: AppColor.blueTextColor,
-            titleFontWeight: FontWeight.w500,
-            type: OrderInfoViewType.Text,
-            value: controller.invoice.value.workingTime ?? ''),
+          if(controller.invoice.value.workingForm == CommonConstants.offline)
+          _buildOrderInfoItem(
+              icon: IconConstants.icOrderCode,
+              title:
+                  '${'invoice.incurred'.tr} ${controller.invoice.value.hours.toString()} ${'invoice.hours'.tr}',
+              titleColor: AppColor.blueTextColor,
+              titleFontWeight: FontWeight.w500,
+              type: OrderInfoViewType.Text,
+              value: controller.invoice.value.workingTime ?? ''),
       ]),
     );
   }

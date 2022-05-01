@@ -20,3 +20,18 @@ Map<String, dynamic> _$ExtendPeriodRequestToJson(
       'extend_period_id': instance.extendPeriodId,
       'payment_type': instance.paymentType,
     };
+
+ExtendPrepareModel _$ExtendPrepareModelFromJson(Map<String, dynamic> json) =>
+    ExtendPrepareModel(
+      invoiceId: json['invoiceId'] as int?,
+      extendPeriod: json['extendPeriod'] == null
+          ? null
+          : ExtendPeriodModel.fromJson(
+              json['extendPeriod'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ExtendPrepareModelToJson(ExtendPrepareModel instance) =>
+    <String, dynamic>{
+      'invoiceId': instance.invoiceId,
+      'extendPeriod': instance.extendPeriod,
+    };

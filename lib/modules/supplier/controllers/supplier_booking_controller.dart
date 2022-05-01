@@ -29,6 +29,7 @@ class SupplierBookingController extends BaseController {
   Rx<int> showSuggest = Rx<int>(0);
   RxList<AddressModel> addressList = RxList<AddressModel>();
   final paymentMethodId = Rx(0);
+  double? hours = 0;
 
   final TextEditingController zipCode = TextEditingController();
   final TextEditingController province = TextEditingController();
@@ -38,9 +39,23 @@ class SupplierBookingController extends BaseController {
 
   SupplierBookingController() {
     bookingPrepare.value = Get.arguments;
+    if(bookingPrepare.value.supplier!.isOnline == '1'){
     total.value = bookingPrepare.value.supplier!.servicePrice! *
-        bookingPrepare.value.totalTime!;
-    totalPay.value = total.value;
+            bookingPrepare.value.totalTime!;
+        totalPay.value = total.value;
+    }else{
+      if(bookingPrepare.value.totalTime! < bookingPrepare.value.supplier!.serviceOfflineMinHours!){
+        total.value = bookingPrepare.value.supplier!.serviceOfflineMinPrice!.toDouble();
+         totalPay.value = total.value;
+      }else{
+        hours = bookingPrepare.value.totalTime! - bookingPrepare.value.supplier!.serviceOfflineMinHours!;
+        var preTotal = hours! * bookingPrepare.value.supplier!.servicePrice!;
+        total.value = bookingPrepare.value.supplier!.serviceOfflineMinPrice!.toDouble() + preTotal;
+        totalPay.value = total.value;
+      }
+      
+    }
+    
 
     bookingRequest.value.supplierId = bookingPrepare.value.supplier!.id!;
     bookingRequest.value.serviceId = bookingPrepare.value.service!.id!;
@@ -126,6 +141,21 @@ class SupplierBookingController extends BaseController {
       if (bookingRequest.value.workingForm == CommonConstants.offline) {
         bookingRequest.value.address = address.text;
         bookingRequest.value.nearestStation = station.text;
+      }
+
+      if(AppDataGlobal.userInfo!.accountBalance! < totalPay.value){
+        await EasyLoading.dismiss();
+        await DialogUtil.showPopup(
+          dialogSize: DialogSize.Popup,
+          barrierDismissible: false,
+          backgroundColor: Colors.transparent,
+          child: NormalWidget(
+            icon: IconConstants.icFail,
+            title: 'booking.wallet_not_enough'.tr,
+          ),
+          onVaLue: (value) {},
+        );
+        return;
       }
 
       info = AppDataGlobal.userInfo!;
