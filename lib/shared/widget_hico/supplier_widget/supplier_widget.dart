@@ -85,7 +85,7 @@ class SupplierWidget extends StatelessWidget {
                               ),
                               const SizedBox(height: 5),
                               Container(
-                                child: invoice.isOnline == "1" ? 
+                                child: invoice.isOnline == 1 ? 
                                   _buildAddressItem(
                                   icon: IconConstants.icMoneyBlue,
                                   title: '$price JPY/${'invoice.hours'.tr}'): 

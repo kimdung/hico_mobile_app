@@ -25,8 +25,8 @@ class SupplierInfoModel {
   String? levelName;
   @JsonKey(name: 'level_id')
   int? levelId;
-  @JsonKey(name: 'is_online', defaultValue: '')
-  String? isOnline;
+  @JsonKey(name: 'is_online')
+  int? isOnline;
 
   SupplierInfoModel(
       {this.id,

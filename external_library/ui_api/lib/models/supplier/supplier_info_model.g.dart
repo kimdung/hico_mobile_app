@@ -20,7 +20,7 @@ SupplierInfoModel _$SupplierInfoModelFromJson(Map<String, dynamic> json) =>
       serviceOfflineMinPrice: json['service_offline_min_price'] as int?,
       levelName: json['level_name'] as String? ?? '',
       levelId: json['level_id'] as int?,
-      isOnline: json['is_online'] as String? ?? '',
+      isOnline: json['is_online'] as int?,
     );
 
 Map<String, dynamic> _$SupplierInfoModelToJson(SupplierInfoModel instance) =>

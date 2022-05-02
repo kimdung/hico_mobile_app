@@ -96,9 +96,11 @@ class ItemOrderWidget extends StatelessWidget {
                                   title: '${'invoice.service'.tr} $service'),
                               const SizedBox(height: 5),
                               Container(
-                                child: invoice.minHours == 0 ? _buildAddressItem(
+                                child: invoice.workingForm == CommonConstants.online? 
+                                _buildAddressItem(
                                   icon: IconConstants.icMoneyBlue,
-                                  title: '$price JPY/${'invoice.hours'.tr}'): _buildPriceItem(
+                                  title: '$price JPY/${'invoice.hours'.tr}'): 
+                                _buildPriceItem(
                                   icon: IconConstants.icMoneyBlue,
                                   title: '$price JPY/ 0,5 - ${invoice.minHours} ${'invoice.hours'.tr}',
                                   subTitle: '${'invoice.incurred'.tr}: ${invoice.price} JPY/ 1${'invoice.hours'.tr}'),
