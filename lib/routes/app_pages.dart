@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+  import 'package:get/get.dart';
 
 import '../modules/bank/bindings/bank_binding.dart';
 import '../modules/bank/views/bank_update_screen.dart';
