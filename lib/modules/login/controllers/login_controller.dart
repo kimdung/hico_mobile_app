@@ -34,7 +34,7 @@ class LoginController extends BaseController {
   UserProfile? _userProfile;
   StoredAccessToken? accessToken;
 
-  RxBool showPassword = false.obs;
+  RxBool hidePassword = true.obs;
 
   final storage = Get.find<SharedPreferences>();
 
@@ -62,6 +62,7 @@ class LoginController extends BaseController {
   Future<void> onLogin() async {
     if (formLogin.currentState?.validate() ?? false) {
       await EasyLoading.show();
+      hideKeyboard(Get.overlayContext!);
       await login();
     }
   }
@@ -74,13 +75,26 @@ class LoginController extends BaseController {
             deviceIdentifier: AppDataGlobal.firebaseToken))
         .then((response) {
       EasyLoading.dismiss();
-      if (response.status == CommonConstants.statusOk &&
+      if (response.status == CommonConstants.statusFailed) {
+        DialogUtil.showPopup(
+          dialogSize: DialogSize.Popup,
+          barrierDismissible: false,
+          backgroundColor: Colors.transparent,
+          child: NormalWidget(
+            icon: response.status == CommonConstants.statusFailed
+                ? IconConstants.icFail
+                : IconConstants.icPassSuccess,
+            title: response.message,
+          ),
+          onVaLue: (value) {},
+        );
+      } else if (response.status == CommonConstants.statusOk &&
           response.loginModel != null &&
           response.loginModel!.info != null) {
         storage.setString(StorageConstants.username, usernameController.text);
         storage.setString(StorageConstants.password, passwordController.text);
         storage.setBool(StorageConstants.isLogin, true);
-
+        
         _loadData(response.loginModel!);
       } else if (response.loginModel != null &&
           response.loginModel!.isResend == 1) {
@@ -299,7 +313,14 @@ class LoginController extends BaseController {
   }
 
   void hideShowPassword() {
-    showPassword.value = !showPassword.value;
-    log('Value: ${showPassword.value}');
+    hidePassword.value = !hidePassword.value;
+    log('Value: ${hidePassword.value}');
+  }
+
+  void hideKeyboard(BuildContext context) {
+    final currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    }
   }
 }
