@@ -11,13 +11,10 @@ extension HomeComponents on HomeScreen {
         children: [
           Expanded(
             child: Container(
-              height: 50,
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () {
-                      Get.toNamed(Routes.PROFILE_UPDATE);
-                    },
+                    onTap: () => Get.toNamed(Routes.PROFILE),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(25),
                       child: CachedNetworkImage(
@@ -52,9 +49,24 @@ extension HomeComponents on HomeScreen {
                             style: AppTextStyle.secondTextStyle
                                 .copyWith(color: AppColor.eightTextColorLight),
                           ),
-                          Text(AppDataGlobal.userInfo!.name!,
-                              style: AppTextStyle.primaryTextStyle.copyWith(
-                                  color: AppColor.niceTextColorLight)),
+                          Text(
+                            AppDataGlobal.userInfo!.name!,
+                            style: AppTextStyle.primaryTextStyle
+                                .copyWith(color: AppColor.niceTextColorLight),
+                          ),
+                          Row(
+                            children: [
+                              FCoreImage(
+                                IconConstants.icWallet,
+                                width: 15,
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                '${AppDataGlobal.userInfo?.accountBalance ?? 0} JPY',
+                                style: TextAppStyle().smallTextPink(),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -63,6 +75,17 @@ extension HomeComponents on HomeScreen {
               ),
             ),
           ),
+          InkWell(
+            onTap: () => Get.toNamed(Routes.WALLET),
+            child: Container(
+              margin: const EdgeInsets.all(10),
+              child: FCoreImage(
+                IconConstants.icWallet2,
+                height: 24,
+              ),
+            ),
+          ),
+          const SizedBox(width: 5),
           InkWell(
             onTap: () {
               Get.toNamed(Routes.SEARCH);
