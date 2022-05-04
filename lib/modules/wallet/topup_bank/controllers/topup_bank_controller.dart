@@ -64,7 +64,7 @@ class TopupBankController extends BaseController {
     FocusScope.of(Get.context!).unfocus();
 
     if (imageBill.value == null) {
-      await EasyLoading.showToast('topup.image.bill.valid');
+      await EasyLoading.showToast('topup.image.bill.valid'.tr);
       return;
     }
 
