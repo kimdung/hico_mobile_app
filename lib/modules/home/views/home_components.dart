@@ -7,104 +7,91 @@ extension HomeComponents on HomeScreen {
           horizontal: CommonConstants.paddingDefault, vertical: 12),
       color: AppColor.secondBackgroundColorLight,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            child: Container(
-              child: Row(
-                children: [
-                  InkWell(
-                    onTap: () => Get.toNamed(Routes.PROFILE),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
-                      child: CachedNetworkImage(
-                        width: 42,
-                        height: 42,
-                        imageUrl: AppDataGlobal.userInfo?.avatarImage ?? '',
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(21),
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      ),
+          InkWell(
+            onTap: () => Get.toNamed(Routes.PROFILE),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(25),
+              child: CachedNetworkImage(
+                width: 42,
+                height: 42,
+                imageUrl: AppDataGlobal.userInfo?.avatarImage ?? '',
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(21),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 14),
-                    child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'order.hello'.tr,
-                            style: AppTextStyle.secondTextStyle
-                                .copyWith(color: AppColor.eightTextColorLight),
-                          ),
-                          Text(
-                            AppDataGlobal.userInfo!.name!,
-                            style: AppTextStyle.primaryTextStyle
-                                .copyWith(color: AppColor.niceTextColorLight),
-                          ),
-                          Row(
-                            children: [
-                              FCoreImage(
-                                IconConstants.icWallet,
-                                width: 15,
-                              ),
-                              const SizedBox(width: 5),
-                              Text(
-                                '${AppDataGlobal.userInfo?.accountBalance ?? 0} JPY',
-                                style: TextAppStyle().smallTextPink(),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                ),
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
           ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'order.hello'.tr,
+                  style: AppTextStyle.secondTextStyle
+                      .copyWith(color: AppColor.eightTextColorLight),
+                ),
+                Text(
+                  AppDataGlobal.userInfo!.name!,
+                  style: AppTextStyle.primaryTextStyle
+                      .copyWith(color: AppColor.niceTextColorLight),
+                ),
+                Row(
+                  children: [
+                    FCoreImage(
+                      IconConstants.icWallet,
+                      width: 15,
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      '${AppDataGlobal.userInfo?.accountBalance ?? 0} JPY',
+                      style: TextAppStyle().smallTextPink(),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 14),
           InkWell(
             onTap: () => Get.toNamed(Routes.WALLET),
             child: Container(
-              margin: const EdgeInsets.all(10),
+              margin: const EdgeInsets.all(5),
               child: FCoreImage(
                 IconConstants.icWallet2,
                 height: 24,
               ),
             ),
           ),
-          const SizedBox(width: 5),
           InkWell(
             onTap: () {
               Get.toNamed(Routes.SEARCH);
             },
             child: Container(
-              margin: const EdgeInsets.all(10),
+              margin: const EdgeInsets.all(5),
               child: FCoreImage(
                 IconConstants.icSearchBlack,
                 height: 24,
               ),
             ),
           ),
-          const SizedBox(width: 5),
           InkWell(
             onTap: controller.onChatAdmin,
             child: Stack(
               children: [
                 Container(
-                  margin: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(5),
                   child: FCoreImage(
                     IconConstants.icChat,
                     height: 24,
@@ -113,8 +100,7 @@ extension HomeComponents on HomeScreen {
                 controller.totalNotif.value == 0
                     ? Container()
                     : Positioned(
-                        right: 5,
-                        top: 5,
+                        right: 0,
                         child: Container(
                           width: 15,
                           height: 15,
