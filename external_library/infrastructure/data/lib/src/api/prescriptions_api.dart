@@ -13,7 +13,6 @@ import 'package:data_infrastructure/src/model/prescription_detail_dtos.dart';
 import 'package:data_infrastructure/src/model/prescription_summary_dtos.dart';
 
 class PrescriptionsApi {
-
   final Dio _dio;
 
   final Serializers _serializers;
@@ -21,7 +20,7 @@ class PrescriptionsApi {
   const PrescriptionsApi(this._dio, this._serializers);
 
   /// apiPrescriptionsGet
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -33,7 +32,7 @@ class PrescriptionsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<PrescriptionSummaryDtos>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<BuiltList<PrescriptionSummaryDtos>>> apiPrescriptionsGet({ 
+  Future<Response<BuiltList<PrescriptionSummaryDtos>>> apiPrescriptionsGet({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -65,12 +64,12 @@ class PrescriptionsApi {
     BuiltList<PrescriptionSummaryDtos> _responseData;
 
     try {
-      const _responseType = FullType(BuiltList, [FullType(PrescriptionSummaryDtos)]);
+      const _responseType =
+          FullType(BuiltList, [FullType(PrescriptionSummaryDtos)]);
       _responseData = _serializers.deserialize(
         _response.data!,
         specifiedType: _responseType,
       ) as BuiltList<PrescriptionSummaryDtos>;
-
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
@@ -93,10 +92,10 @@ class PrescriptionsApi {
   }
 
   /// apiPrescriptionsIDGet
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [ID] 
+  /// * [ID]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -106,7 +105,7 @@ class PrescriptionsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PrescriptionDetailDtos] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PrescriptionDetailDtos>> apiPrescriptionsIDGet({ 
+  Future<Response<PrescriptionDetailDtos>> apiPrescriptionsIDGet({
     required String ID,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -115,7 +114,8 @@ class PrescriptionsApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/Prescriptions/{ID}'.replaceAll('{' r'ID' '}', ID.toString());
+    final _path =
+        r'/api/Prescriptions/{ID}'.replaceAll('{' r'ID' '}', ID.toString());
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -144,7 +144,6 @@ class PrescriptionsApi {
         _response.data!,
         specifiedType: _responseType,
       ) as PrescriptionDetailDtos;
-
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
@@ -167,10 +166,10 @@ class PrescriptionsApi {
   }
 
   /// apiPrescriptionsPost
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [createPrescriptionCommand] 
+  /// * [createPrescriptionCommand]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -180,7 +179,7 @@ class PrescriptionsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PrescriptionDetailDtos] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<PrescriptionDetailDtos>> apiPrescriptionsPost({ 
+  Future<Response<PrescriptionDetailDtos>> apiPrescriptionsPost({
     CreatePrescriptionCommand? createPrescriptionCommand,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -207,11 +206,13 @@ class PrescriptionsApi {
 
     try {
       const _type = FullType(CreatePrescriptionCommand);
-      _bodyData = createPrescriptionCommand == null ? null : _serializers.serialize(createPrescriptionCommand, specifiedType: _type);
-
-    } catch(error, stackTrace) {
+      _bodyData = createPrescriptionCommand == null
+          ? null
+          : _serializers.serialize(createPrescriptionCommand,
+              specifiedType: _type);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
@@ -237,7 +238,6 @@ class PrescriptionsApi {
         _response.data!,
         specifiedType: _responseType,
       ) as PrescriptionDetailDtos;
-
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
@@ -258,5 +258,4 @@ class PrescriptionsApi {
       extra: _response.extra,
     );
   }
-
 }

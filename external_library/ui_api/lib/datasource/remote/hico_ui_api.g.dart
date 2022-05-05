@@ -508,6 +508,42 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
+  Future<SupplierResponse> supplierAllList(
+      serviceId,
+      filterDate,
+      filterTimeSlot,
+      filterIsOnline,
+      filterLocationProvinceId,
+      filterLocationDistrictId,
+      filterNumberStar,
+      limit,
+      offset) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'service_id': serviceId,
+      r'filter_date': filterDate,
+      r'filter_time_slot': filterTimeSlot,
+      r'filter_is_online': filterIsOnline,
+      r'filter_location_province_id': filterLocationProvinceId,
+      r'filter_location_district_id': filterLocationDistrictId,
+      r'filter_number_star': filterNumberStar,
+      r'limit': limit,
+      r'offset': offset
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<SupplierResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/customer/service/suppliers',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SupplierResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<SupplierProfileResponse> supplierDetail(memberCode) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'member_code': memberCode};
@@ -883,6 +919,136 @@ class _HicoUIAPI implements HicoUIAPI {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = CallTokenResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TopupHistoryResponse> topupHistory(limit, offset) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'limit': limit,
+      r'offset': offset
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TopupHistoryResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/payIn/list',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TopupHistoryResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TopupResponse> topupBank(amount) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'amount': amount};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TopupResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/payIn/createPayInCode',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TopupResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TopupResponse> topupBankConfirm(imageBill, payInCode, note) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'pay_in_code': payInCode,
+      r'note': note
+    };
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.files.add(MapEntry(
+        'image',
+        MultipartFile.fromFileSync(imageBill.path,
+            filename: imageBill.path.split(Platform.pathSeparator).last)));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TopupResponse>(Options(
+                method: 'POST',
+                headers: _headers,
+                extra: _extra,
+                contentType: 'multipart/form-data')
+            .compose(_dio.options, '/v1/payIn/createPayInBank',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TopupResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TopupKomajuResponse> topupKomaju(amount, type) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'amount': amount, r'type': type};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TopupKomajuResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/payIn/createPayInKomoju',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TopupKomajuResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TopupResponse> topupKomojuResult(sessionId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'session_id': sessionId};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TopupResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/ipnKomoju',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TopupResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TopupResponse> createPayInStripe(paymentMethodId, name, amount) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'payment_method_id': paymentMethodId,
+      r'name': name,
+      r'amount': amount
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TopupResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/createPayInStripe',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TopupResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<BaseResponse> extendInvoice(request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/customer/invoice/extendPeriod',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseResponse.fromJson(_result.data!);
     return value;
   }
 

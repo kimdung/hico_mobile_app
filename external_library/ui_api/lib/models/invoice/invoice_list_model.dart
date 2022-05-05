@@ -43,6 +43,8 @@ class InvoiceHistoryModel {
   @JsonKey(name: 'offline_price_min', defaultValue: 0)
   int? offlinePriceMin;
   int? status;
+  @JsonKey(name: 'working_form')
+  int? workingForm;
 
   InvoiceHistoryModel(
       {this.id,
@@ -59,6 +61,7 @@ class InvoiceHistoryModel {
       this.minHours,
       this.offlinePriceMin,
       this.status,
+      this.workingForm
       });
 
   factory InvoiceHistoryModel.fromJson(Map<String, dynamic> json) =>

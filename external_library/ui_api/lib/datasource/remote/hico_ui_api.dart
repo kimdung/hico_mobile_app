@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:get/instance_manager.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:ui_api/request/general/contact_request.dart';
 import 'package:ui_api/request/invoice/booking_request.dart';
@@ -35,14 +37,17 @@ import 'package:ui_api/response/user/user_response.dart';
 import 'package:ui_api/response/voucher/check_voucher_response.dart';
 import 'package:ui_api/response/voucher/voucher_response.dart';
 
+import '../../request/invoice/extend_period_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/wallet/topup_history_response.dart';
+import '../../response/wallet/topup_komaju_response.dart';
+import '../../response/wallet/topup_response.dart';
 import '../../response/invoice/extend_period_response.dart';
 part 'hico_ui_api.g.dart';
 
 @RestApi()
 abstract class HicoUIAPI {
-
   factory HicoUIAPI(Dio dio) = _HicoUIAPI;
   //master data
   @GET('/v1/masterData')
@@ -181,7 +186,7 @@ abstract class HicoUIAPI {
     @Query('service_id') int id,
   );
 
-  //filter supplier
+  //filter supplier 
   @GET('/v1/customer/service/suppliers')
   Future<SupplierResponse> supplierList(
     @Query('service_id') int serviceId,
@@ -191,6 +196,20 @@ abstract class HicoUIAPI {
     @Query('filter_location_province_id') int filterLocationProvinceId,
     @Query('filter_location_district_id') int filterLocationDistrictId,
     @Query('filter_level_id') int filterLevelId,
+    @Query('filter_number_star') int? filterNumberStar,
+    @Query('limit') int limit,
+    @Query('offset') int offset,
+  );
+
+  // get all supplier
+  @GET('/v1/customer/service/suppliers')
+  Future<SupplierResponse> supplierAllList(
+    @Query('service_id') int serviceId,
+    @Query('filter_date') String filterDate,
+    @Query('filter_time_slot') String filterTimeSlot,
+    @Query('filter_is_online') int filterIsOnline,
+    @Query('filter_location_province_id') int filterLocationProvinceId,
+    @Query('filter_location_district_id') int filterLocationDistrictId,
     @Query('filter_number_star') int? filterNumberStar,
     @Query('limit') int limit,
     @Query('offset') int offset,
@@ -329,4 +348,42 @@ abstract class HicoUIAPI {
   //Get Token
   @POST('/v1/agoraCall/createToken')
   Future<CallTokenResponse> getCallToken(@Query('channel') String channel);
+
+  /* Wallet */
+  @GET('/v1/payIn/list')
+  Future<TopupHistoryResponse> topupHistory(
+    @Query('limit') int limit,
+    @Query('offset') int offset,
+  );
+
+  @POST('/v1/payIn/createPayInCode')
+  Future<TopupResponse> topupBank(@Query('amount') double amount);
+
+  @MultiPart()
+  @POST('/v1/payIn/createPayInBank')
+  Future<TopupResponse> topupBankConfirm(
+    @Part(name: 'image') File imageBill,
+    @Query('pay_in_code') String payInCode,
+    @Query('note') String note,
+  );
+
+  @POST('/v1/payIn/createPayInKomoju')
+  Future<TopupKomajuResponse> topupKomaju(
+    @Query('amount') double amount,
+    @Query('type') int type,
+  );
+
+  @GET('/v1/ipnKomoju')
+  Future<TopupResponse> topupKomojuResult(
+      @Query('session_id') String sessionId);
+
+  @POST('/v1/createPayInStripe')
+  Future<TopupResponse> createPayInStripe(
+      @Query('payment_method_id') String paymentMethodId,
+      @Query('name') String name,
+      @Query('amount') double amount);
+
+  //post extend 
+  @POST('/v1/customer/invoice/extendPeriod')
+  Future<BaseResponse> extendInvoice(@Body() ExtendPeriodRequest request);
 }

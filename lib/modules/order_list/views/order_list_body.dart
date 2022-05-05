@@ -16,7 +16,7 @@ extension OrderListBody on OrderListScreen {
                     controller.info.value.avatarImage != '')
                   InkWell(
                     onTap: () {
-                      Get.toNamed(Routes.PROFILE);
+                      Get.toNamed(Routes.PROFILE_UPDATE);
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(25),

@@ -235,10 +235,14 @@ class IconConstants {
       'lib/resource/assets_resources/icons/ic_arrow_forward.svg';
   static const String icCopy =
       'lib/resource/assets_resources/icons/ic_copy.svg';
+  static const String icCopy1 =
+      'lib/resource/assets_resources/icons/ic_copy1.svg';
   static const String icSend =
       'lib/resource/assets_resources/icons/ic_send.svg';
   static const String icImage =
       'lib/resource/assets_resources/icons/ic_image.svg';
+  static const String icCopied =
+      'lib/resource/assets_resources/icons/ic_check_circle.svg';
 
   // profile icon
   static const String icProfileEdit =
@@ -289,6 +293,18 @@ class IconConstants {
       'lib/resource/assets_resources/icons/ic_calendar_w.png';
   static const String icBankIcon =
       'lib/resource/assets_resources/icons/ic_bank_icon.png';
+  static const String icWallet =
+      'lib/resource/assets_resources/icons/ic_profile_wallet.svg';
+  static const String icWallet1 =
+      'lib/resource/assets_resources/icons/ic_wallet.svg';
+  static const String icWallet2 =
+      'lib/resource/assets_resources/icons/ic_wallet1.svg';
+  static const String icTopupWallet =
+      'lib/resource/assets_resources/icons/ic_topup_wallet.svg';
+  static const String icKomaju =
+      'lib/resource/assets_resources/icons/ic_komaju.png';
+  static const String icStripe =
+      'lib/resource/assets_resources/icons/ic_stripe.png';
 
   //contact icon
   static const String icCtHotline =
@@ -358,4 +374,6 @@ class IconConstants {
       'lib/resource/assets_resources/icons/document_history.svg';
   static const String iconMoney =
       'lib/resource/assets_resources/icons/icon_money.svg';
+  static const String icCamera =
+      'lib/resource/assets_resources/icons/ic_camera.svg';
 }

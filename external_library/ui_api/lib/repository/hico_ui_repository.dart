@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:image_picker/image_picker.dart';
 import 'package:ui_api/request/general/contact_request.dart';
 import 'package:ui_api/request/invoice/booking_request.dart';
 import 'package:ui_api/request/login/login_request.dart';
@@ -33,8 +34,12 @@ import 'package:ui_api/response/user/user_response.dart';
 import 'package:ui_api/response/voucher/check_voucher_response.dart';
 import 'package:ui_api/response/voucher/voucher_response.dart';
 
+import '../request/invoice/extend_period_request.dart';
 import '../response/call/call_token_response.dart';
 import '../response/chat/chat_token_response.dart';
+import '../response/wallet/topup_history_response.dart';
+import '../response/wallet/topup_komaju_response.dart';
+import '../response/wallet/topup_response.dart';
 import '../response/invoice/extend_period_response.dart';
 
 abstract class HicoUIRepository {
@@ -211,4 +216,27 @@ abstract class HicoUIRepository {
 
   // Create call token
   Future<CallTokenResponse> getCallToken(String channel);
+
+
+  /* Wallet */
+
+  Future<TopupHistoryResponse> topupHistory(int limit, int offset);
+
+  Future<TopupResponse> topupBank(double amount);
+
+  Future<TopupResponse> topupBankConfirm(
+      File imageBill, String payInCode, String note);
+
+  Future<TopupKomajuResponse> topupKomaju(double amount, int type);
+
+  Future<TopupResponse> topupKomojuResult(String sessionId);
+
+  Future<TopupResponse> topupStripe(
+      String paymentMethodId, String name, double amount);
+
+ 
+  //post extend 
+  Future<BaseResponse> extendInvoice(ExtendPeriodRequest request);
+
 }
+ 

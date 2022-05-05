@@ -11,7 +11,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:data_infrastructure/src/model/doctor_summary_dtos.dart';
 
 class DoctorsApi {
-
   final Dio _dio;
 
   final Serializers _serializers;
@@ -19,7 +18,7 @@ class DoctorsApi {
   const DoctorsApi(this._dio, this._serializers);
 
   /// apiDoctorsGet
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -31,7 +30,7 @@ class DoctorsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<DoctorSummaryDtos>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<BuiltList<DoctorSummaryDtos>>> apiDoctorsGet({ 
+  Future<Response<BuiltList<DoctorSummaryDtos>>> apiDoctorsGet({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -68,7 +67,6 @@ class DoctorsApi {
         _response.data!,
         specifiedType: _responseType,
       ) as BuiltList<DoctorSummaryDtos>;
-
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
@@ -91,10 +89,10 @@ class DoctorsApi {
   }
 
   /// apiDoctorsIDGet
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [ID] 
+  /// * [ID]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -104,7 +102,7 @@ class DoctorsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [DoctorSummaryDtos] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<DoctorSummaryDtos>> apiDoctorsIDGet({ 
+  Future<Response<DoctorSummaryDtos>> apiDoctorsIDGet({
     required String ID,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -142,7 +140,6 @@ class DoctorsApi {
         _response.data!,
         specifiedType: _responseType,
       ) as DoctorSummaryDtos;
-
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
@@ -163,5 +160,4 @@ class DoctorsApi {
       extra: _response.extra,
     );
   }
-
 }

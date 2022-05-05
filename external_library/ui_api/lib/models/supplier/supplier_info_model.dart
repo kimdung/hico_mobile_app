@@ -17,6 +17,16 @@ class SupplierInfoModel {
   String? serviceName;
   @JsonKey(name: 'service_price')
   int? servicePrice;
+  @JsonKey(name: 'service_offline_min_hours')
+  int? serviceOfflineMinHours;
+  @JsonKey(name: 'service_offline_min_price')
+  int? serviceOfflineMinPrice;
+  @JsonKey(name: 'level_name', defaultValue: '')
+  String? levelName;
+  @JsonKey(name: 'level_id')
+  int? levelId;
+  @JsonKey(name: 'is_online')
+  int? isOnline;
 
   SupplierInfoModel(
       {this.id,
@@ -26,7 +36,13 @@ class SupplierInfoModel {
       this.taskCompleteNumber,
       this.serviceId,
       this.serviceName,
-      this.servicePrice});
+      this.servicePrice,
+      this.serviceOfflineMinHours,
+      this.serviceOfflineMinPrice,
+      this.levelName,
+      this.levelId,
+      this.isOnline,
+      });
 
   factory SupplierInfoModel.fromJson(Map<String, dynamic> json) =>
       _$SupplierInfoModelFromJson(json);

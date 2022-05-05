@@ -15,14 +15,10 @@ class ItemExtendWidget extends StatelessWidget {
     return GetBuilder<TimeExtensionController>(
       init: controller,
       builder: (con) => InkWell(
-        onTap: () {
-          con.onChooseItemExtend(index);
-        },
+        onTap: () {},
         child: Container(
           decoration: BoxDecoration(
-            color: con.extendList[index].isChoose
-                ? AppColor.secondBackgroundColorLight
-                : Colors.white,
+            color:Colors.white,
             borderRadius: BorderRadius.circular(8.0),
             boxShadow: [
               BoxShadow(
@@ -37,7 +33,7 @@ class ItemExtendWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
           width: double.infinity,
           child: Text(
-            '${con.extendList[index].timeExtend} phút - ${con.extendList[index].money} - JPY',
+            ' - JPY',
             style: TextAppStyle().normalTextPink(),
           ),
         ),
