@@ -5,10 +5,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/instance_manager.dart';
 import 'package:hico/shared/services/navigation_service.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+import 'package:ui_api/request/invoice/invoice_request.dart';
 
 import '../../data/app_data_global.dart';
+import '../../routes/app_pages.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -187,14 +190,6 @@ class FirebaseMessageConfig {
 
       final remoteNotification = message.notification;
       final android = message.notification?.android;
-        if (message.data.isNotEmpty) {
-            final displayType = message.data['display_type'];
-            if(displayType.toString() == '4'){
-              print('extend');
-              
-            }
-          }
-
 
       if (remoteNotification != null && android != null) {
         _flutterLocalNotificationsPlugin.show(
@@ -233,12 +228,18 @@ class FirebaseMessageConfig {
       /// ['id']: Key json chứa ID của thông báo server trả về.
       /// Dùng để điều hướng vào màn chi tiết thông báo
       /// Mặc định đang là ['id']
-      // Navigator.of(AppConfig.navigatorKey.currentContext).pushNamed(
-      //   DetailNotificationScreen.routeName,
-      //   arguments: int.tryParse(
-      //     json.decode(payload)['id']?.toString(),
-      //   ),
-      // );
+      try{
+        var type = json.decode(payload!)['display_type']?.toString();
+        var id = json.decode(payload)['invoice_id']?.toString();
+        if(type == '4'){
+          await Navigator.of(AppDataGlobal.navigatorKey.currentContext!).pushNamed(
+            Routes.ORDER_DETAIL, arguments: InvoiceRequest(id: int.parse(id!), extend: true)
+          );
+        }
+      }catch(e){
+          print(e);
+      }
+      
     }
   }
 

@@ -312,6 +312,7 @@ const Map<String, String> vi_VN = {
   'supplier.filter.level_required': 'Vui lòng chọn cấp độ PDV',
   'supplier.filter.choose_time': 'Chọn thời gian',
   'supplier.filter.choose_date': 'Thời gian sử dụng dịch vụ',
+  'supplier.filter.location_required': 'Vui lòng chọn địa điểm',
   //supplier
   'supplier.title': 'Tìm kiếm Phiên dịch viên',
   'supplier.filter': 'Bộ lọc',

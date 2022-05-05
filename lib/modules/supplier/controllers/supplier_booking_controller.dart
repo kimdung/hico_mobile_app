@@ -171,6 +171,14 @@ class SupplierBookingController extends BaseController {
             .then((response) {
           EasyLoading.dismiss();
           if (response.status == CommonConstants.statusOk) {
+            _uiRepository.getInfo().then((response) {
+              if (response.status == CommonConstants.statusOk &&
+                  response.data != null &&
+                  response.data!.info != null) {
+                AppDataGlobal.userInfo = response.data!.info!;
+                return;
+              }
+            });
             Get.toNamed(Routes.SUPPLIER_BOOKING_SUCCESS,
                 arguments: response.data!.detail!.code!);
           } else {

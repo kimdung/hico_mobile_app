@@ -5,6 +5,7 @@ import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/models/invoice/invoice_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:ui_api/request/invoice/invoice_request.dart';
 import 'package:ui_api/request/invoice/rating_request.dart';
 
 import '../../../base/base_controller.dart';
@@ -30,18 +31,24 @@ class OrderController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
   final invoice = Rx(InvoiceInfoModel());
   int id = 0;
+  InvoiceRequest? request;
 
   @override
   Future<void> onInit() async {
     await super.onInit();
 
-    id = Get.arguments;
+    request = Get.arguments;
+    id = request!.id!;
+    if(request!.extend != null && request!.extend! == true){
+      await showDialogNotification();
+    }
     await _loadData();
   }
 
   @override
   Future<void> onReady() async {
     super.onReady();
+   
     //await showDialogNotification();
   }
 

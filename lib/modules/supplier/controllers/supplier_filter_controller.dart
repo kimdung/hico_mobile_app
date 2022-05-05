@@ -251,10 +251,18 @@ class SupplierFilterController extends BaseController {
 
     var validater = false;
     var message = '';
+
+    if (request.filterLocationProvinceId == null || request.filterLocationDistrictId == null) {
+      validater = true;
+      message = 'supplier.filter.location_required'.tr;
+    } 
+    
     if (fromTime.value == '' || toTime.value == '') {
       validater = true;
       message = 'supplier.filter.time_required'.tr;
-    } else if (validater) {
+    } 
+ 
+    if (validater) {
       await DialogUtil.showPopup(
         dialogSize: DialogSize.Popup,
         barrierDismissible: false,
