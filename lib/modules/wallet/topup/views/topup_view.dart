@@ -98,11 +98,11 @@ class TopupView extends GetView<TopupController> {
           Obx(
             () => GridView.count(
               padding: const EdgeInsets.symmetric(vertical: 12),
-              crossAxisCount: 4,
+              crossAxisCount: 3,
               shrinkWrap: true,
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
-              childAspectRatio: (Get.width - 84) / 4 / 40,
+              childAspectRatio: (Get.width - 32) / 3 / 40,
               physics: const NeverScrollableScrollPhysics(),
               children: <Widget>[
                 ...List.generate(
