@@ -99,6 +99,9 @@ dependencies:
   agora_rtc_engine: ^5.0.1
   permission_handler: ^9.2.0
   flutter_ringtone_player: ^3.2.0
+  keyboard_dismisser: ^2.0.1
+  flutter_stripe: ^2.5.0
+  webview_flutter: ^3.0.2
 
 dev_dependencies:
   flutter_test:

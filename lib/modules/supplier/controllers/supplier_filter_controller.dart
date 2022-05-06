@@ -185,7 +185,6 @@ class SupplierFilterController extends BaseController {
         height: Get.height / 2,
         child: LevelWidget(
           levels: AppDataGlobal.masterData!.levels!,
-          //AppDataGlobal.masterData!.levels!
           currentLevel: request.filterLevelId,
         ),
       ),
@@ -196,6 +195,9 @@ class SupplierFilterController extends BaseController {
           level.value = _value.name != null
               ? '${'supplier.filter.level_title'.tr}: ${_value.name!}'
               : '';
+        } else {
+          request.filterLevelId = 0;
+          level.value = '${'all'.tr}';
         }
       },
     );
