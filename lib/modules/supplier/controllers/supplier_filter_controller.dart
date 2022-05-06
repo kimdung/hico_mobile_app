@@ -230,6 +230,7 @@ class SupplierFilterController extends BaseController {
   }
 
   Future<void> search() async {
+    
     request.filterDate = date.text;
     request.filterTimeSlot = '$fromTime - $toTime';
     request.limit = 20;
