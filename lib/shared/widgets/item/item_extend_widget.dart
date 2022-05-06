@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../modules/extend/controller/time_extension_controller.dart';
 import '../../constants/colors.dart';
+import '../../styles/text_style/text_style.dart';
 
 class ItemExtendWidget extends StatelessWidget {
   const ItemExtendWidget({Key? key, required this.index}) : super(key: key);
@@ -14,14 +15,10 @@ class ItemExtendWidget extends StatelessWidget {
     return GetBuilder<TimeExtensionController>(
       init: controller,
       builder: (con) => InkWell(
-        onTap: () {
-          con.onChooseItemExtend(index);
-        },
+        onTap: () {},
         child: Container(
           decoration: BoxDecoration(
-            color: con.extendList[index].isChoose
-                ? const Color.fromARGB(1, 252, 238, 241)
-                : Colors.white,
+            color:Colors.white,
             borderRadius: BorderRadius.circular(8.0),
             boxShadow: [
               BoxShadow(
@@ -36,13 +33,8 @@ class ItemExtendWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
           width: double.infinity,
           child: Text(
-            '${con.extendList[index].timeExtend} phút - ${con.extendList[index].money} - JPY',
-            style: TextStyle(
-              fontSize: 14.0,
-              fontFamily: 'SVN-Jeko',
-              fontWeight: FontWeight.w400,
-              color: AppColor.primaryTextColorLight,
-            ),
+            ' - JPY',
+            style: TextAppStyle().normalTextPink(),
           ),
         ),
       ),

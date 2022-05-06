@@ -5,6 +5,7 @@ import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/models/invoice/invoice_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:ui_api/request/invoice/invoice_request.dart';
 import 'package:ui_api/request/invoice/rating_request.dart';
 
 import '../../../base/base_controller.dart';
@@ -13,6 +14,8 @@ import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
+import '../../../shared/widget_hico/dialog/order_extend_widget.dart';
+import '../../../shared/widget_hico/dialog/time_extend_widget.dart';
 import '../../../shared/utils/call_utilities.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
@@ -28,19 +31,25 @@ class OrderController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
   final invoice = Rx(InvoiceInfoModel());
   int id = 0;
+  InvoiceRequest? request;
 
   @override
   Future<void> onInit() async {
     await super.onInit();
 
-    id = Get.arguments;
+    request = Get.arguments;
+    id = request!.id!;
+    if(request!.extend != null && request!.extend! == true){
+      await showDialogNotification();
+    }
     await _loadData();
   }
 
   @override
   Future<void> onReady() async {
     super.onReady();
-    await showDialogNotification();
+   
+    //await showDialogNotification();
   }
 
   Future<void> _loadData() async {
@@ -316,14 +325,35 @@ class OrderController extends BaseController {
   @override
   void onClose() {}
 
-  tr(String s) {}
+  //tr(String s) {}
 
   Future<void> showDialogNotification() async {
-    await DialogUtil.showPopup(
-      dialogSize: DialogSize.Popup,
-      barrierDismissible: false,
-      backgroundColor: Colors.transparent,
-      child: const TimeExtendWidget(),
-    );
+    try {
+      await DialogUtil.showPopup(
+        dialogSize: DialogSize.Popup,
+        barrierDismissible: false,
+        backgroundColor: Colors.transparent,
+        child: const OrderExrendWidget(),
+        onVaLue: (_value) {
+          if (_value != null && _value is int) {
+            if (_value == 1) {
+              Get.toNamed(Routes.TIME_EXTENSION, arguments: id);
+            }
+        }
+        },
+      );
+      return;
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+    // await DialogUtil.showPopup(
+    //   dialogSize: DialogSize.Popup,
+    //   barrierDismissible: false,
+    //   backgroundColor: Colors.transparent,
+    //   child: const TimeExtendWidget(),
+    //   onVaLue: (_value) {
+          
+    //   },
+    // );
   }
 }

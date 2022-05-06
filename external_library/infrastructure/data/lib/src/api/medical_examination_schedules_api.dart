@@ -10,7 +10,6 @@ import 'package:dio/dio.dart';
 import 'package:data_infrastructure/src/model/create_medical_examination_schedule_command.dart';
 
 class MedicalExaminationSchedulesApi {
-
   final Dio _dio;
 
   final Serializers _serializers;
@@ -18,10 +17,10 @@ class MedicalExaminationSchedulesApi {
   const MedicalExaminationSchedulesApi(this._dio, this._serializers);
 
   /// apiMedicalExaminationSchedulesCustomerIDCustomerGet
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [customerID] 
+  /// * [customerID]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -31,7 +30,7 @@ class MedicalExaminationSchedulesApi {
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> apiMedicalExaminationSchedulesCustomerIDCustomerGet({ 
+  Future<Response<void>> apiMedicalExaminationSchedulesCustomerIDCustomerGet({
     required String customerID,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -40,7 +39,8 @@ class MedicalExaminationSchedulesApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/MedicalExaminationSchedules/{customerID}/customer'.replaceAll('{' r'customerID' '}', customerID.toString());
+    final _path = r'/api/MedicalExaminationSchedules/{customerID}/customer'
+        .replaceAll('{' r'customerID' '}', customerID.toString());
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -65,10 +65,10 @@ class MedicalExaminationSchedulesApi {
   }
 
   /// apiMedicalExaminationSchedulesDoctorIDDoctorGet
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [doctorID] 
+  /// * [doctorID]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -78,7 +78,7 @@ class MedicalExaminationSchedulesApi {
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> apiMedicalExaminationSchedulesDoctorIDDoctorGet({ 
+  Future<Response<void>> apiMedicalExaminationSchedulesDoctorIDDoctorGet({
     required String doctorID,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -87,7 +87,8 @@ class MedicalExaminationSchedulesApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/MedicalExaminationSchedules/{doctorID}/doctor'.replaceAll('{' r'doctorID' '}', doctorID.toString());
+    final _path = r'/api/MedicalExaminationSchedules/{doctorID}/doctor'
+        .replaceAll('{' r'doctorID' '}', doctorID.toString());
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -112,7 +113,7 @@ class MedicalExaminationSchedulesApi {
   }
 
   /// apiMedicalExaminationSchedulesGet
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -124,7 +125,7 @@ class MedicalExaminationSchedulesApi {
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> apiMedicalExaminationSchedulesGet({ 
+  Future<Response<void>> apiMedicalExaminationSchedulesGet({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -157,10 +158,10 @@ class MedicalExaminationSchedulesApi {
   }
 
   /// apiMedicalExaminationSchedulesHospitalIDHospitalGet
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [hospitalID] 
+  /// * [hospitalID]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -170,7 +171,7 @@ class MedicalExaminationSchedulesApi {
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> apiMedicalExaminationSchedulesHospitalIDHospitalGet({ 
+  Future<Response<void>> apiMedicalExaminationSchedulesHospitalIDHospitalGet({
     required String hospitalID,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -179,7 +180,8 @@ class MedicalExaminationSchedulesApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/MedicalExaminationSchedules/{hospitalID}/hospital'.replaceAll('{' r'hospitalID' '}', hospitalID.toString());
+    final _path = r'/api/MedicalExaminationSchedules/{hospitalID}/hospital'
+        .replaceAll('{' r'hospitalID' '}', hospitalID.toString());
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -204,10 +206,10 @@ class MedicalExaminationSchedulesApi {
   }
 
   /// apiMedicalExaminationSchedulesIDGet
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [ID] 
+  /// * [ID]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -217,7 +219,7 @@ class MedicalExaminationSchedulesApi {
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> apiMedicalExaminationSchedulesIDGet({ 
+  Future<Response<void>> apiMedicalExaminationSchedulesIDGet({
     required int ID,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -226,7 +228,8 @@ class MedicalExaminationSchedulesApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/MedicalExaminationSchedules/{ID}'.replaceAll('{' r'ID' '}', ID.toString());
+    final _path = r'/api/MedicalExaminationSchedules/{ID}'
+        .replaceAll('{' r'ID' '}', ID.toString());
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -251,10 +254,10 @@ class MedicalExaminationSchedulesApi {
   }
 
   /// apiMedicalExaminationSchedulesPost
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [createMedicalExaminationScheduleCommand] 
+  /// * [createMedicalExaminationScheduleCommand]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -264,8 +267,9 @@ class MedicalExaminationSchedulesApi {
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> apiMedicalExaminationSchedulesPost({ 
-    CreateMedicalExaminationScheduleCommand? createMedicalExaminationScheduleCommand,
+  Future<Response<void>> apiMedicalExaminationSchedulesPost({
+    CreateMedicalExaminationScheduleCommand?
+        createMedicalExaminationScheduleCommand,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -291,11 +295,13 @@ class MedicalExaminationSchedulesApi {
 
     try {
       const _type = FullType(CreateMedicalExaminationScheduleCommand);
-      _bodyData = createMedicalExaminationScheduleCommand == null ? null : _serializers.serialize(createMedicalExaminationScheduleCommand, specifiedType: _type);
-
-    } catch(error, stackTrace) {
+      _bodyData = createMedicalExaminationScheduleCommand == null
+          ? null
+          : _serializers.serialize(createMedicalExaminationScheduleCommand,
+              specifiedType: _type);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
@@ -315,5 +321,4 @@ class MedicalExaminationSchedulesApi {
 
     return _response;
   }
-
 }

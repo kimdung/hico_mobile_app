@@ -439,7 +439,7 @@ extension ProfileUpdateExtension on ProfileUpdateScreen {
     return GeneralButton(
       onPressed: onPress,
       borderRadius: BorderRadius.circular(4),
-      height: 31, 
+      height: 31,
       child: Text(
         title,
         style: TextAppStyle().titleButtonStyle(),

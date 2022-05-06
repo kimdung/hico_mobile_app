@@ -5,4 +5,11 @@
 	<key>aps-environment</key>
 	<string>development</string>
 </dict>
+<dict> 
+  <key>com.apple.developer.associated-domains</key>
+  <array>
+    <string>hico:hico.dev.bluebolt.software</string>
+    <string>komoju:komoju.com</string>
+  </array> 
+</dict>
 </plist>

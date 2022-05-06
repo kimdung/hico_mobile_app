@@ -63,6 +63,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
               daysHaveCircularBorder: false,
             ),
           ),
+          const SizedBox(height: 20),
           GeneralButton(
             borderColor: AppColor.primaryColorLight,
             backgroundColor: AppColor.primaryColorLight,

@@ -2,12 +2,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:ui_api/models/invoice/invoice_status.dart';
 
+import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../resource/assets_constant/images_constants.dart';
 import '../../../shared/constants/colors.dart';
+import '../../../shared/constants/common.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
+import '../../../shared/widget_hico/image_widget/network_image.dart';
+import '../../../shared/widgets/image_widget/fcore_image.dart';
+import '../../call/pickup/picker_layout.dart';
+import '../../order/controllers/order_controller.dart';
 import '../controller/booking_detail_controller.dart';
 
 part 'booking_detail_children.dart';
@@ -15,166 +22,75 @@ part 'booking_detail_children.dart';
 class BookingDetailScreen extends GetView<BookingDetailController> {
   const BookingDetailScreen({Key? key}) : super(key: key);
 
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 2.0,
-        centerTitle: true,
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            IconConstants.icBack,
-            width: 11,
+    return PickupLayout(
+      controller.callMethods,
+      scaffold: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          centerTitle: true,
+          leading: IconButton(
+            icon: SvgPicture.asset(
+              IconConstants.icBack,
+              width: 11,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-          onPressed: () => Navigator.of(context).pop(),
+          title: Text(
+            'extend.title.appbar'.tr,
+            style: TextAppStyle().titleAppBarStyle(),
+          ),
+          elevation: 1,
+          backgroundColor: Colors.white,
         ),
-        title: Text(
-          'booking.title'.tr,
-          style: TextAppStyle().titleAppBarStyle(),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _buildForm(
-              Text(
-                'booking.detail.order_infor'.tr,
-                style: TextAppStyle().textOrderInforStyle(),
-              ),
-              IconConstants.syncRetry,
-              'Hình thức',
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 2.0, horizontal: 12.0),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF27AE60),
-                  borderRadius: BorderRadius.circular(18.0),
+        body: SingleChildScrollView(
+          child: Obx(() => Container(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    buildOrderInfo(),
+                    const SizedBox(height: 19),
+                    Container(color: AppColor.greyBackgroundColor, height: 1),
+                    const SizedBox(height: 18),
+                    buildCustomerInfo(),
+                    const SizedBox(height: 19),
+                    Container(color: AppColor.greyBackgroundColor, height: 1),
+                    const SizedBox(height: 18),
+                    if (controller.invoice.value.service != null)
+                      buildServiceInfo(),
+                    const SizedBox(height: 19),
+                    Container(color: AppColor.greyBackgroundColor, height: 1),
+                    const SizedBox(height: 18),
+                    buildWorkingTime(),
+                    const SizedBox(height: 19),
+                    Container(color: AppColor.greyBackgroundColor, height: 1),
+                    const SizedBox(height: 18),
+                    buildPaymentMethod(),
+                    const SizedBox(height: 18),
+                    Container(color: AppColor.greyBackgroundColor, height: 6),
+                    const SizedBox(height: 14),
+                    buildOrderDetail(),       
+                    const SizedBox(height: 32),
+                    Padding(padding: const EdgeInsets.symmetric(horizontal: CommonConstants.paddingDefault),
+                    child: GeneralButton(
+                        onPressed: () {
+                          controller.onSubmit();
+                        },
+                        borderRadius: BorderRadius.circular(24),
+                        borderColor: AppColor.primaryColorLight,
+                        backgroundColor: AppColor.primaryColorLight,
+                        child: Text(
+                          'extend.title.button'.tr,
+                          style: TextAppStyle().normalTextWhite(),
+                        ),
+                    ),),
+
+                    const SizedBox(height: 20),
+                  ],
                 ),
-                child: const Text(
-                  'Online',
-                  style: TextStyle(
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                    fontFamily: 'SVN-Jeko',
-                  ),
-                ),
-              ),
-              AppColor.textBlack,
-            ),
-            const Divider(
-              color: Color(0xFFEEEEEE),
-            ),
-            _buildForm(
-              Text(
-                'booking.detail.interpreters'.tr,
-                style: TextAppStyle().textOrderInforStyle(),
-              ),
-              IconConstants.userTag,
-              'Nguyễn Thuỳ Linh',
-              const SizedBox(),
-              AppColor.blueTextColor,
-            ),
-            const Divider(
-              color: Color(0xFFEEEEEE),
-            ),
-            _buildServiceInfor(),
-            const SizedBox(
-              height: 18.0,
-            ),
-            const Divider(
-              color: Color(0xFFEEEEEE),
-            ),
-            _buildForm(
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'booking.detail.time_work'.tr,
-                    style: TextAppStyle().textOrderInforStyle(),
-                  ),
-                  Text(
-                    '20/11/2021',
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.textBlack,
-                      fontFamily: 'SVN-Jeko',
-                    ),
-                  ),
-                ],
-              ),
-              IconConstants.documentHistory,
-              '${controller.result.timeExtend} phút',
-              const SizedBox(),
-              AppColor.blueTextColor,
-            ),
-            const Divider(
-              color: Color(0xFFEEEEEE),
-            ),
-            ListTile(
-              contentPadding: const EdgeInsets.only(
-                left: 20.5,
-                right: 20.5,
-              ),
-              minLeadingWidth: 18.0,
-              leading: SvgPicture.asset(IconConstants.iconMoney),
-              title: Text(
-                'booking.detail.payment_method'.tr,
-                style: TextStyle(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.textBlack,
-                  fontFamily: 'SVN-Jeko',
-                ),
-              ),
-              subtitle: Text(
-                'Thanh toán bằng ví',
-                style: TextStyle(
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w400,
-                  color: AppColor.textBlack,
-                  fontFamily: 'SVN-Jeko',
-                ),
-              ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Xem tất cả',
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      fontFamily: 'SVN-Jeko',
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.blueTextColor,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 4.0,
-                  ),
-                  SvgPicture.asset(
-                    IconConstants.icArrowRight,
-                    color: AppColor.blueColorLight,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: Get.width,
-              height: 4.0,
-              color: AppColor.fourthTextColorLight.withOpacity(0.2),
-            ),
-            _buildIntoMoney(),
-            const SizedBox(height: 34.0),
-          ],
+              )),
         ),
       ),
-      bottomSheet: _buildExtendConfirmButton(),
     );
   }
 }

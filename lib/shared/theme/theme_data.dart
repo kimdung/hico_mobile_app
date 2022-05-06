@@ -45,7 +45,7 @@ class ThemeConfig {
       cardColor: primaryBackgroundColor,
       dividerColor: divider,
       dividerTheme: DividerThemeData(
-        color: divider,
+        color: divider?.withOpacity(0.2),
         space: 1,
         thickness: 1,
       ),

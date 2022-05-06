@@ -33,6 +33,7 @@ class AppColor {
   static Color textBlack = const Color(0xff333333);
   static Color blueTextColor = const Color(0xFF007AFF);
   static Color redTextColor = const Color(0xFFFF2323);
+  static Color greenTextColor = const Color(0xFF34C759);
 
   //Hint
   static Color primaryHintColor = const Color(0xffFF6B6B);

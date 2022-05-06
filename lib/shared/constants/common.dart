@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class CommonConstants {
   static const num testNum = 1;
   static const double largeText = 16;
@@ -59,6 +61,8 @@ const MediaApiEnvironment = 'MediaApiEnvironment';
 const DefaultLanguageCode = 'DefaultLanguageCode';
 const UIAPIDomain = 'UIAPIDomain';
 const ClientAPIDomain = 'ClientAPIDomain';
+const LineChannelId = 'LineChannelId';
+const StripePublishableKey = 'StripePublishableKey';
 
 // URL DOWNLOAD APP
 const URL_ANDROID =

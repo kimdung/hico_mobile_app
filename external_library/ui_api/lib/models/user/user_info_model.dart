@@ -51,6 +51,8 @@ class UserInfoModel {
   int? kycStatus;
   @JsonKey(name: 'conversation_info')
   ConversationInfoModel? conversationInfo;
+  @JsonKey(name: 'account_balance')
+  int? accountBalance;
 
   UserInfoModel(
       {this.id,
@@ -60,6 +62,7 @@ class UserInfoModel {
       this.dateOfBirth,
       this.email,
       this.phoneNumber,
+      this.bankId,
       this.bankName,
       this.bankBranchName,
       this.bankAccountHolder,
@@ -76,7 +79,8 @@ class UserInfoModel {
       this.workplaces,
       this.userTime,
       this.kycStatus,
-      this.conversationInfo});
+      this.conversationInfo,
+      this.accountBalance});
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>
       _$UserInfoModelFromJson(json);

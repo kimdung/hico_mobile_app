@@ -12,7 +12,6 @@ import 'package:data_infrastructure/src/model/create_disease_symptom_command.dar
 import 'package:data_infrastructure/src/model/disease_symptom_summary_dtos.dart';
 
 class DiseaseSymptonsApi {
-
   final Dio _dio;
 
   final Serializers _serializers;
@@ -20,7 +19,7 @@ class DiseaseSymptonsApi {
   const DiseaseSymptonsApi(this._dio, this._serializers);
 
   /// apiDiseaseSymptonsGet
-  /// 
+  ///
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -32,7 +31,7 @@ class DiseaseSymptonsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<DiseaseSymptomSummaryDtos>] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<BuiltList<DiseaseSymptomSummaryDtos>>> apiDiseaseSymptonsGet({ 
+  Future<Response<BuiltList<DiseaseSymptomSummaryDtos>>> apiDiseaseSymptonsGet({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -64,12 +63,12 @@ class DiseaseSymptonsApi {
     BuiltList<DiseaseSymptomSummaryDtos> _responseData;
 
     try {
-      const _responseType = FullType(BuiltList, [FullType(DiseaseSymptomSummaryDtos)]);
+      const _responseType =
+          FullType(BuiltList, [FullType(DiseaseSymptomSummaryDtos)]);
       _responseData = _serializers.deserialize(
         _response.data!,
         specifiedType: _responseType,
       ) as BuiltList<DiseaseSymptomSummaryDtos>;
-
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
@@ -92,10 +91,10 @@ class DiseaseSymptonsApi {
   }
 
   /// apiDiseaseSymptonsPost
-  /// 
+  ///
   ///
   /// Parameters:
-  /// * [createDiseaseSymptomCommand] 
+  /// * [createDiseaseSymptomCommand]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -105,7 +104,7 @@ class DiseaseSymptonsApi {
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> apiDiseaseSymptonsPost({ 
+  Future<Response<void>> apiDiseaseSymptonsPost({
     CreateDiseaseSymptomCommand? createDiseaseSymptomCommand,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -132,11 +131,13 @@ class DiseaseSymptonsApi {
 
     try {
       const _type = FullType(CreateDiseaseSymptomCommand);
-      _bodyData = createDiseaseSymptomCommand == null ? null : _serializers.serialize(createDiseaseSymptomCommand, specifiedType: _type);
-
-    } catch(error, stackTrace) {
+      _bodyData = createDiseaseSymptomCommand == null
+          ? null
+          : _serializers.serialize(createDiseaseSymptomCommand,
+              specifiedType: _type);
+    } catch (error, stackTrace) {
       throw DioError(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
@@ -156,5 +157,4 @@ class DiseaseSymptonsApi {
 
     return _response;
   }
-
 }

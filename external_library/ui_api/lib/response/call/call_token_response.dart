@@ -17,4 +17,3 @@ class CallTokenResponse extends BaseResponse {
 
   Map<String, dynamic> toJson() => _$CallTokenResponseToJson(this);
 }
- 

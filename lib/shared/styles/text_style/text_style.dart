@@ -46,11 +46,19 @@ class TextAppStyle {
   }
 
   TextStyle titleAppBarStyle() {
-    /// headline1 Color: primaryTextColor -> Black Gray (#333333)
     return TextStyle(
       color: AppColor.thirdTextColorLight,
       fontSize: 16,
       fontWeight: FontWeight.w500,
+      fontFamily: appFont,
+    );
+  }
+
+  TextStyle titleStyle() {
+    return TextStyle(
+      color: AppColor.thirdTextColorLight,
+      fontSize: 14,
+      fontWeight: FontWeight.w700,
       fontFamily: appFont,
     );
   }

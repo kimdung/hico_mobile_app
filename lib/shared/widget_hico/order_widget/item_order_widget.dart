@@ -95,10 +95,18 @@ class ItemOrderWidget extends StatelessWidget {
                                   icon: IconConstants.icServicePink,
                                   title: '${'invoice.service'.tr} $service'),
                               const SizedBox(height: 5),
-                              _buildAddressItem(
+                              Container(
+                                child: invoice.workingForm == CommonConstants.online? 
+                                _buildAddressItem(
                                   icon: IconConstants.icMoneyBlue,
-                                  title: '$price JPY/${'invoice.hours'.tr}'),
+                                  title: '$price JPY/${'invoice.hours'.tr}'): 
+                                _buildPriceItem(
+                                  icon: IconConstants.icMoneyBlue,
+                                  title: '${invoice.offlinePriceMin} JPY/ 0,5 - ${invoice.minHours} ${'invoice.hours'.tr}',
+                                  subTitle: '${'invoice.incurred'.tr}: ${invoice.price} JPY/ 1${'invoice.hours'.tr}'),
+                              ),
                               const SizedBox(height: 8),
+                              
                             ],
                           ),
                         ),
@@ -256,6 +264,38 @@ class ItemOrderWidget extends StatelessWidget {
       ],
     );
   }
+
+  Widget _buildPriceItem({required String icon, required String title, required String subTitle}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(right: 12, top: 3),
+          child: Image.asset(
+            icon,
+            width: 15,
+          ),
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextAppStyle().smallTextGrey(),
+              ),
+              Text(
+                subTitle,
+                style: TextAppStyle().smallTextGrey(),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+
 
   Widget _buildActionButton(
       {required String icon,

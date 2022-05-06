@@ -3,7 +3,7 @@ import '../constants/constants.dart';
 import '../controllers/network_controller.dart';
 
 abstract class NetworkManager {
-  // Note: add bindings to Controller: 
+  // Note: add bindings to Controller:
   //Get.lazyPut<NetworkController>(() => NetworkController());
 
   Future<bool> hasConnectNetwork() async {

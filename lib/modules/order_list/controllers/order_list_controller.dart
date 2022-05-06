@@ -8,6 +8,7 @@ import 'package:ui_api/models/invoice/invoice_list_model.dart';
 import 'package:ui_api/models/invoice/invoice_status.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:ui_api/request/invoice/invoice_request.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../base/base_controller.dart';
@@ -108,7 +109,7 @@ class OrderListController extends BaseController {
   }
 
   Future<void> viewDetail(int id) async {
-    await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+    await Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id:id) );
   }
 
   Future<void> onChatAdmin() async {
