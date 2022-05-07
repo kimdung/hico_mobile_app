@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:hico/shared/utils/dialog_util.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ui_api/models/master_data/master_data_model.dart';
 import 'package:ui_api/models/wallet/topup_history_model.dart';
@@ -30,9 +31,9 @@ class TopupBankController extends BaseController {
 
   /* Action */
 
-  void onCopy(BankModel bank) {
-    Clipboard.setData(ClipboardData(text: bank.accountNumber ?? ''));
-    EasyLoading.showToast('copied'.tr);
+  Future<void> onCopy(BankModel bank) async {
+    await Clipboard.setData(ClipboardData(text: bank.accountNumber ?? ''));
+    await DialogUtil.showMenu();
   }
 
   void onCopyTransferContent() {

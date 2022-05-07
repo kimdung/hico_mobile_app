@@ -118,6 +118,7 @@ class ProfileController extends BaseController {
       district.text = item.districtName!;
       addressId = item.id!;
       showSuggest.value = 0;
+      address.text = item.address!;
     } catch (e) {
       await EasyLoading.dismiss();
     }

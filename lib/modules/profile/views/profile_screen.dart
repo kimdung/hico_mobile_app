@@ -148,10 +148,13 @@ class ProfileScreen extends GetView<ProfileController> {
               buildItem(
                 icon: IconConstants.icProfileLocation,
                 title: 'profile.address'.tr,
-                description: AppDataGlobal.userInfo!.address!.code!,
-                description2: AppDataGlobal.userInfo!.address!.provinceName!,
-                description3: AppDataGlobal.userInfo!.address!.districtName!,
-                description4: AppDataGlobal.userInfo!.address!.address!,
+                description: AppDataGlobal.userInfo!.address!.code.toString(),
+                description2:
+                    AppDataGlobal.userInfo!.address!.provinceName.toString(),
+                description3:
+                    AppDataGlobal.userInfo!.address!.districtName.toString(),
+                description4:
+                    AppDataGlobal.userInfo!.address!.address.toString(),
               ),
               const SizedBox(height: 8),
               buildItem(

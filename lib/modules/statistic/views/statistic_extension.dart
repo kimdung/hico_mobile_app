@@ -2,71 +2,141 @@ part of 'statistic_screen.dart';
 
 extension StatisticExtension on StatisticScreen {
   Widget buildStatusNavBar() {
-    return Container(
-      height: 44,
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(
-        color: AppColor.secondBackgroundColorLight,
-        borderRadius: const BorderRadius.all(Radius.circular(48)),
-      ),
-      child: Obx(() => Row(
+    return Obx(() => SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    controller.indexStatus.value = 0;
-                  },
-                  child: Container(
-                    // height: 44,
-                    padding: const EdgeInsets.symmetric(vertical: 9),
-                    decoration: (controller.indexStatus.value == 0)
-                        ? BoxDecoration(
-                            color: AppColor.primaryColorLight,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(48)),
-                          )
-                        : null,
-                    child: Text(
-                      'statistic.finish'.tr,
-                      textAlign: TextAlign.center,
-                      style: TextAppStyle().genaralTextStyle().copyWith(
-                            color: controller.indexStatus.value == 0
-                                ? AppColor.secondTextColorLight
-                                : AppColor.primaryTextColorLight,
-                          ),
-                    ),
+              const SizedBox(
+                width: 20.0,
+              ),
+              InkWell(
+                onTap: () {
+                  controller.indexStatus.value = 0;
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  decoration: (controller.indexStatus.value == 0)
+                      ? BoxDecoration(
+                          color: AppColor.primaryColorLight,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(48)),
+                        )
+                      : const BoxDecoration(
+                          color: AppColor.primaryPink50,
+                          borderRadius: BorderRadius.all(Radius.circular(48)),
+                        ),
+                  child: Text(
+                    'statistic.synthetic'.tr,
+                    textAlign: TextAlign.center,
+                    style: TextAppStyle().genaralTextStyle().copyWith(
+                          color: controller.indexStatus.value == 0
+                              ? AppColor.secondTextColorLight
+                              : AppColor.primaryTextColorLight,
+                        ),
                   ),
                 ),
               ),
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    controller.indexStatus.value = 1;
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 9),
-                    decoration: controller.indexStatus.value == 1
-                        ? BoxDecoration(
-                            color: AppColor.primaryColorLight,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(48)),
-                          )
-                        : null,
-                    child: Text(
-                      'statistic.cancel'.tr,
-                      textAlign: TextAlign.center,
-                      style: TextAppStyle().genaralTextStyle().copyWith(
-                            color: controller.indexStatus.value == 1
-                                ? AppColor.secondTextColorLight
-                                : AppColor.primaryTextColorLight,
-                          ),
-                    ),
+              const SizedBox(
+                width: 8.0,
+              ),
+              InkWell(
+                onTap: () {
+                  controller.indexStatus.value = 1;
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  decoration: controller.indexStatus.value == 1
+                      ? BoxDecoration(
+                          color: AppColor.primaryColorLight,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(48)),
+                        )
+                      : const BoxDecoration(
+                          color: AppColor.primaryPink50,
+                          borderRadius: BorderRadius.all(Radius.circular(48)),
+                        ),
+                  child: Text(
+                    'statistic.supplier.cancel'.tr,
+                    textAlign: TextAlign.center,
+                    style: TextAppStyle().genaralTextStyle().copyWith(
+                          color: controller.indexStatus.value == 1
+                              ? AppColor.secondTextColorLight
+                              : AppColor.primaryTextColorLight,
+                        ),
                   ),
                 ),
-              )
+              ),
+              const SizedBox(
+                width: 8.0,
+              ),
+              InkWell(
+                onTap: () {
+                  controller.indexStatus.value = 2;
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  decoration: (controller.indexStatus.value == 2)
+                      ? BoxDecoration(
+                          color: AppColor.primaryColorLight,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(48)),
+                        )
+                      : const BoxDecoration(
+                          color: AppColor.primaryPink50,
+                          borderRadius: BorderRadius.all(Radius.circular(48)),
+                        ),
+                  child: Text(
+                    'statistic.finish'.tr,
+                    textAlign: TextAlign.center,
+                    style: TextAppStyle().genaralTextStyle().copyWith(
+                          color: controller.indexStatus.value == 2
+                              ? AppColor.secondTextColorLight
+                              : AppColor.primaryTextColorLight,
+                        ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 8.0,
+              ),
+              InkWell(
+                onTap: () {
+                  controller.indexStatus.value = 3;
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  decoration: (controller.indexStatus.value == 3)
+                      ? BoxDecoration(
+                          color: AppColor.primaryColorLight,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(48)),
+                        )
+                      : const BoxDecoration(
+                          color: AppColor.primaryPink50,
+                          borderRadius: BorderRadius.all(Radius.circular(48)),
+                        ),
+                  child: Text(
+                    'statistic.cancel'.tr,
+                    textAlign: TextAlign.center,
+                    style: TextAppStyle().genaralTextStyle().copyWith(
+                          color: controller.indexStatus.value == 3
+                              ? AppColor.secondTextColorLight
+                              : AppColor.primaryTextColorLight,
+                        ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 20.0,
+              ),
             ],
-          )),
-    );
+          ),
+        ));
   }
 
   Widget buildTotalWithStatus() {
@@ -75,117 +145,61 @@ extension StatisticExtension on StatisticScreen {
             child: controller.indexStatus.value == 0
                 ? Column(children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         _buildTotalItem(
                             margin: 1,
                             icon: IconConstants.icMoneyGreen,
-                            title: 'statistic.finish_total'.tr,
+                            title: 'statistic.wallet'.tr,
                             price:
-                                '${controller.completed.value.total ?? 0} JPY',
-                            textColor: AppColor.blueTextColor),
-                        _buildTotalItem(
-                            margin: 2,
-                            icon: IconConstants.icMoneyPink,
-                            title: 'statistic.finish_paid'.tr,
-                            price:
-                                '${controller.completed.value.paid ?? 0} JPY',
+                                '${controller.completed.value.total ?? 0} JPY ',
                             textColor: AppColor.blueTextColor),
                       ],
                     ),
-                    Row(
-                      children: [
-                        _buildTotalItem(
-                            margin: 1,
-                            icon: IconConstants.icMoneyGreen,
-                            title: 'statistic.finish_remain'.tr,
-                            price:
-                                '${controller.completed.value.remain ?? 0} JPY',
-                            textColor: AppColor.blueTextColor),
-                      ],
-                    )
                   ])
-                : Column(children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildTotalItem(
-                            margin: 1,
-                            icon: IconConstants.icMoneyGreen,
-                            title: 'statistic.cancel_total'.tr,
-                            price:
-                                '${controller.canceled.value.total ?? 0} JPY',
-                            textColor: AppColor.blueTextColor),
-                        _buildTotalItem(
-                            margin: 2,
-                            icon: IconConstants.icMoneyPink,
-                            title: 'statistic.cancel_paid'.tr,
-                            price: '${controller.canceled.value.paid ?? 0} JPY',
-                            textColor: AppColor.blueTextColor),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        _buildTotalItem(
-                            margin: 1,
-                            icon: IconConstants.icMoneyRed,
-                            title: 'statistic.cancel_remain'.tr,
-                            price:
-                                '${controller.canceled.value.remain ?? 0} JPY',
-                            textColor: AppColor.redTextColor),
-                      ],
-                    )
-                  ]),
-
-            // GridView.extent(
-            //   primary: false,
-            //   childAspectRatio: 160 / 60,
-            //   crossAxisSpacing: 14,
-            //   mainAxisSpacing: 0,
-            //   maxCrossAxisExtent: 300.0,
-            //   children: controller.indexStatus.value == 0
-            //       ? <Widget>[
-            //           _buildTotalItem(
-            //               margin: 1,
-            //               icon: IconConstants.icMoneyGreen,
-            //               title: 'statistic.finish_total'.tr,
-            //               price: '${controller.completed.value.total ?? 0} JPY',
-            //               textColor: AppColor.blueTextColor),
-            //           _buildTotalItem(
-            //               margin: 2,
-            //               icon: IconConstants.icMoneyPink,
-            //               title: 'statistic.finish_paid'.tr,
-            //               price: '${controller.completed.value.paid ?? 0} JPY',
-            //               textColor: AppColor.blueTextColor),
-            //           _buildTotalItem(
-            //               margin: 1,
-            //               icon: IconConstants.icMoneyGreen,
-            //               title: 'statistic.finish_remain'.tr,
-            //               price:
-            //                   '${controller.completed.value.remain ?? 0} JPY',
-            //               textColor: AppColor.blueTextColor),
-            //         ]
-            //       : <Widget>[
-            //           _buildTotalItem(
-            //               margin: 1,
-            //               icon: IconConstants.icMoneyGreen,
-            //               title: 'statistic.cancel_total'.tr,
-            //               price: '${controller.canceled.value.total ?? 0} JPY',
-            //               textColor: AppColor.blueTextColor),
-            //           _buildTotalItem(
-            //               margin: 2,
-            //               icon: IconConstants.icMoneyPink,
-            //               title: 'statistic.cancel_paid'.tr,
-            //               price: '${controller.canceled.value.paid ?? 0} JPY',
-            //               textColor: AppColor.blueTextColor),
-            //           _buildTotalItem(
-            //               margin: 1,
-            //               icon: IconConstants.icMoneyRed,
-            //               title: 'statistic.cancel_remain'.tr,
-            //               price: '${controller.canceled.value.remain ?? 0} JPY',
-            //               textColor: AppColor.redTextColor),
-            //         ],
-            // ),
+                : controller.indexStatus.value == 1
+                    ? Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 20.0),
+                              child: _buildTotalItem(
+                                  margin: 1,
+                                  icon: IconConstants.icMoneyGreen,
+                                  title: 'statistic.bonus'.tr,
+                                  price:
+                                      '${controller.completed.value.total ?? 0} JPY ',
+                                  textColor: AppColor.blueTextColor),
+                            ),
+                          ),
+                        ],
+                      )
+                    : controller.indexStatus.value == 2
+                        ? Column(
+                            children: [
+                              _buildTotalItem(
+                                  margin: 1,
+                                  icon: IconConstants.icMoneyGreen,
+                                  title: 'statistic.monney_used'.tr,
+                                  price:
+                                      '${controller.completed.value.total ?? 0} JPY ',
+                                  textColor: AppColor.blueTextColor),
+                            ],
+                          )
+                        : controller.indexStatus.value == 3
+                            ? Column(children: [
+                                Row(
+                                  children: [
+                                    _buildTotalItem(
+                                        margin: 1,
+                                        icon: IconConstants.icMoneyRed,
+                                        title: 'statistic.system_fine'.tr,
+                                        price:
+                                            '${controller.canceled.value.total ?? 0} JPY ',
+                                        textColor: AppColor.redTextColor),
+                                  ],
+                                ),
+                              ])
+                            : null,
           ),
         ));
   }

@@ -54,7 +54,6 @@ class SupplierFilterController extends BaseController {
     date.value = TextEditingValue(text: DateFormatter.formatDate(fromDate));
     request.filterIsOnline = isOnline.value;
     request.filterLevelId = 0;
-    
   }
 
   @override
@@ -186,7 +185,6 @@ class SupplierFilterController extends BaseController {
         height: Get.height / 2,
         child: LevelWidget(
           levels: AppDataGlobal.masterData!.levels!,
-          //AppDataGlobal.masterData!.levels!
           currentLevel: request.filterLevelId,
         ),
       ),
@@ -197,6 +195,9 @@ class SupplierFilterController extends BaseController {
           level.value = _value.name != null
               ? '${'supplier.filter.level_title'.tr}: ${_value.name!}'
               : '';
+        } else {
+          request.filterLevelId = 0;
+          level.value = '${'all'.tr}';
         }
       },
     );
@@ -252,16 +253,17 @@ class SupplierFilterController extends BaseController {
     var validater = false;
     var message = '';
 
-    if (request.filterLocationProvinceId == null || request.filterLocationDistrictId == null) {
+    if (request.filterLocationProvinceId == null ||
+        request.filterLocationDistrictId == null) {
       validater = true;
       message = 'supplier.filter.location_required'.tr;
-    } 
-    
+    }
+
     if (fromTime.value == '' || toTime.value == '') {
       validater = true;
       message = 'supplier.filter.time_required'.tr;
-    } 
- 
+    }
+
     if (validater) {
       await DialogUtil.showPopup(
         dialogSize: DialogSize.Popup,
