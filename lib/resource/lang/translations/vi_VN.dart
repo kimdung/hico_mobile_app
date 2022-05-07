@@ -28,7 +28,7 @@ const Map<String, String> vi_VN = {
   'copied': 'Đã sao chép',
   'comment': 'Ghi chú',
   'camera': 'Hình ảnh',
-  'year' : 'năm',
+  'year': 'năm',
 
   //onboard
   'onboard.title1': 'Welcome to Hico',
@@ -226,7 +226,7 @@ const Map<String, String> vi_VN = {
   //statistic screen
   'statistic.order_finish': 'Đơn hàng đã hoàn thành',
   'statistic.finish': 'Đã hoàn thành',
-  'statistic.cancel': 'Đã hủy',
+  'statistic.cancel': 'Bạn hủy',
   'statistic.finish_total': 'Tổng số tiền',
   'statistic.finish_paid': 'Đã trả hệ thống',
   'statistic.finish_remain': 'Còn nợ hệ thống',
@@ -244,6 +244,11 @@ const Map<String, String> vi_VN = {
   'statistic.to_date': 'Ngày kết thúc:',
   'statistic.order_code': 'Mã đơn hàng',
   'statistic.amount': 'Số tiền',
+  'statistic.synthetic': 'Tổng hợp',
+  'statistic.supplier.cancel': 'PDV huỷ',
+  'statistic.wallet': 'Số dư ví',
+  'statistic.bonus': 'Số tiền được hoàn lại khi PDV huỷ',
+  'statistic.monney_used' : 'Số tiền đã sử dụng',
 
   //support screen
   'support.title':
@@ -325,8 +330,8 @@ const Map<String, String> vi_VN = {
   'supplier.detail.customer': 'Khách hàng',
   'supplier.detail.degree': 'Bằng cấp',
   'supplier.detail.booking': 'Đặt lịch',
-  'supplier.detail.interpretation_experience' : 'Kinh nghiệm phiên dịch',
-  'supplier.detail.translation_experience' : 'Kinh nghiệm biên dịch',
+  'supplier.detail.interpretation_experience': 'Kinh nghiệm phiên dịch',
+  'supplier.detail.translation_experience': 'Kinh nghiệm biên dịch',
 
   //invoice
   'invoice.misson': 'Nhiệm vụ đã hoàn thành',

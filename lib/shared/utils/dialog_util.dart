@@ -170,4 +170,28 @@ class DialogUtil {
       },
     ).then((value) => onVaLue!(value));
   }
+
+  static Future showMenu() async {
+    return showDialog(
+      context: Get.overlayContext!,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return Dialog(
+          alignment: Alignment.center,
+          //  insetPadding: const EdgeInsets.only(top: 160),
+          child: Container(
+            width: 50,
+            child: ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(
+                'copied'.tr,
+                textAlign: TextAlign.center,
+
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
