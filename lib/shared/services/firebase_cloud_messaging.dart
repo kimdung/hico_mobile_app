@@ -230,7 +230,7 @@ class FirebaseMessageConfig {
       /// Mặc định đang là ['id']
       try{
         var type = json.decode(payload!)['display_type']?.toString();
-        var id = json.decode(payload)['invoice_id']?.toString();
+        var id  = json.decode(payload)['invoice_id']?.toString();
         if(type == '4'){
           await Navigator.of(AppDataGlobal.navigatorKey.currentContext!).pushNamed(
             Routes.ORDER_DETAIL, arguments: InvoiceRequest(id: int.parse(id!), extend: true)

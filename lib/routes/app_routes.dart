@@ -33,7 +33,6 @@ abstract class Routes {
   static const TERMS_OF_USE = '/terms_of_use';
   static const SUPPORT = '/support';
   static const STATISTIC = '/statistic';
-  static const PROFILE = '/profile';
   static const PROFILE_UPDATE = '/profile_update';
   static const BANK_UPDATE = '/bank_update';
   //service

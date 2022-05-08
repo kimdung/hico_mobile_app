@@ -45,7 +45,6 @@ import '../modules/order/views/order_screen.dart';
 import '../modules/payment_method/bindings/payment_method_binding.dart';
 import '../modules/payment_method/views/payment_method_screen.dart';
 import '../modules/profile/bindings/profile_binding.dart';
-import '../modules/profile/views/profile_screen.dart';
 import '../modules/profile/views/profile_update_screen.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_otp_screen.dart';
@@ -220,10 +219,6 @@ final routePages = [
       name: Routes.STATISTIC,
       page: () => StatisticScreen(),
       binding: StatisticBinding()),
-  GetPage(
-      name: Routes.PROFILE,
-      page: () => ProfileScreen(),
-      binding: ProfileBinding()),
   GetPage(
     name: Routes.PROFILE_UPDATE,
     page: () => ProfileUpdateScreen(),

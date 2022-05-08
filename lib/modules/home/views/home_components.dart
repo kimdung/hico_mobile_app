@@ -9,7 +9,7 @@ extension HomeComponents on HomeScreen {
       child: Row(
         children: [
           InkWell(
-            onTap: () => Get.toNamed(Routes.PROFILE),
+            onTap: () => Get.toNamed(Routes.PROFILE_UPDATE),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(25),
               child: CachedNetworkImage(
