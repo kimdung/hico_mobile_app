@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../../base/base_controller.dart';
+import '../../../../data/app_data_global.dart';
 import '../../../../resource/assets_constant/icon_constants.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../shared/constants/common.dart' as common;
@@ -20,10 +21,10 @@ class TopupStripeController extends BaseController {
   final double amount;
   CardFieldInputDetails? card;
 
-  final TextEditingController accountHolderController = TextEditingController();
-  final TextEditingController bankNumberController = TextEditingController();
-  final TextEditingController validDateController = TextEditingController();
-  final TextEditingController cvvController = TextEditingController();
+  // final TextEditingController accountHolderController = TextEditingController();
+  // final TextEditingController bankNumberController = TextEditingController();
+  // final TextEditingController validDateController = TextEditingController();
+  // final TextEditingController cvvController = TextEditingController();
 
   TopupStripeController(this.amount);
 
@@ -83,14 +84,23 @@ class TopupStripeController extends BaseController {
       await _uiRepository
           .topupStripe(
               paymentMethod.id, paymentMethod.billingDetails.name ?? '', amount)
-          .then((response) {
-        EasyLoading.dismiss();
+          .then((response) async {
         if (response.status == common.CommonConstants.statusOk &&
             response.data != null &&
             response.data!.row != null) {
-          Get.offAndToNamed(Routes.TOPUP_DETAIL, arguments: response.data!.row);
+          await _uiRepository.getInfo().then((response) {
+            if (response.status == common.CommonConstants.statusOk &&
+                response.data != null &&
+                response.data!.info != null) {
+              AppDataGlobal.userInfo = response.data!.info!;
+            }
+          });
+          await EasyLoading.dismiss();
+          await Get.offAndToNamed(Routes.TOPUP_DETAIL,
+              arguments: response.data!.row);
         } else {
-          DialogUtil.showPopup(
+          await EasyLoading.dismiss();
+          await DialogUtil.showPopup(
             dialogSize: DialogSize.Popup,
             barrierDismissible: false,
             backgroundColor: Colors.transparent,
