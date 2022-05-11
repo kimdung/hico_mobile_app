@@ -392,6 +392,7 @@ const Map<String, String> vi_VN = {
   'consulting.hint_content': 'Ghi chi tiết triệu chứng bạn đang gặp phải',
   'consulting.symptom': 'Triệu chứng',
   'consulting.success': 'Đăng ký tư vấn thành công!',
+  'consulting.address': 'Chưa chọn địa chỉ',
 
   //extend screen
   'extend.header': 'Chọn thời gian bạn muốn gia hạn cho buổi làm việc với PDV',

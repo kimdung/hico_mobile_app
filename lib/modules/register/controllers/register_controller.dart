@@ -166,6 +166,7 @@ class RegisterController extends BaseController {
   }
 
   Future<void> _loadData(LoginModel loginModel) async {
+    AppDataGlobal.accessToken = loginModel.accessToken ?? '';
     AppDataGlobal.userInfo = loginModel.info;
     AppDataGlobal.isLogin = true;
 

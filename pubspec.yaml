@@ -52,7 +52,7 @@ dependencies:
   cloud_firestore: ^3.1.11
 
   #login
-  flutter_line_sdk: ^2.1.0
+  flutter_line_sdk: ^2.2.0
   firebase_auth: ^3.3.6
   google_sign_in: ^5.2.3
   flutter_facebook_auth: ^4.0.1

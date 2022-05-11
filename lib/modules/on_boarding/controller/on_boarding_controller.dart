@@ -6,6 +6,14 @@ import '../../../resource/assets_constant/images_constants.dart';
 import '../../../routes/app_pages.dart';
 
 class OnBoardingController extends BaseController {
+
+  OnBoardingController(){
+    final error = Get.arguments;
+      if (error is String && error.isNotEmpty) {
+        EasyLoading.showToast(error);
+      }
+  }
+
   @override
   Future<void> onInit() async {
     final error = Get.arguments;

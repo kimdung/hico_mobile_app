@@ -72,14 +72,14 @@ class BaseController extends GetxController
   }
 
   Future<void> checkConnectNetwork() async {
-    // Check Network
-    if (!await hasConnectNetwork()) {
-      hasNetworkSink.add(false);
-      await callDialogErrorNetwork();
-    } else {
-      // Has network
-      hasNetworkSink.add(true);
-    }
+    // // Check Network
+    // if (!await hasConnectNetwork()) {
+    //   hasNetworkSink.add(false);
+    //   await callDialogErrorNetwork();
+    // } else {
+    //   // Has network
+    //   hasNetworkSink.add(true);
+    // }
   }
 
   Future<void> callDialogErrorNetwork() async {

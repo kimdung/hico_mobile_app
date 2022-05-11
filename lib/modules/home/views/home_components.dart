@@ -132,7 +132,7 @@ extension HomeComponents on HomeScreen {
         // padding: const EdgeInsets.symmetric(
         // horizontal: CommonConstants.paddingDefault),
         child: SliderWidget(
-          ratio: 2.2,
+          ratio: 2,
           localImage: false,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),

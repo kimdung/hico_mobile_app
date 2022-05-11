@@ -37,16 +37,21 @@ class SearchScreen extends GetView<SearchController> {
                                 Border.all(color: AppColor.primaryColorLight)),
                         child: TextField(
                           onSubmitted: (value) {
-                            controller.search(value);
+                            controller.search();
                           },
                           style: TextAppStyle().genaralTextStyle(),
                           cursorColor: AppColor.fifthTextColorLight,
+                          controller: controller.keyword,
                           decoration: InputDecoration(
                               enabledBorder: InputBorder.none,
                               focusedBorder: InputBorder.none,
                               hintText: 'service.category.search_field'.tr,
                               hintStyle: TextAppStyle().genaralTextStyle(),
-                              suffixIcon: Image.asset(IconConstants.icSearch),
+                              suffixIcon:  InkWell(
+                                            onTap: (){
+                                              controller.search();
+                                            },
+                                            child: Image.asset(IconConstants.icSearch)),
                               contentPadding:
                                   const EdgeInsets.symmetric(vertical: 7)),
                         ),

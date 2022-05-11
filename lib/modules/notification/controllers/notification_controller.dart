@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:ui_api/models/notifications/notification_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:ui_api/request/invoice/invoice_request.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../routes/app_pages.dart';
@@ -78,8 +79,14 @@ class NotificationController extends BaseController {
       await Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)
           ?.then((value) => loadData());
     } else {
-      await Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
-          ?.then((value) => loadData());
+      await _uiRepository.notificationDetail(id).then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.detail != null) {
+               Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id:invoiceId))
+                ?.then((value) => loadData());
+        }
+      });
     }
   }
 
