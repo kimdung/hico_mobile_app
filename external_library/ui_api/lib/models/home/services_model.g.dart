@@ -20,7 +20,7 @@ ServiceModel _$ServiceModelFromJson(Map<String, dynamic> json) => ServiceModel(
       price: json['price'] as int?,
       minHours: json['min_hours'] as int?,
       offlinePriceMin: json['offline_price_min'] as int?,
-      hours: json['hours'] as int?,
+      hours: (json['hours'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$ServiceModelToJson(ServiceModel instance) =>

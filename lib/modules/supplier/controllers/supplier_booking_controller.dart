@@ -39,7 +39,7 @@ class SupplierBookingController extends BaseController {
 
   SupplierBookingController() {
     bookingPrepare.value = Get.arguments;
-    if(bookingPrepare.value.supplier!.isOnline == '1'){
+    if(bookingPrepare.value.supplier!.isOnline == 1){
     total.value = bookingPrepare.value.supplier!.servicePrice! *
             bookingPrepare.value.totalTime!;
         totalPay.value = total.value;

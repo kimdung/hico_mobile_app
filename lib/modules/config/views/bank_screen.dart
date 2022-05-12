@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ui_api/models/master_data/master_data_model.dart';
@@ -117,6 +118,7 @@ class BankScreen extends GetView<ConfigController> {
                         onTap: () {
                           Clipboard.setData(
                               ClipboardData(text: bank.accountNumber!));
+                          EasyLoading.showToast('${'copied'.tr}');
                         },
                         child: FCoreImage(IconConstants.icCopy),
                       )
