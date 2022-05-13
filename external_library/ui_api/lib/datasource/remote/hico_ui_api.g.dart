@@ -1028,7 +1028,7 @@ class _HicoUIAPI implements HicoUIAPI {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<TopupResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/createPayInStripe',
+                .compose(_dio.options, '/v1/payIn/createPayInStripe',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = TopupResponse.fromJson(_result.data!);

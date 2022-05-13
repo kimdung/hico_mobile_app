@@ -178,6 +178,7 @@ const Map<String, String> vi_VN = {
   'topup.confirm': 'Xác Nhận Nạp Tiền',
   'topup.waitting': 'Chờ xác nhận',
   'topup.confirmed': 'Đã xác nhận',
+  'topup.failed': 'Không thành công',
   'topup.balance': 'Số dư ví: ',
   'topup.amount': 'Số tiền cần nạp (JPY)',
   'topup.amount.hint': 'Nhập số tiền cần nạp',
@@ -189,8 +190,8 @@ const Map<String, String> vi_VN = {
   'topup.komoju2': 'スマホ決済 - KOMOJU',
   'topup.komoju.description1': 'Thanh toán tại Mini Stop,...',
   'topup.komoju.description2': 'Thanh toán bằng Line Pay,...',
-  'topup.stripe': 'Thanh toán Stripe',
-  'topup.stripe.description': 'Chuyển thanh toán cho cổng thanh toán Stripe',
+  'topup.stripe': 'Thẻ Credit, Debit',
+  'topup.stripe.description': 'Thanh toán VISA, Master Card, JBC, Amex',
 
   'topup.bank.info': 'Thông tin chuyển khoản',
   'topup.bank.number': 'STK - %s',
@@ -248,7 +249,7 @@ const Map<String, String> vi_VN = {
   'statistic.supplier.cancel': 'PDV huỷ',
   'statistic.wallet': 'Số dư ví',
   'statistic.bonus': 'Số tiền được hoàn lại khi PDV huỷ',
-  'statistic.monney_used' : 'Số tiền đã sử dụng',
+  'statistic.monney_used': 'Số tiền đã sử dụng',
 
   //support screen
   'support.title':

@@ -40,6 +40,7 @@ class TopupStripeController extends BaseController {
       return;
     }
     try {
+      await EasyLoading.show();
       final paymentMethod = await Stripe.instance
           .createPaymentMethod(const PaymentMethodParams.card())
           .catchError(
@@ -61,6 +62,7 @@ class TopupStripeController extends BaseController {
       );
       await _requestPayment(paymentMethod);
     } on StripeError catch (error) {
+      await EasyLoading.dismiss();
       await DialogUtil.showPopup(
         dialogSize: DialogSize.Popup,
         barrierDismissible: false,
@@ -80,7 +82,6 @@ class TopupStripeController extends BaseController {
 
   Future<void> _requestPayment(PaymentMethod paymentMethod) async {
     try {
-      await EasyLoading.show();
       await _uiRepository
           .topupStripe(
               paymentMethod.id, paymentMethod.billingDetails.name ?? '', amount)
@@ -113,7 +114,23 @@ class TopupStripeController extends BaseController {
             },
           );
         }
-      });
+      }).catchError(
+        (onError) {
+          EasyLoading.dismiss();
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: const NormalWidget(
+              icon: IconConstants.icFail,
+              title: 'There was an error processing, please try again!',
+            ),
+            onVaLue: (value) {
+              Get.back();
+            },
+          );
+        },
+      );
     } catch (e) {
       await EasyLoading.dismiss();
     }

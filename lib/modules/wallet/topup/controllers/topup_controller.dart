@@ -57,7 +57,10 @@ class TopupController extends GetxController {
         await _topupKomaju(amount, 2);
         break;
       case 3:
-        await Get.toNamed(Routes.TOPUP_STRIPE, arguments: amount);
+        await Get.toNamed(Routes.TOPUP_STRIPE, arguments: amount)
+            ?.then((value) {
+          balance.value = AppDataGlobal.userInfo?.accountBalance ?? 0;
+        });
         break;
       default:
         break;
@@ -83,7 +86,10 @@ class TopupController extends GetxController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null &&
             response.data!.row != null) {
-          Get.toNamed(Routes.TOPUP_BANK, arguments: response.data!.row);
+          Get.toNamed(Routes.TOPUP_BANK, arguments: response.data!.row)
+              ?.then((value) {
+            balance.value = AppDataGlobal.userInfo?.accountBalance ?? 0;
+          });
         }
       });
     } catch (e) {
@@ -99,7 +105,10 @@ class TopupController extends GetxController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           // _payment(response.data!);
-          Get.toNamed(Routes.TOPUP_KOMOJU, arguments: response.data!);
+          Get.toNamed(Routes.TOPUP_KOMOJU, arguments: response.data!)
+              ?.then((value) {
+            balance.value = AppDataGlobal.userInfo?.accountBalance ?? 0;
+          });
         }
       });
     } catch (e) {

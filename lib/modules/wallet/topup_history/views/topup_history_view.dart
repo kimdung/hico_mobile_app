@@ -35,51 +35,49 @@ class TopupHistoryView extends GetView<TopupHistoryController> {
     return InkWell(
       onTap: () => controller.onTopupDetail(topupHistory),
       child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          FCoreImage(
-            IconConstants.icWallet1,
-            width: 26,
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        '${topupHistory.amount} JPY',
-                        style: TextAppStyle().titleStyle(),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      topupHistory.status == TopupHistoryModel.CONFIRMED
-                          ? 'topup.confirmed'.tr
-                          : 'topup.waitting'.tr,
-                      style: TextAppStyle().genaralTextStyle().copyWith(
-                            color: topupHistory.status ==
-                                    TopupHistoryModel.CONFIRMED
-                                ? AppColor.greenTextColor
-                                : AppColor.primaryColorLight,
-                          ),
-                    ),
-                  ],
-                ),
-                Text(
-                  topupHistory.createdAt ?? '',
-                  style: TextAppStyle().genaralTextStyle(),
-                ),
-              ],
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FCoreImage(
+              IconConstants.icWallet1,
+              width: 26,
             ),
-          ),
-        ],
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '${topupHistory.amount} JPY',
+                          style: TextAppStyle().titleStyle(),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        topupHistory.getStatus(),
+                        style: TextAppStyle().genaralTextStyle().copyWith(
+                              color: topupHistory.status ==
+                                      TopupHistoryModel.CONFIRMED
+                                  ? AppColor.greenTextColor
+                                  : AppColor.primaryColorLight,
+                            ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    topupHistory.createdAt ?? '',
+                    style: TextAppStyle().genaralTextStyle(),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
     );
   }
 }

@@ -154,9 +154,7 @@ class TopupDetailScreen extends GetView<TopupDetailController> {
           ),
           const SizedBox(width: 8),
           Text(
-            controller.topup?.status == TopupHistoryModel.CONFIRMED
-                ? 'topup.confirmed'.tr
-                : 'topup.waitting'.tr,
+            controller.topup?.getStatus() ?? '',
             style: TextAppStyle().genaralTextStyle().copyWith(
                   color: AppColor.thirdTextColorLight,
                 ),

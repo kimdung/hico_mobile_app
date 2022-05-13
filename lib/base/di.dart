@@ -26,7 +26,9 @@ class DependencyInjection {
     await Get.putAsync(() => LocateService().init());
 
     await LineSDK.instance.setup(config.value[LineChannelId]!);
+    
     Stripe.publishableKey = config.value[StripePublishableKey]!;
+    await Stripe.instance.applySettings();
 
     final _dioUIAPI =
         await DioClient.setup(baseUrl: config.value[UIAPIDomain]!);

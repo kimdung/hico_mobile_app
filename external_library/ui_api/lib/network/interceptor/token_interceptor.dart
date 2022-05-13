@@ -21,10 +21,12 @@ class TokenInterceptor extends Interceptor {
       errorUnauthorized();
       print('[TokenInterceptor] onError'
           '${error.message}');
+    } else {
+      super.onError(error, handler);
     }
-    if (error.response == null || error.type != DioErrorType.response) {
-      return;
-    }
+    // if (error.response == null || error.type != DioErrorType.response) {
+    //   return;
+    // }
   }
 
   // @override

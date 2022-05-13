@@ -1,6 +1,6 @@
 class TopupItem {
   static List<TopupItem> topupItems = [
-    TopupItem('300 JPY', 300),
+    TopupItem('500 JPY', 500),
     TopupItem('1000 JPY', 1000),
     TopupItem('2000 JPY', 2000),
     TopupItem('3000 JPY', 3000),

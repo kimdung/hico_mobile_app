@@ -377,7 +377,7 @@ abstract class HicoUIAPI {
   Future<TopupResponse> topupKomojuResult(
       @Query('session_id') String sessionId);
 
-  @POST('/v1/createPayInStripe')
+  @POST('/v1/payIn/createPayInStripe')
   Future<TopupResponse> createPayInStripe(
       @Query('payment_method_id') String paymentMethodId,
       @Query('name') String name,
