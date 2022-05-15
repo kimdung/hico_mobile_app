@@ -253,11 +253,11 @@ class SupplierFilterController extends BaseController {
     var validater = false;
     var message = '';
 
-    if (request.filterLocationProvinceId == null ||
-        request.filterLocationDistrictId == null) {
-      validater = true;
-      message = 'supplier.filter.location_required'.tr;
-    }
+    // if (request.filterLocationProvinceId == null ||
+    //     request.filterLocationDistrictId == null) {
+    //   validater = true;
+    //   message = 'supplier.filter.location_required'.tr;
+    // }
 
     if (fromTime.value == '' || toTime.value == '') {
       validater = true;

@@ -6,10 +6,13 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/extend_period_request.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
+import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
+import '../../../shared/widget_hico/dialog/topup_widget.dart';
 
 class BookingDetailController extends BaseController {
   
@@ -76,6 +79,27 @@ class BookingDetailController extends BaseController {
     Future<void> onSubmit() async {
     try {
       await EasyLoading.show();
+
+      if(AppDataGlobal.userInfo!.accountBalance! < result.value.extendPeriod!.price!){
+        await EasyLoading.dismiss();
+        await DialogUtil.showPopup(
+          dialogSize: DialogSize.Popup,
+          barrierDismissible: false,
+          backgroundColor: Colors.transparent,
+          child: TopupWidget(
+            icon: IconConstants.icFail,
+            title: 'booking.wallet_not_enough'.tr,
+          ),
+          onVaLue: (_value) {
+            if (_value != null && _value is int) {
+              if (_value == 1) {
+                Get.toNamed(Routes.WALLET);
+              }
+            }
+          },
+        );
+        return;
+      }
       final request = ExtendPeriodRequest();
       request.invoiceId = result.value.invoiceId;
       request.extendPeriodId = result.value.extendPeriod!.id!;

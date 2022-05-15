@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ui_api/models/user/documents_certificate_model.dart';
+import 'package:ui_api/models/user/time.dart';
 
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
@@ -63,7 +64,7 @@ class SupplierDetailScreen extends GetView<SupplierDetailController> {
                               'lib/resource/assets_resources/images/diploma.png',
                           title: 'supplier.detail.interpretation_experience'.tr,
                           description:
-                              controller.profile.value.interExp.toString(),
+                              interpretationExperiences[controller.profile.value.interExp!].content,
                           description2: controller.profile.value.interExpDetail,
                         )
                       : const SizedBox(),
@@ -75,7 +76,7 @@ class SupplierDetailScreen extends GetView<SupplierDetailController> {
                               'lib/resource/assets_resources/images/diploma.png',
                           title: 'supplier.detail.translation_experience'.tr,
                           description:
-                              controller.profile.value.transExp.toString(),
+                              translatationExperiences[controller.profile.value.transExp!].content,
                           description2: controller.profile.value.transExpDetail,
                         )
                       : const SizedBox(),

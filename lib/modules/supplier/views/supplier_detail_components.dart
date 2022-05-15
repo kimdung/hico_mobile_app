@@ -174,8 +174,9 @@ extension SupplierDetailComponents on SupplierDetailScreen {
                       ...List.generate(
                           list.length,
                           (index) => _buildImageItem(
-                              image: list[index].url!,
+                              image: list[index].extension == 'pdf' ? 'lib/resource/assets_resources/images/pdf_icon.jpeg' : list[index].url!,
                               padding: true,
+                              file: list[index].extension == 'pdf' ? true: false,
                               width: (Get.width - 40) / 2)),
                     ],
                   )
@@ -190,6 +191,7 @@ extension SupplierDetailComponents on SupplierDetailScreen {
       {required String image,
       String? title,
       double? width,
+      bool? file = false,
       bool? padding = false}) {
     return Column(
       children: [
@@ -202,7 +204,8 @@ extension SupplierDetailComponents on SupplierDetailScreen {
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: CachedNetworkImage(
+            child: file == false ?
+             CachedNetworkImage(
               imageUrl: image,
               imageBuilder: (context, imageProvider) => Container(
                 decoration: BoxDecoration(
@@ -214,7 +217,8 @@ extension SupplierDetailComponents on SupplierDetailScreen {
               ),
               placeholder: (context, url) => const CircularProgressIndicator(),
               errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
+            ):
+            FCoreImage(image,),
           ),
         ),
         if (title != null)

@@ -16,6 +16,7 @@ import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
+import '../../../shared/widget_hico/dialog/topup_widget.dart';
 
 class SupplierBookingController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
@@ -149,11 +150,18 @@ class SupplierBookingController extends BaseController {
           dialogSize: DialogSize.Popup,
           barrierDismissible: false,
           backgroundColor: Colors.transparent,
-          child: NormalWidget(
+          child: TopupWidget(
             icon: IconConstants.icFail,
             title: 'booking.wallet_not_enough'.tr,
           ),
-          onVaLue: (value) {},
+          onVaLue: (_value) {
+            if (_value != null && _value is int) {
+              if (_value == 1) {
+                Get.toNamed(Routes.WALLET);
+              }
+            }
+
+          },
         );
         return;
       }

@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hico/shared/widgets/image_widget/fcore_image.dart';
 
+import '../../constants/colors.dart';
+
 class NetWorkImage extends StatelessWidget {
   const NetWorkImage({
     Key? key,
@@ -23,6 +25,7 @@ class NetWorkImage extends StatelessWidget {
       imageUrl: image,
       width: width,
       height: height ?? 48,
+      
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(radius ?? 0),
@@ -32,7 +35,13 @@ class NetWorkImage extends StatelessWidget {
           ),
         ),
       ),
-      placeholder: (context, url) => const CircularProgressIndicator(),
+      //placeholder: (context, url) => const CircularProgressIndicator(),
+      placeholder: (context, url) => Center(
+        child: CircularProgressIndicator(
+          color: AppColor.primaryColorLight,
+          strokeWidth: 2,
+        ),
+      ),
       errorWidget: (context, url, error) => const Icon(Icons.error),
     );
   }
