@@ -19,6 +19,7 @@ class BookingDetailController extends BaseController {
   Rx<ExtendPrepareModel> result = Rx(ExtendPrepareModel());
   final _uiRepository = Get.find<HicoUIRepository>();
   final invoice = Rx(InvoiceInfoModel());
+  var userInfo = Rx(AppDataGlobal.userInfo);
 
 
   BookingDetailController(){
@@ -93,7 +94,7 @@ class BookingDetailController extends BaseController {
           onVaLue: (_value) {
             if (_value != null && _value is int) {
               if (_value == 1) {
-                Get.toNamed(Routes.WALLET);
+                Get.toNamed(Routes.WALLET)!.then((value) => userInfo.value = AppDataGlobal.userInfo);
               }
             }
           },
@@ -117,7 +118,11 @@ class BookingDetailController extends BaseController {
                   : IconConstants.icFail,
               title: response.message,
             ),
-            onVaLue: (value) {},
+            onVaLue: (value) {
+              if(response.status == CommonConstants.statusOk){
+                Get.offAllNamed(Routes.MAIN);
+              }            
+            },
           );
           return;
         },

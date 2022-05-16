@@ -111,7 +111,7 @@ class OrderListController extends BaseController {
   }
 
   Future<void> viewDetail(int id) async {
-    await Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id:id) );
+    await Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id:id))!.then((value) => loadList());
   }
 
   Future<void> onChatAdmin() async {

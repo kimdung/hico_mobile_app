@@ -226,7 +226,7 @@ const Map<String, String> vi_VN = {
   'topup.failure': 'Nạp tiền thất bại!',
 
   //statistic screen
-  'statistic.order_finish': 'Đơn hàng đã hoàn thành',
+  'statistic.order_finish': 'Danh sách đơn hàng',
   'statistic.finish': 'Đã hoàn thành',
   'statistic.cancel': 'Bạn hủy',
   'statistic.finish_total': 'Tổng số tiền',

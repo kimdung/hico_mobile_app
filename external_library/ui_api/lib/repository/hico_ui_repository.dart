@@ -187,7 +187,7 @@ abstract class HicoUIRepository {
   Future<StatisticsResponse> statistics();
   //statistics
   Future<StatisticInvoiceResponse> statisticsInvoice(
-      int limit, int offset, String keyWords, String startDate, String endDate);
+      int limit, int offset, String keyWords, String startDate, String endDate, int status);
 
   //consulting
   Future<BaseResponse> consulting(

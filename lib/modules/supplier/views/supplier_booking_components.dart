@@ -449,7 +449,7 @@ extension SupplierBookingComponents on SupplierBookingScreen {
               Expanded(
                 flex: 1,
                 child: Text(
-                      '${AppDataGlobal.userInfo!.accountBalance} JPY',
+                      '${controller.info.value.accountBalance} JPY',
                       textAlign: TextAlign.right,
                       style: TextAppStyle().normalTextStype().copyWith(
                             color: AppColor.blueTextColor,

@@ -300,8 +300,8 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   //statistics
   @override
   Future<StatisticInvoiceResponse> statisticsInvoice(int limit, int offset,
-      String keyWords, String startDate, String endDate) {
-    return _api.statisticsInvoice(limit, offset, keyWords, startDate, endDate);
+      String keyWords, String startDate, String endDate, int status) {
+    return _api.statisticsInvoice(limit, offset, keyWords, startDate, endDate, status);
   }
 
   //consulting

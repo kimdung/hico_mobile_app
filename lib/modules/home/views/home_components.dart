@@ -55,7 +55,7 @@ extension HomeComponents on HomeScreen {
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      '${AppDataGlobal.userInfo?.accountBalance ?? 0} JPY',
+                      '${controller.userInfo.value.accountBalance ?? 0} JPY',
                       style: TextAppStyle().smallTextPink(),
                     ),
                   ],

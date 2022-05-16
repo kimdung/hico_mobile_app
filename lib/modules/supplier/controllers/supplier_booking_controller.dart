@@ -26,9 +26,11 @@ class SupplierBookingController extends BaseController {
   Rx<double> totalPay = Rx<double>(0);
   Rx<double> total = Rx<double>(0);
   CheckVoucherModel voucherTmp = CheckVoucherModel();
-  UserInfoModel info = UserInfoModel();
+  // UserInfoModel info = UserInfoModel();
   Rx<int> showSuggest = Rx<int>(0);
   RxList<AddressModel> addressList = RxList<AddressModel>();
+
+  Rx<UserInfoModel> info = Rx(UserInfoModel());
   final paymentMethodId = Rx(0);
   double? hours = 0;
 
@@ -57,7 +59,6 @@ class SupplierBookingController extends BaseController {
       
     }
     
-
     bookingRequest.value.supplierId = bookingPrepare.value.supplier!.id!;
     bookingRequest.value.serviceId = bookingPrepare.value.service!.id!;
     bookingRequest.value.workingForm =
@@ -74,7 +75,11 @@ class SupplierBookingController extends BaseController {
     await super.onInit();
   }
 
-  Future<void> _loadData() async {}
+  Future<void> _loadData() async {
+    info.value = AppDataGlobal.userInfo!;
+    info.refresh();
+    
+  }
 
   Future<void> loadVoucher() async {
     await Get.toNamed(Routes.VOUCHER, arguments: totalPay.value)?.then((value) {
@@ -144,7 +149,7 @@ class SupplierBookingController extends BaseController {
         bookingRequest.value.nearestStation = station.text;
       }
 
-      if(AppDataGlobal.userInfo!.accountBalance! < totalPay.value){
+      if(info.value.accountBalance! < totalPay.value){
         await EasyLoading.dismiss();
         await DialogUtil.showPopup(
           dialogSize: DialogSize.Popup,
@@ -157,7 +162,7 @@ class SupplierBookingController extends BaseController {
           onVaLue: (_value) {
             if (_value != null && _value is int) {
               if (_value == 1) {
-                Get.toNamed(Routes.WALLET);
+                Get.toNamed(Routes.WALLET)!.then((value) => info.value = AppDataGlobal.userInfo!);
               }
             }
 
@@ -166,11 +171,11 @@ class SupplierBookingController extends BaseController {
         return;
       }
 
-      info = AppDataGlobal.userInfo!;
-      if (info.bankName == '' ||
-          info.bankBranchName == '' ||
-          info.bankAccountNumber == '' ||
-          info.bankAccountHolder == '') {
+      info.value = AppDataGlobal.userInfo!;
+      if (info.value.bankName == '' ||
+          info.value.bankBranchName == '' ||
+          info.value.bankAccountNumber == '' ||
+          info.value.bankAccountHolder == '') {
         await EasyLoading.dismiss();
         await Get.toNamed(Routes.BANK_UPDATE);
       } else {

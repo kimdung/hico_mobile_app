@@ -38,6 +38,7 @@ class MainController extends BaseController {
       NewsScreen(newsController),
       AccountScreen(accountController),
     ];
+    homeController.loadData();
   }
 
   @override

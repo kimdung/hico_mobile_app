@@ -775,14 +775,15 @@ class _HicoUIAPI implements HicoUIAPI {
 
   @override
   Future<StatisticInvoiceResponse> statisticsInvoice(
-      limit, offset, keyWords, startDate, endDate) async {
+      limit, offset, keyWords, startDate, endDate, status) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'limit': limit,
       r'offset': offset,
       r'key_words': keyWords,
       r'start_date': startDate,
-      r'end_date': endDate
+      r'end_date': endDate,
+      r'status': status
     };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};

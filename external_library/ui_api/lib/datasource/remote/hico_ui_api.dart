@@ -306,6 +306,7 @@ abstract class HicoUIAPI {
     @Query('key_words') String keyWords,
     @Query('start_date') String startDate,
     @Query('end_date') String endDate,
+    @Query('status') int status,
   );
 
   //consulting

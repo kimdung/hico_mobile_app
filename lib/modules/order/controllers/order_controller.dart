@@ -310,6 +310,8 @@ class OrderController extends BaseController {
                   ),
                   onVaLue: (value) {},
                 );
+              }else{
+                 _loadData();
               }
               return;
             });

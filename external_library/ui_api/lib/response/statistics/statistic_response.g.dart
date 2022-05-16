@@ -10,7 +10,7 @@ StatisticsResponse _$StatisticsResponseFromJson(Map<String, dynamic> json) =>
     StatisticsResponse(
       data: json['data'] == null
           ? null
-          : StatisticsData.fromJson(json['data'] as Map<String, dynamic>),
+          : StatisticModel.fromJson(json['data'] as Map<String, dynamic>),
     )
       ..status = json['status'] as int?
       ..message = json['message'] as String?

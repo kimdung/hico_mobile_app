@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/home/home_model.dart';
 import 'package:ui_api/models/home/services_model.dart';
+import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/booking_prepare_request.dart';
 
@@ -21,6 +22,7 @@ class HomeController extends BaseController {
   final homeModel = Rx(HomeModel());
 
   BookingPrepareRequest request = BookingPrepareRequest();
+  var userInfo = Rx(UserInfoModel());
 
   Channel? adminChatChannel;
 
@@ -35,6 +37,7 @@ class HomeController extends BaseController {
 
   Future<void> loadData() async {
     try {
+      userInfo.value = AppDataGlobal.userInfo!;
       await _uiRepository.home().then((response) {
         if (response.status == CommonConstants.statusOk &&
             response.homeModel != null) {

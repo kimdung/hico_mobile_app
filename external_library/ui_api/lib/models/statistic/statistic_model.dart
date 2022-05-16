@@ -3,11 +3,19 @@ part 'statistic_model.g.dart';
 
 @JsonSerializable()
 class StatisticModel {
-  double? total;
-  double? paid;
-  double? remain;
+  double? balance;
+  @JsonKey(name: 'refunds_by_supplier')
+  double? refundsBySupplier;
+  @JsonKey(name: 'amount_total')
+  double? amountTotal;
+  @JsonKey(name: 'fined_amount')
+  double? finedAmount;
 
-  StatisticModel({this.total, this.paid, this.remain});
+  StatisticModel(
+      {this.balance,
+      this.refundsBySupplier,
+      this.amountTotal,
+      this.finedAmount});
 
   factory StatisticModel.fromJson(Map<String, dynamic> json) =>
       _$StatisticModelFromJson(json);
