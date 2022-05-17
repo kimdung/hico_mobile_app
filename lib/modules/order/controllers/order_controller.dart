@@ -48,8 +48,6 @@ class OrderController extends BaseController {
   @override
   Future<void> onReady() async {
     super.onReady();
-   
-    //await showDialogNotification();
   }
 
   Future<void> _loadData() async {
@@ -311,6 +309,13 @@ class OrderController extends BaseController {
                   onVaLue: (value) {},
                 );
               }else{
+                _uiRepository.getInfo().then((response) {
+                  if (response.status == CommonConstants.statusOk &&
+                      response.data != null &&
+                      response.data!.info != null) {
+                    AppDataGlobal.userInfo = response.data!.info!;
+                  }
+                });
                  _loadData();
               }
               return;

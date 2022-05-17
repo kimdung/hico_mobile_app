@@ -49,6 +49,10 @@ class HomeController extends BaseController {
       await EasyLoading.dismiss();
     }
   }
+  Future<void> deposit() async {
+    await Get.toNamed(Routes.WALLET)!.then((value) => 
+      userInfo.value = AppDataGlobal.userInfo!);
+  }
 
   Future<void> viewDetail(int id) async {
     await Get.toNamed(Routes.SERVICE, arguments: id);

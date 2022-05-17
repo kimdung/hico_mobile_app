@@ -107,6 +107,8 @@ class StatisticController extends BaseController {
         if (response.data!.rows!.isNotEmpty) {
           offset = response.data!.rows!.length;
           invoiceList.value = response.data!.rows!;
+        }else{
+          invoiceList.value = [];
         }
       });
     } catch (e) {

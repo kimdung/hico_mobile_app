@@ -120,6 +120,13 @@ class BookingDetailController extends BaseController {
             ),
             onVaLue: (value) {
               if(response.status == CommonConstants.statusOk){
+                _uiRepository.getInfo().then((response) {
+                  if (response.status == CommonConstants.statusOk &&
+                      response.data != null &&
+                      response.data!.info != null) {
+                    AppDataGlobal.userInfo = response.data!.info!;
+                  }
+                });
                 Get.offAllNamed(Routes.MAIN);
               }            
             },
