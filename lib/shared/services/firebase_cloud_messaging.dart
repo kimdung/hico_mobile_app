@@ -12,6 +12,7 @@ import 'package:ui_api/request/invoice/invoice_request.dart';
 
 import '../../data/app_data_global.dart';
 import '../../routes/app_pages.dart';
+import '../constants/common.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -229,11 +230,15 @@ class FirebaseMessageConfig {
       /// Dùng để điều hướng vào màn chi tiết thông báo
       /// Mặc định đang là ['id']
       try{
-        var type = json.decode(payload!)['display_type']?.toString();
-        var id  = json.decode(payload)['invoice_id']?.toString();
-        if(type == '4'){
+        final type = json.decode(payload!)['display_type']?.toString();
+        final id  = json.decode(payload)['invoice_id']?.toString();
+        if(type == DisplayType.Extend.id.toString()){
           await Navigator.of(AppDataGlobal.navigatorKey.currentContext!).pushNamed(
             Routes.ORDER_DETAIL, arguments: InvoiceRequest(id: int.parse(id!), extend: true)
+          );
+        }else if (type == DisplayType.Rating.id.toString()){
+          await Navigator.of(AppDataGlobal.navigatorKey.currentContext!).pushNamed(
+            Routes.ORDER_DETAIL, arguments: InvoiceRequest(id: int.parse(id!), rating: true)
           );
         }
       }catch(e){

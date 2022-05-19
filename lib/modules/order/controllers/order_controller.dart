@@ -39,10 +39,10 @@ class OrderController extends BaseController {
 
     request = Get.arguments;
     id = request!.id!;
-    if(request!.extend != null && request!.extend! == true){
-      await showDialogNotification();
-    }
     await _loadData();
+
+   
+    
   }
 
   @override
@@ -59,6 +59,12 @@ class OrderController extends BaseController {
             response.data != null &&
             response.data!.detail != null) {
           invoice.value = response.data!.detail!;
+
+          if(request!.extend != null && request!.extend!){
+            showDialogNotification();
+          }else if(invoice.value.isComment != 1 && request!.rating != null && request!.rating!){
+            onRating();
+          }
           return;
         } else {
           DialogUtil.showPopup(
@@ -249,7 +255,7 @@ class OrderController extends BaseController {
           if (_value != null && _value is RatingRequest) {
             // call api rating
             EasyLoading.show();
-            _uiRepository.editInvoiceRequest(id).then((response) {
+            _uiRepository.invoiceRating(_value).then((response) {
               EasyLoading.dismiss();
               DialogUtil.showPopup(
                 dialogSize: DialogSize.Popup,

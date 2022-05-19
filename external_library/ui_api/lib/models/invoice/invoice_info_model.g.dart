@@ -34,6 +34,7 @@ InvoiceInfoModel _$InvoiceInfoModelFromJson(Map<String, dynamic> json) =>
           : CancelReasonModel.fromJson(json['cancel'] as Map<String, dynamic>),
       createdAt: json['created_at'] as String? ?? '',
       isFined: json['is_fined'] as int?,
+      isComment: json['is_comment'] as int?,
     )..extraTime = json['extra_time'] as String? ?? '';
 
 Map<String, dynamic> _$InvoiceInfoModelToJson(InvoiceInfoModel instance) =>
@@ -59,4 +60,5 @@ Map<String, dynamic> _$InvoiceInfoModelToJson(InvoiceInfoModel instance) =>
       'cancel': instance.cancel,
       'created_at': instance.createdAt,
       'is_fined': instance.isFined,
+      'is_comment': instance.isComment,
     };

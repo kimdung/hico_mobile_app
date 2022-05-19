@@ -46,6 +46,8 @@ class InvoiceInfoModel {
   String? createdAt;
   @JsonKey(name: 'is_fined')
   int? isFined;
+   @JsonKey(name: 'is_comment')
+  int? isComment;
 
   InvoiceInfoModel(
       {this.id,
@@ -67,7 +69,10 @@ class InvoiceInfoModel {
       this.total,
       this.cancel,
       this.createdAt,
-      this.isFined});
+      this.isFined,
+      this.isComment
+    }
+  );
 
   factory InvoiceInfoModel.fromJson(Map<String, dynamic> json) =>
       _$InvoiceInfoModelFromJson(json);

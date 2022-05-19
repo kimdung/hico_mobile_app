@@ -75,10 +75,16 @@ class NotificationController extends BaseController {
   }
 
   Future<void> viewDetail(int id, int displayType, int? invoiceId) async {
-    if (displayType == 1) {
-      await Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)
-          ?.then((value) => loadData());
-    } else {
+    if (displayType == DisplayType.Rating.id) {
+      await _uiRepository.notificationDetail(id).then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.detail != null) {
+               Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id:invoiceId, rating: true))
+                ?.then((value) => loadData());
+        }
+      });
+    } else if(displayType == DisplayType.Order.id) {
       await _uiRepository.notificationDetail(id).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
@@ -87,6 +93,9 @@ class NotificationController extends BaseController {
                 ?.then((value) => loadData());
         }
       });
+    } else {
+        await Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)
+          ?.then((value) => loadData());
     }
   }
 
