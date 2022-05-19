@@ -71,7 +71,7 @@ android {
             //debuggable false
             signingConfig signingConfigs.debug
         }
-    }
+    }`
 }
 
 flutter {

@@ -924,6 +924,38 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
+  Future<BaseResponse> beginCall(invoiceId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'invoice_id': invoiceId};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/customer/invoice/beginOnline',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<BaseResponse> endCall(invoiceId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'invoice_id': invoiceId};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/customer/invoice/end',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<TopupHistoryResponse> topupHistory(limit, offset) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{

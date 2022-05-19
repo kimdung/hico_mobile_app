@@ -301,7 +301,8 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   @override
   Future<StatisticInvoiceResponse> statisticsInvoice(int limit, int offset,
       String keyWords, String startDate, String endDate, int status) {
-    return _api.statisticsInvoice(limit, offset, keyWords, startDate, endDate, status);
+    return _api.statisticsInvoice(
+        limit, offset, keyWords, startDate, endDate, status);
   }
 
   //consulting
@@ -387,10 +388,20 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   Future<TopupResponse> topupStripe(
       String paymentMethodId, String name, double amount) {
     return _api.createPayInStripe(paymentMethodId, name, amount);
-      }
-   @override
+  }
+
+  @override
   Future<BaseResponse> extendInvoice(ExtendPeriodRequest request) {
     return _api.extendInvoice(request);
+  }
 
+  @override
+  Future<BaseResponse> beginCall(int invoiceId) {
+    return _api.beginCall(invoiceId);
+  }
+
+  @override
+  Future<BaseResponse> endCall(int invoiceId) {
+    return _api.endCall(invoiceId);
   }
 }

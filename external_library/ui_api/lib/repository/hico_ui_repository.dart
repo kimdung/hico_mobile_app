@@ -217,6 +217,9 @@ abstract class HicoUIRepository {
   // Create call token
   Future<CallTokenResponse> getCallToken(String channel);
 
+  Future<BaseResponse> beginCall(int invoiceId);
+
+  Future<BaseResponse> endCall(int invoiceId);
 
   /* Wallet */
 

@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:get/instance_manager.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:ui_api/request/general/contact_request.dart';
 import 'package:ui_api/request/invoice/booking_request.dart';
@@ -186,7 +184,7 @@ abstract class HicoUIAPI {
     @Query('service_id') int id,
   );
 
-  //filter supplier 
+  //filter supplier
   @GET('/v1/customer/service/suppliers')
   Future<SupplierResponse> supplierList(
     @Query('service_id') int serviceId,
@@ -346,9 +344,15 @@ abstract class HicoUIAPI {
   @POST('/v1/conversation/createToken')
   Future<ChatTokenResponse> createChatToken();
 
-  //Get Token
+  //Get Call Token
   @POST('/v1/agoraCall/createToken')
   Future<CallTokenResponse> getCallToken(@Query('channel') String channel);
+
+  @POST('/v1/customer/invoice/beginOnline')
+  Future<BaseResponse> beginCall(@Query('invoice_id') int invoiceId);
+
+  @POST('/v1/customer/invoice/end')
+  Future<BaseResponse> endCall(@Query('invoice_id') int invoiceId);
 
   /* Wallet */
   @GET('/v1/payIn/list')
@@ -384,7 +388,7 @@ abstract class HicoUIAPI {
       @Query('name') String name,
       @Query('amount') double amount);
 
-  //post extend 
+  //post extend
   @POST('/v1/customer/invoice/extendPeriod')
   Future<BaseResponse> extendInvoice(@Body() ExtendPeriodRequest request);
 }

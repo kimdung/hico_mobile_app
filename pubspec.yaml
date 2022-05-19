@@ -96,7 +96,7 @@ dependencies:
   stream_chat_persistence: ^3.1.0
 
   # Call
-  agora_rtc_engine: 5.0.1
+  agora_rtc_engine: 5.1.0
   permission_handler: ^9.2.0
   flutter_ringtone_player: ^3.2.0
   keyboard_dismisser: ^2.0.1

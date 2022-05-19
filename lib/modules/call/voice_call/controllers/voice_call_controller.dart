@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ui_api/models/call/call_model.dart';
+import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:wakelock/wakelock.dart';
 
 import '../../../../base/base_controller.dart';
@@ -15,6 +14,8 @@ import '../../../../data/app_data_global.dart';
 
 class VoiceCallController extends BaseController {
   final appId = 'fae0cb7e3f5c4c688ca32056eaa146b4';
+
+  final _uiRepository = Get.find<HicoUIRepository>();
 
   StreamSubscription? _callStreamSubscription;
   late final RtcEngine _engine;
@@ -30,7 +31,7 @@ class VoiceCallController extends BaseController {
   final CallModel call;
 
   Timer? _durationTimer;
-  final RxInt dutationCall = RxInt(0);
+  final RxInt durationCall = RxInt(0);
 
   VoiceCallController(this.isCaller, this.call, this.token);
 
@@ -38,7 +39,7 @@ class VoiceCallController extends BaseController {
   Future<void> onInit() async {
     await super.onInit();
 
-    await Wakelock.enabled;
+    await Wakelock.enable();
 
     _addPostFrameCallback();
     await _initEngine();
@@ -87,10 +88,11 @@ class VoiceCallController extends BaseController {
       userJoined: (uid, elapsed) {
         printInfo(info: 'userJoined $uid $elapsed');
         isRemoted.value = true;
+        callBeginCall();
         _durationTimer ??= Timer.periodic(
           const Duration(seconds: 1),
           (Timer timer) {
-            dutationCall.value++;
+            durationCall.value++;
           },
         );
       },
@@ -137,5 +139,24 @@ class VoiceCallController extends BaseController {
 
   Future<void> onEndCall() async {
     await callMethods.endCall(call: call);
+    await callEndCall();
+  }
+
+  /* API */
+
+  Future<void> callBeginCall() async {
+    try {
+      await _uiRepository.beginCall(call.invoiceId ?? -1);
+    } catch (e) {
+      printError(info: e.toString());
+    }
+  }
+
+  Future<void> callEndCall() async {
+    try {
+      await _uiRepository.endCall(call.invoiceId ?? -1);
+    } catch (e) {
+      printError(info: e.toString());
+    }
   }
 }
