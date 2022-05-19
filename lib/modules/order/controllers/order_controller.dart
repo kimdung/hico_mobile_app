@@ -157,6 +157,7 @@ class OrderController extends BaseController {
       filter: Filter.autoComplete('id', invoice.value.supplierId.toString()),
     );
     await Get.toNamed(Routes.CHAT, arguments: {
+      CommonConstants.INVOICE_ID: invoice.value.id,
       CommonConstants.CHANNEL: channel,
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? invoice.value.getProvider()
@@ -177,6 +178,7 @@ class OrderController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           final call = CallModel(
+            invoiceId: invoice.value.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
             callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',
@@ -206,6 +208,7 @@ class OrderController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           final call = CallModel(
+            invoiceId: invoice.value.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
             callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',

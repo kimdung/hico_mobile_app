@@ -9,11 +9,9 @@ import 'package:ui_api/models/invoice/invoice_status.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/invoice_request.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
-import '../../../resource/config/config_agora.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/call_utilities.dart';
@@ -33,11 +31,11 @@ class OrderListController extends BaseController {
 
   final RxList<InvoiceHistoryModel> list = RxList<InvoiceHistoryModel>();
 
-  var scrollController = ScrollController();
+  ScrollController scrollController = ScrollController();
   int limit = 10;
   int offset = 0;
 
-  OrderListController(this.adminChatChannel){
+  OrderListController(this.adminChatChannel) {
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.position.pixels == 0) {
@@ -54,8 +52,6 @@ class OrderListController extends BaseController {
   @override
   Future<void> onInit() async {
     await super.onInit();
-
-    
   }
 
   Future<void> selectStatus(InvoiceStatus status) async {
@@ -111,7 +107,8 @@ class OrderListController extends BaseController {
   }
 
   Future<void> viewDetail(int id) async {
-    await Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id:id))!.then((value) => loadList());
+    await Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id: id))!
+        .then((value) => loadList());
   }
 
   Future<void> onChatAdmin() async {
@@ -146,6 +143,7 @@ class OrderListController extends BaseController {
     );
 
     await Get.toNamed(Routes.CHAT, arguments: {
+      CommonConstants.INVOICE_ID: invoice.id,
       CommonConstants.CHANNEL: channel,
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? invoice.getProvider()
@@ -162,6 +160,7 @@ class OrderListController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           final call = CallModel(
+            invoiceId: invoice.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
             callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',
@@ -191,6 +190,7 @@ class OrderListController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           final call = CallModel(
+            invoiceId: invoice.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
             callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',

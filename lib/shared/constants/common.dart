@@ -28,6 +28,7 @@ class CommonConstants {
   static const int fiveStar = 5;
 
   // Arguments key
+  static const String INVOICE_ID = 'INVOICE_ID';
   static const String CHANNEL = 'CHANNEL';
   static const String CHAT_USER = 'CHAT_USER';
   static const String IS_NOT_CALL = 'IS_NOT_CALL';
