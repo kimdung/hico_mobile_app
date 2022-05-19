@@ -221,6 +221,8 @@ abstract class HicoUIRepository {
   Future<BaseResponse> beginCall(int invoiceId);
 
   Future<BaseResponse> endCall(int invoiceId);
+ 
+  Future<BaseResponse> sendCallNotification(int invoiceId);
 
   /* Wallet */
 

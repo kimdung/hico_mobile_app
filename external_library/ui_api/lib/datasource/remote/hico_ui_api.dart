@@ -354,6 +354,9 @@ abstract class HicoUIAPI {
   @POST('/v1/customer/invoice/end')
   Future<BaseResponse> endCall(@Query('invoice_id') int invoiceId);
 
+  @POST('/v1/agoraCall/sendFCMToCall')
+  Future<BaseResponse> sendCallNotification(@Query('invoice_id') int invoiceId);
+
   /* Wallet */
   @GET('/v1/payIn/list')
   Future<TopupHistoryResponse> topupHistory(
