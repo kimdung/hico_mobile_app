@@ -40,9 +40,6 @@ class OrderController extends BaseController {
     request = Get.arguments;
     id = request!.id!;
     await _loadData();
-
-   
-    
   }
 
   @override
@@ -60,9 +57,11 @@ class OrderController extends BaseController {
             response.data!.detail != null) {
           invoice.value = response.data!.detail!;
 
-          if(request!.extend != null && request!.extend!){
+          if (request!.extend != null && request!.extend!) {
             showDialogNotification();
-          }else if(invoice.value.isComment != 1 && request!.rating != null && request!.rating!){
+          } else if (invoice.value.isComment != 1 &&
+              request!.rating != null &&
+              request!.rating!) {
             onRating();
           }
           return;
@@ -168,6 +167,10 @@ class OrderController extends BaseController {
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? invoice.value.getProvider()
           : _usersResponse!.users.first,
+      CommonConstants.IS_NOT_CALL: invoice.value.supplierStart != null &&
+              invoice.value.supplierStart!.isNotEmpty
+          ? false
+          : true,
     });
   }
 
@@ -317,7 +320,7 @@ class OrderController extends BaseController {
                   ),
                   onVaLue: (value) {},
                 );
-              }else{
+              } else {
                 _uiRepository.getInfo().then((response) {
                   if (response.status == CommonConstants.statusOk &&
                       response.data != null &&
@@ -325,7 +328,7 @@ class OrderController extends BaseController {
                     AppDataGlobal.userInfo = response.data!.info!;
                   }
                 });
-                 _loadData();
+                _loadData();
               }
               return;
             });
@@ -355,7 +358,7 @@ class OrderController extends BaseController {
             if (_value == 1) {
               Get.toNamed(Routes.TIME_EXTENSION, arguments: id);
             }
-        }
+          }
         },
       );
       return;
@@ -368,7 +371,7 @@ class OrderController extends BaseController {
     //   backgroundColor: Colors.transparent,
     //   child: const TimeExtendWidget(),
     //   onVaLue: (_value) {
-          
+
     //   },
     // );
   }

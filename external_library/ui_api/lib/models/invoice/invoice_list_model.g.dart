@@ -37,6 +37,7 @@ InvoiceHistoryModel _$InvoiceHistoryModelFromJson(Map<String, dynamic> json) =>
       offlinePriceMin: json['offline_price_min'] as int? ?? 0,
       status: json['status'] as int?,
       workingForm: json['working_form'] as int?,
+      supplierStart: json['supplier_start'] as String? ?? '',
     );
 
 Map<String, dynamic> _$InvoiceHistoryModelToJson(
@@ -57,4 +58,5 @@ Map<String, dynamic> _$InvoiceHistoryModelToJson(
       'offline_price_min': instance.offlinePriceMin,
       'status': instance.status,
       'working_form': instance.workingForm,
+      'supplier_start': instance.supplierStart,
     };

@@ -48,6 +48,8 @@ class InvoiceInfoModel {
   int? isFined;
    @JsonKey(name: 'is_comment')
   int? isComment;
+  @JsonKey(name: 'supplier_start', defaultValue: '')
+  String? supplierStart;
 
   InvoiceInfoModel(
       {this.id,
@@ -70,7 +72,8 @@ class InvoiceInfoModel {
       this.cancel,
       this.createdAt,
       this.isFined,
-      this.isComment
+      this.isComment,
+      this.supplierStart,
     }
   );
 
