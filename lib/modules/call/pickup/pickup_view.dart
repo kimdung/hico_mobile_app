@@ -134,6 +134,7 @@ class _PickupViewState extends State<PickupView> {
 
         if (response.status == CommonConstants.statusOk &&
             response.data?.token != null) {
+          FlutterRingtonePlayer.stop();
           if (widget.call.isVideo ?? false) {
             Get.toNamed(Routes.VIDEO_CALL, arguments: {
               CommonConstants.IS_CALLER: false,
@@ -155,6 +156,8 @@ class _PickupViewState extends State<PickupView> {
   }
 
   Future<void> onDeniedCall() async {
+        await FlutterRingtonePlayer.stop();
+
     await callMethods.endCall(call: widget.call);
   }
 }

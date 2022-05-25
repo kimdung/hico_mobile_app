@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -20,6 +22,9 @@ import '../shared/services/storage_service.dart';
 
 class DependencyInjection {
   static Future<void> init(String environment) async {
+    HttpOverrides.global = MyHttpOverrides();
+
+
     final config = await ConfigService().init(environment);
     Get.put(() => config);
     await Get.putAsync(() => StorageService().init());
@@ -51,5 +56,15 @@ class DependencyInjection {
     final _hive = HiveDatabase(dir.path);
     await _hive.init();
     Get.put(ImageCacheDAO(_hive.imageCacheBox), permanent: true);
+  }
+  
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

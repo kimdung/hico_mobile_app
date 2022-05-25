@@ -170,16 +170,7 @@ class SupplierBookingController extends BaseController {
         );
         return;
       }
-
-      info.value = AppDataGlobal.userInfo!;
-      if (info.value.bankName == '' ||
-          info.value.bankBranchName == '' ||
-          info.value.bankAccountNumber == '' ||
-          info.value.bankAccountHolder == '') {
-        await EasyLoading.dismiss();
-        await Get.toNamed(Routes.BANK_UPDATE);
-      } else {
-        await _uiRepository
+      await _uiRepository
             .invoiceBooking(bookingRequest.value)
             .then((response) {
           EasyLoading.dismiss();
@@ -210,7 +201,6 @@ class SupplierBookingController extends BaseController {
             return;
           }
         });
-      }
     } catch (e) {
       await EasyLoading.dismiss();
     }
