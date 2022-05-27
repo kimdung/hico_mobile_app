@@ -612,7 +612,7 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.24):
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
-  - cloud_firestore (3.1.15):
+  - cloud_firestore (3.1.16):
     - Firebase/Firestore (= 8.15.0)
     - firebase_core
     - Flutter
@@ -768,7 +768,7 @@ PODS:
   - FMDB/standard (2.7.5)
   - google_sign_in_ios (0.0.1):
     - Flutter
-    - GoogleSignIn (~> 5.0)
+    - GoogleSignIn (~> 6.2)
   - GoogleAppMeasurement (8.15.0):
     - GoogleAppMeasurement/AdIdSupport (= 8.15.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
@@ -793,9 +793,9 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleSignIn (5.0.2):
-    - AppAuth (~> 1.2)
-    - GTMAppAuth (~> 1.0)
+  - GoogleSignIn (6.2.1):
+    - AppAuth (~> 1.5)
+    - GTMAppAuth (~> 1.3)
     - GTMSessionFetcher/Core (~> 1.1)
   - GoogleUtilities/AppDelegateSwizzler (7.7.0):
     - GoogleUtilities/Environment
@@ -891,9 +891,9 @@ PODS:
   - libwebp/mux (1.2.1):
     - libwebp/demux
   - libwebp/webp (1.2.1)
-  - LineSDKSwift (5.8.1):
-    - LineSDKSwift/Core (= 5.8.1)
-  - LineSDKSwift/Core (5.8.1)
+  - LineSDKSwift (5.8.2):
+    - LineSDKSwift/Core (= 5.8.2)
+  - LineSDKSwift/Core (5.8.2)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -1127,7 +1127,7 @@ SPEC CHECKSUMS:
   AgoraIrisRTC_iOS: c789bb65875b54d2b6b02dc278850dc70515b226
   AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
-  cloud_firestore: 76e73835a6ac79ac825190eefd876a1e100c7835
+  cloud_firestore: c85ca781dc18eed0b05c90973b4b030e6802acc4
   connectivity_plus: 413a8857dd5d9f1c399a39130850d02fe0feaf7e
   DKImagePickerController: 72fd378f244cef3d27288e0aebf217a4467e4012
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
@@ -1154,10 +1154,10 @@ SPEC CHECKSUMS:
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_ringtone_player: 15eba85187230b87b2512f0e1b92225618bc03e7
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  google_sign_in_ios: ed71c0dbddfba8b1ea9aa210dbda695f46bf51bd
+  google_sign_in_ios: 90eec6616c4c2105b9f9fe5c774773d13565b504
   GoogleAppMeasurement: 4c19f031220c72464d460c9daa1fb5d1acce958e
   GoogleDataTransport: 5fffe35792f8b96ec8d6775f5eccd83c998d5a3b
-  GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
+  GoogleSignIn: 9c69f4188921d8f789816e4c99ba2a1f5f868ddc
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
@@ -1168,7 +1168,7 @@ SPEC CHECKSUMS:
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
-  LineSDKSwift: 55ea1486ad3b2802b7e00f80aeb5844e3ed3faa3
+  LineSDKSwift: 52bce568988f61f4a529b0ee629525a0cb85b9fe
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   open_file: 02eb5cb6b21264bd3a696876f5afbfb7ca4f4b7d
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
