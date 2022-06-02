@@ -244,12 +244,9 @@ class OrderController extends BaseController {
     try {
       await DialogUtil.showPopup(
         barrierDismissible: true,
-        height: 397,
-        backgroundColor: AppColor.primaryBackgroundColorLight,
-        onPress: () {},
+        backgroundColor: Colors.transparent,
         child: RatingDialogWidget(
           id: id,
-          height: 397,
           icon: invoice.value.supplierAvatar,
           padding: 18,
           hintText: 'invoice.detail.hint_rating'.tr,

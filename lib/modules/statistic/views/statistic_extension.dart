@@ -455,7 +455,7 @@ extension StatisticExtension on StatisticScreen {
         children: [
           Container(
               margin: const EdgeInsets.only(right: 20),
-              child: (item.supplierAvatar != null && item.supplierAvatar != '')
+              child: (item.supplierAvatar!= null && item.supplierAvatar != '')
                   ? NetWorkImage(
                       image: item.supplierAvatar!,
                       height: 60,
