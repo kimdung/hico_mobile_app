@@ -50,13 +50,7 @@ class ChatScreen extends GetView<ChatController> {
     return PickupLayout(
       controller.callMethods,
       scaffold: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        // supportedLocales: const [
-        //   // Locale('vi', 'VN'),
-        //   Locale('ja', 'JP'),
-        //   Locale('en', 'US')
-        // ],
-        // locale: const Locale('ja'),
+        debugShowCheckedModeBanner: false, 
         builder: (context, widget) => StreamChat(
           streamChatThemeData: customTheme,
           client: AppDataGlobal.client!,

@@ -43,6 +43,7 @@ class AccountController extends BaseController {
       onVaLue: (_value) {
         if (_value != null && _value is int) {
           if (_value == 1) {
+            AppDataGlobal.client?.removeDevice(AppDataGlobal.firebaseToken);
             _uiRepository.logout().then((response) {
               AppDataGlobal.accessToken = '';
               storage.setBool(StorageConstants.isLogin, false);
