@@ -42,23 +42,27 @@ class SupplierBookingController extends BaseController {
 
   SupplierBookingController() {
     bookingPrepare.value = Get.arguments;
-    if(bookingPrepare.value.supplier!.isOnline == 1){
-    total.value = bookingPrepare.value.supplier!.servicePrice! *
-            bookingPrepare.value.totalTime!;
+    if (bookingPrepare.value.supplier!.isOnline == 1) {
+      total.value = bookingPrepare.value.supplier!.servicePrice! *
+          bookingPrepare.value.totalTime!;
+      totalPay.value = total.value;
+    } else {
+      if (bookingPrepare.value.totalTime! <
+          bookingPrepare.value.supplier!.serviceOfflineMinHours!) {
+        total.value =
+            bookingPrepare.value.supplier!.serviceOfflineMinPrice!.toDouble();
         totalPay.value = total.value;
-    }else{
-      if(bookingPrepare.value.totalTime! < bookingPrepare.value.supplier!.serviceOfflineMinHours!){
-        total.value = bookingPrepare.value.supplier!.serviceOfflineMinPrice!.toDouble();
-         totalPay.value = total.value;
-      }else{
-        hours = bookingPrepare.value.totalTime! - bookingPrepare.value.supplier!.serviceOfflineMinHours!;
+      } else {
+        hours = bookingPrepare.value.totalTime! -
+            bookingPrepare.value.supplier!.serviceOfflineMinHours!;
         var preTotal = hours! * bookingPrepare.value.supplier!.servicePrice!;
-        total.value = bookingPrepare.value.supplier!.serviceOfflineMinPrice!.toDouble() + preTotal;
+        total.value =
+            bookingPrepare.value.supplier!.serviceOfflineMinPrice!.toDouble() +
+                preTotal;
         totalPay.value = total.value;
       }
-      
     }
-    
+
     bookingRequest.value.supplierId = bookingPrepare.value.supplier!.id!;
     bookingRequest.value.serviceId = bookingPrepare.value.service!.id!;
     bookingRequest.value.workingForm =
@@ -78,7 +82,6 @@ class SupplierBookingController extends BaseController {
   Future<void> _loadData() async {
     info.value = AppDataGlobal.userInfo!;
     info.refresh();
-    
   }
 
   Future<void> loadVoucher() async {
@@ -131,9 +134,10 @@ class SupplierBookingController extends BaseController {
 
   Future<void> selectAddress(AddressModel item) async {
     try {
-      zipCode.text = item.code!;
-      province.text = item.provinceName!;
-      district.text = item.districtName!;
+      zipCode.text = item.code ?? '';
+      province.text = item.provinceName ?? '';
+      district.text = item.districtName ?? '';
+      address.text = item.address ?? '';
       bookingRequest.value.addressId = item.id;
       showSuggest.value = 0;
     } catch (e) {
@@ -149,7 +153,7 @@ class SupplierBookingController extends BaseController {
         bookingRequest.value.nearestStation = station.text;
       }
 
-      if(info.value.accountBalance! < totalPay.value){
+      if (info.value.accountBalance! < totalPay.value) {
         await EasyLoading.dismiss();
         await DialogUtil.showPopup(
           dialogSize: DialogSize.Popup,
@@ -162,45 +166,43 @@ class SupplierBookingController extends BaseController {
           onVaLue: (_value) {
             if (_value != null && _value is int) {
               if (_value == 1) {
-                Get.toNamed(Routes.WALLET)!.then((value) => info.value = AppDataGlobal.userInfo!);
+                Get.toNamed(Routes.WALLET)!
+                    .then((value) => info.value = AppDataGlobal.userInfo!);
               }
             }
-
           },
         );
         return;
       }
-      await _uiRepository
-            .invoiceBooking(bookingRequest.value)
-            .then((response) {
-          EasyLoading.dismiss();
-          if (response.status == CommonConstants.statusOk) {
-            _uiRepository.getInfo().then((response) {
-              if (response.status == CommonConstants.statusOk &&
-                  response.data != null &&
-                  response.data!.info != null) {
-                AppDataGlobal.userInfo = response.data!.info!;
-                return;
-              }
-            });
-            Get.toNamed(Routes.SUPPLIER_BOOKING_SUCCESS,
-                arguments: response.data!.detail!.code!);
-          } else {
-            DialogUtil.showPopup(
-              dialogSize: DialogSize.Popup,
-              barrierDismissible: false,
-              backgroundColor: Colors.transparent,
-              child: NormalWidget(
-                icon: response.status == CommonConstants.statusOk
-                    ? IconConstants.icSuccess
-                    : IconConstants.icFail,
-                title: response.message,
-              ),
-              onVaLue: (value) {},
-            );
-            return;
-          }
-        });
+      await _uiRepository.invoiceBooking(bookingRequest.value).then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk) {
+          _uiRepository.getInfo().then((response) {
+            if (response.status == CommonConstants.statusOk &&
+                response.data != null &&
+                response.data!.info != null) {
+              AppDataGlobal.userInfo = response.data!.info!;
+              return;
+            }
+          });
+          Get.toNamed(Routes.SUPPLIER_BOOKING_SUCCESS,
+              arguments: response.data!.detail!.code!);
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: response.status == CommonConstants.statusOk
+                  ? IconConstants.icSuccess
+                  : IconConstants.icFail,
+              title: response.message,
+            ),
+            onVaLue: (value) {},
+          );
+          return;
+        }
+      });
     } catch (e) {
       await EasyLoading.dismiss();
     }

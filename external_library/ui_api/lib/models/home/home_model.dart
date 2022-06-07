@@ -7,6 +7,10 @@ part 'home_model.g.dart';
 
 @JsonSerializable()
 class HomeModel {
+  @JsonKey(name: 'invoice_id', defaultValue: 0)
+  int? invoiceId;
+  @JsonKey(name: 'avatar_supplier', defaultValue: '')
+  String? avatarSupplier;
   List<SliderModel>? sliders;
   List<ServiceCategoryModel>? serviceCategories;
   List<ServiceModel>? services;
@@ -15,7 +19,10 @@ class HomeModel {
   List<ServiceModel>? serviceViews;
 
   HomeModel(
-      {this.sliders,
+      {
+      this.invoiceId,
+      this.avatarSupplier,
+      this.sliders,
       this.serviceCategories,
       this.services,
       this.bannerHome,

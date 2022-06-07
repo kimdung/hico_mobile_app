@@ -31,8 +31,7 @@ class OrderListScreen extends GetView<OrderListController> {
           child: SafeArea(
             child: Column(
               children: [
-                const SizedBox(height: 12),
-                _buildHeaderBar(),
+                buildHeaderBar(),
                 const SizedBox(height: 10),
                 Expanded(
                   child: Container(

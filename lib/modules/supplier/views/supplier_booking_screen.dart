@@ -109,6 +109,11 @@ class SupplierBookingScreen extends GetView<SupplierBookingController> {
                                       title: 'profile.update.district'.tr),
                                   const SizedBox(height: 16),
                                   _buildInputTemplate(
+                                      textEditng: controller.address,
+                                      focusNode: AlwaysDisabledFocusNode(),
+                                      title: 'profile.update.address'.tr),
+                                  const SizedBox(height: 16),
+                                  _buildInputTemplate(
                                       textEditng: controller.station,
                                       title: 'profile.station'.tr),
                                   const SizedBox(height: 16),

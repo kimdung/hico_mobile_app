@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:ui_api/models/statistic/statistic_invoice_model.dart';
 import 'package:ui_api/models/statistic/statistic_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:ui_api/request/invoice/invoice_request.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/date_formatter.dart';
 
@@ -135,6 +137,10 @@ class StatisticController extends BaseController {
     } catch (e) {
       await EasyLoading.dismiss();
     }
+  }
+
+  Future<void> onDetail(int id) async {
+    await Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id:id));
   }
 
   @override

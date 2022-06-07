@@ -40,10 +40,16 @@ class AccountScreen extends GetView<AccountController> {
                 Center(
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(120)),
-                    child: CachedNetworkImage(
+                    child: controller.info.value.avatarImage == null ||
+                    controller.info.value.avatarImage!.isEmpty ?
+                    Container(
                       width: 140,
                       height: 140,
-                      imageUrl: controller.info.value.avatarImage!,
+                    ) :
+                    CachedNetworkImage(
+                      width: 140,
+                      height: 140,
+                      imageUrl: controller.info.value.avatarImage??'',
                       imageBuilder: (context, imageProvider) => Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(21),
@@ -62,7 +68,7 @@ class AccountScreen extends GetView<AccountController> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  controller.info.value.name!,
+                  controller.info.value.name??'',
                   style: TextAppStyle().largeTextStype(),
                 ),
                 const SizedBox(height: 14),

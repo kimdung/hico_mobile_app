@@ -32,6 +32,8 @@ class OrderController extends BaseController {
   final invoice = Rx(InvoiceInfoModel());
   int id = 0;
   InvoiceRequest? request;
+  final Rx<int> isCommennt = Rx(0);
+
 
   @override
   Future<void> onInit() async {
@@ -56,10 +58,11 @@ class OrderController extends BaseController {
             response.data != null &&
             response.data!.detail != null) {
           invoice.value = response.data!.detail!;
+          isCommennt.value = response.data!.isComment??0;
 
           if (request!.extend != null && request!.extend!) {
             showDialogNotification();
-          } else if (invoice.value.isComment != 1 &&
+          } else if (isCommennt.value != 1 &&
               request!.rating != null &&
               request!.rating!) {
             onRating();
@@ -263,7 +266,7 @@ class OrderController extends BaseController {
                 backgroundColor: Colors.transparent,
                 child: NormalWidget(
                   icon: response.status == CommonConstants.statusOk
-                      ? IconConstants.edit
+                      ? IconConstants.icSuccess
                       : IconConstants.icFail,
                   title: response.message,
                 ),

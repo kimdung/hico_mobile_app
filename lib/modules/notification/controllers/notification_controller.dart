@@ -19,7 +19,7 @@ class NotificationController extends BaseController {
   int offset = 0;
 
   NotificationController() {
-    loadData();
+    //loadData();
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.position.pixels == 0) {

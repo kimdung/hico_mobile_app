@@ -7,6 +7,8 @@ part of 'home_model.dart';
 // **************************************************************************
 
 HomeModel _$HomeModelFromJson(Map<String, dynamic> json) => HomeModel(
+      invoiceId: json['invoice_id'] as int? ?? 0,
+      avatarSupplier: json['avatar_supplier'] as String? ?? '',
       sliders: (json['sliders'] as List<dynamic>?)
           ?.map((e) => SliderModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -26,6 +28,8 @@ HomeModel _$HomeModelFromJson(Map<String, dynamic> json) => HomeModel(
     );
 
 Map<String, dynamic> _$HomeModelToJson(HomeModel instance) => <String, dynamic>{
+      'invoice_id': instance.invoiceId,
+      'avatar_supplier': instance.avatarSupplier,
       'sliders': instance.sliders,
       'serviceCategories': instance.serviceCategories,
       'services': instance.services,

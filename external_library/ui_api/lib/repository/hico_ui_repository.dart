@@ -38,6 +38,7 @@ import '../request/invoice/extend_period_request.dart';
 import '../request/invoice/rating_request.dart';
 import '../response/call/call_token_response.dart';
 import '../response/chat/chat_token_response.dart';
+import '../response/notifications/notification_unread_response.dart';
 import '../response/wallet/topup_history_response.dart';
 import '../response/wallet/topup_komaju_response.dart';
 import '../response/wallet/topup_response.dart';
@@ -103,6 +104,8 @@ abstract class HicoUIRepository {
   //notification detail
   Future<NotificationDetailResponse> notificationDetail(int id);
 
+  //notification un read
+  Future<NotificationUnreadResponse> notificationUnRead();
   //home
   Future<HomeResponse> home();
 
@@ -245,6 +248,7 @@ abstract class HicoUIRepository {
   Future<BaseResponse> extendInvoice(ExtendPeriodRequest request);
 
   Future<BaseResponse> invoiceRating(RatingRequest request);
+  Future<BaseResponse> invoiceCancelRating(int id);
 
 }
  

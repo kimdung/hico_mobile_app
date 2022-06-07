@@ -920,24 +920,6 @@ PODS:
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
-  - sqlite3 (3.38.5):
-    - sqlite3/common (= 3.38.5)
-  - sqlite3/common (3.38.5)
-  - sqlite3/fts5 (3.38.5):
-    - sqlite3/common
-  - sqlite3/json1 (3.38.5):
-    - sqlite3/common
-  - sqlite3/perf-threadsafe (3.38.5):
-    - sqlite3/common
-  - sqlite3/rtree (3.38.5):
-    - sqlite3/common
-  - sqlite3_flutter_libs (0.0.1):
-    - Flutter
-    - sqlite3 (~> 3.38.5)
-    - sqlite3/fts5
-    - sqlite3/json1
-    - sqlite3/perf-threadsafe
-    - sqlite3/rtree
   - Stripe (22.0.0):
     - Stripe/Stripe3DS2 (= 22.0.0)
     - StripeApplePay (= 22.0.0)
@@ -1000,7 +982,6 @@ DEPENDENCIES:
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
-  - sqlite3_flutter_libs (from `.symlinks/plugins/sqlite3_flutter_libs/ios`)
   - stripe_ios (from `.symlinks/plugins/stripe_ios/ios`)
   - uni_links (from `.symlinks/plugins/uni_links/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
@@ -1047,7 +1028,6 @@ SPEC REPOS:
     - PromisesObjC
     - ReachabilitySwift
     - SDWebImage
-    - sqlite3
     - Stripe
     - StripeApplePay
     - StripeConnections
@@ -1102,8 +1082,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
-  sqlite3_flutter_libs:
-    :path: ".symlinks/plugins/sqlite3_flutter_libs/ios"
   stripe_ios:
     :path: ".symlinks/plugins/stripe_ios/ios"
   uni_links:
@@ -1180,8 +1158,6 @@ SPEC CHECKSUMS:
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  sqlite3: 93442daab2ab1825bc9c05faa85814a1996f5b65
-  sqlite3_flutter_libs: 92ed62fa0dcbfe2e37d5e2b60d00820672b71ffb
   Stripe: ee32e594fa4dee4bdf2a8a3039f7fb07a21075dc
   stripe_ios: 4ae5942d4f2f383c2be5c187e6e4e4f31e29c0a5
   StripeApplePay: e09964f3e2c6b318e53a05c12f3cb7efc592484d

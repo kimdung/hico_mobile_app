@@ -365,6 +365,7 @@ const Map<String, String> vi_VN = {
   'invoice.detail.payment_method': 'Phương thức thanh toán',
   'invoice.detail.hint_cancel': 'Ghi lý do hủy đơn của bạn',
   'invoice.detail.hint_rating': 'Viết đánh giá của bạn...',
+  'invoice.detail.error_rating': 'Vui lòng nhập đánh giá.',
 
   //booking
   'booking.title': 'Chi tiết đặt lịch',
@@ -380,7 +381,7 @@ const Map<String, String> vi_VN = {
   'booking.success': 'Đặt dịch vụ',
   'booking.code': 'Mã đơn hàng:',
   'booking.suggest': 'Gợi ý',
-  'booking.your_address': 'Địa chỉ làm việc của bạn',
+  'booking.your_address': 'Nhập địa chỉ nơi hẹn gặp phiên dịch',
   'booking.address_title': 'Tên Bệnh viện/Phòng khám/Nơi làm việc *',
   'booking.payment_method': 'Chọn Phương Thức Thanh Toán',
   'booking.payment_bank': 'Chuyển khoản ngân hàng',

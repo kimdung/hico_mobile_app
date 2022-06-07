@@ -53,7 +53,10 @@ class OrderListController extends BaseController {
   Future<void> onInit() async {
     await super.onInit();
   }
-
+  Future<void> deposit() async {
+    await Get.toNamed(Routes.WALLET)!
+        .then((value) => info.value = AppDataGlobal.userInfo!);
+  }
   Future<void> selectStatus(InvoiceStatus status) async {
     currentStatus.value = status;
     await loadList();

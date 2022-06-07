@@ -435,72 +435,77 @@ extension StatisticExtension on StatisticScreen {
   }
 
   Widget _buildOrderItem({required StatisticInvoiceModel item}) {
-    return Container(
-      //height: 100,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-        boxShadow: [
-          BoxShadow(
-            color: AppColor.secondColorLight.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 2,
-            offset: const Offset(0, 1),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-              margin: const EdgeInsets.only(right: 20),
-              child: (item.supplierAvatar!= null && item.supplierAvatar != '')
-                  ? NetWorkImage(
-                      image: item.supplierAvatar!,
-                      height: 60,
-                      width: 60,
-                      fit: BoxFit.cover,
-                    )
-                  : FCoreImage(
-                      ImageConstants.imageDefault,
-                      height: 60,
-                      width: 60,
-                      fit: BoxFit.cover,
-                    )),
-          Expanded(
-              child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'statistic.order_code'.tr,
-                    style: TextAppStyle().smallTextPink(),
-                  ),
-                  Text(
-                    item.code ?? '',
-                    style: TextAppStyle().smallTextBlack(),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 13),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'statistic.amount'.tr,
-                    style: TextAppStyle().smallTextPink(),
-                  ),
-                  Text(
-                    '${item.total} JPY',
-                    style: TextAppStyle().smallTextBlack(),
-                  ),
-                ],
-              )
-            ],
-          ))
-        ],
+    return InkWell(
+      onTap: (){
+        controller.onDetail(item.id!);
+      },
+      child: Container(
+        //height: 100,
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        margin: const EdgeInsets.only(bottom: 16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          boxShadow: [
+            BoxShadow(
+              color: AppColor.secondColorLight.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: const Offset(0, 1),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+                margin: const EdgeInsets.only(right: 20),
+                child: (item.supplierAvatar!= null && item.supplierAvatar != '')
+                    ? NetWorkImage(
+                        image: item.supplierAvatar!,
+                        height: 60,
+                        width: 60,
+                        fit: BoxFit.cover,
+                      )
+                    : FCoreImage(
+                        ImageConstants.imageDefault,
+                        height: 60,
+                        width: 60,
+                        fit: BoxFit.cover,
+                      )),
+            Expanded(
+                child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'statistic.order_code'.tr,
+                      style: TextAppStyle().smallTextPink(),
+                    ),
+                    Text(
+                      item.code ?? '',
+                      style: TextAppStyle().smallTextBlack(),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 13),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'statistic.amount'.tr,
+                      style: TextAppStyle().smallTextPink(),
+                    ),
+                    Text(
+                      '${item.total} JPY',
+                      style: TextAppStyle().smallTextBlack(),
+                    ),
+                  ],
+                )
+              ],
+            ))
+          ],
+        ),
       ),
     );
   }

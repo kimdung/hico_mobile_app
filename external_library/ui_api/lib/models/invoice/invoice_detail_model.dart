@@ -6,9 +6,11 @@ part 'invoice_detail_model.g.dart';
 
 @JsonSerializable()
 class InvoiceDetailModel {
+  @JsonKey(name: 'is_comment', defaultValue: 0)
+  int? isComment;
   InvoiceInfoModel? detail;
 
-  InvoiceDetailModel({this.detail});
+  InvoiceDetailModel({this.detail, this.isComment});
 
   factory InvoiceDetailModel.fromJson(Map<String, dynamic> json) =>
       _$InvoiceDetailModelFromJson(json);

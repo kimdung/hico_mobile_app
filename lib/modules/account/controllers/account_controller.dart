@@ -18,7 +18,7 @@ class AccountController extends BaseController {
   final storage = Get.find<SharedPreferences>();
 
   AccountController() {
-    loadData();
+    //loadData();
   }
 
   @override

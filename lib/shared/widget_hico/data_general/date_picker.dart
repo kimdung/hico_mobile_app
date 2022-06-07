@@ -52,7 +52,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
               weekendTextStyle: const TextStyle(color: Colors.black),
               thisMonthDayBorderColor: Colors.grey,
               weekFormat: false,
-              height: 380,
+              height: 420,
               dayPadding: 1,
               todayBorderColor: Colors.grey,
               todayButtonColor: Colors.white,

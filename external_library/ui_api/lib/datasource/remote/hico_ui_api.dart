@@ -38,6 +38,7 @@ import 'package:ui_api/response/voucher/voucher_response.dart';
 import '../../request/invoice/extend_period_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/notifications/notification_unread_response.dart';
 import '../../response/wallet/topup_history_response.dart';
 import '../../response/wallet/topup_komaju_response.dart';
 import '../../response/wallet/topup_response.dart';
@@ -144,6 +145,10 @@ abstract class HicoUIAPI {
   Future<NotificationDetailResponse> notificationDetail(
     @Query('notification_id') int id,
   );
+
+  // notification unread
+  @GET('/v1/notification/count_notify_unread')
+  Future<NotificationUnreadResponse> notificationUnRead();
 
   //service categories
   @GET('/v1/customer/category/list')
@@ -262,6 +267,12 @@ abstract class HicoUIAPI {
   @POST('/v1/customer/review/send')
   Future<BaseResponse> invoiceRating(
     @Body() RatingRequest ratingRequest,
+  );
+
+  //invoice cancel rating
+  @POST('/v1/customer/closePopup')
+  Future<BaseResponse> invoiceCancelRating(
+    @Query('invoice_id') int id,
   );
 
   //invoice booking

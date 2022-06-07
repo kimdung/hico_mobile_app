@@ -1,6 +1,133 @@
 part of 'order_list_screen.dart';
 
 extension OrderListBody on OrderListScreen {
+Widget buildHeaderBar() {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+          horizontal: CommonConstants.paddingDefault, vertical: 12),
+      color: AppColor.secondBackgroundColorLight,
+      child: Row(
+        children: [
+          InkWell(
+            onTap: () => Get.toNamed(Routes.PROFILE_UPDATE),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(25),
+              child: CachedNetworkImage(
+                width: 42,
+                height: 42,
+                imageUrl: AppDataGlobal.userInfo?.avatarImage ?? '',
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(21),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
+            ),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'order.hello'.tr,
+                  style: AppTextStyle.secondTextStyle
+                      .copyWith(color: AppColor.eightTextColorLight),
+                ),
+                Text(
+                  AppDataGlobal.userInfo!.name!,
+                  style: AppTextStyle.primaryTextStyle
+                      .copyWith(color: AppColor.niceTextColorLight),
+                ),
+                Row(
+                  children: [
+                    FCoreImage(
+                      IconConstants.icWallet,
+                      width: 15,
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      '${controller.info.value.accountBalance ?? 0} JPY',
+                      style: TextAppStyle().smallTextPink(),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 14),
+          InkWell(
+            onTap: () {
+              controller.deposit();
+            } ,
+            child: Container(
+              margin: const EdgeInsets.all(5),
+              child: FCoreImage(
+                IconConstants.icWallet2,
+                height: 24,
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Get.toNamed(Routes.SEARCH);
+            },
+            child: Container(
+              margin: const EdgeInsets.all(5),
+              child: FCoreImage(
+                IconConstants.icSearchBlack,
+                height: 24,
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: controller.onChatAdmin,
+            child: Stack(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(5),
+                  child: FCoreImage(
+                    IconConstants.icChat,
+                    height: 24,
+                  ),
+                ),
+                controller.totalNotif.value == 0
+                    ? Container()
+                    : Positioned(
+                        right: 0,
+                        child: Container(
+                          width: 15,
+                          height: 15,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              color: AppColor.primaryColorLight),
+                          child: Center(
+                            child: Text(
+                              controller.totalNotif.value.toString(),
+                              style: AppTextStyle.secondTextStyle.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ),
+                      )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   Widget _buildHeaderBar() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),

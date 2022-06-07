@@ -372,6 +372,22 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
+  Future<NotificationUnreadResponse> notificationUnRead() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<NotificationUnreadResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/notification/count_notify_unread',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = NotificationUnreadResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<ServiceCategoriesResponse> serviceCategories(
       limit, offset, searchWord) async {
     const _extra = <String, dynamic>{};
@@ -676,6 +692,22 @@ class _HicoUIAPI implements HicoUIAPI {
         _setStreamType<BaseResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/v1/customer/review/send',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<BaseResponse> invoiceCancelRating(id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'invoice_id': id};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/customer/closePopup',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BaseResponse.fromJson(_result.data!);
