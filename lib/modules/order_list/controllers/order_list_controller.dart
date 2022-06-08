@@ -139,6 +139,8 @@ class OrderListController extends BaseController {
     if (AppDataGlobal.client == null) {
       return;
     }
+
+    print('[OrderListController] channel  ${invoice.getChatChannel()}');
     final channel = AppDataGlobal.client!
         .channel('messaging', id: invoice.getChatChannel());
     final _usersResponse = await AppDataGlobal.client?.queryUsers(
@@ -151,10 +153,11 @@ class OrderListController extends BaseController {
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? invoice.getProvider()
           : _usersResponse!.users.first,
-      CommonConstants.IS_NOT_CALL: invoice.supplierStart != null &&
-              invoice.supplierStart!.isNotEmpty
-          ? false
-          : true,
+      CommonConstants.IS_NOT_CALL: invoice.isNotCall(),
+      // invoice.supplierStart != null &&
+      //         invoice.supplierStart!.isNotEmpty
+      //     ? false
+      //     : true,
     });
   }
 

@@ -1,10 +1,6 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
-import '../data/app_data_global.dart';
 import '../data/interceptors/listen_error_graphql_interceptor.dart';
 import '../shared/dialog_manager/data_models/request/common_dialog_request.dart';
 import '../shared/dialog_manager/services/dialog_service.dart';

@@ -1,6 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:ui_api/models/master_data/master_data_model.dart';
-import 'package:ui_api/models/notifications/notification_detail_model.dart';
 import 'package:ui_api/response/base_response.dart';
 
 part 'notification_unread_response.g.dart';

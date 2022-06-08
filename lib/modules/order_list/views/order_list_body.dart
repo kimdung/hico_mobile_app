@@ -329,7 +329,7 @@ Widget buildHeaderBar() {
           ...List.generate(
               controller.list.length,
               (index) => ItemOrderWidget(
-                    invoice: controller.list[index],
+                    invoice: controller.list[index], 
                     onPress: () =>
                         controller.viewDetail(controller.list[index].id!),
                     onChat: () => controller.onChat(controller.list[index]),

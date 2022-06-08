@@ -38,11 +38,11 @@ import '../../request/invoice/extend_period_request.dart';
 import '../../request/invoice/rating_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/invoice/extend_period_response.dart';
 import '../../response/notifications/notification_unread_response.dart';
 import '../../response/wallet/topup_history_response.dart';
 import '../../response/wallet/topup_komaju_response.dart';
 import '../../response/wallet/topup_response.dart';
-import '../../response/invoice/extend_period_response.dart';
 import '../hico_ui_repository.dart';
 
 class HicoUIRepositoryImpl extends HicoUIRepository {
@@ -150,7 +150,7 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     return _api.notificationDetail(id);
   }
 
-   @override
+  @override
   Future<NotificationUnreadResponse> notificationUnRead() {
     return _api.notificationUnRead();
   }
@@ -407,7 +407,7 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     return _api.invoiceRating(request);
   }
 
-@override
+  @override
   Future<BaseResponse> invoiceCancelRating(int id) {
     return _api.invoiceCancelRating(id);
   }

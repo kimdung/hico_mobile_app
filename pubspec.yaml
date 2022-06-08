@@ -79,6 +79,7 @@ dependencies:
   file_picker: ^4.3.2
   flutter_rating_bar: ^4.0.0 
   pin_code_fields: ^7.3.0
+  flutter_app_badger: ^1.4.0
 
   # Border dotted
   getwidget: ^2.0.4
@@ -95,7 +96,7 @@ dependencies:
       ref: master
 
   # Chat  
-  stream_chat_flutter: ^3.5.1
+  stream_chat_flutter: ^3.6.1
   # stream_chat_localizations: ^2.1.0 
   # stream_chat_persistence: ^3.1.0 
 
@@ -121,7 +122,7 @@ flutter_icons:
   image_path_ios: "lib/resource/assets_resources/images/app_icon.png"
   image_path_android: "lib/resource/assets_resources/images/app_icon.png"
 
-# For information on the generic Dart part of this file, see the
+# For information on the generic Dart part of this file, see the 
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.

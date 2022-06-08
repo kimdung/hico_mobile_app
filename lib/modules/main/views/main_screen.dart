@@ -142,7 +142,7 @@ class MainScreen extends GetView<MainController> {
                       activeIcon: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: FCoreImage(IconConstants.icMenuNewsAct),
-                      ),
+                      ), 
                       label: 'home.news'.tr,
                     ),
                     BottomNavigationBarItem(

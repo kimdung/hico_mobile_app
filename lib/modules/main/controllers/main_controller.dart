@@ -53,6 +53,7 @@ class MainController extends BaseController {
     try {
       await channel?.watch();
       channel?.state?.unreadCountStream.listen((event) {
+        debugPrint('[MainController] channel chat admin badge $event');
         homeController.totalNotif.value = event;
         orderListController.totalNotif.value = event;
       });

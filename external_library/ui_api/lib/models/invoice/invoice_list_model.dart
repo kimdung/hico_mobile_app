@@ -48,29 +48,33 @@ class InvoiceHistoryModel {
   @JsonKey(name: 'supplier_start', defaultValue: '')
   String? supplierStart;
 
-  InvoiceHistoryModel(
-      {this.id,
-      this.code,
-      this.supplierId,
-      this.supplierAvatar,
-      this.supplierName,
-      this.taskCompleteNumber,
-      this.serviceId,
-      this.serviceName,
-      this.price,
-      this.workingDate,
-      this.workingTime,
-      this.minHours,
-      this.offlinePriceMin,
-      this.status,
-      this.workingForm,
-      this.supplierStart,
-      });
+  InvoiceHistoryModel({
+    this.id,
+    this.code,
+    this.supplierId,
+    this.supplierAvatar,
+    this.supplierName,
+    this.taskCompleteNumber,
+    this.serviceId,
+    this.serviceName,
+    this.price,
+    this.workingDate,
+    this.workingTime,
+    this.minHours,
+    this.offlinePriceMin,
+    this.status,
+    this.workingForm,
+    this.supplierStart,
+  });
 
   factory InvoiceHistoryModel.fromJson(Map<String, dynamic> json) =>
       _$InvoiceHistoryModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$InvoiceHistoryModelToJson(this);
+
+  bool isNotCall() {
+    return supplierStart?.isEmpty ?? true;
+  }
 
   String getChatChannel() {
     return '$supplierId-${AppDataGlobal.userInfo?.id}';
