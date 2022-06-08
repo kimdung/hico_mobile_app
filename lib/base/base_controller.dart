@@ -28,43 +28,6 @@ class BaseController extends GetxController
     await checkConnectNetwork();
 
     await firebaseMessageConfig.handleMessage();
-    // AppDataGlobal.client
-    //     ?.on(EventType.messageNew, EventType.notificationMessageNew)
-    //     .listen((event) async {
-    //   if (event.message?.user?.id ==
-    //       AppDataGlobal.client?.state.currentUser?.id) {
-    //     return;
-    //   }
-
-    //   if (event.message == null || event.type != 'message.new') {
-    //     return;
-    //   }
-    //   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    //   const initializationSettings = InitializationSettings(
-    //     android: AndroidInitializationSettings('app_icon'),
-    //     iOS: IOSInitializationSettings(),
-    //   );
-    //   await flutterLocalNotificationsPlugin
-    //       .initialize(initializationSettings);
-    //   final id = event.message?.id.hashCode;
-    //   if (id == null) {
-    //     return;
-    //   }
-    //   await flutterLocalNotificationsPlugin.show(
-    //     id,
-    //     event.message?.user?.name,
-    //     event.message?.text,
-    //     NotificationDetails(
-    //       android: AndroidNotificationDetails(
-    //         event.channelId ?? '',
-    //         'HICO-Channel-Name',
-    //         priority: Priority.high,
-    //         importance: Importance.high,
-    //       ),
-    //       iOS: const IOSNotificationDetails(),
-    //     ),
-    //   );
-    // });
   }
 
   Future<void> checkConnectNetwork() async {

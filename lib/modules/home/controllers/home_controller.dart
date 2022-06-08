@@ -22,7 +22,7 @@ class HomeController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
 
   final Rx<int> currentStatus = Rx(0);
-  final Rx<int> totalNotif = Rx(0);
+  final Rx<int> badgeChatAdmin = Rx(0);
   final Rx<int> bottomIndex = Rx(0);
 
   final homeModel = Rx(HomeModel());
@@ -48,7 +48,7 @@ class HomeController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.homeModel != null) {
           homeModel.value = response.homeModel!;
-          if(homeModel.value.invoiceId != 0) {
+          if (homeModel.value.invoiceId != 0) {
             onRating();
           }
           return;
@@ -108,7 +108,7 @@ class HomeController extends BaseController {
           ? AppDataGlobal.userInfo?.conversationInfo?.getAdmin()
           : _usersResponse!.users.first,
       CommonConstants.IS_NOT_CALL: true,
-    }); 
+    });
   }
 
   Future<void> onRating() async {
@@ -142,13 +142,14 @@ class HomeController extends BaseController {
               );
               return;
             });
-          }else{
+          } else {
             print('cancel');
             EasyLoading.show();
-            _uiRepository.invoiceCancelRating(homeModel.value.invoiceId??0).then((response) {
+            _uiRepository
+                .invoiceCancelRating(homeModel.value.invoiceId ?? 0)
+                .then((response) {
               EasyLoading.dismiss();
             });
-
           }
         },
       );

@@ -8,8 +8,8 @@ import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../constants/colors.dart';
 import '../../constants/common.dart';
-import '../../styles/text_style/app_text_style.dart';
 import '../../styles/text_style/text_style.dart';
+import '../../widgets/badge/badge_widget.dart';
 import '../../widgets/image_widget/fcore_image.dart';
 import '../image_widget/network_image.dart';
 
@@ -35,25 +35,25 @@ class ItemOrderWidget extends StatefulWidget {
 }
 
 class _ItemOrderWidgetState extends State<ItemOrderWidget> {
-  Channel? _channel;
+  late Channel _channel;
   int _badge = 0;
 
   @override
   void initState() {
     super.initState();
 
-    if (AppDataGlobal.client == null) {
-      return;
+    if (AppDataGlobal.client != null) {
+      _channel = AppDataGlobal.client!
+          .channel('messaging', id: widget.invoice.getChatChannel());
+      debugPrint('[ItemOrderWidget] ${widget.invoice.getChatChannel()}');
+      _listenerBadge();
     }
-    _channel = AppDataGlobal.client!
-        .channel('messaging', id: widget.invoice.getChatChannel());
-    _listenerBadge();
   }
 
   Future<void> _listenerBadge() async {
-    try { 
-      await _channel?.watch(); 
-      _channel?.state?.unreadCountStream.listen((event) {
+    try {
+      await _channel.watch();
+      _channel.state?.unreadCountStream.listen((event) {
         debugPrint(
             '[ItemOrderWidget] channel?.state?.unreadCountStream.listen $event');
         setState(() {
@@ -216,71 +216,59 @@ class _ItemOrderWidgetState extends State<ItemOrderWidget> {
                         children: [
                           Expanded(
                             child: _buildActionButton(
-                                onPress: widget.onChat,
-                                icon: IconConstants.icChatColor,
-                                title: 'order.detail.chat'.tr,
-                                badge: _badge,
-                                border: Border(
-                                  right: BorderSide(
-                                    color: AppColor.primaryColorLight,
-                                    width: 0.5,
-                                  ),
-                                  top: BorderSide(
-                                    color: AppColor.primaryColorLight,
-                                    width: 1,
-                                  ),
-                                )),
+                              onPress: widget.onChat,
+                              icon: IconConstants.icChatColor,
+                              title: 'order.detail.chat'.tr,
+                              badge: _badge,
+                              border: Border(
+                                right: BorderSide(
+                                  color: AppColor.primaryColorLight,
+                                  width: 0.5,
+                                ),
+                                top: BorderSide(
+                                  color: AppColor.primaryColorLight,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
                           ),
                           Expanded(
                             child: _buildActionButton(
-                                onPress: widget.invoice.isNotCall()
-                                    ? null
-                                    : widget.onCall,
-                                icon: IconConstants.icCallColor,
-                                title: 'order.detail.call'.tr,
-                                border: Border(
-                                  right: BorderSide(
-                                    color: AppColor.primaryColorLight,
-                                    width: 0.5,
-                                  ),
-                                  top: BorderSide(
-                                    color: AppColor.primaryColorLight,
-                                    width: 1,
-                                  ),
-                                )),
+                              onPress: widget.invoice.isNotCall()
+                                  ? null
+                                  : widget.onCall,
+                              icon: IconConstants.icCallColor,
+                              title: 'order.detail.call'.tr,
+                              border: Border(
+                                right: BorderSide(
+                                  color: AppColor.primaryColorLight,
+                                  width: 0.5,
+                                ),
+                                top: BorderSide(
+                                  color: AppColor.primaryColorLight,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
                           ),
                           Expanded(
                             child: _buildActionButton(
-                                onPress: widget.invoice.isNotCall()
-                                    ? null
-                                    : widget.onVideo,
-                                icon: IconConstants.icVideoCallColor,
-                                title: 'order.detail.video'.tr,
-                                border: Border(
-                                  top: BorderSide(
-                                    color: AppColor.primaryColorLight,
-                                    width: 1,
-                                  ),
-                                )),
+                              onPress: widget.invoice.isNotCall()
+                                  ? null
+                                  : widget.onVideo,
+                              icon: IconConstants.icVideoCallColor,
+                              title: 'order.detail.video'.tr,
+                              border: Border(
+                                top: BorderSide(
+                                  color: AppColor.primaryColorLight,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     )
-
-                  // Container(
-                  //   width: double.infinity,
-                  //   height: 50,
-                  //   child: _buildActionButton(
-                  //       onPress: () {},
-                  //       icon: IconConstants.icCalendarPink,
-                  //       title: 'supplier.book'.tr,
-                  //       border: Border(
-                  //         top: BorderSide(
-                  //           color: AppColor.primaryColorLight,
-                  //           width: 1,
-                  //         ),
-                  //       )),
-                  // ),
                 ],
               ),
             ),
@@ -347,7 +335,7 @@ class _ItemOrderWidgetState extends State<ItemOrderWidget> {
       required String title,
       required Border border,
       required Function()? onPress,
-      int? badge = 0}) {
+      int badge = 0}) {
     return InkWell(
       onTap: onPress,
       child: Container(
@@ -357,34 +345,21 @@ class _ItemOrderWidgetState extends State<ItemOrderWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.asset(
-                  icon,
-                  width: 17,
-                ),
-                const SizedBox(width: 5),
-                (badge == null || badge == 0)
-                    ? Container()
-                    : Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: AppColor.primaryColorLight,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Text(
-                          badge.toString(),
-                          style: AppTextStyle.secondTextStyle.copyWith(
-                              color: Colors.white,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-              ],
+            Container(
+              height: 22,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    icon,
+                    width: 17,
+                  ),
+                  const SizedBox(width: 5),
+                  BadgeWidget(badge: badge),
+                ],
+              ),
             ),
-            const SizedBox(width: 10),
             Text(title, style: TextAppStyle().smallTextBlack())
           ],
         ),

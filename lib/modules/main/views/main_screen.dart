@@ -5,6 +5,7 @@ import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/styles/text_style/app_text_style.dart';
 import '../../../shared/styles/text_style/text_style.dart';
+import '../../../shared/widgets/badge/badge_widget.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
 import '../../call/pickup/picker_layout.dart';
 import '../controllers/main_controller.dart';
@@ -61,46 +62,20 @@ class MainScreen extends GetView<MainController> {
                       label: 'home.home'.tr,
                     ),
                     BottomNavigationBarItem(
-                      icon: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: FCoreImage(IconConstants.icMenuInvInact),
-                      ),
-                      activeIcon: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: FCoreImage(IconConstants.icMenuInvAct),
-                      ),
+                      icon: FCoreImage(IconConstants.icMenuInvInact),
+                      activeIcon: FCoreImage(IconConstants.icMenuInvAct),
                       label: 'home.order'.tr,
                     ),
                     BottomNavigationBarItem(
-                      icon: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Stack(
-                          children: [
-                            FCoreImage(IconConstants.icMenuNotifInact),
-                            Positioned(
-                              right:controller.totalNotif.value == 0 ? -5: 0,
-                              child: Container(
-                                width: 15,
-                                height: 15,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(14),
-                                    color: controller.totalNotif.value == 0
-                                        ? Colors.white
-                                        : AppColor.primaryColorLight),
-                                child: Center(
-                                  child: Text(
-                                    controller.totalNotif.value.toString(),
-                                    style: AppTextStyle.secondTextStyle
-                                        .copyWith(
-                                            color: Colors.white,
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
+                      icon: Stack(
+                        children: [
+                          FCoreImage(IconConstants.icMenuNotifInact),
+                          Positioned(
+                            right: 0,
+                            child: Obx(() =>
+                                BadgeWidget(badge: controller.badge.value)),
+                          ),
+                        ],
                       ),
                       activeIcon: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -108,52 +83,27 @@ class MainScreen extends GetView<MainController> {
                           children: [
                             FCoreImage(IconConstants.icMenuNotifAct),
                             Positioned(
-                              right:controller.totalNotif.value == 0 ? -5: 0,
-                              child: Container(
-                                width: 15,
-                                height: 15,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(14),
-                                    color: controller.totalNotif.value == 0
-                                        ? Colors.white
-                                        : AppColor.primaryColorLight),
-                                child: Center(
-                                  child: Text(
-                                    controller.totalNotif.value.toString(),
-                                    style: AppTextStyle.secondTextStyle
-                                        .copyWith(
-                                            color: Colors.white,
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w500),
-                                  ),
+                              right: 0,
+                              child: Obx(
+                                () => BadgeWidget(
+                                  badge: controller.badge.value,
+                                  isDart: true,
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
                       label: 'home.notification'.tr,
                     ),
                     BottomNavigationBarItem(
-                      icon: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: FCoreImage(IconConstants.icMenuNewsInact),
-                      ),
-                      activeIcon: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: FCoreImage(IconConstants.icMenuNewsAct),
-                      ), 
+                      icon: FCoreImage(IconConstants.icMenuNewsInact),
+                      activeIcon: FCoreImage(IconConstants.icMenuNewsAct),
                       label: 'home.news'.tr,
                     ),
                     BottomNavigationBarItem(
-                      icon: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: FCoreImage(IconConstants.icMenuAccountInact),
-                      ),
-                      activeIcon: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: FCoreImage(IconConstants.icMenuAccountAct),
-                      ),
+                      icon: FCoreImage(IconConstants.icMenuAccountInact),
+                      activeIcon: FCoreImage(IconConstants.icMenuAccountAct),
                       label: 'home.account'.tr,
                     ),
                   ]),

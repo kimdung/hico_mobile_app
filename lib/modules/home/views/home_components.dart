@@ -67,7 +67,7 @@ extension HomeComponents on HomeScreen {
           InkWell(
             onTap: () {
               controller.deposit();
-            } ,
+            },
             child: Container(
               margin: const EdgeInsets.all(5),
               child: FCoreImage(
@@ -99,27 +99,11 @@ extension HomeComponents on HomeScreen {
                     height: 24,
                   ),
                 ),
-                controller.totalNotif.value == 0
-                    ? Container()
-                    : Positioned(
-                        right: 0,
-                        child: Container(
-                          width: 15,
-                          height: 15,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14),
-                              color: AppColor.primaryColorLight),
-                          child: Center(
-                            child: Text(
-                              controller.totalNotif.value.toString(),
-                              style: AppTextStyle.secondTextStyle.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ),
-                      )
+                Positioned(
+                  right: 0,
+                  child: Obx(() =>
+                      BadgeWidget(badge: controller.badgeChatAdmin.value)),
+                ),
               ],
             ),
           )

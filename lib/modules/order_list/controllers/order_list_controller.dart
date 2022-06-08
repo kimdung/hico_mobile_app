@@ -22,7 +22,7 @@ class OrderListController extends BaseController {
 
   Rx<UserInfoModel> info = Rx(UserInfoModel());
 
-  final Rx<int> totalNotif = Rx(0);
+  final Rx<int> badgeChatAdmin = Rx(0);
 
   String keyword = '';
 
@@ -53,10 +53,12 @@ class OrderListController extends BaseController {
   Future<void> onInit() async {
     await super.onInit();
   }
+
   Future<void> deposit() async {
     await Get.toNamed(Routes.WALLET)!
         .then((value) => info.value = AppDataGlobal.userInfo!);
   }
+
   Future<void> selectStatus(InvoiceStatus status) async {
     currentStatus.value = status;
     await loadList();

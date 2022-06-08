@@ -8,17 +8,19 @@ import 'package:ui_api/request/invoice/invoice_request.dart';
 import '../../../base/base_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
+import '../../main/controllers/main_controller.dart';
 
 class NotificationController extends BaseController {
-  //final Rx<int> totalRecord = Rx(1);
-
-  var scrollController = ScrollController();
   final _uiRepository = Get.find<HicoUIRepository>();
+
+  final MainController mainController;
+
+  final scrollController = ScrollController();
   RxList<NotificationModel> notificationList = RxList<NotificationModel>();
   int limit = CommonConstants.limit;
   int offset = 0;
 
-  NotificationController() {
+  NotificationController(this.mainController) {
     //loadData();
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
@@ -80,21 +82,23 @@ class NotificationController extends BaseController {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.detail != null) {
-               Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id:invoiceId, rating: true))
-                ?.then((value) => loadData());
+          Get.toNamed(Routes.ORDER_DETAIL,
+                  arguments: InvoiceRequest(id: invoiceId, rating: true))
+              ?.then((value) => loadData());
         }
       });
-    } else if(displayType == DisplayType.Order.id) {
+    } else if (displayType == DisplayType.Order.id) {
       await _uiRepository.notificationDetail(id).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.detail != null) {
-               Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id:invoiceId))
-                ?.then((value) => loadData());
+          Get.toNamed(Routes.ORDER_DETAIL,
+                  arguments: InvoiceRequest(id: invoiceId))
+              ?.then((value) => loadData());
         }
       });
     } else {
-        await Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)
+      await Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)
           ?.then((value) => loadData());
     }
   }

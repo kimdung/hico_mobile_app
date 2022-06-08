@@ -162,6 +162,8 @@ class FirebaseMessageConfig {
       /// Tương tác với thông báo khi ứng dụng đang ở background và khi đang khóa màn hình
       FirebaseMessaging.onMessageOpenedApp.listen(
         (RemoteMessage message) {
+          debugPrint('ONTAP onMessageOpenedApp: ${message.data.toString()}');
+
           /// ['id']: Key json chứa ID của thông báo server trả về.
           /// Dùng để điều hướng vào màn chi tiết thông báo
           /// Mặc định đang là ['id']
@@ -227,22 +229,21 @@ class FirebaseMessageConfig {
       /// ['id']: Key json chứa ID của thông báo server trả về.
       /// Dùng để điều hướng vào màn chi tiết thông báo
       /// Mặc định đang là ['id']
-      try{
+      try {
         final type = json.decode(payload!)['display_type']?.toString();
-        final id  = json.decode(payload)['invoice_id']?.toString();
-        if(type == DisplayType.Extend.id.toString()){
-          await Navigator.of(AppDataGlobal.navigatorKey.currentContext!).pushNamed(
-            Routes.ORDER_DETAIL, arguments: InvoiceRequest(id: int.parse(id!), extend: true)
-          );
-        }else if (type == DisplayType.Rating.id.toString()){
-          await Navigator.of(AppDataGlobal.navigatorKey.currentContext!).pushNamed(
-            Routes.ORDER_DETAIL, arguments: InvoiceRequest(id: int.parse(id!), rating: true)
-          );
+        final id = json.decode(payload)['invoice_id']?.toString();
+        if (type == DisplayType.Extend.id.toString()) {
+          await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+              .pushNamed(Routes.ORDER_DETAIL,
+                  arguments: InvoiceRequest(id: int.parse(id!), extend: true));
+        } else if (type == DisplayType.Rating.id.toString()) {
+          await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+              .pushNamed(Routes.ORDER_DETAIL,
+                  arguments: InvoiceRequest(id: int.parse(id!), rating: true));
         }
-      }catch(e){
-          print(e);
+      } catch (e) {
+        print(e);
       }
-      
     }
   }
 

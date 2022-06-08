@@ -19,7 +19,7 @@ import '../../order_list/views/order_list_screen.dart';
 
 class MainController extends BaseController {
   Rx<int> index = Rx(0);
-  Rx<int> totalNotif = Rx(0);
+  Rx<int> badge = Rx(0);
   final _uiRepository = Get.find<HicoUIRepository>();
 
   final channel = AppDataGlobal.client?.channel('messaging',
@@ -28,13 +28,14 @@ class MainController extends BaseController {
   List<Widget> tabs = [];
   late HomeController homeController;
   late OrderListController orderListController;
-  final notificationController = NotificationController();
+  late NotificationController notificationController;
   final newsController = NewsController();
   final accountController = AccountController();
 
   MainController() {
     homeController = HomeController(channel);
     orderListController = OrderListController(channel);
+    notificationController = NotificationController(this);
     tabs = [
       HomeScreen(homeController),
       OrderListScreen(orderListController),
@@ -54,8 +55,8 @@ class MainController extends BaseController {
       await channel?.watch();
       channel?.state?.unreadCountStream.listen((event) {
         debugPrint('[MainController] channel chat admin badge $event');
-        homeController.totalNotif.value = event;
-        orderListController.totalNotif.value = event;
+        homeController.badgeChatAdmin.value = event;
+        orderListController.badgeChatAdmin.value = event;
       });
     } catch (e) {
       printError(info: e.toString());
@@ -63,8 +64,6 @@ class MainController extends BaseController {
   }
 
   Future<void> changeIndex(int _index) async {
-    await countNotifyUnread();
-
     if (_index != index.value) {
       if (_index == 0) {
         await homeController.loadData();
@@ -78,15 +77,17 @@ class MainController extends BaseController {
         await accountController.loadData();
       }
     }
-
     index.value = _index;
+
+    await countNotifyUnread();
   }
 
   Future<void> countNotifyUnread() async {
     await _uiRepository.notificationUnRead().then((response) {
-       if (response.status == CommonConstants.statusOk && response.data != null) {
-          totalNotif.value = response.data!;  
-        }
-      });
+      if (response.status == CommonConstants.statusOk &&
+          response.data != null) {
+        badge.value = response.data!;
+      }
+    });
   }
 }
