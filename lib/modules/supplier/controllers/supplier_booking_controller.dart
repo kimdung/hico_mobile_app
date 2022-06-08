@@ -37,6 +37,7 @@ class SupplierBookingController extends BaseController {
   final TextEditingController zipCode = TextEditingController();
   final TextEditingController province = TextEditingController();
   final TextEditingController district = TextEditingController();
+  final TextEditingController addressDetail = TextEditingController();
   final TextEditingController address = TextEditingController();
   final TextEditingController station = TextEditingController();
 
@@ -115,6 +116,7 @@ class SupplierBookingController extends BaseController {
       // zipCode.text = '';
       province.text = '';
       district.text = '';
+      addressDetail.text='';
       bookingRequest.value.addressId = 0;
       if (keyword != '') {
         await _uiRepository.addressList(20, 0, keyword).then((response) {
@@ -137,7 +139,7 @@ class SupplierBookingController extends BaseController {
       zipCode.text = item.code ?? '';
       province.text = item.provinceName ?? '';
       district.text = item.districtName ?? '';
-      address.text = item.address ?? '';
+      addressDetail.text = item.address ?? '';
       bookingRequest.value.addressId = item.id;
       showSuggest.value = 0;
     } catch (e) {

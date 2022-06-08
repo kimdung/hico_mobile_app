@@ -89,6 +89,7 @@ class VoiceCallView extends GetView<VoiceCallController> {
           children: [
             FloatingActionButton(
               elevation: 4,
+              backgroundColor: AppColor.primaryBackgroundColorLight,
               onPressed: controller.switchSpeakerphone,
               child: Icon(
                 controller.enableSpeakerphone.value

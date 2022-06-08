@@ -41,132 +41,135 @@ class SupplierBookingScreen extends GetView<SupplierBookingController> {
           elevation: 1,
           backgroundColor: Colors.white,
         ),
-        body: SingleChildScrollView(
-          child: Obx(() => Container(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 14),
-                    buildOrderInfo(),
-                    const SizedBox(height: 19),
-                    Container(color: AppColor.greyBackgroundColor, height: 1),
-                    const SizedBox(height: 18),
-                    buildCustomerInfo(),
-                    const SizedBox(height: 19),
-                    Container(color: AppColor.greyBackgroundColor, height: 1),
-                    const SizedBox(height: 18),
-                    buildServiceInfo(),
-                    const SizedBox(height: 19),
-                    Container(color: AppColor.greyBackgroundColor, height: 1),
-                    const SizedBox(height: 18),
-                    buildWorkingTime(),
-                    const SizedBox(height: 19),
-                    Container(color: AppColor.greyBackgroundColor, height: 1),
-                    const SizedBox(height: 18),
-                    buildVoucher(),
-                    const SizedBox(height: 18),
-                    Container(color: AppColor.greyBackgroundColor, height: 1),
-                    const SizedBox(height: 18),
-                    buildPaymentMethod(),
-                    const SizedBox(height: 18),
-                    Container(color: AppColor.greyBackgroundColor, height: 4),
-                    const SizedBox(height: 14),
-                    buildOrderDetail(),
-                    const SizedBox(height: 20),
-                    if (controller.bookingPrepare.value.supplierRequest!
-                            .filterIsOnline! ==
-                        CommonConstants.offline)
-                      Container(
-                        child: Column(
-                          children: [
-                            Container(
-                                color: AppColor.greyBackgroundColor, height: 4),
-                            const SizedBox(height: 14),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: CommonConstants.paddingDefault),
-                              child: _buildTitleSection(
-                                  title: 'booking.your_address'.tr),
-                            ),
-                            //address
-                            const SizedBox(height: 14),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: CommonConstants.paddingDefault),
-                              child: Column(
-                                children: [
-                                  _buildInputAddressCode(),
-                                  if (controller.showSuggest.value != 0)
-                                    buildSuggestAddress(),
-                                  const SizedBox(height: 16),
-                                  _buildInputTemplate(
-                                      textEditng: controller.province,
-                                      focusNode: AlwaysDisabledFocusNode(),
-                                      title: 'profile.update.provice'.tr),
-                                  const SizedBox(height: 16),
-                                  _buildInputTemplate(
-                                      textEditng: controller.district,
-                                      focusNode: AlwaysDisabledFocusNode(),
-                                      title: 'profile.update.district'.tr),
-                                  const SizedBox(height: 16),
-                                  _buildInputTemplate(
-                                      textEditng: controller.address,
-                                      focusNode: AlwaysDisabledFocusNode(),
-                                      title: 'profile.update.address'.tr),
-                                  const SizedBox(height: 16),
-                                  _buildInputTemplate(
-                                      textEditng: controller.station,
-                                      title: 'profile.station'.tr),
-                                  const SizedBox(height: 16),
-                                  _buildInputTextArea(
-                                      textEditng: controller.address,
-                                      title: 'booking.address_title'.tr),
-                                ],
+        body: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: SingleChildScrollView(
+            child: Obx(() => Container(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 14),
+                      buildOrderInfo(),
+                      const SizedBox(height: 19),
+                      Container(color: AppColor.greyBackgroundColor, height: 1),
+                      const SizedBox(height: 18),
+                      buildCustomerInfo(),
+                      const SizedBox(height: 19),
+                      Container(color: AppColor.greyBackgroundColor, height: 1),
+                      const SizedBox(height: 18),
+                      buildServiceInfo(),
+                      const SizedBox(height: 19),
+                      Container(color: AppColor.greyBackgroundColor, height: 1),
+                      const SizedBox(height: 18),
+                      buildWorkingTime(),
+                      const SizedBox(height: 19),
+                      Container(color: AppColor.greyBackgroundColor, height: 1),
+                      const SizedBox(height: 18),
+                      buildVoucher(),
+                      const SizedBox(height: 18),
+                      Container(color: AppColor.greyBackgroundColor, height: 1),
+                      const SizedBox(height: 18),
+                      buildPaymentMethod(),
+                      const SizedBox(height: 18),
+                      Container(color: AppColor.greyBackgroundColor, height: 4),
+                      const SizedBox(height: 14),
+                      buildOrderDetail(),
+                      const SizedBox(height: 20),
+                      if (controller.bookingPrepare.value.supplierRequest!
+                              .filterIsOnline! ==
+                          CommonConstants.offline)
+                        Container(
+                          child: Column(
+                            children: [
+                              Container(
+                                  color: AppColor.greyBackgroundColor, height: 4),
+                              const SizedBox(height: 14),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: CommonConstants.paddingDefault),
+                                child: _buildTitleSection(
+                                    title: 'booking.your_address'.tr),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: CommonConstants.paddingDefault),
-                              child: RichText(
-                                textAlign: TextAlign.left,
-                                text: TextSpan(
-                                  text: '${'note'.tr} ',
-                                  style: TextAppStyle()
-                                      .smallTextPink()
-                                      .copyWith(
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.bold),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: 'booking.address_note'.tr,
-                                      style: TextAppStyle().smallTextBlack(),
-                                    ),
+                              //address
+                              const SizedBox(height: 14),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: CommonConstants.paddingDefault),
+                                child: Column(
+                                  children: [
+                                    _buildInputAddressCode(),
+                                    if (controller.showSuggest.value != 0)
+                                      buildSuggestAddress(),
+                                    const SizedBox(height: 16),
+                                    _buildInputTemplate(
+                                        textEditng: controller.province,
+                                        focusNode: AlwaysDisabledFocusNode(),
+                                        title: 'profile.update.provice'.tr),
+                                    const SizedBox(height: 16),
+                                    _buildInputTemplate(
+                                        textEditng: controller.district,
+                                        focusNode: AlwaysDisabledFocusNode(),
+                                        title: 'profile.update.district'.tr),
+                                    const SizedBox(height: 16),
+                                    _buildInputTemplate(
+                                        textEditng: controller.addressDetail,
+                                        focusNode: AlwaysDisabledFocusNode(),
+                                        title: 'profile.update.address'.tr),
+                                    const SizedBox(height: 16),
+                                    _buildInputTemplate(
+                                        textEditng: controller.station,
+                                        title: 'profile.station'.tr),
+                                    const SizedBox(height: 16),
+                                    _buildInputTextArea(
+                                        textEditng: controller.address,
+                                        title: 'booking.address_title'.tr),
                                   ],
                                 ),
                               ),
-                            ),
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: CommonConstants.paddingDefault),
+                                child: RichText(
+                                  textAlign: TextAlign.left,
+                                  text: TextSpan(
+                                    text: '${'note'.tr} ',
+                                    style: TextAppStyle()
+                                        .smallTextPink()
+                                        .copyWith(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: 'booking.address_note'.tr,
+                                        style: TextAppStyle().smallTextBlack(),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: GeneralButton(
+                          borderRadius: BorderRadius.circular(24),
+                          borderColor: AppColor.primaryColorLight,
+                          backgroundColor: AppColor.primaryColorLight,
+                          onPressed: () {
+                            controller.booking();
+                          },
+                          child: Text(
+                            'booking.booking'.tr,
+                            style: TextAppStyle().titleButtonStyle(),
+                          ),
                         ),
                       ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: GeneralButton(
-                        borderRadius: BorderRadius.circular(24),
-                        borderColor: AppColor.primaryColorLight,
-                        backgroundColor: AppColor.primaryColorLight,
-                        onPressed: () {
-                          controller.booking();
-                        },
-                        child: Text(
-                          'booking.booking'.tr,
-                          style: TextAppStyle().titleButtonStyle(),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
-              )),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                )),
+          ),
         ),
       ),
     );

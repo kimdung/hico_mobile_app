@@ -174,6 +174,28 @@ class FirebaseMessageConfig {
             //     message?.data['id']?.toString(),
             //   ),
             // );
+            //FCM Firebase
+            final type = message.data['display_type']?.toString();
+            final id = message.data['invoice_id']?.toString();
+            //FCM GetStream
+            final sender = message.data['sender']?.toString();
+
+
+            if (type == DisplayType.Extend.id.toString()) {
+              Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+                  .pushNamed(Routes.ORDER_DETAIL,
+                      arguments:
+                          InvoiceRequest(id: int.parse(id!), extend: true));
+            } else if (type == DisplayType.Rating.id.toString()) {
+              Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+                  .pushNamed(Routes.ORDER_DETAIL,
+                      arguments:
+                          InvoiceRequest(id: int.parse(id!), rating: true));
+            }else if(sender == 'stream.chat'){
+              //router chat screen
+              debugPrint('router chat screen');
+
+            }
           }
         },
       );

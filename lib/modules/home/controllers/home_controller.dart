@@ -8,6 +8,7 @@ import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/booking_prepare_request.dart';
 import 'package:ui_api/request/invoice/rating_request.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
@@ -158,4 +159,11 @@ class HomeController extends BaseController {
       await EasyLoading.dismiss();
     }
   }
+
+
+  Future<void> openLink(String url) async {
+    final _url = Uri.parse(url);
+    await launchUrl(_url);
+  }
+
 }

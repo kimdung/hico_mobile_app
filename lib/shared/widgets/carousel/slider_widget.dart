@@ -10,10 +10,13 @@ class SliderItem {
     this.title,
     this.description,
     required this.image,
+    this.onpress,
   });
 
   final String image;
   final String? title, description;
+  Function()? onpress;
+
 }
 
 class SliderWidget extends StatefulWidget {
@@ -70,41 +73,44 @@ class _SliderWidgetState extends State<SliderWidget> {
               items: List.generate(
                 widget.items.length,
                 (index) {
-                  return Container(
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: widget.localImage
-                              ? const EdgeInsets.all(0)
-                              : const EdgeInsets.only(
-                                  top: 5, left: 20, right: 20),
-                          width: double.infinity,
-                          decoration: widget.decoration,
-                          child: widget.localImage
-                              ? FCoreImage(
-                                  widget.items[index].image,
-                                )
-                              : NetWorkImage(
-                                  image: widget.items[index].image,
-                                  height: 160,
-                                ),
-                        ),
-                        if (widget.items[index].title != null)
-                          Text(
-                            widget.items[index].title!,
-                            style: TextAppStyle().titleBoldStyle(),
+                  return InkWell(
+                    onTap: widget.items[index].onpress,
+                    child: Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: widget.localImage
+                                ? const EdgeInsets.all(0)
+                                : const EdgeInsets.only(
+                                    top: 5, left: 20, right: 20),
+                            width: double.infinity,
+                            decoration: widget.decoration,
+                            child: widget.localImage
+                                ? FCoreImage(
+                                    widget.items[index].image,
+                                  )
+                                : NetWorkImage(
+                                    image: widget.items[index].image,
+                                    height: 160,
+                                  ),
                           ),
-                        if (widget.items[index].description != null)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 8),
-                            child: Text(
-                              widget.items[index].description!,
-                              textAlign: TextAlign.center,
-                              style: TextAppStyle().genaralTextStyle(),
+                          if (widget.items[index].title != null)
+                            Text(
+                              widget.items[index].title!,
+                              style: TextAppStyle().titleBoldStyle(),
                             ),
-                          ),
-                      ],
+                          if (widget.items[index].description != null)
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 8),
+                              child: Text(
+                                widget.items[index].description!,
+                                textAlign: TextAlign.center,
+                                style: TextAppStyle().genaralTextStyle(),
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   );
                 },

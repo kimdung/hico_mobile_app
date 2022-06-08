@@ -115,8 +115,6 @@ extension HomeComponents on HomeScreen {
   Widget buildSlider(List<SliderModel?> sliders) {
     if (sliders.isNotEmpty) {
       return Container(
-        // padding: const EdgeInsets.symmetric(
-        // horizontal: CommonConstants.paddingDefault),
         child: SliderWidget(
           ratio: 2,
           localImage: false,
@@ -135,6 +133,7 @@ extension HomeComponents on HomeScreen {
           items: sliders
               .map((e) => SliderItem(
                     image: e!.displayImage!,
+                    onpress: () => controller.openLink(e.urlLink??''),
                   ))
               .toList(),
         ),
