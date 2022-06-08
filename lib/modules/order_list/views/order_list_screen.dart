@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ui_api/models/invoice/invoice_status.dart';
 
 import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';

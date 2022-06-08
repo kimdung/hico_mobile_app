@@ -203,21 +203,34 @@ extension OrderListBody on OrderListScreen {
   }
 
   Widget _buildListOrder() {
-    return Container(
-      child: Column(
-        children: [
-          ...List.generate(
-              controller.list.length,
-              (index) => ItemOrderWidget(
-                    invoice: controller.list[index],
-                    onPress: () =>
-                        controller.viewDetail(controller.list[index].id!),
-                    onChat: () => controller.onChat(controller.list[index]),
-                    onCall: () => controller.onCall(controller.list[index]),
-                    onVideo: () => controller.onVideo(controller.list[index]),
-                  ))
-        ],
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: controller.list.length,
+      itemBuilder: (context, index) => ItemOrderWidget(
+        invoice: controller.list[index],
+        onPress: () => controller.viewDetail(controller.list[index].id!),
+        onChat: () => controller.onChat(controller.list[index]),
+        onCall: () => controller.onCall(controller.list[index]),
+        onVideo: () => controller.onVideo(controller.list[index]),
       ),
+      separatorBuilder: (context, index) => Container(),
     );
-  } 
+    // return Container(
+    //   child: Column(
+    //     children: [
+    //       ...List.generate(
+    //           controller.list.length,
+    //           (index) => ItemOrderWidget(
+    //                 invoice: controller.list[index],
+    //                 onPress: () =>
+    //                     controller.viewDetail(controller.list[index].id!),
+    //                 onChat: () => controller.onChat(controller.list[index]),
+    //                 onCall: () => controller.onCall(controller.list[index]),
+    //                 onVideo: () => controller.onVideo(controller.list[index]),
+    //               ))
+    //     ],
+    //   ),
+    // );
+  }
 }
