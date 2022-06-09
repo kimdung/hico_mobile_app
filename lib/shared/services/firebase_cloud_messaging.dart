@@ -180,8 +180,12 @@ class FirebaseMessageConfig {
             //FCM GetStream
             final sender = message.data['sender']?.toString();
 
-
-            if (type == DisplayType.Extend.id.toString()) {
+            if (type == DisplayType.Order.id.toString() || type == DisplayType.Remind.id.toString()) {
+              Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+                  .pushNamed(Routes.ORDER_DETAIL,
+                      arguments:
+                          InvoiceRequest(id: int.parse(id!)));
+            } else if (type == DisplayType.Extend.id.toString()) {
               Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
                   .pushNamed(Routes.ORDER_DETAIL,
                       arguments:

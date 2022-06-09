@@ -19,12 +19,17 @@ class TopupKomojuController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
   final _evnConfig = Get.find<EnvConfiguration>();
 
-  final String payUrl;
+  late String payUrl;
 
   final Completer<WebViewController> webViewController =
       Completer<WebViewController>();
+  bool isOrder = false;
 
-  TopupKomojuController(this.payUrl);
+  TopupKomojuController(){
+    final arguments = Get.arguments as Map;
+    isOrder = arguments[CommonConstants.TOPUP_ISORDER];
+    payUrl = arguments[CommonConstants.TOPUP_DATA];
+  }
 
   @override
   Future<void> onInit() async {
@@ -76,8 +81,12 @@ class TopupKomojuController extends BaseController {
             }
           });
           await EasyLoading.dismiss();
-          await Get.offAndToNamed(Routes.TOPUP_DETAIL,
+          if(isOrder){
+              Get.back(result: isOrder);
+          }else{
+            await Get.offAndToNamed(Routes.TOPUP_DETAIL,
               arguments: response.data!.row);
+          }   
         } else {
           await EasyLoading.dismiss();
           await DialogUtil.showPopup(

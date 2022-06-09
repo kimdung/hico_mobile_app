@@ -22,12 +22,17 @@ class TopupBankController extends BaseController {
   final imageWidget = ImageWidgetController();
   final noteController = TextEditingController();
 
-  final TopupHistoryModel topup;
+  late TopupHistoryModel topup;
   final banks = AppDataGlobal.masterData?.banks ?? [];
 
   final imageBill = Rxn<File>();
+  bool isOrder = false;
 
-  TopupBankController(this.topup);
+  TopupBankController(){
+    final arguments = Get.arguments as Map;
+    isOrder = arguments[CommonConstants.TOPUP_ISORDER];
+    topup = arguments[CommonConstants.TOPUP_DATA];
+  }
 
   /* Action */
 
@@ -79,7 +84,12 @@ class TopupBankController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null &&
             response.data!.row != null) {
-          Get.offAndToNamed(Routes.TOPUP_DETAIL, arguments: response.data!.row);
+              if(isOrder){
+                Get.back(result: isOrder);
+              }else{
+                Get.offAndToNamed(Routes.TOPUP_DETAIL, arguments: response.data!.row);
+              }
+          
         }
       });
     } catch (e) {

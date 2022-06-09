@@ -35,6 +35,9 @@ class CommonConstants {
   static const String IS_CALLER = 'IS_CALLER';
   static const String CALL_MODEL = 'CALL_MODEL';
   static const String CALL_TOKEN = 'CALL_TOKEN';
+  static const String TOPUP_DATA = 'TOPUP_DATA';
+  static const String TOPUP_ISORDER = 'TOPUP_ISORDER';
+
 }
 
 const APP_NAME = 'Hico';
@@ -87,7 +90,7 @@ extension PaymentMethodName on PaymentMethod {
   }
 }
 
-enum DisplayType { All, Notif, Order, Extend, Rating }
+enum DisplayType { All, Notif, Order,Remind, Extend, Rating }
 
 extension DisplayTypeId on DisplayType {
   int get id {
@@ -98,6 +101,8 @@ extension DisplayTypeId on DisplayType {
         return 1;
       case DisplayType.Order:
         return 2;
+      case DisplayType.Remind:
+        return 3;
       case DisplayType.Extend:
         return 7;
       case DisplayType.Rating:

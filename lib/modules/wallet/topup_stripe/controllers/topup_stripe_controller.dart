@@ -18,15 +18,20 @@ class TopupStripeController extends BaseController {
 
   final cardEditController = CardFormEditController();
 
-  final double amount;
+  late double amount;
   CardFieldInputDetails? card;
+  bool isOrder = false;
 
   // final TextEditingController accountHolderController = TextEditingController();
   // final TextEditingController bankNumberController = TextEditingController();
   // final TextEditingController validDateController = TextEditingController();
   // final TextEditingController cvvController = TextEditingController();
 
-  TopupStripeController(this.amount);
+  TopupStripeController(){
+    final arguments = Get.arguments as Map;
+    isOrder = arguments['TOPUP_ISORDER'];
+    amount = arguments['TOPUP_DATA'];
+  }
 
   @override
   Future<void> onInit() async {
@@ -97,8 +102,13 @@ class TopupStripeController extends BaseController {
             }
           });
           await EasyLoading.dismiss();
-          await Get.offAndToNamed(Routes.TOPUP_DETAIL,
+          if(isOrder){
+              Get.back(result: isOrder);
+          }else{
+            await Get.offAndToNamed(Routes.TOPUP_DETAIL,
               arguments: response.data!.row);
+          }   
+
         } else {
           await EasyLoading.dismiss();
           await DialogUtil.showPopup(

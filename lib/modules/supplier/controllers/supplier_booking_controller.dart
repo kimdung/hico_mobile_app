@@ -168,7 +168,7 @@ class SupplierBookingController extends BaseController {
           onVaLue: (_value) {
             if (_value != null && _value is int) {
               if (_value == 1) {
-                Get.toNamed(Routes.WALLET)!
+                Get.toNamed(Routes.WALLET, arguments: true)!
                     .then((value) => info.value = AppDataGlobal.userInfo!);
               }
             }

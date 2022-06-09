@@ -6,7 +6,7 @@ class TopupKomojuBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<TopupKomojuController>(
-      () => TopupKomojuController(Get.arguments),
+      () => TopupKomojuController(),
     );
   }
 }

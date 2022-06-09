@@ -29,6 +29,12 @@ class TopupController extends GetxController {
   List<PaymentMethodItem> get paymentMethods =>
       PaymentMethodItem.paymentMethods;
 
+  bool _isOrder = false;
+
+  TopupController(isOrder) {
+    _isOrder = isOrder;
+  }
+
   @override
   void onClose() {
     printInfo(info: 'onClose');
@@ -57,9 +63,14 @@ class TopupController extends GetxController {
         await _topupKomaju(amount, 2);
         break;
       case 3:
-        await Get.toNamed(Routes.TOPUP_STRIPE, arguments: amount)
-            ?.then((value) {
+        await Get.toNamed(Routes.TOPUP_STRIPE, arguments: {
+          CommonConstants.TOPUP_DATA: amount,
+          CommonConstants.TOPUP_ISORDER: _isOrder,
+        })?.then((value) {
           balance.value = AppDataGlobal.userInfo?.accountBalance ?? 0;
+          if (value) {
+            Get.back();
+          }
         });
         break;
       default:
@@ -86,9 +97,15 @@ class TopupController extends GetxController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null &&
             response.data!.row != null) {
-          Get.toNamed(Routes.TOPUP_BANK, arguments: response.data!.row)
-              ?.then((value) {
+          Get.toNamed(Routes.TOPUP_BANK, arguments: //response.data!.row
+              {
+            CommonConstants.TOPUP_DATA: response.data!.row,
+            CommonConstants.TOPUP_ISORDER: _isOrder,
+          })?.then((value) {
             balance.value = AppDataGlobal.userInfo?.accountBalance ?? 0;
+            if (value) {
+              Get.back();
+            }
           });
         }
       });
@@ -105,9 +122,14 @@ class TopupController extends GetxController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           // _payment(response.data!);
-          Get.toNamed(Routes.TOPUP_KOMOJU, arguments: response.data!)
-              ?.then((value) {
+          Get.toNamed(Routes.TOPUP_KOMOJU, arguments: {
+            CommonConstants.TOPUP_DATA: response.data!,
+            CommonConstants.TOPUP_ISORDER: _isOrder,
+          })?.then((value) {
             balance.value = AppDataGlobal.userInfo?.accountBalance ?? 0;
+            if (value) {
+              Get.back();
+            }
           });
         }
       });

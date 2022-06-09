@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ui_api/models/supplier/supplier_profile_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/booking_prepare_request.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../routes/app_pages.dart';
@@ -44,7 +45,10 @@ class SupplierDetailController extends BaseController {
   Future<void> onBooking() async {
     await Get.toNamed(Routes.SUPPLIER_BOOKING, arguments: bookingPrepare);
   }
-
+  Future<void> openLink(String url) async {
+    final _url = Uri.parse(url);
+    await launchUrl(_url);
+  }
   @override
   void onClose() {}
 }

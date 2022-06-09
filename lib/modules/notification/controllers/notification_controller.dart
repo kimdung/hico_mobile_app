@@ -84,7 +84,10 @@ class NotificationController extends BaseController {
             response.detail != null) {
           Get.toNamed(Routes.ORDER_DETAIL,
                   arguments: InvoiceRequest(id: invoiceId, rating: true))
-              ?.then((value) => loadData());
+              ?.then((value) {
+                mainController.countNotifyUnread();
+                loadData();
+              } );
         }
       });
     } else if (displayType == DisplayType.Order.id) {

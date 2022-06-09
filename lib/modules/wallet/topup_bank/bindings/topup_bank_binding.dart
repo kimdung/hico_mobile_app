@@ -6,7 +6,8 @@ class TopupBankBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<TopupBankController>(
-      () => TopupBankController(Get.arguments),
+      () => TopupBankController(),
     );
   }
+
 }

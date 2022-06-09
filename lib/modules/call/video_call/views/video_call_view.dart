@@ -100,6 +100,7 @@ class VideoCallView extends GetView<VideoCallController> {
           children: [
             FloatingActionButton(
               elevation: 4,
+              backgroundColor: AppColor.primaryBackgroundColorLight,
               onPressed: controller.onToggleMute,
               child: Icon(
                 controller.muteLocalAudio.value
