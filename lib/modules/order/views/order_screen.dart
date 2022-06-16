@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:ui_api/models/invoice/invoice_detail_model.dart';
 import 'package:ui_api/models/invoice/invoice_status.dart';
 
+import '../../../data/app_data_global.dart';
 import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
@@ -93,8 +95,13 @@ class OrderScreen extends GetView<OrderController> {
                     if (controller.invoice.value.status ==
                         InvoiceStatus.canceled.id)
                       buildCancelReason(),
+                    const SizedBox(height: 18),
+                    Container(color: AppColor.greyBackgroundColor, height: 6),
+                    const SizedBox(height: 18),
+                    if(controller.myReview != null && controller.myReview!.numberStar != null)
+                      buildReview(controller.myReview!),  
                     const SizedBox(height: 32),
-                    buildActionBtnBottom(controller.invoice.value.status),
+                    buildActionBtnBottom(controller.invoice.value.status),       
                     const SizedBox(height: 20),
                   ],
                 ),

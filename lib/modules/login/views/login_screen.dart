@@ -124,14 +124,14 @@ class LoginScreen extends GetView<LoginController> {
                                   horizontal: 83, vertical: 28),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   _buildSocialBtn(controller.loginFB,
                                       ImageConstants.facebook),
-                                  _buildSocialBtn(
-                                    controller.loginLine,
-                                    ImageConstants.line,
-                                  ),
+                                  // _buildSocialBtn(
+                                  //   controller.loginLine,
+                                  //   ImageConstants.line,
+                                  // ),
                                   _buildSocialBtn(controller.loginGG,
                                       ImageConstants.google),
                                 ],

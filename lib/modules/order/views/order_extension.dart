@@ -22,8 +22,10 @@ extension OrderExtension on OrderScreen {
         children: [
           Expanded(
             child: GeneralButton(
-                onPressed: controller.invoice.value.supplierStart != null && 
-                          controller.invoice.value.supplierStart!.isNotEmpty ? controller.onCall : null,
+                onPressed: controller.invoice.value.supplierStart != null &&
+                        controller.invoice.value.supplierStart!.isNotEmpty
+                    ? controller.onCall
+                    : null,
                 height: 47,
                 backgroundColor: AppColor.greenColorLight,
                 borderColor: AppColor.greenColorLight,
@@ -44,8 +46,10 @@ extension OrderExtension on OrderScreen {
           const SizedBox(width: 16),
           Expanded(
             child: GeneralButton(
-                onPressed: controller.invoice.value.supplierStart != null && 
-                          controller.invoice.value.supplierStart!.isNotEmpty ? controller.onVideo : null,
+                onPressed: controller.invoice.value.supplierStart != null &&
+                        controller.invoice.value.supplierStart!.isNotEmpty
+                    ? controller.onVideo
+                    : null,
                 height: 47,
                 backgroundColor: AppColor.blueColorLight,
                 borderColor: AppColor.blueColorLight,
@@ -267,59 +271,62 @@ extension OrderExtension on OrderScreen {
                                 color: Colors.black,
                               )),
                       Container(
-                        child: controller.invoice.value.workingForm == CommonConstants.online?        
-                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                                '${controller.invoice.value.service!.price} JPY/${'invoice.hours'.tr}',
-                                style:
-                                    TextAppStyle().genaralTextStyle().copyWith(
-                                          color: AppColor.blueTextColor,
-                                          fontWeight: FontWeight.w500,
-                                        )),
-                            Text(
-                                'x ${controller.invoice.value.hours} ${'invoice.hours'.tr}',
-                                style:
-                                    TextAppStyle().normalTextStype()),
-                          ],
-                        ): 
-                        Column(
-                          children:[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                    '${controller.invoice.value.service!.offlinePriceMin} JPY/ 0,5 - ${controller.invoice.value.service!.minHours} ${'invoice.hours'.tr}',
-                                    style:
-                                        TextAppStyle().genaralTextStyle().copyWith(
+                        child: controller.invoice.value.workingForm ==
+                                CommonConstants.online
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      '${controller.invoice.value.service!.price} JPY/${'invoice.hours'.tr}',
+                                      style: TextAppStyle()
+                                          .genaralTextStyle()
+                                          .copyWith(
+                                            color: AppColor.blueTextColor,
+                                            fontWeight: FontWeight.w500,
+                                          )),
+                                  Text(
+                                      'x ${controller.invoice.value.hours} ${'invoice.hours'.tr}',
+                                      style: TextAppStyle().normalTextStype()),
+                                ],
+                              )
+                            : Column(children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        '${controller.invoice.value.service!.offlinePriceMin} JPY/ 0,5 - ${controller.invoice.value.service!.minHours} ${'invoice.hours'.tr}',
+                                        style: TextAppStyle()
+                                            .genaralTextStyle()
+                                            .copyWith(
                                               color: AppColor.blueTextColor,
                                               fontWeight: FontWeight.w500,
                                             )),
-                                Text(
-                                    'x 1',
-                                    style:
-                                        TextAppStyle().normalTextStype()),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                    '${'invoice.incurred'.tr}: ${controller.invoice.value.service!.price} JPY/ 1${'invoice.hours'.tr}',
-                                    style:
-                                        TextAppStyle().genaralTextStyle().copyWith(
+                                    Text('x 1',
+                                        style:
+                                            TextAppStyle().normalTextStype()),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        '${'invoice.incurred'.tr}: ${controller.invoice.value.service!.price} JPY/ 1${'invoice.hours'.tr}',
+                                        style: TextAppStyle()
+                                            .genaralTextStyle()
+                                            .copyWith(
                                               color: AppColor.blueTextColor,
                                               fontWeight: FontWeight.w500,
                                             )),
-                                Text(
-                                    'x ${controller.invoice.value.service!.hours}',
-                                    style:
-                                        TextAppStyle().normalTextStype()),
-                              ],
-                            )
-                          ]
-                        ),
+                                    Text(
+                                        'x ${controller.invoice.value.service!.hours}',
+                                        style:
+                                            TextAppStyle().normalTextStype()),
+                                  ],
+                                )
+                              ]),
                       )
                     ],
                   ),
@@ -347,17 +354,13 @@ extension OrderExtension on OrderScreen {
         _buildOrderInfoItem(
             icon: IconConstants.icOrderCode,
             title:
-                ' ${(controller.invoice.value.workingForm == CommonConstants.offline && 
-                      controller.invoice.value.service != null &&
-                      controller.invoice.value.hours! > controller.invoice.value.service!.minHours!) 
-                      ? controller.invoice.value.service!.minHours :
-                       controller.invoice.value.hours
-                    } ${'invoice.hours'.tr}',
+                ' ${(controller.invoice.value.workingForm == CommonConstants.offline && controller.invoice.value.service != null && controller.invoice.value.hours! > controller.invoice.value.service!.minHours!) ? controller.invoice.value.service!.minHours : controller.invoice.value.hours} ${'invoice.hours'.tr}',
             titleColor: AppColor.blueTextColor,
             titleFontWeight: FontWeight.w500,
             type: OrderInfoViewType.Text,
             value: controller.invoice.value.workingTime ?? ''),
-          if(controller.invoice.value.workingForm == CommonConstants.offline && controller.invoice.value.service!.hours! > 0)
+        if (controller.invoice.value.workingForm == CommonConstants.offline &&
+            controller.invoice.value.service!.hours! > 0)
           _buildOrderInfoItem(
               icon: IconConstants.icOrderCode,
               title:
@@ -367,7 +370,7 @@ extension OrderExtension on OrderScreen {
               type: OrderInfoViewType.Text,
               value: controller.invoice.value.extraTime ?? ''),
       ]),
-    );   
+    );
   }
 
   Widget buildPaymentMethod() {
@@ -618,5 +621,77 @@ extension OrderExtension on OrderScreen {
         ],
       ),
     );
+  }
+
+  Widget buildReview(InvoiceReviewModel review) {
+    return Container(
+        padding: const EdgeInsets.symmetric(
+            horizontal: CommonConstants.paddingDefault),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Đánh giá của tôi',
+              style: TextAppStyle().largeTextStype().copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            Row(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(120)),
+                  child: NetWorkImage(
+                    image: controller.user.value.avatarImage ?? '',
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        controller.user.value.name ?? '',
+                        style: TextAppStyle().normalTextStype(),
+                      ),
+                      Row(
+                        children: [
+                          ...List.generate(
+                            review.numberStar ?? 0,
+                            (int index) => Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 2),
+                              child: FCoreImage(
+                                'lib/resource/assets_resources/icons/star_yellow.jpg',
+                                width: 16,
+                                height: 16,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  review.createdAt ?? '',
+                  style: TextAppStyle().normalTextGrey(),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Container(
+              child: Text(
+                review.content ?? '',
+                style: TextAppStyle().normalTextStype(),
+              ),
+            )
+          ],
+        ));
   }
 }

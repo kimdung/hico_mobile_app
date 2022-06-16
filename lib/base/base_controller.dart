@@ -17,7 +17,7 @@ class BaseController extends GetxController
 
   Sink<bool> get hasNetworkSink => _hasNetworkSubject.sink;
 
-  FirebaseMessageConfig firebaseMessageConfig = FirebaseMessageConfig();
+  // FirebaseMessageConfig firebaseMessageConfig = FirebaseMessageConfig();
   final CallMethods callMethods = CallMethods();
 
   @override
@@ -27,7 +27,10 @@ class BaseController extends GetxController
     // check network
     await checkConnectNetwork();
 
-    await firebaseMessageConfig.handleMessage();
+
+    // await firebaseMessageConfig.handleMessage(log: (p0) {
+    //   printInfo(info: p0);
+    // },);
   }
 
   Future<void> checkConnectNetwork() async {

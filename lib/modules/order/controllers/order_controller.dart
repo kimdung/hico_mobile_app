@@ -3,7 +3,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/call/call_model.dart';
+import 'package:ui_api/models/invoice/invoice_detail_model.dart';
 import 'package:ui_api/models/invoice/invoice_info_model.dart';
+import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/invoice_request.dart';
 import 'package:ui_api/request/invoice/rating_request.dart';
@@ -33,7 +35,8 @@ class OrderController extends BaseController {
   int id = 0;
   InvoiceRequest? request;
   final Rx<int> isCommennt = Rx(0);
-
+  InvoiceReviewModel? myReview;
+  Rx<UserInfoModel> user = Rx(UserInfoModel());
 
   @override
   Future<void> onInit() async {
@@ -52,6 +55,7 @@ class OrderController extends BaseController {
   Future<void> _loadData() async {
     try {
       await EasyLoading.show();
+      user.value = AppDataGlobal.userInfo!;
       await _uiRepository.invoiceDetail(id).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
@@ -59,6 +63,9 @@ class OrderController extends BaseController {
             response.data!.detail != null) {
           invoice.value = response.data!.detail!;
           isCommennt.value = response.data!.isComment??0;
+          if(response.data!.dataReview != null && response.data!.dataReview!.content!.isNotEmpty){
+            myReview = response.data!.dataReview;
+          }
 
           if (request!.extend != null && request!.extend!) {
             showDialogNotification();

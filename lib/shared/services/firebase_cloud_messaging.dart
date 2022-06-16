@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -134,7 +135,7 @@ class FirebaseMessageConfig {
     }
   }
 
-  Future<void> handleMessage() async {
+  Future<void> handleMessage({required Function(String) log}) async {
     try {
       /// Lấy tất cả thông báo khiến ứng dụng mở từ terminated state
       /// Một khi lấy ra thông báo để điều hướng, nó sẽ bị remove
@@ -162,6 +163,7 @@ class FirebaseMessageConfig {
       /// Tương tác với thông báo khi ứng dụng đang ở background và khi đang khóa màn hình
       FirebaseMessaging.onMessageOpenedApp.listen(
         (RemoteMessage message) {
+          log('ONTAP onMessageOpenedApp: ${message.data.toString()}');
           debugPrint('ONTAP onMessageOpenedApp: ${message.data.toString()}');
 
           /// ['id']: Key json chứa ID của thông báo server trả về.
@@ -174,6 +176,10 @@ class FirebaseMessageConfig {
             //     message?.data['id']?.toString(),
             //   ),
             // );
+            if (AppDataGlobal.userInfo == null) {
+              return;
+            }
+            
             //FCM Firebase
             final type = message.data['display_type']?.toString();
             final id = message.data['invoice_id']?.toString();
