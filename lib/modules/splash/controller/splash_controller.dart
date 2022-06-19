@@ -21,7 +21,7 @@ class SplashController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     await config.initFirebaseMessageConfig();
-    await config.handleMessage(log: (p0) {});
+    await config.handleMessage();
 
     await loadInitSplashScreen();
   }

@@ -29,8 +29,6 @@
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
         
-        
-
         <activity
             android:name="com.wap.hico.MainActivity"
             android:exported="true"
@@ -69,6 +67,11 @@
                 <data
                     android:scheme="https"
                     android:host="blueboltsoftware.com" />
+            </intent-filter>
+
+             <intent-filter>
+                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
      
         </activity>
