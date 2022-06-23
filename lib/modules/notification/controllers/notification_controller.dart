@@ -40,6 +40,7 @@ class NotificationController extends BaseController {
   Future<void> loadData() async {
     try {
       await EasyLoading.show();
+      await mainController.countNotifyUnread();
       offset = 0;
       await _uiRepository.notificationList(limit, offset).then((response) {
         EasyLoading.dismiss();
@@ -85,9 +86,8 @@ class NotificationController extends BaseController {
           Get.toNamed(Routes.ORDER_DETAIL,
                   arguments: InvoiceRequest(id: invoiceId, rating: true))
               ?.then((value) {
-                mainController.countNotifyUnread();
-                loadData();
-              } );
+            loadData();
+          });
         }
       });
     } else if (displayType == DisplayType.Order.id) {

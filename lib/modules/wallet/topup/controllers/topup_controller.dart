@@ -56,19 +56,19 @@ class TopupController extends GetxController {
       case 0:
         await _topupBank(amount);
         break;
+      // case 1:
+      //   await _topupKomaju(amount, 1);
+      //   break;
+      // case 2:
+      //   await _topupKomaju(amount, 2);
+      //   break;
       case 1:
-        await _topupKomaju(amount, 1);
-        break;
-      case 2:
-        await _topupKomaju(amount, 2);
-        break;
-      case 3:
         await Get.toNamed(Routes.TOPUP_STRIPE, arguments: {
           CommonConstants.TOPUP_DATA: amount,
           CommonConstants.TOPUP_ISORDER: _isOrder,
         })?.then((value) {
           balance.value = AppDataGlobal.userInfo?.accountBalance ?? 0;
-          if (value) {
+          if (value != null && value) {
             Get.back();
           }
         });
