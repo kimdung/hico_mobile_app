@@ -55,9 +55,12 @@ class RegisterOtpScreen extends GetView<RegisterController> {
                     'register.comfirm'.tr,
                     style: TextAppStyle().largeTextPink(),
                   ),
-                  Text(
-                    'register.comfirm_email'.tr,
-                    style: TextAppStyle().normalTextGrey(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      'register.comfirm_email'.tr,
+                      style: TextAppStyle().normalTextGrey(),
+                    ),
                   ),
                   Text(
                     controller.emailHidden.value,

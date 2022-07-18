@@ -264,6 +264,12 @@ abstract class HicoUIAPI {
     @Query('reason') String reason,
   );
 
+  //invoice cancel
+  @POST('/v1/customer/invoice/cancelInvoice')
+  Future<BaseResponse> invoiceCancelInvoice(
+    @Query('invoice_id') int id,
+  );
+
   //invoice rating
   @POST('/v1/customer/review/send')
   Future<BaseResponse> invoiceRating(
@@ -294,6 +300,12 @@ abstract class HicoUIAPI {
   Future<CheckVoucherResponse> voucherCheck(
     @Query('voucher_id') int id,
     @Query('total') double total,
+  );
+
+  //voucher
+  @POST('/v1/voucher/addVoucher')
+  Future<VoucherResponse> voucherAdd(
+    @Query('voucher_code') String code,
   );
 
   //get address
@@ -406,4 +418,8 @@ abstract class HicoUIAPI {
   //post extend
   @POST('/v1/customer/invoice/extendPeriod')
   Future<BaseResponse> extendInvoice(@Body() ExtendPeriodRequest request);
+
+  //delete user
+  @POST('/v1/user/deleteUser')
+  Future<BaseResponse> deleteUser();
 }

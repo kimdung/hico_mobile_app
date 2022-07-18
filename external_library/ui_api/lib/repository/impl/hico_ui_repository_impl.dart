@@ -274,6 +274,11 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     return _api.invoiceCancel(id, reason);
   }
 
+ @override
+  Future<BaseResponse> invoiceCancelInvoice(int id) {
+    return _api.invoiceCancelInvoice(id);
+  }
+
   //invoice detail:cancel
   @override
   Future<BookingResponse> invoiceBooking(BookingRequest request) {
@@ -290,6 +295,12 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   @override
   Future<CheckVoucherResponse> voucherCheck(int id, double total) {
     return _api.voucherCheck(id, total);
+  }
+
+  //voucher list
+  @override
+  Future<VoucherResponse> voucherAdd(String code) {
+    return _api.voucherAdd(code);
   }
 
   //address list
@@ -412,6 +423,7 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     return _api.invoiceCancelRating(id);
   }
 
+
   @override
   Future<BaseResponse> beginCall(int invoiceId) {
     return _api.beginCall(invoiceId);
@@ -425,5 +437,9 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   @override
   Future<BaseResponse> sendCallNotification(int invoiceId) {
     return _api.sendCallNotification(invoiceId);
+  }
+  @override
+  Future<BaseResponse> deleteUser() {
+    return _api.deleteUser();
   }
 }

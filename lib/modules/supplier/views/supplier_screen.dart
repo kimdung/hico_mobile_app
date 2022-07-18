@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hico/resource/assets_constant/images_constants.dart';
 
 import '../../../resource/assets_constant/icon_constants.dart';
+import '../../../resource/assets_constant/images_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/styles/text_style/text_style.dart';
@@ -31,7 +31,7 @@ class SupplierScreen extends GetView<SupplierController> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            'supplier.title'.tr,
+            '${'supplier.title'.tr}: ${controller.bookingPrepare.service?.name ??''}' ,
             style: TextAppStyle().titleAppBarStyle(),
           ),
           elevation: 4,

@@ -63,8 +63,9 @@ class SupplierDetailScreen extends GetView<SupplierDetailController> {
                           icon:
                               'lib/resource/assets_resources/images/diploma.png',
                           title: 'supplier.detail.interpretation_experience'.tr,
-                          description:
-                              interpretationExperiences[controller.profile.value.interExp!].content,
+                          description: interpretationExperiences[
+                                  controller.profile.value.interExp!]
+                              .content,
                           description2: controller.profile.value.interExpDetail,
                         )
                       : const SizedBox(),
@@ -75,8 +76,9 @@ class SupplierDetailScreen extends GetView<SupplierDetailController> {
                           icon:
                               'lib/resource/assets_resources/images/diploma.png',
                           title: 'supplier.detail.translation_experience'.tr,
-                          description:
-                              translatationExperiences[controller.profile.value.transExp!].content,
+                          description: translatationExperiences[
+                                  controller.profile.value.transExp!]
+                              .content,
                           description2: controller.profile.value.transExpDetail,
                         )
                       : const SizedBox(),
@@ -86,6 +88,11 @@ class SupplierDetailScreen extends GetView<SupplierDetailController> {
                         'lib/resource/assets_resources/images/certificate.png',
                     title: 'supplier.detail.degree'.tr,
                     list: controller.profile.value.files,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    controller.profile.value.experience.toString(),
+                    style: TextAppStyle().normalTextGrey(),
                   ),
                   const SizedBox(height: 38),
                   GeneralButton(

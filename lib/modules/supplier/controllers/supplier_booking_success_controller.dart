@@ -1,10 +1,10 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:hico/routes/app_pages.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
+import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 
 class SupplierBookingSuccessController extends BaseController {
@@ -30,6 +30,6 @@ class SupplierBookingSuccessController extends BaseController {
           return;
         }
       });
-    await Get.offAllNamed(Routes.MAIN);
+    await Get.offAllNamed(Routes.MAIN, arguments: 1);
   }
 }

@@ -39,7 +39,9 @@ class NewsListScreen extends GetView<NewsListController> {
           shadowColor: AppColor.appbarColorLight.withOpacity(0.8),
         ),
         body: Obx(() => Container(
-              child: ListView.builder(
+              child:controller.newsList.isEmpty
+                ? Center(child: Text('news.empty'.tr, style: TextAppStyle().normalTextGrey(),),)
+                :  ListView.builder(
                   controller: controller.scrollController,
                   itemCount: controller.newsList.length,
                   shrinkWrap: true,

@@ -108,6 +108,7 @@ dependencies:
   keyboard_dismisser: ^2.0.1
   flutter_stripe: ^2.5.0
   webview_flutter: ^3.0.2
+  easy_rich_text: ^1.1.0
 
 dev_dependencies:
   flutter_test:

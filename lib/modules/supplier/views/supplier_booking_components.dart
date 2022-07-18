@@ -378,6 +378,10 @@ extension SupplierBookingComponents on SupplierBookingScreen {
               titleFontWeight: FontWeight.w500,
               type: OrderInfoViewType.Text,
               value: ''),
+          Text(
+            'time.note'.tr,
+            style: TextAppStyle().normalTextGrey())
+
       ]),
     );
   }
@@ -391,11 +395,13 @@ extension SupplierBookingComponents on SupplierBookingScreen {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-                child: _buildTitleSection(
+              flex:2,
+              child: _buildTitleSection(
               title: 'booking.voucher'.tr,
               icon: IconConstants.ticket,
             )),
             Expanded(
+              flex:3,
               child: InkWell(
                 onTap: () {
                   controller.loadVoucher();

@@ -1,7 +1,7 @@
-part of 'voucher_screen.dart';
+part of 'my_voucher_screen.dart';
 
-extension VoucherComponent on VoucherScreen {
-  Widget buidItem({required VoucherModel item}) {
+extension MyVoucherComponent on MyVoucherScreen {
+  Widget buidItem({required VoucherModel item,required BuildContext context,}) {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       child: InkWell(
@@ -69,7 +69,7 @@ extension VoucherComponent on VoucherScreen {
                                 ),
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: (){controller.getDetail(context, item);},
                                 child: FCoreImage(
                                   IconConstants.icInfo,
                                   width: 18,

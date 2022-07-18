@@ -19,13 +19,24 @@ class TopupHistoryView extends GetView<TopupHistoryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() {
-        return ListView.builder(
-          padding: const EdgeInsets.only(top: 20),
-          controller: controller.scrollController,
-          itemCount: controller.topupHistories.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) =>
-              _buildTopupHistoryCell(controller.topupHistories[index]),
+        return Container(
+          child: controller.topupHistories.isEmpty
+              ? Container(
+                  child: Center(
+                    child: Text(
+                      'topup.empty'.tr,
+                      style: TextAppStyle().normalTextGrey(),
+                    ),
+                  ),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.only(top: 20),
+                  controller: controller.scrollController,
+                  itemCount: controller.topupHistories.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) =>
+                      _buildTopupHistoryCell(controller.topupHistories[index]),
+                ),
         );
       }),
     );

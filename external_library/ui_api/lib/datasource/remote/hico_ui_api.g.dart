@@ -682,6 +682,22 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
+  Future<BaseResponse> invoiceCancelInvoice(id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'invoice_id': id};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/customer/invoice/cancelInvoice',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<BaseResponse> invoiceRating(ratingRequest) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -766,6 +782,22 @@ class _HicoUIAPI implements HicoUIAPI {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = CheckVoucherResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<VoucherResponse> voucherAdd(code) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'voucher_code': code};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<VoucherResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/voucher/addVoucher',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = VoucherResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -1127,6 +1159,22 @@ class _HicoUIAPI implements HicoUIAPI {
         _setStreamType<BaseResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/v1/customer/invoice/extendPeriod',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<BaseResponse> deleteUser() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/user/deleteUser',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BaseResponse.fromJson(_result.data!);

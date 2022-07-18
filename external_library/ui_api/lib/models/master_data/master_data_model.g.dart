@@ -8,9 +8,22 @@ part of 'master_data_model.dart';
 
 MasterDataModel _$MasterDataModelFromJson(Map<String, dynamic> json) =>
     MasterDataModel(
-      customerAllowedHours: json['customer_allowed_hours'] as int?,
+      customerAllowedHours: json['customer_allowed_hours'] as int? ?? 0,
+      customerAllowedHoursOffline:
+          json['customer_allowed_hours_offline'] as int? ?? 0,
+      customerAllowedHoursOnline:
+          json['customer_allowed_hours_online'] as int? ?? 0,
+      hotline: json['hotline'] as String?,
+      linkMessenger: json['link_messenger'] as String? ?? '',
+      paymentPolicy: json['payment_policy'] as String? ?? '',
       privacyPolicy: json['privacy_policy'] as String? ?? '',
-      supplierAllowedHours: json['supplier_allowed_hours'] as int?,
+      shippingFeeMin: json['shipping_fee_min'] as String? ?? '',
+      supplierAllowedHours: json['supplier_allowed_hours'] as int? ?? 0,
+      supplierAllowedHoursOffline:
+          json['supplier_allowed_hours_offline'] as int? ?? 0,
+      supplierAllowedHoursOnline:
+          json['supplier_allowed_hours_online'] as int? ?? 0,
+      supportEmail: json['support_email'] as String? ?? '',
       termsOfUse: json['terms_of_use'] as String? ?? '',
       levels: (json['levels'] as List<dynamic>?)
           ?.map((e) => LevelModel.fromJson(e as Map<String, dynamic>))
@@ -21,21 +34,28 @@ MasterDataModel _$MasterDataModelFromJson(Map<String, dynamic> json) =>
       provinces: (json['provinces'] as List<dynamic>?)
           ?.map((e) => ProvincesModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-    )
-      ..paymentPolicy = json['payment_policy'] as String? ?? ''
-      ..supportEmail = json['support_email'] as String? ?? '';
+      loginSocial: json['login_social'] as int? ?? 0,
+    );
 
 Map<String, dynamic> _$MasterDataModelToJson(MasterDataModel instance) =>
     <String, dynamic>{
       'customer_allowed_hours': instance.customerAllowedHours,
+      'customer_allowed_hours_offline': instance.customerAllowedHoursOffline,
+      'customer_allowed_hours_online': instance.customerAllowedHoursOnline,
+      'hotline': instance.hotline,
+      'link_messenger': instance.linkMessenger,
       'payment_policy': instance.paymentPolicy,
       'privacy_policy': instance.privacyPolicy,
+      'shipping_fee_min': instance.shippingFeeMin,
       'supplier_allowed_hours': instance.supplierAllowedHours,
-      'terms_of_use': instance.termsOfUse,
+      'supplier_allowed_hours_offline': instance.supplierAllowedHoursOffline,
+      'supplier_allowed_hours_online': instance.supplierAllowedHoursOnline,
       'support_email': instance.supportEmail,
+      'terms_of_use': instance.termsOfUse,
       'levels': instance.levels,
       'banks': instance.banks,
       'provinces': instance.provinces,
+      'login_social': instance.loginSocial,
     };
 
 LevelModel _$LevelModelFromJson(Map<String, dynamic> json) => LevelModel(

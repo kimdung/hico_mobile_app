@@ -12,9 +12,10 @@ import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
+import '../../../shared/widget_hico/dialog/voucher_widget.dart';
+import '../../../shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 
-class VoucherController extends BaseController {
-  // ignore: type_annotate_public_apis
+class MyVoucherController extends BaseController {
   var scrollController = ScrollController();
   final _uiRepository = Get.find<HicoUIRepository>();
   RxList<VoucherModel> voucherList = RxList<VoucherModel>();
@@ -28,8 +29,7 @@ class VoucherController extends BaseController {
   final TextEditingController code = TextEditingController();
 
 
-  VoucherController() {
-    total = Get.arguments;
+  MyVoucherController() {
     loadData();
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
@@ -90,37 +90,6 @@ class VoucherController extends BaseController {
     }
   }
 
-  Future<void> approve() async {
-    try {
-      await EasyLoading.show();
-      await _uiRepository.voucherCheck(voucherId.value, total).then((response) {
-        EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.data != null) {
-          voucher.voucherId = voucherId.value;
-          voucher.discount = response.data!.discount!;
-          Get.back(result: voucher);
-        } else {
-          DialogUtil.showPopup(
-            dialogSize: DialogSize.Popup,
-            barrierDismissible: false,
-            backgroundColor: Colors.transparent,
-            child: NormalWidget(
-              icon: response.status == CommonConstants.statusOk
-                  ? IconConstants.icUserTag
-                  : IconConstants.icFail,
-              title: response.message,
-            ),
-            onVaLue: (value) {},
-          );
-          return;
-        }
-      });
-    } catch (e) {
-      await EasyLoading.dismiss();
-    }
-  }
-
   Future<void> addVoucher() async {
     try {
       if(code.text.isNotEmpty){
@@ -160,6 +129,22 @@ class VoucherController extends BaseController {
 
   void changeText(String value){
     enableButton.value = value.isNotEmpty ? true: false;
+  }
+
+  Future<void> getDetail(BuildContext context, VoucherModel item) async {
+    print('123');
+    await ShowBottomSheet().showBottomSheet(
+      child: Container(
+        height: Get.height / 1.8,
+        child: VoucherDialogWidget(item: item,),
+      ),
+      context: context,
+      onValue: (_value) {
+        if (_value != null && _value is double) {
+          
+        }
+      },
+    );
   }
   @override
   void onClose() {}

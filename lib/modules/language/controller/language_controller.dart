@@ -35,6 +35,26 @@ class LanguageController extends GetxController {
     super.onReady();
   }
 
+  Future<void> selectLanguage() async {
+    switch (currentLanguage.value) {
+      case LanguageCode.VN:
+        AppDataGlobal.languageCode = VIETNAMESE_LANG;
+        break;
+      case LanguageCode.EN:
+        AppDataGlobal.languageCode = ENGLISH_LANG;
+        break;
+      case LanguageCode.JA:
+        AppDataGlobal.languageCode = JAPANESE_LANG;
+        break;
+    }
+
+    TranslationService.changeLocale(currentLanguage.value.languageLocale);
+
+    await storage.setString(
+        StorageConstants.language, AppDataGlobal.languageCode);
+
+  }
+
   Future<void> confirmLanguage() async {
     switch (currentLanguage.value) {
       case LanguageCode.VN:

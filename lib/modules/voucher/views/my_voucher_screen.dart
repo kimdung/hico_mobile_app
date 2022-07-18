@@ -13,11 +13,12 @@ import '../../../shared/widget_hico/button/general_button.dart';
 import '../../../shared/widget_hico/image_widget/network_image.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
 import '../../call/pickup/picker_layout.dart';
+import '../controllers/my_voucher_controller.dart';
 import '../controllers/voucher_controller.dart';
 
-part 'voucher_components.dart';
+part 'my_voucher_components.dart';
 
-class VoucherScreen extends GetView<VoucherController> {
+class MyVoucherScreen extends GetView<MyVoucherController> {
   @override
   @override
   Widget build(BuildContext context) {
@@ -111,23 +112,10 @@ class VoucherScreen extends GetView<VoucherController> {
                         ...List.generate(
                             controller.voucherList.length,
                             (int index) =>
-                                buidItem(item: controller.voucherList[index])),
+                                buidItem(item: controller.voucherList[index], context: context,),),
                       ],
                     ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 14),
-              GeneralButton(
-                onPressed: () {
-                  controller.approve();
-                },
-                borderColor: AppColor.primaryColorLight,
-                backgroundColor: AppColor.primaryColorLight,
-                borderRadius: BorderRadius.circular(24),
-                child: Text(
-                  'voucher.apply'.tr,
-                  style: TextAppStyle().titleButtonStyle(),
                 ),
               ),
               const SizedBox(height: 14),

@@ -243,13 +243,14 @@ class ProfileController extends BaseController {
   }
 
   Future<void> showDate(BuildContext context) async {
-    await DatePicker.showDatePicker(
+    await DatePicker.showDatePicker( 
       context,
       showTitleActions: true,
       onConfirm: (date) {
         birthDay.value = DateFormatter.formatDate(date);
       },
       currentTime: DateTime.now(),
+       minTime: DateTime(1950, 1, 1),
     );
   }
 

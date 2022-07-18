@@ -12,7 +12,6 @@ import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
-import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
@@ -151,8 +150,9 @@ class SupplierBookingController extends BaseController {
     try {
       await EasyLoading.show();
       if (bookingRequest.value.workingForm == CommonConstants.offline) {
-        bookingRequest.value.address = address.text;
+        bookingRequest.value.address = addressDetail.text;
         bookingRequest.value.nearestStation = station.text;
+        bookingRequest.value.hospitalName = address.text;
       }
 
       if (info.value.accountBalance! < totalPay.value) {

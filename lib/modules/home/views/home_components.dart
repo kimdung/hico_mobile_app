@@ -287,7 +287,7 @@ extension HomeComponents on HomeScreen {
                   ),
             ),
             Text(
-              '$price JPY/${'invoice.hours'.tr}',
+              '$price JPY/30 ${'invoice.minutes'.tr}',
               style: TextAppStyle()
                   .secondTextStyle()
                   .copyWith(color: AppColor.blueTextColor),

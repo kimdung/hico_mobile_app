@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hico/shared/decoration/text_field_decoration.dart';
 
-import '../../../data/app_data_global.dart';
-import '../../call/pickup/picker_layout.dart';
 import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
+import '../../../shared/decoration/text_field_decoration.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
 import '../../../shared/widget_hico/image_widget/network_image.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
+import '../../call/pickup/picker_layout.dart';
 import '../../order/controllers/order_controller.dart';
 import '../controllers/supplier_booking_controller.dart';
 
@@ -112,7 +111,6 @@ class SupplierBookingScreen extends GetView<SupplierBookingController> {
                                     const SizedBox(height: 16),
                                     _buildInputTemplate(
                                         textEditng: controller.addressDetail,
-                                        focusNode: AlwaysDisabledFocusNode(),
                                         title: 'profile.update.address'.tr),
                                     const SizedBox(height: 16),
                                     _buildInputTemplate(

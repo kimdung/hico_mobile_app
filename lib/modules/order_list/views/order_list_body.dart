@@ -202,6 +202,72 @@ extension OrderListBody on OrderListScreen {
     );
   }
 
+  Widget _buildStatus() {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.only(bottom: 10),
+      child: SizedBox(
+        height: 35,
+        width: Get.width,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: controller.invoiceStatus.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: ()=>controller.selectStatus(controller.invoiceStatus[index]),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: controller.invoiceStatus[index] ==
+                                controller.currentStatus.value
+                            ? AppColor.primaryColorLight
+                            : AppColor.borderPinkColorLight,
+                        width: controller.invoiceStatus[index] ==
+                                controller.currentStatus.value
+                            ? 2
+                            : 1,
+                      ),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        decoration: BoxDecoration(
+                          border: index == (controller.invoiceStatus.length -1) ? null : const Border(
+                            right: BorderSide(
+                              color: Color(0xFFDCDCDC),
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                        child: Text(
+                          controller.invoiceStatus[index].name.tr,
+                          textAlign: TextAlign.center,
+                          style: TextAppStyle().normalTextGrey().copyWith(
+                                color: controller.invoiceStatus[index] ==
+                                        controller.currentStatus.value
+                                    ? Colors.black
+                                    : const Color(0xFF4E4E4E),
+                                fontWeight: controller.invoiceStatus[index] ==
+                                        controller.currentStatus.value
+                                    ? FontWeight.bold
+                                    : FontWeight.w500,
+                              ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                    ],
+                  ),
+                ),
+              );
+            }),
+      ),
+    );
+  }
+
   Widget _buildListOrder() {
     return ListView.separated(
       shrinkWrap: true,

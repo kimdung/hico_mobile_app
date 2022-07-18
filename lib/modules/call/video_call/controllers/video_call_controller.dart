@@ -13,7 +13,7 @@ import '../../../../base/base_controller.dart';
 import '../../../../data/app_data_global.dart';
 
 class VideoCallController extends BaseController {
-  final appId = 'fae0cb7e3f5c4c688ca32056eaa146b4';
+  final appId = '898c8e034c484b02af88ef21f2056005';
 
   final _uiRepository = Get.find<HicoUIRepository>();
 

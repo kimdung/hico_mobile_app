@@ -176,6 +176,11 @@ abstract class HicoUIRepository {
     String reason,
   );
 
+   //invoice detail: cancel
+  Future<BaseResponse> invoiceCancelInvoice(
+    int id,
+  );
+
   //invoice booking
   Future<BookingResponse> invoiceBooking(BookingRequest request);
 
@@ -184,6 +189,9 @@ abstract class HicoUIRepository {
 
   //voucher check
   Future<CheckVoucherResponse> voucherCheck(int id, double total);
+
+  //voucher add
+  Future<VoucherResponse> voucherAdd(String code);
 
   //address list
   Future<AddressResponse> addressList(int limit, int offset, String code);
@@ -250,4 +258,5 @@ abstract class HicoUIRepository {
   Future<BaseResponse> invoiceRating(RatingRequest request);
 
   Future<BaseResponse> invoiceCancelRating(int id); 
+  Future<BaseResponse> deleteUser();
 }

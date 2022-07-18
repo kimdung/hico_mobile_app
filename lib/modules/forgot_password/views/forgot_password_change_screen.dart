@@ -38,61 +38,66 @@ class ForgotPasswordChangeScreen extends GetView<ForgotPasswordController> {
         backgroundColor: Colors.white,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40),
-                child: Center(
-                    child: Image.asset(ImageConstants.forgotPasswordChange)),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 92),
-                child: Text(
-                  'forgot_password.new_description'.tr,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: AppColor.thirdTextColorLight,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400),
+        child: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 40),
+                  child: Center(
+                      child: Image.asset(ImageConstants.forgotPasswordChange)),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 21),
-                child: Form(
-                  key: controller.forgetChangeGlobalKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 40),
-                        child: _buildPassword(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: _buildConfirmPassword(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 94),
-                        child: GeneralButton(
-                          onPressed: () => controller.onChange(),
-                          borderRadius: BorderRadius.circular(24),
-                          backgroundColor: AppColor.primaryColorLight,
-                          borderColor: AppColor.primaryColorLight,
-                          child: Text(
-                            'forgot_password.recovery'.tr,
-                            style: TextStyle(
-                                color: AppColor.secondTextColorLight,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 92),
+                  child: Text(
+                    'forgot_password.new_description'.tr,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: AppColor.thirdTextColorLight,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 21),
+                  child: Form(
+                    key: controller.forgetChangeGlobalKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 40),
+                          child: _buildPassword(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: _buildConfirmPassword(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 94),
+                          child: GeneralButton(
+                            onPressed: () => controller.onChange(),
+                            borderRadius: BorderRadius.circular(24),
+                            backgroundColor: AppColor.primaryColorLight,
+                            borderColor: AppColor.primaryColorLight,
+                            child: Text(
+                              'forgot_password.recovery'.tr,
+                              style: TextStyle(
+                                  color: AppColor.secondTextColorLight,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

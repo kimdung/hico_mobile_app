@@ -27,6 +27,8 @@ class SupplierInfoModel {
   int? levelId;
   @JsonKey(name: 'is_online')
   int? isOnline;
+  @JsonKey(name: 'nearest_station')
+  String? nearestStation;
 
   SupplierInfoModel(
       {this.id,
@@ -42,6 +44,7 @@ class SupplierInfoModel {
       this.levelName,
       this.levelId,
       this.isOnline,
+      this.nearestStation,
       });
 
   factory SupplierInfoModel.fromJson(Map<String, dynamic> json) =>

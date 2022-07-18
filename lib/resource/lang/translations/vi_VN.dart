@@ -8,8 +8,8 @@ const Map<String, String> vi_VN = {
   'not_account': 'Bạn chưa có tài khoản?',
   'password': 'Mật khẩu',
   'confirm_password': 'Nhập lại mật khẩu',
-  'register_notif': 'Bằng cách đăng ký, bạn đồng ý với',
-  'term_and_conditions': 'Điều khoản & Điều kiện',
+  'register_notif': 'Bằng cách đăng ký, bạn đồng ý với\nĐiều khoản sử dụng và Chính sách bảo mật',
+  'term_and_conditions': 'Điều khoản sử dụng',
   'and': 'và',
   'privacy_policy': 'Chính sách bảo mật',
   'success': 'Thành công',
@@ -29,6 +29,7 @@ const Map<String, String> vi_VN = {
   'comment': 'Ghi chú',
   'camera': 'Hình ảnh',
   'year': 'năm',
+  'accept': 'Chấp nhận',
 
   //onboard
   'onboard.title1': 'Welcome to Hico',
@@ -90,6 +91,7 @@ const Map<String, String> vi_VN = {
   //news
   'news.title': 'Tin tức',
   'news.detail_title': 'Chi tiết tin tức',
+  'news.empty': 'Chưa có tin tức cho ngôn ngữ này',
 
   //notification
   'notification.title': 'Thông báo',
@@ -158,7 +160,7 @@ const Map<String, String> vi_VN = {
   'profile': 'Thông tin cá nhân',
   'services': 'Dịch vụ đang cung cấp',
   'statistic': 'Thống kê',
-  'setting': 'Cài đặt',
+  'setting': 'Ngôn ngữ',
   'topup': 'Nạp tiền',
   'change_password': 'Đổi mật khẩu',
   'contact': 'Liên hệ',
@@ -171,7 +173,10 @@ const Map<String, String> vi_VN = {
   'branch': 'Chi nhánh:',
   'account_holder': 'Chủ tải khoản:',
   'account_number': 'Số tải khoản:',
-
+  'account.required_delete': 'Yêu cầu huỷ tài khoản',
+  'account.description_delete': 'Chúng tôi rất lấy làm tiếc khi bạn muốn rời Hico, nhưng xin lưu ý các tài khoản đã bị xoá sẽ không được mở trở lại.',
+  'account.delete': 'Xoá tài khoản',
+ 
   // topup
   'topup.title': 'Thông tin nạp tiền',
   'topup.history': 'Lịch sử nạp tiền',
@@ -224,6 +229,7 @@ const Map<String, String> vi_VN = {
 
   'topup.error': 'Có lỗi xẩy ra trong quá trình nạp tiền!',
   'topup.failure': 'Nạp tiền thất bại!',
+  'topup.empty': 'Chưa có phiên giao dịch',
 
   //statistic screen
   'statistic.order_finish': 'Danh sách đơn hàng',
@@ -333,6 +339,8 @@ const Map<String, String> vi_VN = {
   'supplier.filter.choose_time': 'Chọn thời gian',
   'supplier.filter.choose_date': 'Thời gian sử dụng dịch vụ',
   'supplier.filter.location_required': 'Vui lòng chọn địa điểm',
+  'supplier.filter.move_fee': 'Chi phí chưa bao gồm tiền đi lại',
+
   //supplier
   'supplier.title': 'Tìm kiếm Phiên dịch viên',
   'supplier.filter': 'Bộ lọc',
@@ -354,7 +362,7 @@ const Map<String, String> vi_VN = {
   'invoice.hours': 'Giờ',
   'invoice.minutes': 'Phút',
   'invoice.all': 'Tất cả',
-  'invoice.requested': 'Đã yêu cầu',
+  'invoice.requested': 'Đang yêu cầu',
   'invoice.accepted': 'PDV đồng ý',
   'invoice.successed': 'Hoàn thành',
   'invoice.canceled': 'Đã huỷ',
@@ -366,6 +374,7 @@ const Map<String, String> vi_VN = {
   'invoice.detail.hint_cancel': 'Ghi lý do hủy đơn của bạn',
   'invoice.detail.hint_rating': 'Viết đánh giá của bạn...',
   'invoice.detail.error_rating': 'Vui lòng nhập đánh giá.',
+  'invoice.detail.cancel': 'Huỷ đơn hàng',
 
   //booking
   'booking.title': 'Chi tiết đặt lịch',
@@ -423,4 +432,13 @@ const Map<String, String> vi_VN = {
   'booking.detail.serivce_infor': 'Thông tin dịch vụ',
   'booking.detail.time_work': 'Thời gian làm việc',
   'booking.detail.payment_method': 'Phương thức thanh toán',
+
+  'voucher.code': 'Mã',
+  'voucher.promotion': 'Ưu đãi',
+  'voucher.expired': 'Hiệu lực',
+  'voucher.condition': 'Điều kiện',
+  'voucher.skip': 'Bỏ qua',
+  'voucher.apply': 'Áp dụng',
+  'voucher.hint': 'Nhập mã khuyến mãi',
+  'time.note' :'※Thời gian trong ứng dụng được tính theo múi giờ Nhật Bản (GMT+9)',
 };

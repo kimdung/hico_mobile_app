@@ -47,6 +47,7 @@ abstract class Routes {
   static const SUPPLIER_BOOKING = '/supplier_booking';
   static const SUPPLIER_BOOKING_SUCCESS = '/supplier_booking_success';
   static const VOUCHER = '/vouchers';
+  static const MY_VOUCHER = '/my_vouchers';
   static const PAYMENT_METHOD = '/payment_method';
 
   static const CONSULTING = '/consulting';

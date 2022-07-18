@@ -31,6 +31,7 @@ class MainController extends BaseController {
   late NotificationController notificationController;
   final newsController = NewsController();
   final accountController = AccountController();
+  int? tab;
 
   MainController() {
     homeController = HomeController(channel);
@@ -45,6 +46,9 @@ class MainController extends BaseController {
     ];
     homeController.loadData();
     countNotifyUnread();
+    if(tab != null){
+      changeIndex(1);
+    }
   }
 
   @override

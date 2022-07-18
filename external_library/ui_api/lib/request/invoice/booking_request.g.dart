@@ -18,6 +18,7 @@ BookingRequest _$BookingRequestFromJson(Map<String, dynamic> json) =>
       addressId: json['address_id'] as int?,
       address: json['address'] as String?,
       nearestStation: json['nearest_station'] as String?,
+      hospitalName: json['hospital_name'] as String?,
     );
 
 Map<String, dynamic> _$BookingRequestToJson(BookingRequest instance) =>
@@ -32,4 +33,5 @@ Map<String, dynamic> _$BookingRequestToJson(BookingRequest instance) =>
       'address_id': instance.addressId,
       'address': instance.address,
       'nearest_station': instance.nearestStation,
+      'hospital_name': instance.hospitalName,
     };

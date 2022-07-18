@@ -58,14 +58,14 @@ class HomeScreen extends GetView<HomeController> {
                         const SizedBox(height: 24),
                         if (controller.homeModel.value.bannerHome != null &&
                             controller.homeModel.value.bannerHome != '')
-                          buildBannerHome(),
-                        const SizedBox(height: 24),
-                        buildNewsList(),
+                          buildBannerHome(), 
                         const SizedBox(height: 24),
                         buildServiceList(
                             title: 'home.viewed_service'.tr,
                             onPress: () => Get.toNamed(Routes.RECENT_SERVICE),
                             list: controller.homeModel.value.serviceViews),
+                        const SizedBox(height: 24),
+                        buildNewsList(),
                         const SizedBox(height: 37),
                       ],
                     ),

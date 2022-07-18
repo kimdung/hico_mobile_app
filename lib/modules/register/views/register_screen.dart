@@ -1,3 +1,5 @@
+import 'package:easy_rich_text/easy_rich_text.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -66,55 +68,29 @@ class RegisterScreen extends GetView<RegisterController> {
                           _buildPassword(),
                           const SizedBox(height: 20),
                           _buildConfirmPassword(),
-                          const SizedBox(height: 40),
-                          Text(
-                            'register_notif'.tr,
-                            style: TextAppStyle().secondTextStyle().copyWith(
-                                  color: AppColor.fifthTextColorLight,
+                          const SizedBox(height: 30),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: EasyRichText(
+                              'register_notif'.tr,
+                              defaultStyle: TextAppStyle().smallTextGrey(),
+                              textAlign: TextAlign.center,
+                              patternList: [
+                                EasyRichTextPattern(
+                                  targetString: 'term_and_conditions'.tr,
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      controller.termsOfUse();
+                                    },
+                                  style: TextAppStyle().smallTextPink(),
                                 ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    controller.termsOfUse();
-                                  },
-                                  child: Text(
-                                    'term_and_conditions'.tr,
-                                    style: TextAppStyle()
-                                        .secondTextStyle()
-                                        .copyWith(
-                                          color: AppColor.primaryTextColorLight,
-                                        ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 4),
-                                  child: Text(
-                                    'and'.tr,
-                                    style: TextAppStyle()
-                                        .secondTextStyle()
-                                        .copyWith(
-                                          color: AppColor.fifthTextColorLight,
-                                        ),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    controller.privatePolicy();
-                                  },
-                                  child: Text(
-                                    'privacy_policy'.tr,
-                                    style: TextAppStyle()
-                                        .secondTextStyle()
-                                        .copyWith(
-                                          color: AppColor.primaryTextColorLight,
-                                        ),
-                                  ),
+                                EasyRichTextPattern(
+                                  targetString: 'privacy_policy'.tr,
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      controller.privatePolicy();
+                                    },
+                                  style: TextAppStyle().smallTextPink()
                                 ),
                               ],
                             ),

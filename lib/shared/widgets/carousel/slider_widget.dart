@@ -92,6 +92,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                                 : NetWorkImage(
                                     image: widget.items[index].image,
                                     height: 160,
+                                    fit: BoxFit.cover,
                                   ),
                           ),
                           if (widget.items[index].title != null)

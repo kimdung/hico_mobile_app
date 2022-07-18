@@ -6,6 +6,7 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/invoice_request.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../data/app_data_global.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../main/controllers/main_controller.dart';
@@ -101,6 +102,14 @@ class NotificationController extends BaseController {
         }
       });
     } else {
+      await _uiRepository.getInfo().then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.data != null &&
+            response.data!.info != null) {
+          AppDataGlobal.userInfo = response.data!.info!;
+        }
+      });
       await Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)
           ?.then((value) => loadData());
     }

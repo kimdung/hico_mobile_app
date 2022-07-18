@@ -76,7 +76,9 @@ import '../modules/supplier/views/supplier_filter_screen.dart';
 import '../modules/supplier/views/supplier_screen.dart';
 import '../modules/support/bindings/support_binding.dart';
 import '../modules/support/views/support_screen.dart';
+import '../modules/voucher/bindings/my_voucher_binding.dart';
 import '../modules/voucher/bindings/voucher_binding.dart';
+import '../modules/voucher/views/my_voucher_screen.dart';
 import '../modules/voucher/views/voucher_screen.dart';
 import '../modules/wallet/topup_bank/bindings/topup_bank_binding.dart';
 import '../modules/wallet/topup_bank/views/topup_bank_screen.dart';
@@ -280,6 +282,11 @@ final routePages = [
     name: Routes.VOUCHER,
     page: () => VoucherScreen(),
     binding: VoucherBinding(),
+  ),
+  GetPage(
+    name: Routes.MY_VOUCHER,
+    page: () => MyVoucherScreen(),
+    binding: MyVoucherBinding(),
   ),
   GetPage(
     name: Routes.PAYMENT_METHOD,

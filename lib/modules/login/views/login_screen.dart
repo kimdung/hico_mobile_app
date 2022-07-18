@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../data/app_data_global.dart';
 import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
@@ -43,7 +44,6 @@ class LoginScreen extends GetView<LoginController> {
         () => SafeArea(
           child: GestureDetector(
             onTap: () {
-              log('123');
               FocusScope.of(context).unfocus();
             },
             child: SingleChildScrollView(
@@ -119,23 +119,25 @@ class LoginScreen extends GetView<LoginController> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 83, vertical: 28),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  _buildSocialBtn(controller.loginFB,
-                                      ImageConstants.facebook),
-                                  // _buildSocialBtn(
-                                  //   controller.loginLine,
-                                  //   ImageConstants.line,
-                                  // ),
-                                  _buildSocialBtn(controller.loginGG,
-                                      ImageConstants.google),
-                                ],
-                              ),
+                            Container(
+                              child: AppDataGlobal.masterData?.loginSocial == 1 ? Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 83, vertical: 28),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    _buildSocialBtn(controller.loginFB,
+                                        ImageConstants.facebook),
+                                    // _buildSocialBtn(
+                                    //   controller.loginLine,
+                                    //   ImageConstants.line,
+                                    // ),
+                                    _buildSocialBtn(controller.loginGG,
+                                        ImageConstants.google),
+                                  ],
+                                ),
+                              ): Container(),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,

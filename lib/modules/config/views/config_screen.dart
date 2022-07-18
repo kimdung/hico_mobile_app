@@ -42,32 +42,34 @@ class ConfigScreen extends GetView<ConfigController> {
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Obx(() => Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         buildLanguageItem(
                           icon: ImageConstants.japanFlag,
                           title: '日本語',
                           code: LanguageCode.JA,
-                          onPress: () => {
-                            controller.currentLanguage.value = LanguageCode.JA
+                          onPress: () {
+                            controller.currentLanguage.value = LanguageCode.JA;
+                            controller.selectLanguage();
                           },
                         ),
                         buildLanguageItem(
                           icon: ImageConstants.vietnamFlag,
                           title: 'Việt Nam',
                           code: LanguageCode.VN,
-                          onPress: () => {
-                            controller.currentLanguage.value = LanguageCode.VN
+                          onPress: () {
+                            controller.currentLanguage.value = LanguageCode.VN;
+                            controller.selectLanguage();
                           },
                         ),
-                        buildLanguageItem(
-                          icon: ImageConstants.ukFlag,
-                          title: 'English',
-                          code: LanguageCode.EN,
-                          onPress: () => {
-                            controller.currentLanguage.value = LanguageCode.EN
-                          },
-                        )
+                        // buildLanguageItem(
+                        //   icon: ImageConstants.ukFlag,
+                        //   title: 'English',
+                        //   code: LanguageCode.EN,
+                        //   onPress: () => {
+                        //     controller.currentLanguage.value = LanguageCode.EN
+                        //   },
+                        // )
                       ],
                     )),
               ),

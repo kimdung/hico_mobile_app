@@ -62,10 +62,10 @@ class SupplierFilterScreen extends GetView<SupplierFilterController> {
                                 DateFormatter.formatDate(controller.fromDate),
                           ),
                           const SizedBox(height: 24),
-                          buildTitleComponent(
-                            title: 'supplier.filter.time_slot'.tr,
-                          ),
-                          const SizedBox(height: 16),
+                          // buildTitleComponent(
+                          //   title: 'supplier.filter.time_slot'.tr,
+                          // ),
+                          // const SizedBox(height: 16),
                           Row(
                             children: [
                               Expanded(

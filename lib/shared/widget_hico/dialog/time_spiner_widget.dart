@@ -38,7 +38,7 @@ class _TimeSpinerWidgetState extends State<TimeSpinerWidget> {
                 const SizedBox(height: 10),
                 TimePickerSpinner(
                   spacing: 20,
-                  minutesInterval: 30,
+                  minutesInterval: 15,
                   time: widget.currentTime,
                   isForce2Digits: true,
                   normalTextStyle:

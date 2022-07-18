@@ -217,7 +217,7 @@ extension SupplierDetailComponents on SupplierDetailScreen {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: imageProvider,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),

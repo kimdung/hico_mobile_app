@@ -87,6 +87,12 @@ class AccountScreen extends GetView<AccountController> {
                 ),
                 const SizedBox(height: 14),
                 buildItem(
+                  icon: IconConstants.ticket,
+                  title: '  ${'booking.voucher_title'.tr}' ,
+                  onPress: () => Get.toNamed(Routes.MY_VOUCHER),
+                ),
+                const SizedBox(height: 14),
+                buildItem(
                   icon: IconConstants.icProfileSetting,
                   title: 'setting'.tr,
                   onPress: () => Get.toNamed(Routes.CONFIG),
@@ -126,6 +132,12 @@ class AccountScreen extends GetView<AccountController> {
                   icon: IconConstants.icProfileSupport,
                   title: 'support'.tr,
                   onPress: () => Get.toNamed(Routes.SUPPORT),
+                ),
+                const SizedBox(height: 14),
+                buildItem(
+                  icon: IconConstants.icProfilePass,
+                  title: 'account.delete'.tr,
+                  onPress: () {controller.deleteUser();},
                 ),
                 const SizedBox(height: 14),
                 buildItem(

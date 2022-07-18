@@ -348,6 +348,30 @@ class OrderController extends BaseController {
     }
   }
 
+Future<void> cancelInvoice() async {
+    try {
+      await EasyLoading.show();
+     await _uiRepository.invoiceCancelInvoice(id).then((response) {
+              EasyLoading.dismiss();
+              DialogUtil.showPopup(
+                dialogSize: DialogSize.Popup,
+                barrierDismissible: false,
+                backgroundColor: Colors.transparent,
+                child: NormalWidget(
+                  icon: response.status == CommonConstants.statusOk
+                      ? IconConstants.icSuccess
+                      : IconConstants.icFail,
+                  title: response.message,
+                ),
+                onVaLue: (value) {},
+              );
+              return;
+            });
+      return;
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
   @override
   void onClose() {}
 
