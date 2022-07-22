@@ -7,10 +7,9 @@ import '../shared/dialog_manager/services/dialog_service.dart';
 import '../shared/methods/call_methods.dart';
 import '../shared/network/constants/constants.dart';
 import '../shared/network/managers/network_manager.dart';
-import '../shared/services/firebase_cloud_messaging.dart';
 
-class BaseController extends GetxController
-    with NetworkManager, ListenErrorGraphQL {
+class BaseController extends FullLifeCycleController
+    with NetworkManager, ListenErrorGraphQL, FullLifeCycleMixin {
   final _hasNetworkSubject = BehaviorSubject<bool>();
 
   Stream<bool> get hasNetworkStream => _hasNetworkSubject.stream;
@@ -27,11 +26,12 @@ class BaseController extends GetxController
     // check network
     await checkConnectNetwork();
 
-
     // await firebaseMessageConfig.handleMessage(log: (p0) {
     //   printInfo(info: p0);
     // },);
   }
+
+  
 
   Future<void> checkConnectNetwork() async {
     // // Check Network
@@ -83,5 +83,25 @@ class BaseController extends GetxController
   void onClose() {
     super.onClose();
     _hasNetworkSubject.close();
+  }
+
+  @override
+  void onDetached() {
+    // TODO: implement onDetached
+  }
+
+  @override
+  void onInactive() {
+    // TODO: implement onInactive
+  }
+
+  @override
+  void onPaused() {
+    // TODO: implement onPaused
+  }
+
+  @override
+  void onResumed() {
+    // TODO: implement onResumed
   }
 }
