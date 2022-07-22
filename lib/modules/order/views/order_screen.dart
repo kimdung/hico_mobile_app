@@ -66,8 +66,8 @@ class OrderScreen extends GetView<OrderController> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    if (controller.invoice.value.status ==
-                        InvoiceStatus.accepted.id)
+                    if (controller.invoice.value.getStatus() ==
+                        InvoiceStatus.accepted)
                       buildActionButton(),
                     const SizedBox(height: 14),
                     buildOrderInfo(),
@@ -98,10 +98,11 @@ class OrderScreen extends GetView<OrderController> {
                     const SizedBox(height: 18),
                     Container(color: AppColor.greyBackgroundColor, height: 6),
                     const SizedBox(height: 18),
-                    if(controller.myReview != null && controller.myReview!.numberStar != null)
-                      buildReview(controller.myReview!),  
+                    if (controller.myReview != null &&
+                        controller.myReview!.numberStar != null)
+                      buildReview(controller.myReview!),
                     const SizedBox(height: 32),
-                    buildActionBtnBottom(controller.invoice.value.status),       
+                    buildActionBtnBottom(controller.invoice.value.status),
                     const SizedBox(height: 20),
                   ],
                 ),

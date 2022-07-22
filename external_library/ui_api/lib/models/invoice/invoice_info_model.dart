@@ -46,36 +46,35 @@ class InvoiceInfoModel {
   String? createdAt;
   @JsonKey(name: 'is_fined')
   int? isFined;
-   @JsonKey(name: 'is_comment')
+  @JsonKey(name: 'is_comment')
   int? isComment;
   @JsonKey(name: 'supplier_start', defaultValue: '')
   String? supplierStart;
 
-  InvoiceInfoModel(
-      {this.id,
-      this.code,
-      this.supplierId,
-      this.supplierAvatar,
-      this.supplierName,
-      this.workingForm,
-      this.status,
-      this.service,
-      this.workingDate,
-      this.workingTime,
-      this.hours,
-      this.paymentType,
-      this.travelingCosts,
-      this.tmpTotal,
-      this.voucher,
-      this.expandPeriod,
-      this.total,
-      this.cancel,
-      this.createdAt,
-      this.isFined,
-      this.isComment,
-      this.supplierStart,
-    }
-  );
+  InvoiceInfoModel({
+    this.id,
+    this.code,
+    this.supplierId,
+    this.supplierAvatar,
+    this.supplierName,
+    this.workingForm,
+    this.status,
+    this.service,
+    this.workingDate,
+    this.workingTime,
+    this.hours,
+    this.paymentType,
+    this.travelingCosts,
+    this.tmpTotal,
+    this.voucher,
+    this.expandPeriod,
+    this.total,
+    this.cancel,
+    this.createdAt,
+    this.isFined,
+    this.isComment,
+    this.supplierStart,
+  });
 
   factory InvoiceInfoModel.fromJson(Map<String, dynamic> json) =>
       _$InvoiceInfoModelFromJson(json);
@@ -101,5 +100,9 @@ class InvoiceInfoModel {
       name: supplierName,
       image: supplierAvatar,
     );
+  }
+
+  bool isNotCall() {
+    return supplierStart?.isEmpty ?? true;
   }
 }

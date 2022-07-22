@@ -51,6 +51,7 @@ class VideoCallController extends BaseController {
 
   @override
   void onClose() {
+    printInfo(info: 'onClose');
     onEndCall();
     _engine.leaveChannel();
     _engine.destroy();
@@ -82,6 +83,7 @@ class VideoCallController extends BaseController {
 
     //create the engine
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
+    await _engine.setParameters('{"che.audio.opensl":true}');
     await _engine.enableVideo();
     _engine.setEventHandler(RtcEngineEventHandler(
       warning: (warningCode) {
@@ -140,6 +142,7 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> onEndCall() async {
+    printInfo(info: 'onEndCall');
     await callMethods.endCall(call: call);
     await _callEndCall();
   }

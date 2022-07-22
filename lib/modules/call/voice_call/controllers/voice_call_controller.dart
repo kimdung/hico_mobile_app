@@ -82,6 +82,7 @@ class VoiceCallController extends BaseController {
     await [Permission.microphone].request();
 
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
+    await _engine.setParameters('{"che.audio.opensl":true}');
     _engine.setEventHandler(RtcEngineEventHandler(
       warning: (warningCode) {
         printError(info: 'warning $warningCode');

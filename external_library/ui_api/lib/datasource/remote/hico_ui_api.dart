@@ -372,7 +372,7 @@ abstract class HicoUIAPI {
   @POST('/v1/agoraCall/createToken')
   Future<CallTokenResponse> getCallToken(@Query('channel') String channel);
 
-  @POST('/v1/customer/invoice/beginOnline')
+  @POST('/v1/customer/invoice/begin')
   Future<BaseResponse> beginCall(@Query('invoice_id') int invoiceId);
 
   @POST('/v1/customer/invoice/end')

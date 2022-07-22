@@ -22,71 +22,80 @@ extension OrderExtension on OrderScreen {
         children: [
           Expanded(
             child: GeneralButton(
-                onPressed: controller.invoice.value.supplierStart != null &&
-                        controller.invoice.value.supplierStart!.isNotEmpty
-                    ? controller.onCall
-                    : null,
-                height: 47,
-                backgroundColor: AppColor.greenColorLight,
-                borderColor: AppColor.greenColorLight,
-                padding: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    FCoreImage(IconConstants.icCallWhite, width: 16),
-                    const SizedBox(width: 6),
-                    Text(
-                      'order.detail.call'.tr,
-                      style: TextAppStyle().normalTextWhite(),
-                    )
-                  ],
-                )),
+              onPressed: controller.invoice.value.isNotCall()
+                  ? null
+                  : controller.onCall,
+              height: 47,
+              backgroundColor: controller.invoice.value.isNotCall()
+                  ? AppColor.disabledColorLight
+                  : AppColor.greenColorLight,
+              borderColor: controller.invoice.value.isNotCall()
+                  ? AppColor.disabledColorLight
+                  : AppColor.greenColorLight,
+              padding: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  FCoreImage(IconConstants.icCallWhite, width: 16),
+                  const SizedBox(width: 6),
+                  Text(
+                    'order.detail.call'.tr,
+                    style: TextAppStyle().normalTextWhite(),
+                  )
+                ],
+              ),
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
             child: GeneralButton(
-                onPressed: controller.invoice.value.supplierStart != null &&
-                        controller.invoice.value.supplierStart!.isNotEmpty
-                    ? controller.onVideo
-                    : null,
-                height: 47,
-                backgroundColor: AppColor.blueColorLight,
-                borderColor: AppColor.blueColorLight,
-                padding: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    FCoreImage(IconConstants.icVideoWhite, width: 16),
-                    const SizedBox(width: 6),
-                    Text(
-                      'order.detail.video'.tr,
-                      style: TextAppStyle().normalTextWhite(),
-                    )
-                  ],
-                )),
+              onPressed: controller.invoice.value.isNotCall()
+                  ? null
+                  : controller.onVideo,
+              height: 47,
+              backgroundColor: controller.invoice.value.isNotCall()
+                  ? AppColor.disabledColorLight
+                  : AppColor.blueColorLight,
+              borderColor: controller.invoice.value.isNotCall()
+                  ? AppColor.disabledColorLight
+                  : AppColor.blueColorLight,
+              padding: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  FCoreImage(IconConstants.icVideoWhite, width: 16),
+                  const SizedBox(width: 6),
+                  Text(
+                    'order.detail.video'.tr,
+                    style: TextAppStyle().normalTextWhite(),
+                  )
+                ],
+              ),
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
             child: GeneralButton(
-                onPressed: controller.onChat,
-                height: 47,
-                padding: 0,
-                backgroundColor: AppColor.primaryColorLight,
-                borderColor: AppColor.primaryColorLight,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    FCoreImage(IconConstants.icChatWhite, width: 16),
-                    const SizedBox(width: 6),
-                    Text(
-                      'order.detail.chat'.tr,
-                      style: TextAppStyle().normalTextWhite(),
-                    )
-                  ],
-                )),
+              onPressed: controller.onChat,
+              height: 47,
+              padding: 0,
+              backgroundColor: AppColor.primaryColorLight,
+              borderColor: AppColor.primaryColorLight,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  FCoreImage(IconConstants.icChatWhite, width: 16),
+                  const SizedBox(width: 6),
+                  Text(
+                    'order.detail.chat'.tr,
+                    style: TextAppStyle().normalTextWhite(),
+                  )
+                ],
+              ),
+            ),
           ),
         ],
       ),
