@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:hico/resource/assets_constant/images_constants.dart';
-import 'package:hico/shared/widget_hico/button/general_button.dart';
 import 'package:ui_api/models/master_data/master_data_model.dart';
 
-import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
+import '../../../resource/assets_constant/images_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/styles/text_style/text_style.dart';
+import '../../../shared/widget_hico/button/general_button.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
 import '../../call/pickup/picker_layout.dart';
 import '../controllers/supplier_booking_success_controller.dart';

@@ -28,12 +28,16 @@ class CommonConstants {
   static const int fiveStar = 5;
 
   // Arguments key
+  static const String INVOICE_ID = 'INVOICE_ID';
   static const String CHANNEL = 'CHANNEL';
   static const String CHAT_USER = 'CHAT_USER';
   static const String IS_NOT_CALL = 'IS_NOT_CALL';
   static const String IS_CALLER = 'IS_CALLER';
   static const String CALL_MODEL = 'CALL_MODEL';
   static const String CALL_TOKEN = 'CALL_TOKEN';
+  static const String TOPUP_DATA = 'TOPUP_DATA';
+  static const String TOPUP_ISORDER = 'TOPUP_ISORDER';
+
 }
 
 const APP_NAME = 'Hico';
@@ -82,6 +86,29 @@ extension PaymentMethodName on PaymentMethod {
         return 'Thanh toán online';
       default:
         return '';
+    }
+  }
+}
+
+enum DisplayType { All, Notif, Order,Remind, Extend, Rating }
+
+extension DisplayTypeId on DisplayType {
+  int get id {
+    switch (this) {
+      case DisplayType.All:
+        return 0;
+      case DisplayType.Notif:
+        return 1;
+      case DisplayType.Order:
+        return 2;
+      case DisplayType.Remind:
+        return 3;
+      case DisplayType.Extend:
+        return 7;
+      case DisplayType.Rating:
+        return 8;
+      default:
+        return 0;
     }
   }
 }

@@ -74,7 +74,7 @@ class ServiceScreen extends GetView<ServiceController> {
                           shrinkWrap: true,
                           crossAxisSpacing: 16,
                           mainAxisSpacing: 24,
-                          childAspectRatio: 1,
+                          childAspectRatio: 0.9,
                           physics: const NeverScrollableScrollPhysics(),
                           children: <Widget>[
                             ...List.generate(
@@ -86,6 +86,7 @@ class ServiceScreen extends GetView<ServiceController> {
                                 shadowColor:
                                     AppColor.dividerColorLight.withOpacity(0.2),
                                 fit: BoxFit.cover,
+                                height: 90,
                                 onPress: () {
                                   controller.viewService(
                                       controller.serviceList[index]);

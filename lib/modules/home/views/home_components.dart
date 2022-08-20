@@ -9,7 +9,7 @@ extension HomeComponents on HomeScreen {
       child: Row(
         children: [
           InkWell(
-            onTap: () => Get.toNamed(Routes.PROFILE),
+            onTap: () => Get.toNamed(Routes.PROFILE_UPDATE),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(25),
               child: CachedNetworkImage(
@@ -55,7 +55,7 @@ extension HomeComponents on HomeScreen {
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      '${AppDataGlobal.userInfo?.accountBalance ?? 0} JPY',
+                      '${controller.userInfo.value.accountBalance ?? 0} JPY',
                       style: TextAppStyle().smallTextPink(),
                     ),
                   ],
@@ -65,7 +65,9 @@ extension HomeComponents on HomeScreen {
           ),
           const SizedBox(width: 14),
           InkWell(
-            onTap: () => Get.toNamed(Routes.WALLET),
+            onTap: () {
+              controller.deposit();
+            },
             child: Container(
               margin: const EdgeInsets.all(5),
               child: FCoreImage(
@@ -97,27 +99,11 @@ extension HomeComponents on HomeScreen {
                     height: 24,
                   ),
                 ),
-                controller.totalNotif.value == 0
-                    ? Container()
-                    : Positioned(
-                        right: 0,
-                        child: Container(
-                          width: 15,
-                          height: 15,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14),
-                              color: AppColor.primaryColorLight),
-                          child: Center(
-                            child: Text(
-                              controller.totalNotif.value.toString(),
-                              style: AppTextStyle.secondTextStyle.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ),
-                      )
+                Positioned(
+                  right: 0,
+                  child: Obx(() =>
+                      BadgeWidget(badge: controller.badgeChatAdmin.value)),
+                ),
               ],
             ),
           )
@@ -129,10 +115,8 @@ extension HomeComponents on HomeScreen {
   Widget buildSlider(List<SliderModel?> sliders) {
     if (sliders.isNotEmpty) {
       return Container(
-        // padding: const EdgeInsets.symmetric(
-        // horizontal: CommonConstants.paddingDefault),
         child: SliderWidget(
-          ratio: 2.2,
+          ratio: 2,
           localImage: false,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -149,6 +133,7 @@ extension HomeComponents on HomeScreen {
           items: sliders
               .map((e) => SliderItem(
                     image: e!.displayImage!,
+                    onpress: () => controller.openLink(e.urlLink??''),
                   ))
               .toList(),
         ),
@@ -302,7 +287,7 @@ extension HomeComponents on HomeScreen {
                   ),
             ),
             Text(
-              '$price JPY/${'invoice.hours'.tr}',
+              '$price JPY/30 ${'invoice.minutes'.tr}',
               style: TextAppStyle()
                   .secondTextStyle()
                   .copyWith(color: AppColor.blueTextColor),

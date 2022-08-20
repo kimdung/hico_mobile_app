@@ -19,7 +19,7 @@ class ServiceModel {
   int? minHours;
   @JsonKey(name: 'offline_price_min')
   int? offlinePriceMin;
-  int? hours;
+  double? hours;
 
   ServiceModel(
       {this.id,

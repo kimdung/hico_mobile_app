@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:hico/shared/utils/dialog_util.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ui_api/models/master_data/master_data_model.dart';
 import 'package:ui_api/models/wallet/topup_history_model.dart';
@@ -21,18 +22,23 @@ class TopupBankController extends BaseController {
   final imageWidget = ImageWidgetController();
   final noteController = TextEditingController();
 
-  final TopupHistoryModel topup;
+  late TopupHistoryModel topup;
   final banks = AppDataGlobal.masterData?.banks ?? [];
 
   final imageBill = Rxn<File>();
+  bool isOrder = false;
 
-  TopupBankController(this.topup);
+  TopupBankController(){
+    final arguments = Get.arguments as Map;
+    isOrder = arguments[CommonConstants.TOPUP_ISORDER];
+    topup = arguments[CommonConstants.TOPUP_DATA];
+  }
 
   /* Action */
 
-  void onCopy(BankModel bank) {
-    Clipboard.setData(ClipboardData(text: bank.accountNumber ?? ''));
-    EasyLoading.showToast('copied'.tr);
+  Future<void> onCopy(BankModel bank) async {
+    await Clipboard.setData(ClipboardData(text: bank.accountNumber ?? ''));
+    await DialogUtil.showMenu();
   }
 
   void onCopyTransferContent() {
@@ -78,7 +84,12 @@ class TopupBankController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null &&
             response.data!.row != null) {
-          Get.offAndToNamed(Routes.TOPUP_DETAIL, arguments: response.data!.row);
+              if(isOrder){
+                Get.back(result: isOrder);
+              }else{
+                Get.offAndToNamed(Routes.TOPUP_DETAIL, arguments: response.data!.row);
+              }
+          
         }
       });
     } catch (e) {

@@ -12,10 +12,10 @@ import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
-import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
+import '../../../shared/widget_hico/dialog/topup_widget.dart';
 
 class SupplierBookingController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
@@ -25,37 +25,43 @@ class SupplierBookingController extends BaseController {
   Rx<double> totalPay = Rx<double>(0);
   Rx<double> total = Rx<double>(0);
   CheckVoucherModel voucherTmp = CheckVoucherModel();
-  UserInfoModel info = UserInfoModel();
+  // UserInfoModel info = UserInfoModel();
   Rx<int> showSuggest = Rx<int>(0);
   RxList<AddressModel> addressList = RxList<AddressModel>();
+
+  Rx<UserInfoModel> info = Rx(UserInfoModel());
   final paymentMethodId = Rx(0);
   double? hours = 0;
 
   final TextEditingController zipCode = TextEditingController();
   final TextEditingController province = TextEditingController();
   final TextEditingController district = TextEditingController();
+  final TextEditingController addressDetail = TextEditingController();
   final TextEditingController address = TextEditingController();
   final TextEditingController station = TextEditingController();
 
   SupplierBookingController() {
     bookingPrepare.value = Get.arguments;
-    if(bookingPrepare.value.supplier!.isOnline == '1'){
-    total.value = bookingPrepare.value.supplier!.servicePrice! *
-            bookingPrepare.value.totalTime!;
+    if (bookingPrepare.value.supplier!.isOnline == 1) {
+      total.value = bookingPrepare.value.supplier!.servicePrice! *
+          bookingPrepare.value.totalTime!;
+      totalPay.value = total.value;
+    } else {
+      if (bookingPrepare.value.totalTime! <
+          bookingPrepare.value.supplier!.serviceOfflineMinHours!) {
+        total.value =
+            bookingPrepare.value.supplier!.serviceOfflineMinPrice!.toDouble();
         totalPay.value = total.value;
-    }else{
-      if(bookingPrepare.value.totalTime! < bookingPrepare.value.supplier!.serviceOfflineMinHours!){
-        total.value = bookingPrepare.value.supplier!.serviceOfflineMinPrice!.toDouble();
-         totalPay.value = total.value;
-      }else{
-        hours = bookingPrepare.value.totalTime! - bookingPrepare.value.supplier!.serviceOfflineMinHours!;
+      } else {
+        hours = bookingPrepare.value.totalTime! -
+            bookingPrepare.value.supplier!.serviceOfflineMinHours!;
         var preTotal = hours! * bookingPrepare.value.supplier!.servicePrice!;
-        total.value = bookingPrepare.value.supplier!.serviceOfflineMinPrice!.toDouble() + preTotal;
+        total.value =
+            bookingPrepare.value.supplier!.serviceOfflineMinPrice!.toDouble() +
+                preTotal;
         totalPay.value = total.value;
       }
-      
     }
-    
 
     bookingRequest.value.supplierId = bookingPrepare.value.supplier!.id!;
     bookingRequest.value.serviceId = bookingPrepare.value.service!.id!;
@@ -73,7 +79,10 @@ class SupplierBookingController extends BaseController {
     await super.onInit();
   }
 
-  Future<void> _loadData() async {}
+  Future<void> _loadData() async {
+    info.value = AppDataGlobal.userInfo!;
+    info.refresh();
+  }
 
   Future<void> loadVoucher() async {
     await Get.toNamed(Routes.VOUCHER, arguments: totalPay.value)?.then((value) {
@@ -106,6 +115,7 @@ class SupplierBookingController extends BaseController {
       // zipCode.text = '';
       province.text = '';
       district.text = '';
+      addressDetail.text='';
       bookingRequest.value.addressId = 0;
       if (keyword != '') {
         await _uiRepository.addressList(20, 0, keyword).then((response) {
@@ -125,9 +135,10 @@ class SupplierBookingController extends BaseController {
 
   Future<void> selectAddress(AddressModel item) async {
     try {
-      zipCode.text = item.code!;
-      province.text = item.provinceName!;
-      district.text = item.districtName!;
+      zipCode.text = item.code ?? '';
+      province.text = item.provinceName ?? '';
+      district.text = item.districtName ?? '';
+      addressDetail.text = item.address ?? '';
       bookingRequest.value.addressId = item.id;
       showSuggest.value = 0;
     } catch (e) {
@@ -139,65 +150,61 @@ class SupplierBookingController extends BaseController {
     try {
       await EasyLoading.show();
       if (bookingRequest.value.workingForm == CommonConstants.offline) {
-        bookingRequest.value.address = address.text;
+        bookingRequest.value.address = addressDetail.text;
         bookingRequest.value.nearestStation = station.text;
+        bookingRequest.value.hospitalName = address.text;
       }
 
-      if(AppDataGlobal.userInfo!.accountBalance! < totalPay.value){
+      if (info.value.accountBalance! < totalPay.value) {
         await EasyLoading.dismiss();
         await DialogUtil.showPopup(
           dialogSize: DialogSize.Popup,
           barrierDismissible: false,
           backgroundColor: Colors.transparent,
-          child: NormalWidget(
+          child: TopupWidget(
             icon: IconConstants.icFail,
             title: 'booking.wallet_not_enough'.tr,
           ),
-          onVaLue: (value) {},
+          onVaLue: (_value) {
+            if (_value != null && _value is int) {
+              if (_value == 1) {
+                Get.toNamed(Routes.WALLET, arguments: true)!
+                    .then((value) => info.value = AppDataGlobal.userInfo!);
+              }
+            }
+          },
         );
         return;
       }
-
-      info = AppDataGlobal.userInfo!;
-      if (info.bankName == '' ||
-          info.bankBranchName == '' ||
-          info.bankAccountNumber == '' ||
-          info.bankAccountHolder == '') {
-        await EasyLoading.dismiss();
-        await Get.toNamed(Routes.BANK_UPDATE);
-      } else {
-        await _uiRepository
-            .invoiceBooking(bookingRequest.value)
-            .then((response) {
-          EasyLoading.dismiss();
-          if (response.status == CommonConstants.statusOk) {
-            _uiRepository.getInfo().then((response) {
-              if (response.status == CommonConstants.statusOk &&
-                  response.data != null &&
-                  response.data!.info != null) {
-                AppDataGlobal.userInfo = response.data!.info!;
-                return;
-              }
-            });
-            Get.toNamed(Routes.SUPPLIER_BOOKING_SUCCESS,
-                arguments: response.data!.detail!.code!);
-          } else {
-            DialogUtil.showPopup(
-              dialogSize: DialogSize.Popup,
-              barrierDismissible: false,
-              backgroundColor: Colors.transparent,
-              child: NormalWidget(
-                icon: response.status == CommonConstants.statusOk
-                    ? IconConstants.icSuccess
-                    : IconConstants.icFail,
-                title: response.message,
-              ),
-              onVaLue: (value) {},
-            );
-            return;
-          }
-        });
-      }
+      await _uiRepository.invoiceBooking(bookingRequest.value).then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk) {
+          _uiRepository.getInfo().then((response) {
+            if (response.status == CommonConstants.statusOk &&
+                response.data != null &&
+                response.data!.info != null) {
+              AppDataGlobal.userInfo = response.data!.info!;
+              return;
+            }
+          });
+          Get.toNamed(Routes.SUPPLIER_BOOKING_SUCCESS,
+              arguments: response.data!.detail!.code!);
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: response.status == CommonConstants.statusOk
+                  ? IconConstants.icSuccess
+                  : IconConstants.icFail,
+              title: response.message,
+            ),
+            onVaLue: (value) {},
+          );
+          return;
+        }
+      });
     } catch (e) {
       await EasyLoading.dismiss();
     }

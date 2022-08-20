@@ -23,6 +23,8 @@ class BookingRequest {
   String? address;
   @JsonKey(name: 'nearest_station')
   String? nearestStation;
+   @JsonKey(name: 'hospital_name')
+  String? hospitalName;
 
   BookingRequest({
     this.supplierId,
@@ -35,6 +37,7 @@ class BookingRequest {
     this.addressId,
     this.address,
     this.nearestStation,
+    this.hospitalName,
   });
 
   factory BookingRequest.fromJson(Map<String, dynamic> json) =>

@@ -13,10 +13,7 @@ import '../controllers/config_controller.dart';
 class TermOfUseScreen extends GetView<ConfigController> {
   @override
   Widget build(BuildContext context) {
-    return PickupLayout(
-      controller.callMethods,
-      scaffold: Scaffold(
-        resizeToAvoidBottomInset: false,
+    return Scaffold( 
         appBar: AppBar(
           centerTitle: true,
           leading: IconButton(
@@ -36,7 +33,7 @@ class TermOfUseScreen extends GetView<ConfigController> {
         ),
         body: SingleChildScrollView(
           child: Container(
-            width: Get.width,
+            width: Get.width, 
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -57,7 +54,7 @@ class TermOfUseScreen extends GetView<ConfigController> {
             ),
           ),
         ),
-      ),
+      
     );
   }
 }

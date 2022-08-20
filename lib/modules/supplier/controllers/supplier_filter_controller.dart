@@ -2,10 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:get/get.dart';
-import 'package:hico/shared/widget_hico/data_general/date_picker.dart';
-import 'package:hico/shared/widget_hico/dialog/time_spiner_widget.dart';
 import 'package:ui_api/models/master_data/districts_model.dart';
 import 'package:ui_api/models/master_data/master_data_model.dart';
 import 'package:ui_api/models/master_data/provinces_model.dart';
@@ -21,11 +18,13 @@ import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/date_formatter.dart';
 import '../../../shared/utils/dialog_util.dart';
+import '../../../shared/widget_hico/data_general/date_picker.dart';
 import '../../../shared/widget_hico/data_general/district.dart';
 import '../../../shared/widget_hico/data_general/level.dart';
 import '../../../shared/widget_hico/data_general/province.dart';
 import '../../../shared/widget_hico/data_general/rating.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
+import '../../../shared/widget_hico/dialog/time_spiner_widget.dart';
 import '../../../shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 
 class SupplierFilterController extends BaseController {
@@ -54,7 +53,6 @@ class SupplierFilterController extends BaseController {
     date.value = TextEditingValue(text: DateFormatter.formatDate(fromDate));
     request.filterIsOnline = isOnline.value;
     request.filterLevelId = 0;
-    
   }
 
   @override
@@ -186,7 +184,6 @@ class SupplierFilterController extends BaseController {
         height: Get.height / 2,
         child: LevelWidget(
           levels: AppDataGlobal.masterData!.levels!,
-          //AppDataGlobal.masterData!.levels!
           currentLevel: request.filterLevelId,
         ),
       ),
@@ -197,6 +194,9 @@ class SupplierFilterController extends BaseController {
           level.value = _value.name != null
               ? '${'supplier.filter.level_title'.tr}: ${_value.name!}'
               : '';
+        } else {
+          request.filterLevelId = 0;
+          level.value = '${'all'.tr}';
         }
       },
     );
@@ -242,9 +242,13 @@ class SupplierFilterController extends BaseController {
     var hours = tmpToTime.difference(tmpFromTime).inHours.toDouble();
     final minutes = tmpToTime.difference(tmpFromTime).inMinutes;
     final tmpMinutes = minutes - (hours * 60);
-    if (tmpMinutes > 0 && tmpMinutes <= 30) {
+    if (tmpMinutes > 0 && tmpMinutes <= 15) {
+      hours += 0.25;
+    } else if (tmpMinutes > 15 && tmpMinutes <= 30) {
       hours += 0.5;
-    } else if (tmpMinutes > 30) {
+    }else if (tmpMinutes > 30 && tmpMinutes <= 45) {
+      hours += 0.75;
+    }else if (tmpMinutes > 45) {
       hours += 1;
     }
     bookingPrepare.totalTime = hours;
@@ -252,16 +256,17 @@ class SupplierFilterController extends BaseController {
     var validater = false;
     var message = '';
 
-    if (request.filterLocationProvinceId == null || request.filterLocationDistrictId == null) {
+    if (request.filterIsOnline == CommonConstants.offline && (request.filterLocationProvinceId == null ||
+        request.filterLocationDistrictId == null)) {
       validater = true;
       message = 'supplier.filter.location_required'.tr;
-    } 
-    
+    }
+
     if (fromTime.value == '' || toTime.value == '') {
       validater = true;
       message = 'supplier.filter.time_required'.tr;
-    } 
- 
+    }
+
     if (validater) {
       await DialogUtil.showPopup(
         dialogSize: DialogSize.Popup,

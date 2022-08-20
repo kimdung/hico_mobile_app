@@ -49,21 +49,29 @@ class StatisticScreen extends GetView<StatisticController> {
                 const SizedBox(height: 20),
                 buildStatusNavBar(),
                 buildTotalWithStatus(),
-                const SizedBox(height: 20),
-                buildSearchField(),
-                const SizedBox(height: 20),
-                buildSearchDate(context),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    'statistic.order_finish'.tr,
-                    style: TextAppStyle().genaralTextStyle().copyWith(
-                        color: Colors.black, fontWeight: FontWeight.w500),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                buildOrderList(),
+                Obx(() => controller.indexStatus.value == 0
+                    ? const SizedBox()
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 20),
+                          buildSearchField(),
+                          const SizedBox(height: 20),
+                          buildSearchDate(context),
+                          const SizedBox(height: 20),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              'statistic.order_finish'.tr,
+                              style: TextAppStyle().genaralTextStyle().copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          buildOrderList(),
+                        ],
+                      )),
               ],
             ),
           ),

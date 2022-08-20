@@ -6,7 +6,7 @@ class TopupStripeBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<TopupStripeController>(
-      () => TopupStripeController(Get.arguments),
+      () => TopupStripeController(),
     );
   }
 }

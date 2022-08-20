@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:ui_api/models/statistic/statistic_invoice_model.dart';
 import 'package:ui_api/models/statistic/statistic_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:ui_api/request/invoice/invoice_request.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/date_formatter.dart';
 
@@ -15,14 +17,13 @@ class StatisticController extends BaseController {
   Rx<int> indexStatus = Rx(0);
   int limit = CommonConstants.limit;
   int offset = 0;
-  String keyword = '';
   String fromDate = '';
   String toDate = '';
   final TextEditingController fromDateController = TextEditingController();
   final TextEditingController toDateController = TextEditingController();
+  final TextEditingController keywordController = TextEditingController();
 
-  Rx<StatisticModel> completed = Rx(StatisticModel());
-  Rx<StatisticModel> canceled = Rx(StatisticModel());
+  Rx<StatisticModel> statistic = Rx(StatisticModel());
   RxList<StatisticInvoiceModel> invoiceList = RxList<StatisticInvoiceModel>();
 
   Rx<int> totalInvoice = Rx(20);
@@ -32,7 +33,6 @@ class StatisticController extends BaseController {
         DateFormatter.formatDate(DateTime.now().add(const Duration(days: -7)));
     toDate = DateFormatter.formatDate(DateTime.now());
     loadData();
-    loadInvoiceList();
   }
 
   @override
@@ -55,8 +55,7 @@ class StatisticController extends BaseController {
       await _uiRepository.statistics().then((response) {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
-          completed.value = response.data!.completed!;
-          canceled.value = response.data!.canceled!;
+          statistic.value = response.data!;
           return;
         }
       });
@@ -88,11 +87,12 @@ class StatisticController extends BaseController {
       toDateController.value = TextEditingValue(text: toDate);
     }
   }
-
-  Future<void> onSearch(String value) async {
+  Future<void> onChangeStatus(int index) async {
     try {
-      keyword = value;
-      await loadInvoiceList();
+      indexStatus.value = index;
+      if(index != 0){
+        await loadInvoiceList();
+      }   
     } catch (e) {
       await EasyLoading.dismiss();
     }
@@ -101,13 +101,16 @@ class StatisticController extends BaseController {
   Future<void> loadInvoiceList() async {
     try {
       await EasyLoading.show();
+      offset = 0;
       await _uiRepository
-          .statisticsInvoice(limit, offset, keyword, fromDate, toDate)
+          .statisticsInvoice(limit, offset, keywordController.text, fromDate, toDate, indexStatus.value)
           .then((response) {
         EasyLoading.dismiss();
         if (response.data!.rows!.isNotEmpty) {
           offset = response.data!.rows!.length;
           invoiceList.value = response.data!.rows!;
+        }else{
+          invoiceList.value = [];
         }
       });
     } catch (e) {
@@ -119,7 +122,7 @@ class StatisticController extends BaseController {
     try {
       await EasyLoading.show();
       await _uiRepository
-          .statisticsInvoice(limit, offset, keyword, fromDate, toDate)
+          .statisticsInvoice(limit, offset, keywordController.text, fromDate, toDate, indexStatus.value)
           .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
@@ -134,6 +137,10 @@ class StatisticController extends BaseController {
     } catch (e) {
       await EasyLoading.dismiss();
     }
+  }
+
+  Future<void> onDetail(int id) async {
+    await Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id:id));
   }
 
   @override

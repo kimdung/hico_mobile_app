@@ -7,10 +7,11 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../base/base_controller.dart';
+import '../../../../data/app_data_global.dart';
 import '../../../../resource/assets_constant/icon_constants.dart';
 import '../../../../resource/config/config_environment.dart';
 import '../../../../routes/app_pages.dart';
-import '../../../../shared/constants/common.dart'; 
+import '../../../../shared/constants/common.dart';
 import '../../../../shared/utils/dialog_util.dart';
 import '../../../../shared/widget_hico/dialog/normal_widget.dart';
 
@@ -18,12 +19,17 @@ class TopupKomojuController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
   final _evnConfig = Get.find<EnvConfiguration>();
 
-  final String payUrl;
+  late String payUrl;
 
   final Completer<WebViewController> webViewController =
       Completer<WebViewController>();
+  bool isOrder = false;
 
-  TopupKomojuController(this.payUrl);
+  TopupKomojuController(){
+    final arguments = Get.arguments as Map;
+    isOrder = arguments[CommonConstants.TOPUP_ISORDER];
+    payUrl = arguments[CommonConstants.TOPUP_DATA];
+  }
 
   @override
   Future<void> onInit() async {
@@ -63,14 +69,27 @@ class TopupKomojuController extends BaseController {
     }
     try {
       await EasyLoading.show();
-      await _uiRepository.topupKomojuResult(sessionId).then((response) {
-        EasyLoading.dismiss();
+      await _uiRepository.topupKomojuResult(sessionId).then((response) async {
         if (response.status == CommonConstants.statusOk &&
             response.data != null &&
             response.data!.row != null) {
-          Get.offAndToNamed(Routes.TOPUP_DETAIL, arguments: response.data!.row);
+          await _uiRepository.getInfo().then((response) {
+            if (response.status == CommonConstants.statusOk &&
+                response.data != null &&
+                response.data!.info != null) {
+              AppDataGlobal.userInfo = response.data!.info!;
+            }
+          });
+          await EasyLoading.dismiss();
+          if(isOrder){
+              Get.back(result: isOrder);
+          }else{
+            await Get.offAndToNamed(Routes.TOPUP_DETAIL,
+              arguments: response.data!.row);
+          }   
         } else {
-          DialogUtil.showPopup(
+          await EasyLoading.dismiss();
+          await DialogUtil.showPopup(
             dialogSize: DialogSize.Popup,
             barrierDismissible: false,
             backgroundColor: Colors.transparent,

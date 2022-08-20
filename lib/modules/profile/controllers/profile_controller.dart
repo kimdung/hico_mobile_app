@@ -118,6 +118,7 @@ class ProfileController extends BaseController {
       district.text = item.districtName!;
       addressId = item.id!;
       showSuggest.value = 0;
+      address.text = item.address!;
     } catch (e) {
       await EasyLoading.dismiss();
     }
@@ -242,13 +243,14 @@ class ProfileController extends BaseController {
   }
 
   Future<void> showDate(BuildContext context) async {
-    await DatePicker.showDatePicker(
+    await DatePicker.showDatePicker( 
       context,
       showTitleActions: true,
       onConfirm: (date) {
         birthDay.value = DateFormatter.formatDate(date);
       },
       currentTime: DateTime.now(),
+       minTime: DateTime(1950, 1, 1),
     );
   }
 

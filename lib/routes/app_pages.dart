@@ -45,7 +45,6 @@ import '../modules/order/views/order_screen.dart';
 import '../modules/payment_method/bindings/payment_method_binding.dart';
 import '../modules/payment_method/views/payment_method_screen.dart';
 import '../modules/profile/bindings/profile_binding.dart';
-import '../modules/profile/views/profile_screen.dart';
 import '../modules/profile/views/profile_update_screen.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_otp_screen.dart';
@@ -77,7 +76,9 @@ import '../modules/supplier/views/supplier_filter_screen.dart';
 import '../modules/supplier/views/supplier_screen.dart';
 import '../modules/support/bindings/support_binding.dart';
 import '../modules/support/views/support_screen.dart';
+import '../modules/voucher/bindings/my_voucher_binding.dart';
 import '../modules/voucher/bindings/voucher_binding.dart';
+import '../modules/voucher/views/my_voucher_screen.dart';
 import '../modules/voucher/views/voucher_screen.dart';
 import '../modules/wallet/topup_bank/bindings/topup_bank_binding.dart';
 import '../modules/wallet/topup_bank/views/topup_bank_screen.dart';
@@ -221,10 +222,6 @@ final routePages = [
       page: () => StatisticScreen(),
       binding: StatisticBinding()),
   GetPage(
-      name: Routes.PROFILE,
-      page: () => ProfileScreen(),
-      binding: ProfileBinding()),
-  GetPage(
     name: Routes.PROFILE_UPDATE,
     page: () => ProfileUpdateScreen(),
     binding: ProfileBinding(),
@@ -285,6 +282,11 @@ final routePages = [
     name: Routes.VOUCHER,
     page: () => VoucherScreen(),
     binding: VoucherBinding(),
+  ),
+  GetPage(
+    name: Routes.MY_VOUCHER,
+    page: () => MyVoucherScreen(),
+    binding: MyVoucherBinding(),
   ),
   GetPage(
     name: Routes.PAYMENT_METHOD,

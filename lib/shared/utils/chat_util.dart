@@ -18,14 +18,16 @@ class ChatUtil {
       var isExist = false;
       listDevicesResponse.devices.forEach((device) {
         if (device.id == AppDataGlobal.firebaseToken) {
-          print('[ChatUtil] added firebaseToken');
+          print('[ChatUtil] added firebaseToken ${device.id}');
           isExist = true;
         } else {
+          print('[ChatUtil] removeDevice firebaseToken ${device.id}');
           AppDataGlobal.client?.removeDevice(device.id);
         }
       });
       if (!isExist) {
-        print('[ChatUtil] new add firebaseToken');
+        print(
+            '[ChatUtil] new add firebaseToken ${AppDataGlobal.firebaseToken}');
         AppDataGlobal.client
             ?.addDevice(AppDataGlobal.firebaseToken, PushProvider.firebase);
       }

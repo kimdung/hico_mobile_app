@@ -35,12 +35,14 @@ import 'package:ui_api/response/voucher/check_voucher_response.dart';
 import 'package:ui_api/response/voucher/voucher_response.dart';
 
 import '../../request/invoice/extend_period_request.dart';
+import '../../request/invoice/rating_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/invoice/extend_period_response.dart';
+import '../../response/notifications/notification_unread_response.dart';
 import '../../response/wallet/topup_history_response.dart';
 import '../../response/wallet/topup_komaju_response.dart';
 import '../../response/wallet/topup_response.dart';
-import '../../response/invoice/extend_period_response.dart';
 import '../hico_ui_repository.dart';
 
 class HicoUIRepositoryImpl extends HicoUIRepository {
@@ -146,6 +148,11 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   @override
   Future<NotificationDetailResponse> notificationDetail(int id) {
     return _api.notificationDetail(id);
+  }
+
+  @override
+  Future<NotificationUnreadResponse> notificationUnRead() {
+    return _api.notificationUnRead();
   }
 
   @override
@@ -267,6 +274,11 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     return _api.invoiceCancel(id, reason);
   }
 
+ @override
+  Future<BaseResponse> invoiceCancelInvoice(int id) {
+    return _api.invoiceCancelInvoice(id);
+  }
+
   //invoice detail:cancel
   @override
   Future<BookingResponse> invoiceBooking(BookingRequest request) {
@@ -285,6 +297,12 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     return _api.voucherCheck(id, total);
   }
 
+  //voucher list
+  @override
+  Future<VoucherResponse> voucherAdd(String code) {
+    return _api.voucherAdd(code);
+  }
+
   //address list
   @override
   Future<AddressResponse> addressList(int limit, int offset, String code) {
@@ -300,8 +318,9 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   //statistics
   @override
   Future<StatisticInvoiceResponse> statisticsInvoice(int limit, int offset,
-      String keyWords, String startDate, String endDate) {
-    return _api.statisticsInvoice(limit, offset, keyWords, startDate, endDate);
+      String keyWords, String startDate, String endDate, int status) {
+    return _api.statisticsInvoice(
+        limit, offset, keyWords, startDate, endDate, status);
   }
 
   //consulting
@@ -387,10 +406,40 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   Future<TopupResponse> topupStripe(
       String paymentMethodId, String name, double amount) {
     return _api.createPayInStripe(paymentMethodId, name, amount);
-      }
-   @override
+  }
+
+  @override
   Future<BaseResponse> extendInvoice(ExtendPeriodRequest request) {
     return _api.extendInvoice(request);
+  }
 
+  @override
+  Future<BaseResponse> invoiceRating(RatingRequest request) {
+    return _api.invoiceRating(request);
+  }
+
+  @override
+  Future<BaseResponse> invoiceCancelRating(int id) {
+    return _api.invoiceCancelRating(id);
+  }
+
+
+  @override
+  Future<BaseResponse> beginCall(int invoiceId) {
+    return _api.beginCall(invoiceId);
+  }
+
+  @override
+  Future<BaseResponse> endCall(int invoiceId) {
+    return _api.endCall(invoiceId);
+  }
+
+  @override
+  Future<BaseResponse> sendCallNotification(int invoiceId) {
+    return _api.sendCallNotification(invoiceId);
+  }
+  @override
+  Future<BaseResponse> deleteUser() {
+    return _api.deleteUser();
   }
 }

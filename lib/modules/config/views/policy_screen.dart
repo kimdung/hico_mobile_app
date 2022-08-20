@@ -13,9 +13,7 @@ import '../controllers/config_controller.dart';
 class PolicyScreen extends GetView<ConfigController> {
   @override
   Widget build(BuildContext context) {
-    return PickupLayout(
-      controller.callMethods,
-      scaffold: Scaffold(
+    return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           centerTitle: true,
@@ -57,7 +55,6 @@ class PolicyScreen extends GetView<ConfigController> {
             ),
           ),
         ),
-      ),
     );
   }
 }

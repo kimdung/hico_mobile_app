@@ -62,11 +62,12 @@ class ServiceItem extends StatelessWidget {
                     fit: fit,
                   ),
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: 5),
                 if (title != null)
                   Text(
                     title!,
                     style: TextAppStyle().smallTextBlack(),
+                    maxLines: 1,
                   ),
               ],
             ),

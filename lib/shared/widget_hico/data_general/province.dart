@@ -59,54 +59,57 @@ class _ProvinceWidgetState extends State<ProvinceWidget> {
                   contentPadding: const EdgeInsets.symmetric(vertical: 7)),
             ),
           ),
-          const SizedBox(height: 24),
-          Container(
-            padding: const EdgeInsets.symmetric(
-                horizontal: CommonConstants.paddingDefault),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ...List.generate(
-                    _filterProvinces.length,
-                    (index) => InkWell(
-                      onTap: () {
-                        Navigator.pop(context, _filterProvinces[index]);
-                      },
-                      child: BoxDecorationWidget(
-                        height: 45,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: AppColor.borderGrayColorLight,
-                            width: 1,
+          const SizedBox(height: 14),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: CommonConstants.paddingDefault),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ...List.generate(
+                      _filterProvinces.length,
+                      (index) => InkWell(
+                        onTap: () {
+                          Navigator.pop(context, _filterProvinces[index]);
+                        },
+                        child: BoxDecorationWidget(
+                          height: 45,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: AppColor.borderGrayColorLight,
+                              width: 1,
+                            ),
                           ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                _filterProvinces[index].name ?? '',
-                                textAlign: TextAlign.left,
-                                style: TextAppStyle().normalTextStype(),
-                              ),
-                              (_filterProvinces[index].id == widget.currentID)
-                                  ? FCoreImage(
-                                      IconConstants.icSuccess,
-                                      width: 16,
-                                    )
-                                  : Container(),
-                            ],
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  _filterProvinces[index].name ?? '',
+                                  textAlign: TextAlign.left,
+                                  style: TextAppStyle().normalTextStype(),
+                                ),
+                                (_filterProvinces[index].id == widget.currentID)
+                                    ? FCoreImage(
+                                        IconConstants.icSuccess,
+                                        width: 16,
+                                      )
+                                    : Container(),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          )
+          ),
+          const SizedBox(height: 20),
         ],
       ),
     );

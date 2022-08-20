@@ -47,7 +47,7 @@ class WalletScreen extends GetView<WalletController> {
         Expanded(
           child: Obx(
             () => controller.indexPage.value == 0
-                ? TopupView(TopupController())
+                ? TopupView(TopupController(controller.isOrder))
                 : TopupHistoryView(TopupHistoryController(controller)),
           ),
         ),

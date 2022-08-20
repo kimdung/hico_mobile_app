@@ -1,27 +1,22 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
-import '../data/app_data_global.dart';
 import '../data/interceptors/listen_error_graphql_interceptor.dart';
 import '../shared/dialog_manager/data_models/request/common_dialog_request.dart';
 import '../shared/dialog_manager/services/dialog_service.dart';
 import '../shared/methods/call_methods.dart';
 import '../shared/network/constants/constants.dart';
 import '../shared/network/managers/network_manager.dart';
-import '../shared/services/firebase_cloud_messaging.dart';
 
-class BaseController extends GetxController
-    with NetworkManager, ListenErrorGraphQL {
+class BaseController extends FullLifeCycleController
+    with NetworkManager, ListenErrorGraphQL, FullLifeCycleMixin {
   final _hasNetworkSubject = BehaviorSubject<bool>();
 
   Stream<bool> get hasNetworkStream => _hasNetworkSubject.stream;
 
   Sink<bool> get hasNetworkSink => _hasNetworkSubject.sink;
 
-  FirebaseMessageConfig firebaseMessageConfig = FirebaseMessageConfig();
+  // FirebaseMessageConfig firebaseMessageConfig = FirebaseMessageConfig();
   final CallMethods callMethods = CallMethods();
 
   @override
@@ -31,55 +26,22 @@ class BaseController extends GetxController
     // check network
     await checkConnectNetwork();
 
-    await firebaseMessageConfig.handleMessage();
-    // AppDataGlobal.client
-    //     ?.on(EventType.messageNew, EventType.notificationMessageNew)
-    //     .listen((event) async {
-    //   if (event.message?.user?.id ==
-    //       AppDataGlobal.client?.state.currentUser?.id) {
-    //     return;
-    //   }
-
-    //   if (event.message == null || event.type != 'message.new') {
-    //     return;
-    //   }
-    //   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    //   const initializationSettings = InitializationSettings(
-    //     android: AndroidInitializationSettings('app_icon'),
-    //     iOS: IOSInitializationSettings(),
-    //   );
-    //   await flutterLocalNotificationsPlugin
-    //       .initialize(initializationSettings);
-    //   final id = event.message?.id.hashCode;
-    //   if (id == null) {
-    //     return;
-    //   }
-    //   await flutterLocalNotificationsPlugin.show(
-    //     id,
-    //     event.message?.user?.name,
-    //     event.message?.text,
-    //     NotificationDetails(
-    //       android: AndroidNotificationDetails(
-    //         event.channelId ?? '',
-    //         'HICO-Channel-Name',
-    //         priority: Priority.high,
-    //         importance: Importance.high,
-    //       ),
-    //       iOS: const IOSNotificationDetails(),
-    //     ),
-    //   );
-    // });
+    // await firebaseMessageConfig.handleMessage(log: (p0) {
+    //   printInfo(info: p0);
+    // },);
   }
 
+  
+
   Future<void> checkConnectNetwork() async {
-    // Check Network
-    if (!await hasConnectNetwork()) {
-      hasNetworkSink.add(false);
-      await callDialogErrorNetwork();
-    } else {
-      // Has network
-      hasNetworkSink.add(true);
-    }
+    // // Check Network
+    // if (!await hasConnectNetwork()) {
+    //   hasNetworkSink.add(false);
+    //   await callDialogErrorNetwork();
+    // } else {
+    //   // Has network
+    //   hasNetworkSink.add(true);
+    // }
   }
 
   Future<void> callDialogErrorNetwork() async {
@@ -121,5 +83,25 @@ class BaseController extends GetxController
   void onClose() {
     super.onClose();
     _hasNetworkSubject.close();
+  }
+
+  @override
+  void onDetached() {
+    // TODO: implement onDetached
+  }
+
+  @override
+  void onInactive() {
+    // TODO: implement onInactive
+  }
+
+  @override
+  void onPaused() {
+    // TODO: implement onPaused
+  }
+
+  @override
+  void onResumed() {
+    // TODO: implement onResumed
   }
 }

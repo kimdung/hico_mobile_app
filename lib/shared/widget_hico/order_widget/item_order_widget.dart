@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/invoice/invoice_list_model.dart';
 import 'package:ui_api/models/invoice/invoice_status.dart';
 
+import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../constants/colors.dart';
 import '../../constants/common.dart';
 import '../../styles/text_style/text_style.dart';
+import '../../widgets/badge/badge_widget.dart';
 import '../../widgets/image_widget/fcore_image.dart';
 import '../image_widget/network_image.dart';
 
-class ItemOrderWidget extends StatelessWidget {
+class ItemOrderWidget extends StatefulWidget {
   final InvoiceHistoryModel invoice;
   final Function()? onPress;
 
@@ -28,12 +31,42 @@ class ItemOrderWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<ItemOrderWidget> createState() => _ItemOrderWidgetState();
+}
+
+class _ItemOrderWidgetState extends State<ItemOrderWidget> {
+  Channel? _channel;
+  int _badge = 0;
+
+  Future<void> _listenerBadge() async {
+    try {
+      await _channel?.watch();
+      _channel?.state?.unreadCountStream.listen((event) {
+        setState(() {
+          _badge = event;
+        });
+      });
+    } catch (e) {
+      debugPrint('[ItemOrderWidget] get unread error ${e.toString()}');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final task = invoice.taskCompleteNumber ?? 0;
-    final service = invoice.serviceName ?? '';
-    final price = invoice.price ?? 0;
+    final task = widget.invoice.taskCompleteNumber ?? 0;
+    final service = widget.invoice.serviceName ?? '';
+    final price = widget.invoice.price ?? 0;
+
+    if (widget.invoice.status == InvoiceStatus.accepted.id &&
+        AppDataGlobal.client != null &&
+        _channel == null) {
+      _channel = AppDataGlobal.client!
+          .channel('messaging', id: widget.invoice.getChatChannel());
+      _listenerBadge();
+    }
+
     return InkWell(
-      onTap: onPress,
+      onTap: widget.onPress,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: const BoxDecoration(
@@ -64,10 +97,10 @@ class ItemOrderWidget extends StatelessWidget {
                         margin: const EdgeInsets.only(left: 20, right: 26),
                         width: 80,
                         height: 80,
-                        child: (invoice.supplierAvatar != null &&
-                                invoice.supplierAvatar != '')
+                        child: (widget.invoice.supplierAvatar != null &&
+                                widget.invoice.supplierAvatar != '')
                             ? NetWorkImage(
-                                image: invoice.supplierAvatar ?? '',
+                                image: widget.invoice.supplierAvatar ?? '',
                                 width: 80,
                                 height: 80,
                                 fit: BoxFit.cover,
@@ -83,7 +116,7 @@ class ItemOrderWidget extends StatelessWidget {
                             children: [
                               const SizedBox(height: 18),
                               Text(
-                                invoice.supplierName ?? '',
+                                widget.invoice.supplierName ?? '',
                                 style: TextAppStyle().normalTextStype(),
                               ),
                               const SizedBox(height: 5),
@@ -96,17 +129,20 @@ class ItemOrderWidget extends StatelessWidget {
                                   title: '${'invoice.service'.tr} $service'),
                               const SizedBox(height: 5),
                               Container(
-                                child: invoice.workingForm == CommonConstants.online? 
-                                _buildAddressItem(
-                                  icon: IconConstants.icMoneyBlue,
-                                  title: '$price JPY/${'invoice.hours'.tr}'): 
-                                _buildPriceItem(
-                                  icon: IconConstants.icMoneyBlue,
-                                  title: '${invoice.offlinePriceMin} JPY/ 0,5 - ${invoice.minHours} ${'invoice.hours'.tr}',
-                                  subTitle: '${'invoice.incurred'.tr}: ${invoice.price} JPY/ 1${'invoice.hours'.tr}'),
+                                child: widget.invoice.workingForm ==
+                                        CommonConstants.online
+                                    ? _buildAddressItem(
+                                        icon: IconConstants.icMoneyBlue,
+                                        title:
+                                            '$price JPY/${'invoice.hours'.tr}')
+                                    : _buildPriceItem(
+                                        icon: IconConstants.icMoneyBlue,
+                                        title:
+                                            '${widget.invoice.offlinePriceMin} JPY/ 0,5 - ${widget.invoice.minHours} ${'invoice.hours'.tr}',
+                                        subTitle:
+                                            '${'invoice.incurred'.tr}: ${widget.invoice.price} JPY/ 1${'invoice.hours'.tr}'),
                               ),
                               const SizedBox(height: 8),
-                              
                             ],
                           ),
                         ),
@@ -133,7 +169,7 @@ class ItemOrderWidget extends StatelessWidget {
                               ),
                               const SizedBox(width: 5),
                               Text(
-                                invoice.workingDate ?? '',
+                                widget.invoice.workingDate ?? '',
                                 style: TextAppStyle()
                                     .smallTextStype()
                                     .copyWith(color: Colors.white),
@@ -156,7 +192,7 @@ class ItemOrderWidget extends StatelessWidget {
                               ),
                               const SizedBox(width: 5),
                               Text(
-                                invoice.workingTime ?? '',
+                                widget.invoice.workingTime ?? '',
                                 style: TextAppStyle()
                                     .smallTextStype()
                                     .copyWith(color: Colors.white),
@@ -168,73 +204,66 @@ class ItemOrderWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 15),
-                  if (invoice.status == InvoiceStatus.accepted.id)
+                  if (widget.invoice.status == InvoiceStatus.accepted.id)
                     Container(
                       height: 50,
                       child: Row(
                         children: [
                           Expanded(
                             child: _buildActionButton(
-                                onPress: onChat,
-                                icon: IconConstants.icChatColor,
-                                title: 'order.detail.chat'.tr,
-                                border: Border(
-                                  right: BorderSide(
-                                    color: AppColor.primaryColorLight,
-                                    width: 0.5,
-                                  ),
-                                  top: BorderSide(
-                                    color: AppColor.primaryColorLight,
-                                    width: 1,
-                                  ),
-                                )),
+                              onPress: widget.onChat,
+                              icon: IconConstants.icChatColor,
+                              title: 'order.detail.chat'.tr,
+                              badge: _badge,
+                              border: Border(
+                                right: BorderSide(
+                                  color: AppColor.primaryColorLight,
+                                  width: 0.5,
+                                ),
+                                top: BorderSide(
+                                  color: AppColor.primaryColorLight,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
                           ),
                           Expanded(
                             child: _buildActionButton(
-                                onPress: onCall,
-                                icon: IconConstants.icCallColor,
-                                title: 'order.detail.call'.tr,
-                                border: Border(
-                                  right: BorderSide(
-                                    color: AppColor.primaryColorLight,
-                                    width: 0.5,
-                                  ),
-                                  top: BorderSide(
-                                    color: AppColor.primaryColorLight,
-                                    width: 1,
-                                  ),
-                                )),
+                              onPress: widget.invoice.isNotCall()
+                                  ? null
+                                  : widget.onCall,
+                              icon: IconConstants.icCallColor,
+                              title: 'order.detail.call'.tr,
+                              border: Border(
+                                right: BorderSide(
+                                  color: AppColor.primaryColorLight,
+                                  width: 0.5,
+                                ),
+                                top: BorderSide(
+                                  color: AppColor.primaryColorLight,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
                           ),
                           Expanded(
                             child: _buildActionButton(
-                                onPress: onVideo,
-                                icon: IconConstants.icVideoCallColor,
-                                title: 'order.detail.video'.tr,
-                                border: Border(
-                                  top: BorderSide(
-                                    color: AppColor.primaryColorLight,
-                                    width: 1,
-                                  ),
-                                )),
+                              onPress: widget.invoice.isNotCall()
+                                  ? null
+                                  : widget.onVideo,
+                              icon: IconConstants.icVideoCallColor,
+                              title: 'order.detail.video'.tr,
+                              border: Border(
+                                top: BorderSide(
+                                  color: AppColor.primaryColorLight,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     )
-
-                  // Container(
-                  //   width: double.infinity,
-                  //   height: 50,
-                  //   child: _buildActionButton(
-                  //       onPress: () {},
-                  //       icon: IconConstants.icCalendarPink,
-                  //       title: 'supplier.book'.tr,
-                  //       border: Border(
-                  //         top: BorderSide(
-                  //           color: AppColor.primaryColorLight,
-                  //           width: 1,
-                  //         ),
-                  //       )),
-                  // ),
                 ],
               ),
             ),
@@ -265,7 +294,8 @@ class ItemOrderWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildPriceItem({required String icon, required String title, required String subTitle}) {
+  Widget _buildPriceItem(
+      {required String icon, required String title, required String subTitle}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -295,13 +325,12 @@ class ItemOrderWidget extends StatelessWidget {
     );
   }
 
-
-
   Widget _buildActionButton(
       {required String icon,
       required String title,
       required Border border,
-      required Function()? onPress}) {
+      required Function()? onPress,
+      int badge = 0}) {
     return InkWell(
       onTap: onPress,
       child: Container(
@@ -311,11 +340,21 @@ class ItemOrderWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              icon,
-              width: 17,
+            Container(
+              height: 22,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    icon,
+                    width: 17,
+                  ),
+                  const SizedBox(width: 5),
+                  BadgeWidget(badge: badge),
+                ],
+              ),
             ),
-            const SizedBox(width: 10),
             Text(title, style: TextAppStyle().smallTextBlack())
           ],
         ),

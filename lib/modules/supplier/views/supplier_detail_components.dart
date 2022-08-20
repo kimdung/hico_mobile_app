@@ -174,9 +174,12 @@ extension SupplierDetailComponents on SupplierDetailScreen {
                       ...List.generate(
                           list.length,
                           (index) => _buildImageItem(
-                              image: list[index].url!,
+                              onpress:() => controller.openLink(list[index].url!),
+                              image: list[index].extension == 'pdf' ? 'lib/resource/assets_resources/images/pdf_icon.jpeg' : list[index].url!,
                               padding: true,
-                              width: (Get.width - 40) / 2)),
+                              file: list[index].extension == 'pdf' ? true: false,
+                              width: (Get.width - 40) / 2),
+                              ),
                     ],
                   )
                 : null,
@@ -190,40 +193,49 @@ extension SupplierDetailComponents on SupplierDetailScreen {
       {required String image,
       String? title,
       double? width,
-      bool? padding = false}) {
-    return Column(
-      children: [
-        Container(
-          width: width ?? Get.width,
-          padding: padding!
-              ? const EdgeInsets.symmetric(horizontal: 5)
-              : const EdgeInsets.all(0),
-          height: 119,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: CachedNetworkImage(
-              imageUrl: image,
-              imageBuilder: (context, imageProvider) => Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: imageProvider,
-                    fit: BoxFit.fill,
+      bool? file = false,
+      bool? padding = false,
+      Function()? onpress,}) {
+    return InkWell(
+      onTap: onpress,
+      child: Container(
+        child: Column(
+          children: [
+            Container(
+              width: width ?? Get.width,
+              padding: padding!
+                  ? const EdgeInsets.symmetric(horizontal: 5)
+                  : const EdgeInsets.all(0),
+              height: 119,
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: file == false ?
+                 CachedNetworkImage(
+                  imageUrl: image,
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                ),
+                  placeholder: (context, url) => const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ):
+                FCoreImage(image,),
               ),
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
-          ),
+            if (title != null)
+              Text(
+                title,
+                style: TextAppStyle().genaralTextStyle(),
+              ),
+            const SizedBox(height: 12),
+          ],
         ),
-        if (title != null)
-          Text(
-            title,
-            style: TextAppStyle().genaralTextStyle(),
-          ),
-        const SizedBox(height: 12),
-      ],
+      ),
     );
   }
 

@@ -8,8 +8,8 @@ const Map<String, String> vi_VN = {
   'not_account': 'Bạn chưa có tài khoản?',
   'password': 'Mật khẩu',
   'confirm_password': 'Nhập lại mật khẩu',
-  'register_notif': 'Bằng cách đăng ký, bạn đồng ý với',
-  'term_and_conditions': 'Điều khoản & Điều kiện',
+  'register_notif': 'Bằng cách đăng ký, bạn đồng ý với\nĐiều khoản sử dụng và Chính sách bảo mật',
+  'term_and_conditions': 'Điều khoản sử dụng',
   'and': 'và',
   'privacy_policy': 'Chính sách bảo mật',
   'success': 'Thành công',
@@ -28,7 +28,8 @@ const Map<String, String> vi_VN = {
   'copied': 'Đã sao chép',
   'comment': 'Ghi chú',
   'camera': 'Hình ảnh',
-  'year' : 'năm',
+  'year': 'năm',
+  'accept': 'Chấp nhận',
 
   //onboard
   'onboard.title1': 'Welcome to Hico',
@@ -90,6 +91,7 @@ const Map<String, String> vi_VN = {
   //news
   'news.title': 'Tin tức',
   'news.detail_title': 'Chi tiết tin tức',
+  'news.empty': 'Chưa có tin tức cho ngôn ngữ này',
 
   //notification
   'notification.title': 'Thông báo',
@@ -116,7 +118,7 @@ const Map<String, String> vi_VN = {
   'order.detail.cancel_reason': 'Lý do hủy đơn',
   'order.detail.voucher': 'Voucher từ Hico',
   'order.detail.step': 'Lần',
-  'order.detail.requied_repeat': 'Yêu cầu hệ thông tìm PDV khác',
+  'order.detail.requied_repeat': 'Yêu cầu hệ thống tìm PDV khác',
   'order.detail.cancel_act': 'Hủy đơn',
   'order.detail.edit': 'Yêu cầu chỉnh sửa',
   'order.detail.rating': 'Đánh giá',
@@ -158,7 +160,7 @@ const Map<String, String> vi_VN = {
   'profile': 'Thông tin cá nhân',
   'services': 'Dịch vụ đang cung cấp',
   'statistic': 'Thống kê',
-  'setting': 'Cài đặt',
+  'setting': 'Ngôn ngữ',
   'topup': 'Nạp tiền',
   'change_password': 'Đổi mật khẩu',
   'contact': 'Liên hệ',
@@ -171,13 +173,17 @@ const Map<String, String> vi_VN = {
   'branch': 'Chi nhánh:',
   'account_holder': 'Chủ tải khoản:',
   'account_number': 'Số tải khoản:',
-
+  'account.required_delete': 'Yêu cầu huỷ tài khoản',
+  'account.description_delete': 'Chúng tôi rất lấy làm tiếc khi bạn muốn rời Hico, nhưng xin lưu ý các tài khoản đã bị xoá sẽ không được mở trở lại.',
+  'account.delete': 'Xoá tài khoản',
+ 
   // topup
   'topup.title': 'Thông tin nạp tiền',
   'topup.history': 'Lịch sử nạp tiền',
   'topup.confirm': 'Xác Nhận Nạp Tiền',
   'topup.waitting': 'Chờ xác nhận',
   'topup.confirmed': 'Đã xác nhận',
+  'topup.failed': 'Không thành công',
   'topup.balance': 'Số dư ví: ',
   'topup.amount': 'Số tiền cần nạp (JPY)',
   'topup.amount.hint': 'Nhập số tiền cần nạp',
@@ -189,8 +195,8 @@ const Map<String, String> vi_VN = {
   'topup.komoju2': 'スマホ決済 - KOMOJU',
   'topup.komoju.description1': 'Thanh toán tại Mini Stop,...',
   'topup.komoju.description2': 'Thanh toán bằng Line Pay,...',
-  'topup.stripe': 'Thanh toán Stripe',
-  'topup.stripe.description': 'Chuyển thanh toán cho cổng thanh toán Stripe',
+  'topup.stripe': 'Thẻ Credit, Debit',
+  'topup.stripe.description': 'Thanh toán VISA, Master Card, JBC, Amex',
 
   'topup.bank.info': 'Thông tin chuyển khoản',
   'topup.bank.number': 'STK - %s',
@@ -219,14 +225,16 @@ const Map<String, String> vi_VN = {
   'topup.method': 'Hình thức nạp tiền',
   'topup.note': 'Ghi chú',
   'topup.recharge': 'Nạp thêm',
+  'topup.cancel': 'Huỷ',
 
   'topup.error': 'Có lỗi xẩy ra trong quá trình nạp tiền!',
   'topup.failure': 'Nạp tiền thất bại!',
+  'topup.empty': 'Chưa có phiên giao dịch',
 
   //statistic screen
-  'statistic.order_finish': 'Đơn hàng đã hoàn thành',
+  'statistic.order_finish': 'Danh sách đơn hàng',
   'statistic.finish': 'Đã hoàn thành',
-  'statistic.cancel': 'Đã hủy',
+  'statistic.cancel': 'Bạn hủy',
   'statistic.finish_total': 'Tổng số tiền',
   'statistic.finish_paid': 'Đã trả hệ thống',
   'statistic.finish_remain': 'Còn nợ hệ thống',
@@ -244,6 +252,11 @@ const Map<String, String> vi_VN = {
   'statistic.to_date': 'Ngày kết thúc:',
   'statistic.order_code': 'Mã đơn hàng',
   'statistic.amount': 'Số tiền',
+  'statistic.synthetic': 'Tổng hợp',
+  'statistic.supplier.cancel': 'PDV huỷ',
+  'statistic.wallet': 'Số dư ví',
+  'statistic.bonus': 'Số tiền được hoàn lại khi PDV huỷ',
+  'statistic.monney_used': 'Số tiền đã sử dụng',
 
   //support screen
   'support.title':
@@ -275,6 +288,19 @@ const Map<String, String> vi_VN = {
   'profile.update.image_card': 'Ảnh thẻ ngoại kiều (2 mặt)',
   'profile.update.education': 'VD: Cử nhân ĐH A',
   'profile.update.experience': 'Ghi rõ kinh nghiệm phiên dịch của bạn',
+
+  'profile.update.number_years_in_japan.all': 'Chọn số năm ở Nhật',
+  'profile.update.number_years_in_japan.none': 'Chưa đến Nhật',
+  'profile.update.number_years_in_japan.one_to_three_year': '1-3 năm',
+  'profile.update.number_years_in_japan.four_to_six_year': '4-6 năm',
+  'profile.update.number_years_in_japan.seven_to_ten_year': '7-10 năm',
+  'profile.update.number_years_in_japan.more_than_ten_year': 'Trên 10 năm',
+
+  'profile.update.experience.none': 'Chưa có kinh nghiệm',
+  'profile.update.experience.one_to_three_year': '1-3 năm',
+  'profile.update.experience.four_to_six_year': '4-6 năm',
+  'profile.update.experience.seven_to_ten_year': '7-10 năm',
+  'profile.update.experience.more_than_ten_year': 'Trên 10 năm',
 
   //service
   'service.titlebar': 'Danh Sách Dịch Vụ Cung Cấp',
@@ -313,6 +339,8 @@ const Map<String, String> vi_VN = {
   'supplier.filter.choose_time': 'Chọn thời gian',
   'supplier.filter.choose_date': 'Thời gian sử dụng dịch vụ',
   'supplier.filter.location_required': 'Vui lòng chọn địa điểm',
+  'supplier.filter.move_fee': 'Chi phí chưa bao gồm tiền đi lại',
+
   //supplier
   'supplier.title': 'Tìm kiếm Phiên dịch viên',
   'supplier.filter': 'Bộ lọc',
@@ -325,8 +353,8 @@ const Map<String, String> vi_VN = {
   'supplier.detail.customer': 'Khách hàng',
   'supplier.detail.degree': 'Bằng cấp',
   'supplier.detail.booking': 'Đặt lịch',
-  'supplier.detail.interpretation_experience' : 'Kinh nghiệm phiên dịch',
-  'supplier.detail.translation_experience' : 'Kinh nghiệm biên dịch',
+  'supplier.detail.interpretation_experience': 'Kinh nghiệm phiên dịch',
+  'supplier.detail.translation_experience': 'Kinh nghiệm biên dịch',
 
   //invoice
   'invoice.misson': 'Nhiệm vụ đã hoàn thành',
@@ -334,7 +362,7 @@ const Map<String, String> vi_VN = {
   'invoice.hours': 'Giờ',
   'invoice.minutes': 'Phút',
   'invoice.all': 'Tất cả',
-  'invoice.requested': 'Đã yêu cầu',
+  'invoice.requested': 'Đang yêu cầu',
   'invoice.accepted': 'PDV đồng ý',
   'invoice.successed': 'Hoàn thành',
   'invoice.canceled': 'Đã huỷ',
@@ -345,6 +373,8 @@ const Map<String, String> vi_VN = {
   'invoice.detail.payment_method': 'Phương thức thanh toán',
   'invoice.detail.hint_cancel': 'Ghi lý do hủy đơn của bạn',
   'invoice.detail.hint_rating': 'Viết đánh giá của bạn...',
+  'invoice.detail.error_rating': 'Vui lòng nhập đánh giá.',
+  'invoice.detail.cancel': 'Huỷ đơn hàng',
 
   //booking
   'booking.title': 'Chi tiết đặt lịch',
@@ -360,7 +390,7 @@ const Map<String, String> vi_VN = {
   'booking.success': 'Đặt dịch vụ',
   'booking.code': 'Mã đơn hàng:',
   'booking.suggest': 'Gợi ý',
-  'booking.your_address': 'Địa chỉ làm việc của bạn',
+  'booking.your_address': 'Nhập địa chỉ nơi hẹn gặp phiên dịch',
   'booking.address_title': 'Tên Bệnh viện/Phòng khám/Nơi làm việc *',
   'booking.payment_method': 'Chọn Phương Thức Thanh Toán',
   'booking.payment_bank': 'Chuyển khoản ngân hàng',
@@ -387,6 +417,7 @@ const Map<String, String> vi_VN = {
   'consulting.hint_content': 'Ghi chi tiết triệu chứng bạn đang gặp phải',
   'consulting.symptom': 'Triệu chứng',
   'consulting.success': 'Đăng ký tư vấn thành công!',
+  'consulting.address': 'Chưa chọn địa chỉ',
 
   //extend screen
   'extend.header': 'Chọn thời gian bạn muốn gia hạn cho buổi làm việc với PDV',
@@ -401,4 +432,13 @@ const Map<String, String> vi_VN = {
   'booking.detail.serivce_infor': 'Thông tin dịch vụ',
   'booking.detail.time_work': 'Thời gian làm việc',
   'booking.detail.payment_method': 'Phương thức thanh toán',
+
+  'voucher.code': 'Mã',
+  'voucher.promotion': 'Ưu đãi',
+  'voucher.expired': 'Hiệu lực',
+  'voucher.condition': 'Điều kiện',
+  'voucher.skip': 'Bỏ qua',
+  'voucher.apply': 'Áp dụng',
+  'voucher.hint': 'Nhập mã khuyến mãi',
+  'time.note' :'※Thời gian trong ứng dụng được tính theo múi giờ Nhật Bản (GMT+9)',
 };

@@ -8,14 +8,16 @@ part of 'statistic_model.dart';
 
 StatisticModel _$StatisticModelFromJson(Map<String, dynamic> json) =>
     StatisticModel(
-      total: (json['total'] as num?)?.toDouble(),
-      paid: (json['paid'] as num?)?.toDouble(),
-      remain: (json['remain'] as num?)?.toDouble(),
+      balance: (json['balance'] as num?)?.toDouble(),
+      refundsBySupplier: (json['refunds_by_supplier'] as num?)?.toDouble(),
+      amountTotal: (json['amount_total'] as num?)?.toDouble(),
+      finedAmount: (json['fined_amount'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$StatisticModelToJson(StatisticModel instance) =>
     <String, dynamic>{
-      'total': instance.total,
-      'paid': instance.paid,
-      'remain': instance.remain,
+      'balance': instance.balance,
+      'refunds_by_supplier': instance.refundsBySupplier,
+      'amount_total': instance.amountTotal,
+      'fined_amount': instance.finedAmount,
     };

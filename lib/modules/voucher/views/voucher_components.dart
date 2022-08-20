@@ -12,7 +12,7 @@ extension VoucherComponent on VoucherScreen {
           children: [
             BoxDecorationWidget(
               shadow: true,
-              height: 100,
+              height: 110,
               border: Border.all(
                   color: controller.voucherId.value == item.id
                       ? AppColor.primaryColorLight
@@ -22,14 +22,14 @@ extension VoucherComponent on VoucherScreen {
                   ? AppColor.secondBackgroundColorLight
                   : AppColor.primaryBackgroundColorLight,
               child: Container(
-                height: 100,
+                height: 110,
                 child: Row(children: [
                   Stack(
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 13),
-                        child: (item.displayImage != null)
+                        child: (item.displayImage != null && item.displayImage!.isNotEmpty)
                             ? NetWorkImage(
                                 image: item.displayImage!,
                                 width: 75,
@@ -37,7 +37,7 @@ extension VoucherComponent on VoucherScreen {
                                 fit: BoxFit.cover,
                               )
                             : FCoreImage(
-                                ImageConstants.imageDefault,
+                                ImageConstants.emptyImage,
                                 width: 75,
                                 height: 75,
                                 fit: BoxFit.cover,

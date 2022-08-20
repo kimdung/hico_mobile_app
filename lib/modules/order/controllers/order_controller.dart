@@ -3,7 +3,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/call/call_model.dart';
+import 'package:ui_api/models/invoice/invoice_detail_model.dart';
 import 'package:ui_api/models/invoice/invoice_info_model.dart';
+import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/invoice_request.dart';
 import 'package:ui_api/request/invoice/rating_request.dart';
@@ -32,6 +34,9 @@ class OrderController extends BaseController {
   final invoice = Rx(InvoiceInfoModel());
   int id = 0;
   InvoiceRequest? request;
+  final Rx<int> isCommennt = Rx(0);
+  InvoiceReviewModel? myReview;
+  Rx<UserInfoModel> user = Rx(UserInfoModel());
 
   @override
   Future<void> onInit() async {
@@ -39,28 +44,36 @@ class OrderController extends BaseController {
 
     request = Get.arguments;
     id = request!.id!;
-    if(request!.extend != null && request!.extend! == true){
-      await showDialogNotification();
-    }
     await _loadData();
   }
 
   @override
   Future<void> onReady() async {
     super.onReady();
-   
-    //await showDialogNotification();
   }
 
   Future<void> _loadData() async {
     try {
       await EasyLoading.show();
+      user.value = AppDataGlobal.userInfo!;
       await _uiRepository.invoiceDetail(id).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null &&
             response.data!.detail != null) {
           invoice.value = response.data!.detail!;
+          isCommennt.value = response.data!.isComment??0;
+          if(response.data!.dataReview != null && response.data!.dataReview!.content!.isNotEmpty){
+            myReview = response.data!.dataReview;
+          }
+
+          if (request!.extend != null && request!.extend!) {
+            showDialogNotification();
+          } else if (isCommennt.value != 1 &&
+              request!.rating != null &&
+              request!.rating!) {
+            onRating();
+          }
           return;
         } else {
           DialogUtil.showPopup(
@@ -159,10 +172,15 @@ class OrderController extends BaseController {
       filter: Filter.autoComplete('id', invoice.value.supplierId.toString()),
     );
     await Get.toNamed(Routes.CHAT, arguments: {
+      CommonConstants.INVOICE_ID: invoice.value.id,
       CommonConstants.CHANNEL: channel,
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? invoice.value.getProvider()
           : _usersResponse!.users.first,
+      CommonConstants.IS_NOT_CALL: invoice.value.supplierStart != null &&
+              invoice.value.supplierStart!.isNotEmpty
+          ? false
+          : true,
     });
   }
 
@@ -179,6 +197,7 @@ class OrderController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           final call = CallModel(
+            invoiceId: invoice.value.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
             callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',
@@ -208,6 +227,7 @@ class OrderController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           final call = CallModel(
+            invoiceId: invoice.value.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
             callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',
@@ -234,12 +254,9 @@ class OrderController extends BaseController {
     try {
       await DialogUtil.showPopup(
         barrierDismissible: true,
-        height: 397,
-        backgroundColor: AppColor.primaryBackgroundColorLight,
-        onPress: () {},
+        backgroundColor: Colors.transparent,
         child: RatingDialogWidget(
           id: id,
-          height: 397,
           icon: invoice.value.supplierAvatar,
           padding: 18,
           hintText: 'invoice.detail.hint_rating'.tr,
@@ -248,7 +265,7 @@ class OrderController extends BaseController {
           if (_value != null && _value is RatingRequest) {
             // call api rating
             EasyLoading.show();
-            _uiRepository.editInvoiceRequest(id).then((response) {
+            _uiRepository.invoiceRating(_value).then((response) {
               EasyLoading.dismiss();
               DialogUtil.showPopup(
                 dialogSize: DialogSize.Popup,
@@ -256,7 +273,7 @@ class OrderController extends BaseController {
                 backgroundColor: Colors.transparent,
                 child: NormalWidget(
                   icon: response.status == CommonConstants.statusOk
-                      ? IconConstants.edit
+                      ? IconConstants.icSuccess
                       : IconConstants.icFail,
                   title: response.message,
                 ),
@@ -310,6 +327,15 @@ class OrderController extends BaseController {
                   ),
                   onVaLue: (value) {},
                 );
+              } else {
+                _uiRepository.getInfo().then((response) {
+                  if (response.status == CommonConstants.statusOk &&
+                      response.data != null &&
+                      response.data!.info != null) {
+                    AppDataGlobal.userInfo = response.data!.info!;
+                  }
+                });
+                _loadData();
               }
               return;
             });
@@ -322,6 +348,30 @@ class OrderController extends BaseController {
     }
   }
 
+Future<void> cancelInvoice() async {
+    try {
+      await EasyLoading.show();
+     await _uiRepository.invoiceCancelInvoice(id).then((response) {
+              EasyLoading.dismiss();
+              DialogUtil.showPopup(
+                dialogSize: DialogSize.Popup,
+                barrierDismissible: false,
+                backgroundColor: Colors.transparent,
+                child: NormalWidget(
+                  icon: response.status == CommonConstants.statusOk
+                      ? IconConstants.icSuccess
+                      : IconConstants.icFail,
+                  title: response.message,
+                ),
+                onVaLue: (value) {},
+              );
+              return;
+            });
+      return;
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
   @override
   void onClose() {}
 
@@ -339,7 +389,7 @@ class OrderController extends BaseController {
             if (_value == 1) {
               Get.toNamed(Routes.TIME_EXTENSION, arguments: id);
             }
-        }
+          }
         },
       );
       return;
@@ -352,7 +402,7 @@ class OrderController extends BaseController {
     //   backgroundColor: Colors.transparent,
     //   child: const TimeExtendWidget(),
     //   onVaLue: (_value) {
-          
+
     //   },
     // );
   }

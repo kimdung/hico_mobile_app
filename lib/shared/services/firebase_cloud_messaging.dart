@@ -1,17 +1,18 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:get/instance_manager.dart';
-import 'package:hico/shared/services/navigation_service.dart';
+import 'package:get/get.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/request/invoice/invoice_request.dart';
 
 import '../../data/app_data_global.dart';
 import '../../routes/app_pages.dart';
+import '../constants/common.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -112,7 +113,14 @@ class FirebaseMessageConfig {
       );
       await _flutterLocalNotificationsPlugin.initialize(
         initializationSettings,
-        onSelectNotification: _onSelectNotifcation,
+        onSelectNotification: (payload) {
+          if (payload?.isEmpty ?? true) {
+            return;
+          }
+          final message = jsonDecode(payload ?? '');
+          debugPrint('ONTAP onSelectNotification');
+          _onSelectNotifcation(message);
+        },
       );
 
       if (Platform.isIOS) {
@@ -161,21 +169,14 @@ class FirebaseMessageConfig {
       FirebaseMessaging.onMessage.listen(_showNotification);
 
       /// Tương tác với thông báo khi ứng dụng đang ở background và khi đang khóa màn hình
-      FirebaseMessaging.onMessageOpenedApp.listen(
-        (RemoteMessage message) {
-          /// ['id']: Key json chứa ID của thông báo server trả về.
-          /// Dùng để điều hướng vào màn chi tiết thông báo
-          /// Mặc định đang là ['id']
-          if (message.data.isNotEmpty) {
-            // Navigator.of(AppConfig.navigatorKey.currentContext).pushNamed(
-            //   DetailNotificationScreen.routeName,
-            //   arguments: int.tryParse(
-            //     message?.data['id']?.toString(),
-            //   ),
-            // );
-          }
-        },
-      );
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        debugPrint('ONTAP onMessageOpenedApp: ${message.data.toString()}');
+
+        /// ['id']: Key json chứa ID của thông báo server trả về.
+        /// Dùng để điều hướng vào màn chi tiết thông báo
+        /// Mặc định đang là ['id']
+        _onSelectNotifcation(message.data);
+      });
     } catch (e) {
       debugPrint('$e');
     }
@@ -222,24 +223,56 @@ class FirebaseMessageConfig {
     }
   }
 
-  Future<void> _onSelectNotifcation(String? payload) async {
-    debugPrint('ONTAP NOTIFICATION: $payload');
-    if (payload?.isNotEmpty ?? false) {
-      /// ['id']: Key json chứa ID của thông báo server trả về.
-      /// Dùng để điều hướng vào màn chi tiết thông báo
-      /// Mặc định đang là ['id']
-      try{
-        var type = json.decode(payload!)['display_type']?.toString();
-        var id = json.decode(payload)['invoice_id']?.toString();
-        if(type == '4'){
-          await Navigator.of(AppDataGlobal.navigatorKey.currentContext!).pushNamed(
-            Routes.ORDER_DETAIL, arguments: InvoiceRequest(id: int.parse(id!), extend: true)
-          );
-        }
-      }catch(e){
-          print(e);
-      }
-      
+  Future<void> _onSelectNotifcation(Map<String, dynamic> message) async {
+    debugPrint('ONTAP NOTIFICATION: $message');
+    if (message.isEmpty) {
+      return;
+    }
+
+    /// ['id']: Key json chứa ID của thông báo server trả về.
+    /// Dùng để điều hướng vào màn chi tiết thông báo
+    /// Mặc định đang là ['id']
+    // try {
+    //   final type = message['display_type']?.toString();
+    //   final id = message['invoice_id']?.toString();
+    //   if (type == DisplayType.Extend.id.toString()) {
+    //     await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+    //         .pushNamed(Routes.ORDER_DETAIL,
+    //             arguments: InvoiceRequest(id: int.parse(id!), extend: true));
+    //   } else if (type == DisplayType.Rating.id.toString()) {
+    //     await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+    //         .pushNamed(Routes.ORDER_DETAIL,
+    //             arguments: InvoiceRequest(id: int.parse(id!), rating: true));
+    //   }
+    // } catch (e) {
+    //   print(e);
+    // }
+
+    //FCM Firebase
+    final type = message['display_type']?.toString();
+    final id = message['invoice_id']?.toString();
+
+    //FCM GetStream
+    final sender = message['sender']?.toString();
+    final channelId = message['channel_id'] ?? '';
+
+    if (type == DisplayType.Order.id.toString() ||
+        type == DisplayType.Remind.id.toString()) {
+      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!).pushNamed(
+          Routes.ORDER_DETAIL,
+          arguments: InvoiceRequest(id: int.parse(id!)));
+    } else if (type == DisplayType.Extend.id.toString()) {
+      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!).pushNamed(
+          Routes.ORDER_DETAIL,
+          arguments: InvoiceRequest(id: int.parse(id!), extend: true));
+    } else if (type == DisplayType.Rating.id.toString()) {
+      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!).pushNamed(
+          Routes.ORDER_DETAIL,
+          arguments: InvoiceRequest(id: int.parse(id!), rating: true));
+    } else if (sender == 'stream.chat' && channelId.isNotEmpty) {
+      //router chat screen
+      debugPrint('router chat screen');
+      await onChat(channelId);
     }
   }
 
@@ -261,6 +294,30 @@ class FirebaseMessageConfig {
         AppDataGlobal.firebaseToken = token;
         AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
       }
+    });
+  }
+
+  Future<void> onChat(String channelId) async {
+    if (AppDataGlobal.client == null) {
+      return;
+    }
+    final channel = AppDataGlobal.client!.channel('messaging', id: channelId);
+    final ids = channelId.split('-');
+    final userId = ids
+        .firstWhereOrNull((id) => id != AppDataGlobal.userInfo?.id.toString());
+    if (userId == null) {
+      return;
+    }
+    await AppDataGlobal.client
+        ?.queryUsers(filter: Filter.autoComplete('id', userId))
+        .then((response) {
+      if (response.users.isEmpty) {
+        return;
+      }
+      Get.toNamed(Routes.CHAT, arguments: {
+        CommonConstants.CHANNEL: channel,
+        CommonConstants.CHAT_USER: response.users.first,
+      });
     });
   }
 }

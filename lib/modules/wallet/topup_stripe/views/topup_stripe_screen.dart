@@ -8,7 +8,7 @@ import '../../../../resource/assets_constant/icon_constants.dart';
 import '../../../../shared/constants/colors.dart';
 import '../../../../shared/styles/text_style/text_style.dart';
 import '../../../../shared/widget_hico/button/general_button.dart';
-import '../../../../shared/widget_hico/widget_touch_hide_keyboard.dart'; 
+import '../../../../shared/widget_hico/widget_touch_hide_keyboard.dart';
 import '../../../call/pickup/picker_layout.dart';
 import '../controllers/topup_stripe_controller.dart';
 
@@ -121,55 +121,55 @@ class TopupStripeScreen extends GetView<TopupStripeController> {
     );
   }
 
-  Widget _buildInputAccountHolder() {
-    return TextFormField(
-      controller: controller.accountHolderController,
-      keyboardType: TextInputType.text,
-      cursorColor: Colors.grey,
-      decoration: InputDecoration(
-        labelText: 'topup.card.name'.tr,
-        labelStyle: TextAppStyle().smallTextGrey(),
-      ),
-      style: TextAppStyle().smallTextGrey(),
-    );
-  }
+  // Widget _buildInputAccountHolder() {
+  //   return TextFormField(
+  //     controller: controller.accountHolderController,
+  //     keyboardType: TextInputType.text,
+  //     cursorColor: Colors.grey,
+  //     decoration: InputDecoration(
+  //       labelText: 'topup.card.name'.tr,
+  //       labelStyle: TextAppStyle().smallTextGrey(),
+  //     ),
+  //     style: TextAppStyle().smallTextGrey(),
+  //   );
+  // }
 
-  Widget _buildInputBankNumber() {
-    return TextFormField(
-      controller: controller.bankNumberController,
-      keyboardType: TextInputType.number,
-      cursorColor: Colors.grey,
-      decoration: InputDecoration(
-        labelText: 'topup.card.number'.tr,
-        labelStyle: TextAppStyle().smallTextGrey(),
-      ),
-      style: TextAppStyle().smallTextGrey(),
-    );
-  }
+  // Widget _buildInputBankNumber() {
+  //   return TextFormField(
+  //     controller: controller.bankNumberController,
+  //     keyboardType: TextInputType.number,
+  //     cursorColor: Colors.grey,
+  //     decoration: InputDecoration(
+  //       labelText: 'topup.card.number'.tr,
+  //       labelStyle: TextAppStyle().smallTextGrey(),
+  //     ),
+  //     style: TextAppStyle().smallTextGrey(),
+  //   );
+  // }
 
-  Widget _buildInputValidDate() {
-    return TextFormField(
-      controller: controller.validDateController,
-      keyboardType: TextInputType.datetime,
-      cursorColor: Colors.grey,
-      decoration: InputDecoration(
-        labelText: 'topup.card.date'.tr,
-        labelStyle: TextAppStyle().smallTextGrey(),
-      ),
-      style: TextAppStyle().smallTextGrey(),
-    );
-  }
+  // Widget _buildInputValidDate() {
+  //   return TextFormField(
+  //     controller: controller.validDateController,
+  //     keyboardType: TextInputType.datetime,
+  //     cursorColor: Colors.grey,
+  //     decoration: InputDecoration(
+  //       labelText: 'topup.card.date'.tr,
+  //       labelStyle: TextAppStyle().smallTextGrey(),
+  //     ),
+  //     style: TextAppStyle().smallTextGrey(),
+  //   );
+  // }
 
-  Widget _buildInputCVV() {
-    return TextFormField(
-      controller: controller.cvvController,
-      keyboardType: TextInputType.number,
-      cursorColor: Colors.grey,
-      decoration: InputDecoration(
-        labelText: 'topup.card.cvv'.tr,
-        labelStyle: TextAppStyle().smallTextGrey(),
-      ),
-      style: TextAppStyle().smallTextGrey(),
-    );
-  }
+  // Widget _buildInputCVV() {
+  //   return TextFormField(
+  //     controller: controller.cvvController,
+  //     keyboardType: TextInputType.number,
+  //     cursorColor: Colors.grey,
+  //     decoration: InputDecoration(
+  //       labelText: 'topup.card.cvv'.tr,
+  //       labelStyle: TextAppStyle().smallTextGrey(),
+  //     ),
+  //     style: TextAppStyle().smallTextGrey(),
+  //   );
+  // }
 }

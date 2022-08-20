@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ui_api/models/master_data/master_data_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/user/changepass_request.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
@@ -46,8 +48,11 @@ class ConfigController extends BaseController {
       TextEditingController();
   bool showPassword = false;
 
+  MasterDataModel masterData = MasterDataModel();
+
   @override
   Future<void> onInit() {
+    masterData = AppDataGlobal.masterData!;
     final language = storage.getString(StorageConstants.language);
     switch (language) {
       case VIETNAMESE_LANG:
@@ -61,6 +66,28 @@ class ConfigController extends BaseController {
         break;
     }
     return super.onInit();
+  }
+
+  Future<void> selectLanguage() async {
+    try {
+      switch (currentLanguage.value) {
+        case LanguageCode.VN:
+          AppDataGlobal.languageCode = VIETNAMESE_LANG;
+          break;
+        case LanguageCode.EN:
+          AppDataGlobal.languageCode = ENGLISH_LANG;
+          break;
+        case LanguageCode.JA:
+          AppDataGlobal.languageCode = JAPANESE_LANG;
+          break;
+      }
+      TranslationService.changeLocale(currentLanguage.value.languageLocale);
+
+      await storage.setString(
+          StorageConstants.language, AppDataGlobal.languageCode);
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
   }
 
   Future<void> confirmLanguage() async {
@@ -155,6 +182,14 @@ class ConfigController extends BaseController {
         },
       );
     }
+  }
+
+  Future<void> makeAction(String scheme, String endpoint) async {
+    final launchUri = Uri(
+      scheme: scheme,
+      path: endpoint,
+    );
+    await launchUrl(launchUri);
   }
 
   @override

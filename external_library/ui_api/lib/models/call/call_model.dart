@@ -5,6 +5,7 @@ part 'call_model.g.dart';
 @JsonSerializable()
 class CallModel {
   int? callerId;
+  int? invoiceId;
   String? callerName;
   String? callerPic;
   int? receiverId;
@@ -16,6 +17,7 @@ class CallModel {
 
   CallModel({
     this.callerId,
+    this.invoiceId,
     this.callerName,
     this.callerPic,
     this.receiverId,

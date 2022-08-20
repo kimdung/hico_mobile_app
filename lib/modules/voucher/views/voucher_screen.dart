@@ -6,6 +6,7 @@ import 'package:ui_api/models/voucher/voucher_model.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../resource/assets_constant/images_constants.dart';
 import '../../../shared/constants/colors.dart';
+import '../../../shared/decoration/text_field_decoration.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/box_decoration/box_decoration.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
@@ -43,11 +44,52 @@ class VoucherScreen extends GetView<VoucherController> {
           backgroundColor: Colors.white,
           shadowColor: AppColor.appbarColorLight.withOpacity(0.8),
         ),
-        body: Container(
+        body: Obx(()=> Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
               const SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: TextFormField(
+                      controller: controller.code,
+                      onChanged: (value){controller.changeText(value);},
+                      keyboardType: TextInputType.text,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      cursorColor: AppColor.fifthTextColorLight,
+                      decoration: TextFieldDecoration.borderOutline(
+                        backgroundColor: AppColor.primaryBackgroundColorLight,
+                        borderColor: AppColor.sixTextColorLight,
+                        hintText: ' ${'voucher.hint'.tr}',
+                        hintStype: TextAppStyle().normalTextGrey(),
+                        radius: 6,
+                      ),
+                      style: TextAppStyle().normalTextGrey(),
+                    ),
+                  ),
+                  const SizedBox(width:10),
+                  Expanded(
+                    flex: 2,
+                    child: GeneralButton(
+                      onPressed: () {
+                        if(controller.code.text.isNotEmpty){
+                          controller.addVoucher();
+                        }
+                      },
+                      borderColor: controller.enableButton.value ? AppColor.primaryColorLight: Color(0xFFCCCCCC),
+                      backgroundColor:controller.enableButton.value ? AppColor.primaryColorLight: Color(0xFFCCCCCC),
+                      borderRadius: BorderRadius.circular(4),
+                      child: Text(
+                        'voucher.apply'.tr,
+                        style: TextAppStyle().titleButtonStyle(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -74,14 +116,6 @@ class VoucherScreen extends GetView<VoucherController> {
                     ),
                   ),
                 ),
-
-                // Obx(() => ListView.builder(
-                //     controller: controller.scrollController,
-                //     itemCount: controller.voucherList.length,
-                //     shrinkWrap: true,
-                //     itemBuilder: (context, index) {
-                //       return buidItem(item: controller.voucherList[index]);
-                //     })),
               ),
               const SizedBox(height: 14),
               GeneralButton(
@@ -92,14 +126,14 @@ class VoucherScreen extends GetView<VoucherController> {
                 backgroundColor: AppColor.primaryColorLight,
                 borderRadius: BorderRadius.circular(24),
                 child: Text(
-                  'Áp dụng',
+                  'voucher.apply'.tr,
                   style: TextAppStyle().titleButtonStyle(),
                 ),
               ),
               const SizedBox(height: 14),
             ],
           ),
-        ),
+        )) ,
       ),
     );
   }

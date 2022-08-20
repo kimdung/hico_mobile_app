@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../../base/base_controller.dart';
+import '../../../../data/app_data_global.dart';
 import '../../../../resource/assets_constant/icon_constants.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../shared/constants/common.dart' as common;
@@ -17,15 +18,20 @@ class TopupStripeController extends BaseController {
 
   final cardEditController = CardFormEditController();
 
-  final double amount;
+  late double amount;
   CardFieldInputDetails? card;
+  bool isOrder = false;
 
-  final TextEditingController accountHolderController = TextEditingController();
-  final TextEditingController bankNumberController = TextEditingController();
-  final TextEditingController validDateController = TextEditingController();
-  final TextEditingController cvvController = TextEditingController();
+  // final TextEditingController accountHolderController = TextEditingController();
+  // final TextEditingController bankNumberController = TextEditingController();
+  // final TextEditingController validDateController = TextEditingController();
+  // final TextEditingController cvvController = TextEditingController();
 
-  TopupStripeController(this.amount);
+  TopupStripeController(){
+    final arguments = Get.arguments as Map;
+    isOrder = arguments['TOPUP_ISORDER'];
+    amount = arguments['TOPUP_DATA'];
+  }
 
   @override
   Future<void> onInit() async {
@@ -39,6 +45,7 @@ class TopupStripeController extends BaseController {
       return;
     }
     try {
+      await EasyLoading.show();
       final paymentMethod = await Stripe.instance
           .createPaymentMethod(const PaymentMethodParams.card())
           .catchError(
@@ -60,6 +67,7 @@ class TopupStripeController extends BaseController {
       );
       await _requestPayment(paymentMethod);
     } on StripeError catch (error) {
+      await EasyLoading.dismiss();
       await DialogUtil.showPopup(
         dialogSize: DialogSize.Popup,
         barrierDismissible: false,
@@ -79,18 +87,31 @@ class TopupStripeController extends BaseController {
 
   Future<void> _requestPayment(PaymentMethod paymentMethod) async {
     try {
-      await EasyLoading.show();
       await _uiRepository
           .topupStripe(
               paymentMethod.id, paymentMethod.billingDetails.name ?? '', amount)
-          .then((response) {
-        EasyLoading.dismiss();
+          .then((response) async {
         if (response.status == common.CommonConstants.statusOk &&
             response.data != null &&
             response.data!.row != null) {
-          Get.offAndToNamed(Routes.TOPUP_DETAIL, arguments: response.data!.row);
+          await _uiRepository.getInfo().then((response) {
+            if (response.status == common.CommonConstants.statusOk &&
+                response.data != null &&
+                response.data!.info != null) {
+              AppDataGlobal.userInfo = response.data!.info!;
+            }
+          });
+          await EasyLoading.dismiss();
+          if(isOrder){
+              Get.back(result: isOrder);
+          }else{
+            await Get.offAndToNamed(Routes.TOPUP_DETAIL,
+              arguments: response.data!.row);
+          }   
+
         } else {
-          DialogUtil.showPopup(
+          await EasyLoading.dismiss();
+          await DialogUtil.showPopup(
             dialogSize: DialogSize.Popup,
             barrierDismissible: false,
             backgroundColor: Colors.transparent,
@@ -103,7 +124,23 @@ class TopupStripeController extends BaseController {
             },
           );
         }
-      });
+      }).catchError(
+        (onError) {
+          EasyLoading.dismiss();
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: const NormalWidget(
+              icon: IconConstants.icFail,
+              title: 'There was an error processing, please try again!',
+            ),
+            onVaLue: (value) {
+              Get.back();
+            },
+          );
+        },
+      );
     } catch (e) {
       await EasyLoading.dismiss();
     }

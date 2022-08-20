@@ -63,7 +63,7 @@ class VoiceCallView extends GetView<VoiceCallController> {
                   () => Text(
                     (controller.isRemoted.value)
                         ? DateFormatter.formatSecondsToTime(
-                            controller.dutationCall.value)
+                            controller.durationCall.value)
                         : '',
                     style: TextAppStyle().titleAppBarStyle().copyWith(
                           color: AppColor.primaryColorLight,
@@ -89,6 +89,7 @@ class VoiceCallView extends GetView<VoiceCallController> {
           children: [
             FloatingActionButton(
               elevation: 4,
+              backgroundColor: AppColor.primaryBackgroundColorLight,
               onPressed: controller.switchSpeakerphone,
               child: Icon(
                 controller.enableSpeakerphone.value

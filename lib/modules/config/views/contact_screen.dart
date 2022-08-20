@@ -38,19 +38,30 @@ class ContactScreen extends GetView<ConfigController> {
           child: Column(
             children: [
               buildContactItem(
-                icon: IconConstants.icCtHotline,
-                title: 'Hotline',
-                value: '1900800988',
-              ),
+                  icon: IconConstants.icCtHotline,
+                  title: 'Hotline',
+                  value: controller.masterData.hotline ?? '',
+                  onPress: () {
+                    controller.makeAction(
+                        'tel', controller.masterData.hotline ?? '');
+                  }),
               buildContactItem(
                 icon: IconConstants.icCtEmail,
                 title: 'Email',
-                value: 'hicosupport@hico.com',
+                value: controller.masterData.supportEmail ?? '',
+                onPress: () {
+                  controller.makeAction(
+                      'mailto', controller.masterData.supportEmail ?? '');
+                },
               ),
               buildContactItem(
                 icon: IconConstants.icCtMessenger,
                 title: 'Messenger',
-                value: 'https://www.facebook.com/messages/hico',
+                value: controller.masterData.linkMessenger ?? '',
+                onPress: () {
+                  controller.makeAction(
+                      'https', controller.masterData.linkMessenger ?? '');
+                },
               )
             ],
           ),
@@ -59,8 +70,12 @@ class ContactScreen extends GetView<ConfigController> {
     );
   }
 
-  Container buildContactItem(
-      {required String icon, required String title, required String value}) {
+  Container buildContactItem({
+    required String icon,
+    required String title,
+    required String value,
+    Function()? onPress,
+  }) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
@@ -89,7 +104,13 @@ class ContactScreen extends GetView<ConfigController> {
                 title,
                 style: TextAppStyle().normalTextStype(),
               ),
-              Text(value, style: TextAppStyle().genaralTextStyle()),
+              InkWell(
+                onTap: onPress,
+                child: Text(
+                  value,
+                  style: TextAppStyle().genaralTextStyle(),
+                ),
+              ),
             ],
           ))
         ],

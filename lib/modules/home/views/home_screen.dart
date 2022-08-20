@@ -14,6 +14,7 @@ import '../../../shared/styles/text_style/app_text_style.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/box_decoration/box_decoration.dart';
 import '../../../shared/widget_hico/image_widget/network_image.dart';
+import '../../../shared/widgets/badge/badge_widget.dart';
 import '../../../shared/widgets/carousel/slider_widget.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
 import '../../../shared/widgets/services_widget/service_item.dart';
@@ -57,14 +58,14 @@ class HomeScreen extends GetView<HomeController> {
                         const SizedBox(height: 24),
                         if (controller.homeModel.value.bannerHome != null &&
                             controller.homeModel.value.bannerHome != '')
-                          buildBannerHome(),
-                        const SizedBox(height: 24),
-                        buildNewsList(),
+                          buildBannerHome(), 
                         const SizedBox(height: 24),
                         buildServiceList(
                             title: 'home.viewed_service'.tr,
                             onPress: () => Get.toNamed(Routes.RECENT_SERVICE),
                             list: controller.homeModel.value.serviceViews),
+                        const SizedBox(height: 24),
+                        buildNewsList(),
                         const SizedBox(height: 37),
                       ],
                     ),

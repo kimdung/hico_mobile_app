@@ -9,11 +9,9 @@ import 'package:ui_api/models/invoice/invoice_status.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/invoice_request.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
-import '../../../resource/config/config_agora.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/call_utilities.dart';
@@ -24,7 +22,7 @@ class OrderListController extends BaseController {
 
   Rx<UserInfoModel> info = Rx(UserInfoModel());
 
-  final Rx<int> totalNotif = Rx(0);
+  final Rx<int> badgeChatAdmin = Rx(0);
 
   String keyword = '';
 
@@ -33,16 +31,11 @@ class OrderListController extends BaseController {
 
   final RxList<InvoiceHistoryModel> list = RxList<InvoiceHistoryModel>();
 
-  final ScrollController scrollController = ScrollController();
-  int limit = 4;
+  ScrollController scrollController = ScrollController();
+  int limit = 10;
   int offset = 0;
 
-  OrderListController(this.adminChatChannel);
-
-  @override
-  Future<void> onInit() async {
-    await super.onInit();
-
+  OrderListController(this.adminChatChannel) {
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.position.pixels == 0) {
@@ -54,6 +47,16 @@ class OrderListController extends BaseController {
         }
       }
     });
+  }
+
+  @override
+  Future<void> onInit() async {
+    await super.onInit();
+  }
+
+  Future<void> deposit() async {
+    await Get.toNamed(Routes.WALLET)!
+        .then((value) => info.value = AppDataGlobal.userInfo!);
   }
 
   Future<void> selectStatus(InvoiceStatus status) async {
@@ -109,7 +112,8 @@ class OrderListController extends BaseController {
   }
 
   Future<void> viewDetail(int id) async {
-    await Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id:id) );
+    await Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id: id))!
+        .then((value) => loadList());
   }
 
   Future<void> onChatAdmin() async {
@@ -137,6 +141,8 @@ class OrderListController extends BaseController {
     if (AppDataGlobal.client == null) {
       return;
     }
+
+    print('[OrderListController] channel  ${invoice.getChatChannel()}');
     final channel = AppDataGlobal.client!
         .channel('messaging', id: invoice.getChatChannel());
     final _usersResponse = await AppDataGlobal.client?.queryUsers(
@@ -144,10 +150,16 @@ class OrderListController extends BaseController {
     );
 
     await Get.toNamed(Routes.CHAT, arguments: {
+      CommonConstants.INVOICE_ID: invoice.id,
       CommonConstants.CHANNEL: channel,
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? invoice.getProvider()
           : _usersResponse!.users.first,
+      CommonConstants.IS_NOT_CALL: invoice.isNotCall(),
+      // invoice.supplierStart != null &&
+      //         invoice.supplierStart!.isNotEmpty
+      //     ? false
+      //     : true,
     });
   }
 
@@ -160,6 +172,7 @@ class OrderListController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           final call = CallModel(
+            invoiceId: invoice.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
             callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',
@@ -189,6 +202,7 @@ class OrderListController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           final call = CallModel(
+            invoiceId: invoice.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
             callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',

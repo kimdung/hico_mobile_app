@@ -95,6 +95,16 @@ class SupplierWidget extends StatelessWidget {
                                   subTitle: '${'invoice.incurred'.tr}: ${invoice.servicePrice} JPY/ 1${'invoice.hours'.tr}'),
                               ),
                               const SizedBox(height: 8),
+                              _buildAddressItem(
+                                icon: IconConstants.icMoneyPink,
+                                title: '${'supplier.filter.move_fee'.tr}',
+                              ),
+                              const SizedBox(height: 5),
+                              _buildAddressItem(
+                                icon: IconConstants.icTrain,
+                                title: '${'profile.station'.tr} ${invoice.nearestStation}',
+                              ),
+                              const SizedBox(height: 8),
                             ],
                           ),
                         ),

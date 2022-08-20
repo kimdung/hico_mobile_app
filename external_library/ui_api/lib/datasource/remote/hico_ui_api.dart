@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:get/instance_manager.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:ui_api/request/general/contact_request.dart';
 import 'package:ui_api/request/invoice/booking_request.dart';
@@ -40,10 +38,12 @@ import 'package:ui_api/response/voucher/voucher_response.dart';
 import '../../request/invoice/extend_period_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/invoice/extend_period_response.dart';
+import '../../response/notifications/notification_unread_response.dart';
 import '../../response/wallet/topup_history_response.dart';
 import '../../response/wallet/topup_komaju_response.dart';
 import '../../response/wallet/topup_response.dart';
-import '../../response/invoice/extend_period_response.dart';
+
 part 'hico_ui_api.g.dart';
 
 @RestApi()
@@ -147,6 +147,10 @@ abstract class HicoUIAPI {
     @Query('notification_id') int id,
   );
 
+  // notification unread
+  @GET('/v1/notification/count_notify_unread')
+  Future<NotificationUnreadResponse> notificationUnRead();
+
   //service categories
   @GET('/v1/customer/category/list')
   Future<ServiceCategoriesResponse> serviceCategories(
@@ -186,7 +190,7 @@ abstract class HicoUIAPI {
     @Query('service_id') int id,
   );
 
-  //filter supplier 
+  //filter supplier
   @GET('/v1/customer/service/suppliers')
   Future<SupplierResponse> supplierList(
     @Query('service_id') int serviceId,
@@ -260,10 +264,22 @@ abstract class HicoUIAPI {
     @Query('reason') String reason,
   );
 
+  //invoice cancel
+  @POST('/v1/customer/invoice/cancelInvoice')
+  Future<BaseResponse> invoiceCancelInvoice(
+    @Query('invoice_id') int id,
+  );
+
   //invoice rating
   @POST('/v1/customer/review/send')
   Future<BaseResponse> invoiceRating(
     @Body() RatingRequest ratingRequest,
+  );
+
+  //invoice cancel rating
+  @POST('/v1/customer/closePopup')
+  Future<BaseResponse> invoiceCancelRating(
+    @Query('invoice_id') int id,
   );
 
   //invoice booking
@@ -286,6 +302,12 @@ abstract class HicoUIAPI {
     @Query('total') double total,
   );
 
+  //voucher
+  @POST('/v1/voucher/addVoucher')
+  Future<VoucherResponse> voucherAdd(
+    @Query('voucher_code') String code,
+  );
+
   //get address
   @GET('/v1/address/list')
   Future<AddressResponse> addressList(
@@ -306,6 +328,7 @@ abstract class HicoUIAPI {
     @Query('key_words') String keyWords,
     @Query('start_date') String startDate,
     @Query('end_date') String endDate,
+    @Query('status') int status,
   );
 
   //consulting
@@ -345,9 +368,18 @@ abstract class HicoUIAPI {
   @POST('/v1/conversation/createToken')
   Future<ChatTokenResponse> createChatToken();
 
-  //Get Token
+  //Get Call Token
   @POST('/v1/agoraCall/createToken')
   Future<CallTokenResponse> getCallToken(@Query('channel') String channel);
+
+  @POST('/v1/customer/invoice/begin')
+  Future<BaseResponse> beginCall(@Query('invoice_id') int invoiceId);
+
+  @POST('/v1/customer/invoice/end')
+  Future<BaseResponse> endCall(@Query('invoice_id') int invoiceId);
+
+  @POST('/v1/agoraCall/sendFCMToCall')
+  Future<BaseResponse> sendCallNotification(@Query('invoice_id') int invoiceId);
 
   /* Wallet */
   @GET('/v1/payIn/list')
@@ -377,13 +409,17 @@ abstract class HicoUIAPI {
   Future<TopupResponse> topupKomojuResult(
       @Query('session_id') String sessionId);
 
-  @POST('/v1/createPayInStripe')
+  @POST('/v1/payIn/createPayInStripe')
   Future<TopupResponse> createPayInStripe(
       @Query('payment_method_id') String paymentMethodId,
       @Query('name') String name,
       @Query('amount') double amount);
 
-  //post extend 
+  //post extend
   @POST('/v1/customer/invoice/extendPeriod')
   Future<BaseResponse> extendInvoice(@Body() ExtendPeriodRequest request);
+
+  //delete user
+  @POST('/v1/user/deleteUser')
+  Future<BaseResponse> deleteUser();
 }

@@ -21,6 +21,7 @@ SupplierInfoModel _$SupplierInfoModelFromJson(Map<String, dynamic> json) =>
       levelName: json['level_name'] as String? ?? '',
       levelId: json['level_id'] as int?,
       isOnline: json['is_online'] as int?,
+      nearestStation: json['nearest_station'] as String?,
     );
 
 Map<String, dynamic> _$SupplierInfoModelToJson(SupplierInfoModel instance) =>
@@ -38,4 +39,5 @@ Map<String, dynamic> _$SupplierInfoModelToJson(SupplierInfoModel instance) =>
       'level_name': instance.levelName,
       'level_id': instance.levelId,
       'is_online': instance.isOnline,
+      'nearest_station': instance.nearestStation,
     };

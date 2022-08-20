@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:ui_api/models/home/services_model.dart';
@@ -15,6 +16,7 @@ class SearchController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
   final serviceList = RxList<ServiceModel>();
   BookingPrepareRequest request = BookingPrepareRequest();
+  final TextEditingController keyword = TextEditingController();
 
   @override
   Future<void> onInit() async {
@@ -41,8 +43,8 @@ class SearchController extends BaseController {
     }
   }
 
-  Future<void> search(String text) async {
-    await _loadData(text);
+  Future<void> search() async {
+    await _loadData(keyword.text);
   }
 
   Future<void> viewService(ServiceModel item) async {

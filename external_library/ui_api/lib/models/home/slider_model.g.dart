@@ -12,6 +12,7 @@ SliderModel _$SliderModelFromJson(Map<String, dynamic> json) => SliderModel(
       displayImage: json['display_image'] as String? ?? '',
       order: json['order'] as int?,
       status: json['status'] as int?,
+      urlLink: json['url_link'] as String? ?? '',
     );
 
 Map<String, dynamic> _$SliderModelToJson(SliderModel instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$SliderModelToJson(SliderModel instance) =>
       'display_image': instance.displayImage,
       'order': instance.order,
       'status': instance.status,
+      'url_link': instance.urlLink,
     };

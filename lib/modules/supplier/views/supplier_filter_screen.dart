@@ -62,10 +62,10 @@ class SupplierFilterScreen extends GetView<SupplierFilterController> {
                                 DateFormatter.formatDate(controller.fromDate),
                           ),
                           const SizedBox(height: 24),
-                          buildTitleComponent(
-                            title: 'supplier.filter.time_slot'.tr,
-                          ),
-                          const SizedBox(height: 16),
+                          // buildTitleComponent(
+                          //   title: 'supplier.filter.time_slot'.tr,
+                          // ),
+                          // const SizedBox(height: 16),
                           Row(
                             children: [
                               Expanded(
@@ -119,28 +119,41 @@ class SupplierFilterScreen extends GetView<SupplierFilterController> {
                             ],
                           ),
                           const SizedBox(height: 24),
-                          buildTitleComponent(
-                            title: 'supplier.filter.location'.tr,
-                          ),
-                          const SizedBox(height: 14),
-                          buildSelectComponent(
-                            title: controller.province.value != ''
-                                ? controller.province.value
-                                : 'supplier.filter.provice'.tr,
-                            textColor: controller.province.value != ''
-                                ? TextAppStyle().smallTextBlack()
-                                : TextAppStyle().smallTextGrey(),
-                            onPress: () => controller.getProvince(context),
-                          ),
-                          const SizedBox(height: 8),
-                          buildSelectComponent(
-                            title: controller.district.value != ''
-                                ? controller.district.value
-                                : 'supplier.filter.district'.tr,
-                            textColor: controller.district.value != ''
-                                ? TextAppStyle().smallTextBlack()
-                                : TextAppStyle().smallTextGrey(),
-                            onPress: () => controller.getDistricts(context),
+                          Container(
+                            child: controller.isOnline.value ==
+                                    CommonConstants.offline
+                                ? Column(
+                                    children: [
+                                      buildTitleComponent(
+                                        title: 'supplier.filter.location'.tr,
+                                      ),
+                                      const SizedBox(height: 14),
+                                      buildSelectComponent(
+                                        title: controller.province.value != ''
+                                            ? controller.province.value
+                                            : 'supplier.filter.provice'.tr,
+                                        textColor: controller.province.value !=
+                                                ''
+                                            ? TextAppStyle().smallTextBlack()
+                                            : TextAppStyle().smallTextGrey(),
+                                        onPress: () =>
+                                            controller.getProvince(context),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      buildSelectComponent(
+                                        title: controller.district.value != ''
+                                            ? controller.district.value
+                                            : 'supplier.filter.district'.tr,
+                                        textColor: controller.district.value !=
+                                                ''
+                                            ? TextAppStyle().smallTextBlack()
+                                            : TextAppStyle().smallTextGrey(),
+                                        onPress: () =>
+                                            controller.getDistricts(context),
+                                      ),
+                                    ],
+                                  )
+                                : Container(),
                           ),
                           const SizedBox(height: 24),
                           buildSelectComponent(

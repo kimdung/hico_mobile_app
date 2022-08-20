@@ -6,15 +6,18 @@ import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ui_api/models/call/call_model.dart';
+import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:wakelock/wakelock.dart';
 
 import '../../../../base/base_controller.dart';
 import '../../../../data/app_data_global.dart';
 
 class VideoCallController extends BaseController {
-  final appId = 'fae0cb7e3f5c4c688ca32056eaa146b4';
+  final appId = '898c8e034c484b02af88ef21f2056005';
 
-  late RtcEngine _engine;
+  final _uiRepository = Get.find<HicoUIRepository>();
+
+  RtcEngine? _engine;
   StreamSubscription? _callStreamSubscription;
 
   RxnInt remoteUid = RxnInt();
@@ -35,18 +38,30 @@ class VideoCallController extends BaseController {
   Future<void> onInit() async {
     await super.onInit();
 
-    await Wakelock.enabled;
+    await Wakelock.enable();
 
     _addPostFrameCallback();
     await _initAgora();
     await _joinChannel();
+
+    if (isCaller) {
+      await _sendCallNotification();
+    }
+  }
+
+  @override
+  void onResumed() {
+    _engine?.disableVideo();
+    _engine?.enableVideo();
+    super.onResumed();
   }
 
   @override
   void onClose() {
+    printInfo(info: 'onClose');
     onEndCall();
-    _engine.leaveChannel();
-    _engine.destroy();
+    _engine?.leaveChannel();
+    _engine?.destroy();
     _durationTimer?.cancel();
     _callStreamSubscription?.cancel();
     Wakelock.disable();
@@ -75,8 +90,9 @@ class VideoCallController extends BaseController {
 
     //create the engine
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
-    await _engine.enableVideo();
-    _engine.setEventHandler(RtcEngineEventHandler(
+    await _engine?.setParameters('{"che.audio.opensl":true}');
+    await _engine?.enableVideo();
+    _engine?.setEventHandler(RtcEngineEventHandler(
       warning: (warningCode) {
         printError(info: 'warning $warningCode');
       },
@@ -86,6 +102,7 @@ class VideoCallController extends BaseController {
       userJoined: (uid, elapsed) {
         printInfo(info: 'userJoined $uid $elapsed');
         remoteUid.value = uid;
+        _callBeginCall();
         _durationTimer ??= Timer.periodic(
           const Duration(seconds: 1),
           (Timer timer) {
@@ -110,7 +127,7 @@ class VideoCallController extends BaseController {
 
   Future<void> _joinChannel() async {
     await _engine
-        .joinChannel(token, call.channelId ?? '', null, call.getId() ?? 0)
+        ?.joinChannel(token, call.channelId ?? '', null, call.getId() ?? 0)
         .catchError((onError) {
       printError(info: 'error ${onError.toString()}');
       Future.delayed(Duration.zero, Get.back);
@@ -118,7 +135,7 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> onToggleMute() async {
-    await _engine.muteLocalAudioStream(!muteLocalAudio.value).then((value) {
+    await _engine?.muteLocalAudioStream(!muteLocalAudio.value).then((value) {
       muteLocalAudio.value = !muteLocalAudio.value;
     }).catchError((err) {
       printError(info: 'muteLocalAudio $err');
@@ -126,12 +143,40 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> onSwitchCamera() async {
-    await _engine.switchCamera().catchError((err) {
+    await _engine?.switchCamera().catchError((err) {
       printError(info: 'onSwitchCamera $err');
     });
   }
 
   Future<void> onEndCall() async {
+    printInfo(info: 'onEndCall');
     await callMethods.endCall(call: call);
+    await _callEndCall();
+  }
+
+  /* API */
+
+  Future<void> _sendCallNotification() async {
+    try {
+      await _uiRepository.sendCallNotification(call.invoiceId ?? -1);
+    } catch (e) {
+      printError(info: e.toString());
+    }
+  }
+
+  Future<void> _callBeginCall() async {
+    try {
+      await _uiRepository.beginCall(call.invoiceId ?? -1);
+    } catch (e) {
+      printError(info: e.toString());
+    }
+  }
+
+  Future<void> _callEndCall() async {
+    try {
+      await _uiRepository.endCall(call.invoiceId ?? -1);
+    } catch (e) {
+      printError(info: e.toString());
+    }
   }
 }

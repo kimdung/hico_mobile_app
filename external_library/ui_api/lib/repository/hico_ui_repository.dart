@@ -35,8 +35,10 @@ import 'package:ui_api/response/voucher/check_voucher_response.dart';
 import 'package:ui_api/response/voucher/voucher_response.dart';
 
 import '../request/invoice/extend_period_request.dart';
+import '../request/invoice/rating_request.dart';
 import '../response/call/call_token_response.dart';
 import '../response/chat/chat_token_response.dart';
+import '../response/notifications/notification_unread_response.dart'; 
 import '../response/wallet/topup_history_response.dart';
 import '../response/wallet/topup_komaju_response.dart';
 import '../response/wallet/topup_response.dart';
@@ -101,6 +103,9 @@ abstract class HicoUIRepository {
 
   //notification detail
   Future<NotificationDetailResponse> notificationDetail(int id);
+
+  //notification unread
+  Future<NotificationUnreadResponse> notificationUnRead();  
 
   //home
   Future<HomeResponse> home();
@@ -171,6 +176,11 @@ abstract class HicoUIRepository {
     String reason,
   );
 
+   //invoice detail: cancel
+  Future<BaseResponse> invoiceCancelInvoice(
+    int id,
+  );
+
   //invoice booking
   Future<BookingResponse> invoiceBooking(BookingRequest request);
 
@@ -180,14 +190,17 @@ abstract class HicoUIRepository {
   //voucher check
   Future<CheckVoucherResponse> voucherCheck(int id, double total);
 
+  //voucher add
+  Future<VoucherResponse> voucherAdd(String code);
+
   //address list
   Future<AddressResponse> addressList(int limit, int offset, String code);
 
   //statistics
   Future<StatisticsResponse> statistics();
   //statistics
-  Future<StatisticInvoiceResponse> statisticsInvoice(
-      int limit, int offset, String keyWords, String startDate, String endDate);
+  Future<StatisticInvoiceResponse> statisticsInvoice(int limit, int offset,
+      String keyWords, String startDate, String endDate, int status);
 
   //consulting
   Future<BaseResponse> consulting(
@@ -217,6 +230,11 @@ abstract class HicoUIRepository {
   // Create call token
   Future<CallTokenResponse> getCallToken(String channel);
 
+  Future<BaseResponse> beginCall(int invoiceId);
+
+  Future<BaseResponse> endCall(int invoiceId);
+
+  Future<BaseResponse> sendCallNotification(int invoiceId);
 
   /* Wallet */
 
@@ -234,9 +252,11 @@ abstract class HicoUIRepository {
   Future<TopupResponse> topupStripe(
       String paymentMethodId, String name, double amount);
 
- 
-  //post extend 
+  //post extend
   Future<BaseResponse> extendInvoice(ExtendPeriodRequest request);
 
+  Future<BaseResponse> invoiceRating(RatingRequest request);
+
+  Future<BaseResponse> invoiceCancelRating(int id); 
+  Future<BaseResponse> deleteUser();
 }
- 

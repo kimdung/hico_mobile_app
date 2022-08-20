@@ -4,7 +4,9 @@ part 'topup_history_model.g.dart';
 
 @JsonSerializable()
 class TopupHistoryModel {
+  static const int WAITTING = 0;
   static const int CONFIRMED = 1;
+  static const int FAILURE = 2;
 
   int? id;
   String? code;
@@ -44,6 +46,19 @@ class TopupHistoryModel {
         return 'topup.komoju'.tr;
       case 5: // Refund
         return 'Refund';
+      default:
+        return '';
+    }
+  }
+
+  String getStatus() {
+    switch (status) {
+      case WAITTING:
+        return 'topup.waitting'.tr;
+      case CONFIRMED:
+        return 'topup.confirmed'.tr;
+      case FAILURE:
+        return 'topup.failed'.tr;
       default:
         return '';
     }

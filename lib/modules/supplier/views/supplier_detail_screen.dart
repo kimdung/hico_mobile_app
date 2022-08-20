@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ui_api/models/user/documents_certificate_model.dart';
+import 'package:ui_api/models/user/time.dart';
 
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
@@ -62,8 +63,9 @@ class SupplierDetailScreen extends GetView<SupplierDetailController> {
                           icon:
                               'lib/resource/assets_resources/images/diploma.png',
                           title: 'supplier.detail.interpretation_experience'.tr,
-                          description:
-                              controller.profile.value.interExp.toString(),
+                          description: interpretationExperiences[
+                                  controller.profile.value.interExp!]
+                              .content,
                           description2: controller.profile.value.interExpDetail,
                         )
                       : const SizedBox(),
@@ -74,8 +76,9 @@ class SupplierDetailScreen extends GetView<SupplierDetailController> {
                           icon:
                               'lib/resource/assets_resources/images/diploma.png',
                           title: 'supplier.detail.translation_experience'.tr,
-                          description:
-                              controller.profile.value.transExp.toString(),
+                          description: translatationExperiences[
+                                  controller.profile.value.transExp!]
+                              .content,
                           description2: controller.profile.value.transExpDetail,
                         )
                       : const SizedBox(),
@@ -85,6 +88,11 @@ class SupplierDetailScreen extends GetView<SupplierDetailController> {
                         'lib/resource/assets_resources/images/certificate.png',
                     title: 'supplier.detail.degree'.tr,
                     list: controller.profile.value.files,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    controller.profile.value.experience.toString(),
+                    style: TextAppStyle().normalTextGrey(),
                   ),
                   const SizedBox(height: 38),
                   GeneralButton(

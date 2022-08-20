@@ -7,7 +7,7 @@ part 'statistic_response.g.dart';
 @JsonSerializable()
 class StatisticsResponse extends BaseResponse {
   @JsonKey(name: 'data')
-  StatisticsData? data;
+  StatisticModel? data;
 
   StatisticsResponse({this.data});
 

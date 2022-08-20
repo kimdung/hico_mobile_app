@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
+import '../../../shared/constants/common.dart';
 import '../../account/controllers/account_controller.dart';
 import '../../account/views/account_screen.dart';
 import '../../home/controllers/home_controller.dart';
@@ -17,6 +19,8 @@ import '../../order_list/views/order_list_screen.dart';
 
 class MainController extends BaseController {
   Rx<int> index = Rx(0);
+  Rx<int> badge = Rx(0);
+  final _uiRepository = Get.find<HicoUIRepository>();
 
   final channel = AppDataGlobal.client?.channel('messaging',
       id: AppDataGlobal.userInfo?.conversationInfo?.getAdminChannel() ?? '');
@@ -24,13 +28,15 @@ class MainController extends BaseController {
   List<Widget> tabs = [];
   late HomeController homeController;
   late OrderListController orderListController;
-  final notificationController = NotificationController();
+  late NotificationController notificationController;
   final newsController = NewsController();
   final accountController = AccountController();
+  int? tab;
 
   MainController() {
     homeController = HomeController(channel);
     orderListController = OrderListController(channel);
+    notificationController = NotificationController(this);
     tabs = [
       HomeScreen(homeController),
       OrderListScreen(orderListController),
@@ -38,6 +44,11 @@ class MainController extends BaseController {
       NewsScreen(newsController),
       AccountScreen(accountController),
     ];
+    homeController.loadData();
+    countNotifyUnread();
+    if(tab != null){
+      changeIndex(1);
+    }
   }
 
   @override
@@ -47,8 +58,9 @@ class MainController extends BaseController {
     try {
       await channel?.watch();
       channel?.state?.unreadCountStream.listen((event) {
-        homeController.totalNotif.value = event;
-        orderListController.totalNotif.value = event;
+        debugPrint('[MainController] channel chat admin badge $event');
+        homeController.badgeChatAdmin.value = event;
+        orderListController.badgeChatAdmin.value = event;
       });
     } catch (e) {
       printError(info: e.toString());
@@ -69,7 +81,17 @@ class MainController extends BaseController {
         await accountController.loadData();
       }
     }
-
     index.value = _index;
+
+    await countNotifyUnread();
+  }
+
+  Future<void> countNotifyUnread() async {
+    await _uiRepository.notificationUnRead().then((response) {
+      if (response.status == CommonConstants.statusOk &&
+          response.data != null) {
+        badge.value = response.data!;
+      }
+    });
   }
 }

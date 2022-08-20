@@ -35,7 +35,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -48,14 +48,14 @@ android {
 
     defaultConfig {
         applicationId "com.wap.hico"
-        minSdkVersion 23
-        targetSdkVersion 31
+        minSdkVersion 26
+        targetSdkVersion 32
         renderscriptTargetApi 21
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
-        config {
+        release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
             storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
@@ -64,12 +64,9 @@ android {
     }
 
     buildTypes {
-        debug {
-            debuggable true
-        }
         release {
             //debuggable false
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -80,4 +77,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.google.android.material:material:1.6.0'
 } 
