@@ -1,5 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:ui_api/models/user/documents_certificate_model.dart';
+
+import '../user/services_model.dart';
+import '../user/user_time_model.dart';
+import '../user/workplaces_model.dart';
 part 'supplier_profile_model.g.dart';
 
 @JsonSerializable()
@@ -24,6 +28,10 @@ class SupplierProfileModel {
   String? transExpDetail;
   @JsonKey(name: 'translation_experience')
   int? transExp;
+  List<UserServicesCategoryModel>? customServices;
+  List<WorkplacesModel>? customWorkplaces;
+  @JsonKey(name: 'user_time')
+  List<UserTimeModel>? userTime;
 
   SupplierProfileModel({
     this.name,
@@ -38,6 +46,9 @@ class SupplierProfileModel {
     this.interExp,
     this.transExpDetail,
     this.transExp,
+    this.customServices,
+    this.customWorkplaces,
+    this.userTime,
   });
 
   factory SupplierProfileModel.fromJson(Map<String, dynamic> json) =>

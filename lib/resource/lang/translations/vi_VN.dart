@@ -30,6 +30,7 @@ const Map<String, String> vi_VN = {
   'camera': 'Hình ảnh',
   'year': 'năm',
   'accept': 'Chấp nhận',
+  'notif' : 'Hệ thống đang sử dụng múi giờ Nhật Bản.',
 
   //onboard
   'onboard.title1': 'Welcome to Hico',
@@ -86,6 +87,7 @@ const Map<String, String> vi_VN = {
   'home.view_all': 'Xem tất cả',
   'home.service_categories': 'Loại dịch vụ',
   'home.new_service': 'Dịch vụ mới nhất ⚡',
+  'home.featured_supplier': 'Phiên dịch viên nổi bật',
   'home.viewed_service': 'Dịch vụ đã xem',
 
   //news
@@ -441,4 +443,14 @@ const Map<String, String> vi_VN = {
   'voucher.apply': 'Áp dụng',
   'voucher.hint': 'Nhập mã khuyến mãi',
   'time.note' :'※Thời gian trong ứng dụng được tính theo múi giờ Nhật Bản (GMT+9)',
+
+  //sort type
+  'sort.price_desc': 'Giá cao nhất',
+  'sort.price_asc': 'Giá thấp nhất',
+  'sort.level_asc': 'Cấp độ PDV thấp nhất',
+  'sort.level_desc': 'Cấp độ PDV cao nhất',
+  'sort.rating': 'Đánh giá cao nhất',
+  'sort.order': 'Đơn hàng nhiều nhất',
+
+
 };

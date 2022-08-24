@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ui_api/models/home/service_category_model.dart';
 import 'package:ui_api/models/home/services_model.dart';
 import 'package:ui_api/models/home/slider_model.dart';
+import 'package:ui_api/models/supplier/supplier_info_model.dart';
 
 import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
@@ -56,9 +57,16 @@ class HomeScreen extends GetView<HomeController> {
                             onPress: () => Get.toNamed(Routes.NEW_SERVICE),
                             list: controller.homeModel.value.services),
                         const SizedBox(height: 24),
+                        buildSupplierList(
+                            title: 'home.featured_supplier'.tr,
+                            onPress: () {
+                              controller.viewAllSuppliers();
+                            },
+                            list: controller.listSuppliers),
+                        const SizedBox(height: 24),
                         if (controller.homeModel.value.bannerHome != null &&
                             controller.homeModel.value.bannerHome != '')
-                          buildBannerHome(), 
+                          buildBannerHome(),
                         const SizedBox(height: 24),
                         buildServiceList(
                             title: 'home.viewed_service'.tr,

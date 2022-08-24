@@ -220,6 +220,15 @@ abstract class HicoUIAPI {
   );
 
 //filter supplier
+
+  @GET('/v1/customer/supplier_list')
+  Future<SupplierResponse> customerSuppliers(
+    @Query('sort_type') int sortType,
+    @Query('service_id') int serviceId,
+    @Query('limit') int limit,
+    @Query('offset') int offset,
+  );
+
   @GET('/v1/supplier/detailInfo')
   Future<SupplierProfileResponse> supplierDetail(
       @Query('member_code') String memberCode);

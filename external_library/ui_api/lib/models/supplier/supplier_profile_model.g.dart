@@ -24,6 +24,16 @@ SupplierProfileModel _$SupplierProfileModelFromJson(
       interExp: json['interpretation_experience'] as int?,
       transExpDetail: json['translation_experience_detail'] as String?,
       transExp: json['translation_experience'] as int?,
+      customServices: (json['customServices'] as List<dynamic>?)
+          ?.map((e) =>
+              UserServicesCategoryModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      customWorkplaces: (json['customWorkplaces'] as List<dynamic>?)
+          ?.map((e) => WorkplacesModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      userTime: (json['user_time'] as List<dynamic>?)
+          ?.map((e) => UserTimeModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$SupplierProfileModelToJson(
@@ -41,4 +51,7 @@ Map<String, dynamic> _$SupplierProfileModelToJson(
       'interpretation_experience': instance.interExp,
       'translation_experience_detail': instance.transExpDetail,
       'translation_experience': instance.transExp,
+      'customServices': instance.customServices,
+      'customWorkplaces': instance.customWorkplaces,
+      'user_time': instance.userTime,
     };

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/home/home_model.dart';
 import 'package:ui_api/models/home/services_model.dart';
+import 'package:ui_api/models/home/slider_model.dart';
+import 'package:ui_api/models/supplier/supplier_info_model.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/booking_prepare_request.dart';
@@ -27,6 +29,7 @@ class HomeController extends BaseController {
   final Rx<int> bottomIndex = Rx(0);
 
   final homeModel = Rx(HomeModel());
+  final listSuppliers = RxList<SupplierInfoModel>();
 
   BookingPrepareRequest request = BookingPrepareRequest();
   var userInfo = Rx(UserInfoModel());
@@ -55,6 +58,13 @@ class HomeController extends BaseController {
           return;
         }
       });
+      await _uiRepository.customerSuppliers(SortType.Random.id, 0,10,0).then((response) {
+        if (response.status == CommonConstants.statusOk &&
+            response.data?.suppliers != null) {
+          listSuppliers.value = response.data!.suppliers!;
+          return;
+        }
+      });
     } catch (e) {
       await EasyLoading.dismiss();
     }
@@ -72,7 +82,14 @@ class HomeController extends BaseController {
   Future<void> viewService(ServiceModel item) async {
     request.service = item;
     await _uiRepository.serviceView(item.id!).then((response) {});
-    await Get.toNamed(Routes.SUPPLIER_FILTER, arguments: request);
+    await Get.toNamed(Routes.SUPPLIER_LIST, arguments: item.id);
+  }
+
+  Future<void> supplierDetail(String code) async {
+    await Get.toNamed(Routes.BOOKING_SUPPLIER_DETAIL, arguments: code);
+  }
+  Future<void> viewAllSuppliers() async {
+    await Get.toNamed(Routes.SUPPLIER_LIST);
   }
 
   Future<void> viewAllNews() async {
@@ -159,6 +176,18 @@ class HomeController extends BaseController {
       await EasyLoading.dismiss();
     }
   }
+
+  Future<void> routerSlider(SliderModel item) async {
+    if(item.type == SliderType.Link.id){
+      final _url = Uri.parse(item.urlLink??'');
+      await launchUrl(_url);
+    }else if(item.type == SliderType.Chat.id){
+      await onChatAdmin();
+    }else if (item.type == SliderType.News.id){
+      await Get.toNamed(Routes.NEWS_DETAIL, arguments: item.itemId);
+    }
+  }
+
 
 
   Future<void> openLink(String url) async {

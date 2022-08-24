@@ -29,6 +29,8 @@ const Map<String, String> ja_JP = {
   'comment': '備考',
   'camera': '画像',
   'year': '年',
+  'notif' : 'システムは日本時間帯を使用しています',
+
 
   //onboard
   'onboard.title1': 'HICOへようこそ',
@@ -83,6 +85,7 @@ const Map<String, String> ja_JP = {
   'home.view_all': '全て',
   'home.service_categories': 'サービス',
   'home.new_service': '新サービス',
+  'home.featured_supplier': '注目の通訳者',
   'home.viewed_service': '閲覧履歴',
 
   //news

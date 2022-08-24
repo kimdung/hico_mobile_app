@@ -16,3 +16,4 @@ class DataSupplierModel {
 
   Map<String, dynamic> toJson() => _$DataSupplierModelToJson(this);
 }
+

@@ -133,7 +133,7 @@ extension HomeComponents on HomeScreen {
           items: sliders
               .map((e) => SliderItem(
                     image: e!.displayImage!,
-                    onpress: () => controller.openLink(e.urlLink??''),
+                    onpress: () => controller.routerSlider(e),
                   ))
               .toList(),
         ),
@@ -191,6 +191,34 @@ extension HomeComponents on HomeScreen {
     );
   }
 
+  Widget buildSupplierList(
+      {required String title,
+      Function()? onPress,
+      required List<SupplierInfoModel>? list}) {
+    return Container(
+      child: Column(
+        children: [
+          _buildSectionTitle(title: title, onPress: onPress),
+          const SizedBox(height: 12),
+          if (list != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: CommonConstants.paddingDefault),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    ...List.generate(list.length,
+                        (index) => _buildSupplierItem(item: list[index]))
+                  ],
+                ),
+              ),
+            )
+        ],
+      ),
+    );
+  }
+
   Widget buildBannerHome() {
     return Container(
       margin: const EdgeInsets.symmetric(
@@ -233,6 +261,7 @@ extension HomeComponents on HomeScreen {
                 scrollDirection: Axis.horizontal,
                 child: Container(
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ...List.generate(
                         controller.homeModel.value.news!.length,
@@ -292,6 +321,62 @@ extension HomeComponents on HomeScreen {
                   .secondTextStyle()
                   .copyWith(color: AppColor.blueTextColor),
             )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSupplierItem({required SupplierInfoModel item}) {
+    final width = (Get.width - 60) / 2;
+    return InkWell(
+      onTap: () {
+        controller.supplierDetail(item.memberCode??'');
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 15),
+        decoration: BoxDecoration(
+          border: Border.all(color: const Color(0x19000000)),
+          borderRadius: BorderRadius.circular(6),
+          color: Colors.white,
+        ),
+        child: Column(
+          children: [
+            Container(
+              width: width,
+              height: width,
+              child: NetWorkImage(
+                image: item.avatarImage ?? '',
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              item.name ?? '',
+              style: TextAppStyle().smallTextBlack(),
+            ),
+            Container(
+              width: width,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    child: Image.asset(
+                      IconConstants.icSuccessOrder,
+                      width: 15,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    '${item.taskCompleteNumber} ${'supplier.detail.complete'.tr}',
+                    style: TextAppStyle().smallTextGrey(),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 8),
           ],
         ),
       ),

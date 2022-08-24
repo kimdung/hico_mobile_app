@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 class CommonConstants {
   static const num testNum = 1;
@@ -37,7 +38,6 @@ class CommonConstants {
   static const String CALL_TOKEN = 'CALL_TOKEN';
   static const String TOPUP_DATA = 'TOPUP_DATA';
   static const String TOPUP_ISORDER = 'TOPUP_ISORDER';
-
 }
 
 const APP_NAME = 'Hico';
@@ -90,7 +90,7 @@ extension PaymentMethodName on PaymentMethod {
   }
 }
 
-enum DisplayType { All, Notif, Order,Remind, Extend, Rating }
+enum DisplayType { All, Notif, Order, Remind, Extend, Rating }
 
 extension DisplayTypeId on DisplayType {
   int get id {
@@ -109,6 +109,79 @@ extension DisplayTypeId on DisplayType {
         return 8;
       default:
         return 0;
+    }
+  }
+}
+
+enum SliderType { Link, Chat, News }
+
+extension SliderTypeId on SliderType {
+  int get id {
+    switch (this) {
+      case SliderType.Link:
+        return 1;
+      case SliderType.Chat:
+        return 2;
+      case SliderType.News:
+        return 3;
+      default:
+        return 0;
+    }
+  }
+}
+
+enum SortType {
+  Random,
+  PriceDesc,
+  PriceAsc,
+  LevelAsc,
+  LevelDesc,
+  Rating,
+  Orders
+}
+
+extension SortTypeId on SortType {
+  int get id {
+    switch (this) {
+      case SortType.Random:
+        return 1;
+      case SortType.PriceDesc:
+        return 2;
+      case SortType.PriceAsc:
+        return 3;
+      case SortType.LevelAsc:
+        return 4;
+      case SortType.LevelDesc:
+        return 5;
+      case SortType.Rating:
+        return 6;
+      case SortType.Orders:
+        return 7;
+      default:
+        return 0;
+    }
+  }
+}
+
+extension SortTypeName on SortType {
+  String get name{
+    switch (this) {
+      case SortType.Random:
+        return 'Ngẫu nhiên';
+      case SortType.PriceDesc:
+        return 'sort.price_desc'.tr;
+      case SortType.PriceAsc:
+        return 'sort.price_asc'.tr;
+      case SortType.LevelAsc:
+        return 'sort.level_asc'.tr;
+      case SortType.LevelDesc:
+        return 'sort.level_desc'.tr;
+      case SortType.Rating:
+        return 'sort.rating'.tr;
+      case SortType.Orders:
+        return 'sort.order'.tr;
+      default:
+        return '';
     }
   }
 }

@@ -8,11 +8,23 @@ class SliderModel {
   @JsonKey(name: 'display_image', defaultValue: '')
   String? displayImage;
   int? order;
-  int? status;  
+  int? status;
   @JsonKey(name: 'url_link', defaultValue: '')
   String? urlLink;
+  @JsonKey(name: 'item_id', defaultValue: 0)
+  int? itemId;
+  int? type;
 
-  SliderModel({this.id, this.name, this.displayImage, this.order, this.status, this.urlLink});
+  SliderModel({
+    this.id,
+    this.name,
+    this.displayImage,
+    this.order,
+    this.status,
+    this.urlLink,
+    this.itemId,
+    this.type,
+  });
 
   factory SliderModel.fromJson(Map<String, dynamic> json) =>
       _$SliderModelFromJson(json);

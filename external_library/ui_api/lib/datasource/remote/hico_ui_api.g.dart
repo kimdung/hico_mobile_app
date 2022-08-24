@@ -560,6 +560,28 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
+  Future<SupplierResponse> customerSuppliers(
+      sortType, serviceId, limit, offset) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'sort_type': sortType,
+      r'service_id': serviceId,
+      r'limit': limit,
+      r'offset': offset
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<SupplierResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/customer/supplier_list',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SupplierResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<SupplierProfileResponse> supplierDetail(memberCode) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'member_code': memberCode};

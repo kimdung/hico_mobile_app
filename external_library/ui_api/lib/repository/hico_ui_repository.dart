@@ -142,6 +142,14 @@ abstract class HicoUIRepository {
     int offset,
   );
 
+   //Supplier list customer
+  Future<SupplierResponse> customerSuppliers(
+    int sortType,
+    int serviceId,
+    int limit,
+    int offset,
+  );
+
 //Supplier profile
   Future<SupplierProfileResponse> supplierDetail(String memberCode);
 

@@ -49,7 +49,7 @@ class RecentServiceController extends BaseController {
   Future<void> viewService(ServiceModel item) async {
     request.service = item;
     await _uiRepository.serviceView(item.id!).then((response) {});
-    await Get.toNamed(Routes.SUPPLIER_FILTER, arguments: request);
+    await Get.toNamed(Routes.SUPPLIER_LIST, arguments: item.id);
   }
 
   @override

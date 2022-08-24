@@ -2,6 +2,10 @@
 
 import '../modules/bank/bindings/bank_binding.dart';
 import '../modules/bank/views/bank_update_screen.dart';
+import '../modules/booking/supplier_detail/bindings/supplier_detail_binding.dart';
+import '../modules/booking/supplier_detail/views/supplier_detail_screen.dart';
+import '../modules/booking/supplier_list/bindings/supplier_list_binding.dart';
+import '../modules/booking/supplier_list/views/supplier_list_screen.dart';
 import '../modules/booking_detail/binding/booking_detail_binding.dart';
 import '../modules/booking_detail/view/booking_detail_screen.dart';
 import '../modules/call/video_call/bindings/video_call_binding.dart';
@@ -352,5 +356,17 @@ final routePages = [
     name: Routes.TOPUP_KOMOJU,
     page: () => TopupKomojuScreen(),
     binding: TopupKomojuBinding(),
+  ),
+
+  //Booking
+  GetPage(
+    name: Routes.SUPPLIER_LIST,
+    page: () => SupplierListScreen(),
+    binding: SupplierListBinding(),
+  ),
+   GetPage(
+    name: Routes.BOOKING_SUPPLIER_DETAIL,
+    page: () => BookingSupplierDetailScreen(),
+    binding: BookingSupplierDetailBinding(),
   ),
 ];

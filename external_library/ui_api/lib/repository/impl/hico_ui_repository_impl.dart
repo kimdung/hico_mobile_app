@@ -230,6 +230,21 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   }
 
   @override
+  Future<SupplierResponse> customerSuppliers(
+    int sortType,
+    int serviceId,
+    int limit,
+    int offset,
+  ) {
+    return _api.customerSuppliers(
+      sortType,
+      serviceId,
+      limit,
+      offset,
+    );
+  }
+
+  @override
   Future<SupplierProfileResponse> supplierDetail(String memberCode) {
     return _api.supplierDetail(memberCode);
   }
@@ -274,7 +289,7 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     return _api.invoiceCancel(id, reason);
   }
 
- @override
+  @override
   Future<BaseResponse> invoiceCancelInvoice(int id) {
     return _api.invoiceCancelInvoice(id);
   }
@@ -423,7 +438,6 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     return _api.invoiceCancelRating(id);
   }
 
-
   @override
   Future<BaseResponse> beginCall(int invoiceId) {
     return _api.beginCall(invoiceId);
@@ -438,6 +452,7 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   Future<BaseResponse> sendCallNotification(int invoiceId) {
     return _api.sendCallNotification(invoiceId);
   }
+
   @override
   Future<BaseResponse> deleteUser() {
     return _api.deleteUser();

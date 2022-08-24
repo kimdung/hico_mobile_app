@@ -39,14 +39,21 @@ class SupplierWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
-                    color: AppColor.secondColorLight.withOpacity(0.2),
-                    spreadRadius: 3,
-                    blurRadius: 7,
-                    offset: const Offset(0, 3),
+                    color: Color(0x19000000),
+                    blurRadius: 8,
+                    offset: Offset(0, 2),
                   ),
                 ],
+                // boxShadow: [
+                //   BoxShadow(
+                //     color: AppColor.secondColorLight.withOpacity(0.2),
+                //     spreadRadius: 3,
+                //     blurRadius: 7,
+                //     offset: const Offset(0, 3),
+                //   ),
+                // ],
               ),
               child: Column(
                 children: [
@@ -75,7 +82,7 @@ class SupplierWidget extends StatelessWidget {
                               ),
                               const SizedBox(height: 5),
                               _buildAddressItem(
-                                icon: IconConstants.icSuccess,
+                                icon: IconConstants.icSuccessOrder,
                                 title: '$task ${'invoice.misson'.tr}',
                               ),
                               const SizedBox(height: 5),
@@ -85,14 +92,17 @@ class SupplierWidget extends StatelessWidget {
                               ),
                               const SizedBox(height: 5),
                               Container(
-                                child: invoice.isOnline == 1 ? 
-                                  _buildAddressItem(
-                                  icon: IconConstants.icMoneyBlue,
-                                  title: '$price JPY/${'invoice.hours'.tr}'): 
-                                  _buildPriceItem(
-                                  icon: IconConstants.icMoneyBlue,
-                                  title: '${invoice.serviceOfflineMinPrice} JPY/ 0,5 - ${invoice.serviceOfflineMinHours} ${'invoice.hours'.tr}',
-                                  subTitle: '${'invoice.incurred'.tr}: ${invoice.servicePrice} JPY/ 1${'invoice.hours'.tr}'),
+                                child: invoice.isOnline == 1
+                                    ? _buildAddressItem(
+                                        icon: IconConstants.icMoneyBlue,
+                                        title:
+                                            '$price JPY/${'invoice.hours'.tr}')
+                                    : _buildPriceItem(
+                                        icon: IconConstants.icMoneyBlue,
+                                        title:
+                                            '${invoice.serviceOfflineMinPrice} JPY/ 0,5 - ${invoice.serviceOfflineMinHours} ${'invoice.hours'.tr}',
+                                        subTitle:
+                                            '${'invoice.incurred'.tr}: ${invoice.servicePrice} JPY/ 1${'invoice.hours'.tr}'),
                               ),
                               const SizedBox(height: 8),
                               _buildAddressItem(
@@ -102,7 +112,8 @@ class SupplierWidget extends StatelessWidget {
                               const SizedBox(height: 5),
                               _buildAddressItem(
                                 icon: IconConstants.icTrain,
-                                title: '${'profile.station'.tr} ${invoice.nearestStation}',
+                                title:
+                                    '${'profile.station'.tr} ${invoice.nearestStation}',
                               ),
                               const SizedBox(height: 8),
                             ],
@@ -112,20 +123,20 @@ class SupplierWidget extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 15),
-                  Container(
-                    width: double.infinity,
-                    height: 50,
-                    child: _buildActionButton(
-                        onPress: onPressButton,
-                        icon: IconConstants.icCalendarPink,
-                        title: 'supplier.book'.tr,
-                        border: Border(
-                          top: BorderSide(
-                            color: AppColor.primaryColorLight,
-                            width: 1,
-                          ),
-                        )),
-                  ),
+                  // Container(
+                  //   width: double.infinity,
+                  //   height: 50,
+                  //   child: _buildActionButton(
+                  //       onPress: onPressButton,
+                  //       icon: IconConstants.icCalendarPink,
+                  //       title: 'supplier.book'.tr,
+                  //       border: Border(
+                  //         top: BorderSide(
+                  //           color: AppColor.primaryColorLight,
+                  //           width: 1,
+                  //         ),
+                  //       )),
+                  // ),
                 ],
               ),
             ),
@@ -156,7 +167,8 @@ class SupplierWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildPriceItem({required String icon, required String title, required String subTitle}) {
+  Widget _buildPriceItem(
+      {required String icon, required String title, required String subTitle}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

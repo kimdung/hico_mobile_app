@@ -6,8 +6,9 @@ class WorkplacesModel {
   int? provinceId;
   String? name;
   List<DistrictsModel>? districts;
+  bool? openChild;
 
-  WorkplacesModel({this.provinceId, this.name, this.districts});
+  WorkplacesModel({this.provinceId, this.name, this.districts, this.openChild});
 
   factory WorkplacesModel.fromJson(Map<String, dynamic> json) =>
       _$WorkplacesModelFromJson(json);

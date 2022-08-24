@@ -1,9 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../resource/assets_constant/images_constants.dart';
 import '../../../routes/app_pages.dart';
+import '../../../shared/utils/dialog_util.dart';
+import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class OnBoardingController extends BaseController {
 
@@ -12,6 +16,7 @@ class OnBoardingController extends BaseController {
       if (error is String && error.isNotEmpty) {
         EasyLoading.showToast(error);
       }
+
   }
 
   @override
@@ -21,6 +26,7 @@ class OnBoardingController extends BaseController {
       await EasyLoading.showToast(error);
     }
     await super.onInit();
+
   }
 
   final lstSlider = [

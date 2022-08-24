@@ -110,6 +110,14 @@ class ConfigController extends BaseController {
       await storage.setString(
           StorageConstants.language, AppDataGlobal.languageCode);
 
+      await _uiRepository.masterData().then((response) {
+        if (response.status == CommonConstants.statusOk &&
+            response.masterDataModel != null) {
+          AppDataGlobal.masterData = response.masterDataModel!;
+          return;
+        }
+      });
+
       await _uiRepository
           .updateLangCode(AppDataGlobal.languageCode)
           .then((response) {

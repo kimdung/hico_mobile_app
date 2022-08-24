@@ -332,6 +332,8 @@ class IconConstants {
   static const String icArrowDown =
       'lib/resource/assets_resources/icons/ic_arrow_down.png';
 
+  static const String icArrowForwardIos =
+      'lib/resource/assets_resources/icons/ic_arrow_forward.svg';
   //star icon
   static const String icStarColor =
       'lib/resource/assets_resources/icons/star_color.png';
@@ -376,4 +378,15 @@ class IconConstants {
       'lib/resource/assets_resources/icons/icon_money.svg';
   static const String icCamera =
       'lib/resource/assets_resources/icons/ic_camera.svg';
+  static const String icArrowUpDown =
+      'lib/resource/assets_resources/icons/arrow_up_down.svg';
+  static const String icFilter =
+      'lib/resource/assets_resources/icons/filter.svg';
+  static const String icRadioFill =
+      'lib/resource/assets_resources/icons/radio-fill.svg';
+  static const String icRadioOutline =
+      'lib/resource/assets_resources/icons/radio-outline.svg';
+
+  static const String icTimeCircle =
+      'lib/resource/assets_resources/icons/time_circle.svg';
 }
