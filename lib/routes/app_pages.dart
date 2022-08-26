@@ -2,6 +2,10 @@
 
 import '../modules/bank/bindings/bank_binding.dart';
 import '../modules/bank/views/bank_update_screen.dart';
+import '../modules/booking/supplier_booking/bindings/supplier_booking_binding.dart';
+import '../modules/booking/supplier_booking/views/supplier_booking_screen.dart';
+import '../modules/booking/supplier_checkout/bindings/suppiler_booking_checkout_binding.dart';
+import '../modules/booking/supplier_checkout/views/supplier_booking_checkout_screen.dart';
 import '../modules/booking/supplier_detail/bindings/supplier_detail_binding.dart';
 import '../modules/booking/supplier_detail/views/supplier_detail_screen.dart';
 import '../modules/booking/supplier_list/bindings/supplier_list_binding.dart';
@@ -364,9 +368,19 @@ final routePages = [
     page: () => SupplierListScreen(),
     binding: SupplierListBinding(),
   ),
-   GetPage(
+  GetPage(
     name: Routes.BOOKING_SUPPLIER_DETAIL,
     page: () => BookingSupplierDetailScreen(),
     binding: BookingSupplierDetailBinding(),
+  ),
+  GetPage(
+    name: Routes.BOOKING_SUPPLIER_BOOKING,
+    page: () => BookingSupplierBookingScreen(),
+    binding: BookingSupplierBookingBinding(),
+  ),
+  GetPage(
+    name: Routes.BOOKING_SUPPLIER_CHECKOUT,
+    page: () => SupplierBookingCheckoutScreen(),
+    binding: SupplierBookingCheckoutBinding(),
   ),
 ];

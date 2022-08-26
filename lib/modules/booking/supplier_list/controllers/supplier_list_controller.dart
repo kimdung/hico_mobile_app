@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:ui_api/models/home/services_model.dart';
 import 'package:ui_api/models/supplier/supplier_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
@@ -15,14 +16,16 @@ class SupplierListController extends BaseController {
   var scrollController = ScrollController();
   final _uiRepository = Get.find<HicoUIRepository>();
   RxList<SupplierInfoModel> suppliers = RxList<SupplierInfoModel>();
-  Rx<int> categoryId = Rx(0);
+  Rx<int> serviceId = Rx(0);
   Rx<int> currentOrder = Rx(SortType.Random.id);
   int limit = CommonConstants.limit;
   int offset = 0;
+  ServiceModel service = ServiceModel();
 
   SupplierListController() {
     if (Get.arguments != null) {
-      categoryId.value = Get.arguments;
+      service = Get.arguments;
+      serviceId.value = service.id!;
     }
     loadData();
     scrollController.addListener(() {
@@ -46,7 +49,7 @@ class SupplierListController extends BaseController {
       offset = 0;
       await _uiRepository
           .customerSuppliers(
-              currentOrder.value, categoryId.value, limit, offset)
+              currentOrder.value, serviceId.value, limit, offset)
           .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
@@ -65,7 +68,7 @@ class SupplierListController extends BaseController {
       await EasyLoading.show();
       await _uiRepository
           .customerSuppliers(
-              currentOrder.value, categoryId.value, limit, offset)
+              currentOrder.value, serviceId.value, limit, offset)
           .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
@@ -79,9 +82,10 @@ class SupplierListController extends BaseController {
     }
   }
 
-  Future<void> viewDetail(String code) async {
-    await Get.toNamed(Routes.BOOKING_SUPPLIER_DETAIL, arguments: code);
+  Future<void> viewDetail(SupplierInfoModel item) async {
+    await Get.toNamed(Routes.BOOKING_SUPPLIER_DETAIL, arguments: item);
   }
+
   Future<void> sortOrder(BuildContext context) async {
     await ShowBottomSheet().showBottomSheet(
       child: Container(
@@ -105,6 +109,10 @@ class SupplierListController extends BaseController {
   }
 
   Future<void> filter() async {
-    //await Get.toNamed(Routes.NEWS_DETAIL, arguments: id);
+    if(serviceId.value != 0){
+      await Get.toNamed(Routes.SUPPLIER_FILTER, arguments: service);
+    }else{
+      await Get.toNamed(Routes.SUPPLIER_FILTER);
+    }
   }
 }

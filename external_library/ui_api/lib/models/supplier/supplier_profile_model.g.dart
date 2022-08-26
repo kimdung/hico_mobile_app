@@ -9,6 +9,7 @@ part of 'supplier_profile_model.dart';
 SupplierProfileModel _$SupplierProfileModelFromJson(
         Map<String, dynamic> json) =>
     SupplierProfileModel(
+      id: json['id'] as int?,
       name: json['name'] as String?,
       avatarImage: json['avatar_image'] as String? ?? '',
       avgRating: json['avg_rating'] as String? ?? '',
@@ -39,6 +40,7 @@ SupplierProfileModel _$SupplierProfileModelFromJson(
 Map<String, dynamic> _$SupplierProfileModelToJson(
         SupplierProfileModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'avatar_image': instance.avatarImage,
       'avg_rating': instance.avgRating,

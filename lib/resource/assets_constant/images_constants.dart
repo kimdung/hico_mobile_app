@@ -84,4 +84,6 @@ class ImageConstants {
       'lib/resource/assets_resources/images/user_empty.jpg';
   static const String medical =
       'lib/resource/assets_resources/images/medical.png';
+  static const String filterEmpty =
+      'lib/resource/assets_resources/icons/filter_empty.svg';
 }

@@ -38,6 +38,7 @@ import '../../request/invoice/extend_period_request.dart';
 import '../../request/invoice/rating_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/invoice/booking_checkdata_response.dart';
 import '../../response/invoice/extend_period_response.dart';
 import '../../response/notifications/notification_unread_response.dart';
 import '../../response/wallet/topup_history_response.dart';
@@ -171,6 +172,16 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   Future<ServiceListResponse> serviceList(
       int limit, int offset, int id, String searchWord) {
     return _api.serviceList(limit, offset, id, searchWord);
+  }
+
+  @override
+  Future<ServiceListResponse> serviceListByCode(String memberCode) {
+    return _api.serviceListByCode(memberCode);
+  }
+
+  @override
+  Future<ServiceListResponse> serviceListAll() {
+    return _api.serviceListAll();
   }
 
   @override
@@ -451,6 +462,11 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   @override
   Future<BaseResponse> sendCallNotification(int invoiceId) {
     return _api.sendCallNotification(invoiceId);
+  }
+
+   @override
+  Future<BookingCheckDataResponse> bookingCheckData(BookingRequest request) {
+    return _api.bookingCheckData(request);
   }
 
   @override

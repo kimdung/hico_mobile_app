@@ -1,5 +1,6 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:ui_api/models/supplier/supplier_info_model.dart';
 import 'package:ui_api/models/supplier/supplier_profile_model.dart';
 import 'package:ui_api/models/user/services_model.dart';
 import 'package:ui_api/models/user/workplaces_model.dart';
@@ -16,10 +17,10 @@ class BookingSupplierDetailController extends BaseController {
   final profile = Rx(SupplierProfileModel());
 
   BookingPrepareRequest bookingPrepare = BookingPrepareRequest();
-
+  SupplierInfoModel supplier = SupplierInfoModel();
   BookingSupplierDetailController() {
-    final code = Get.arguments;
-    _loadData(code);
+    supplier = Get.arguments;
+    _loadData(supplier.memberCode??'');
   }
 
   @override
@@ -45,38 +46,39 @@ class BookingSupplierDetailController extends BaseController {
   }
 
   Future<void> onBooking() async {
-    await Get.toNamed(Routes.SUPPLIER_BOOKING, arguments: bookingPrepare);
+    await Get.toNamed(Routes.BOOKING_SUPPLIER_BOOKING, arguments: supplier);
   }
+
   Future<void> openLink(String url) async {
     final _url = Uri.parse(url);
     await launchUrl(_url);
   }
 
   Future<void> changeServiceArrow(UserServicesCategoryModel item) async {
-    try{
+    try {
       item.openChild = !item.openChild!;
-      var index = profile.value.customServices?.indexWhere((element) => element.serviceCategoryId == item.serviceCategoryId);
+      var index = profile.value.customServices?.indexWhere(
+          (element) => element.serviceCategoryId == item.serviceCategoryId);
       if (index != -1) {
         profile.value.customServices?[index!] = item;
         profile.refresh();
       }
-    }catch(e){
+    } catch (e) {
       await EasyLoading.dismiss();
     }
-    
   }
 
   Future<void> changeArrow(WorkplacesModel item) async {
-    try{
+    try {
       item.openChild = !item.openChild!;
-      var index = profile.value.customWorkplaces?.indexWhere((element) => element.provinceId == item.provinceId);
+      var index = profile.value.customWorkplaces
+          ?.indexWhere((element) => element.provinceId == item.provinceId);
       if (index != -1) {
         profile.value.customWorkplaces?[index!] = item;
         profile.refresh();
       }
-    }catch(e){
+    } catch (e) {
       await EasyLoading.dismiss();
     }
-    
   }
 }

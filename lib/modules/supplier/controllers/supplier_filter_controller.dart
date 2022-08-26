@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:ui_api/models/home/services_model.dart';
 import 'package:ui_api/models/master_data/districts_model.dart';
 import 'package:ui_api/models/master_data/master_data_model.dart';
 import 'package:ui_api/models/master_data/provinces_model.dart';
@@ -23,6 +24,7 @@ import '../../../shared/widget_hico/data_general/district.dart';
 import '../../../shared/widget_hico/data_general/level.dart';
 import '../../../shared/widget_hico/data_general/province.dart';
 import '../../../shared/widget_hico/data_general/rating.dart';
+import '../../../shared/widget_hico/data_general/service.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 import '../../../shared/widget_hico/dialog/time_spiner_widget.dart';
 import '../../../shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
@@ -46,10 +48,19 @@ class SupplierFilterController extends BaseController {
   Rx<int> star = Rx(0);
   Rx<int> isOnline = Rx(CommonConstants.online);
   List<DistrictsModel> lstDistrict = [];
+  Rx<String> serviceName = Rx('service'.tr);
+  final serviceList = RxList<ServiceModel>();
+
 
   SupplierFilterController() {
-    bookingPrepare = Get.arguments;
-    request.serviceId = bookingPrepare.service?.id;
+    //bookingPrepare = Get.arguments;
+    //request.serviceId = bookingPrepare.service?.id;
+    if(Get.arguments != null){
+      bookingPrepare.service = Get.arguments;
+      serviceName.value = bookingPrepare.service?.name ??'';
+      request.serviceId = bookingPrepare.service?.id;
+    }
+    _loadService();
     date.value = TextEditingValue(text: DateFormatter.formatDate(fromDate));
     request.filterIsOnline = isOnline.value;
     request.filterLevelId = 0;
@@ -58,6 +69,50 @@ class SupplierFilterController extends BaseController {
   @override
   Future<void> onInit() async {
     await super.onInit();
+  }
+
+Future<void> _loadService() async {
+    try {
+      await EasyLoading.show();
+      await _uiRepository
+          .serviceListAll()
+          .then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.dataService != null &&
+            response.dataService!.services != null) {
+          serviceList.value = response.dataService!.services!;
+          return;
+        }
+      });
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
+
+  Future<void> selectService(BuildContext context) async {
+    await ShowBottomSheet().showBottomSheet(
+      child: Container(
+        height: Get.height / 2,
+        child: ServiceWidget(
+          services: serviceList,
+          currentID: request.serviceId,
+        ),
+      ),
+      context: context,
+      onValue: (_value) {
+        if (_value != null && _value is ServiceModel) {
+          if (_value.id == request.serviceId) {
+            request.serviceId = 0;
+            serviceName.value = 'service'.tr;
+          } else {
+            request.serviceId = _value.id;
+            serviceName.value = _value.name ?? '';
+            bookingPrepare.service = _value;
+          }
+        }
+      },
+    );
   }
 
   Future<void> selectFromDate(BuildContext context) async {
@@ -265,6 +320,11 @@ class SupplierFilterController extends BaseController {
     if (fromTime.value == '' || toTime.value == '') {
       validater = true;
       message = 'supplier.filter.time_required'.tr;
+    }
+
+    if (request.serviceId == null) {
+      validater = true;
+      message = 'supplier.filter.service_required'.tr;
     }
 
     if (validater) {

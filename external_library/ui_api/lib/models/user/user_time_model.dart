@@ -18,7 +18,9 @@ class UserTimeModel {
 class UserTimeListModel {
   int? id;
   String? date;
+  @JsonKey(name: 'begin_time', defaultValue: '')
   String? beginTime;
+  @JsonKey(name: 'end_time', defaultValue: '')
   String? endTime;
 
   UserTimeListModel({this.id, this.date, this.beginTime, this.endTime});

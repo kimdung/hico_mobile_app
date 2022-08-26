@@ -67,4 +67,6 @@ abstract class Routes {
   //booking
   static const SUPPLIER_LIST = '/booking/supplier_list';
   static const BOOKING_SUPPLIER_DETAIL = '/booking/supplier_detail';
+  static const BOOKING_SUPPLIER_BOOKING = '/booking/supplier_booking';
+  static const BOOKING_SUPPLIER_CHECKOUT = '/booking/supplier_checkout';
 }

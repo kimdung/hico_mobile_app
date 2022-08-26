@@ -15,6 +15,7 @@ class SupplierController extends BaseController {
   int offset = 0;
   final HicoUIRepository _uiRepository;
   final suppliers = RxList<SupplierInfoModel>();
+  final suppliersOther = RxList<SupplierInfoModel>();
 
   SupplierRequest request = SupplierRequest();
   BookingPrepareRequest bookingPrepare = BookingPrepareRequest();
@@ -52,6 +53,7 @@ class SupplierController extends BaseController {
             response.data != null &&
             response.data!.suppliers != null) {
           suppliers.value = response.data!.suppliers!;
+          suppliersOther.value = response.data!.suppliersOther!;
           return;
         }
       });
@@ -68,6 +70,11 @@ class SupplierController extends BaseController {
     bookingPrepare.supplier = supplier;
     await Get.toNamed(Routes.SUPPLIER_DETAIL, arguments: bookingPrepare);
   }
+
+   Future<void> viewSupplierDetail(SupplierInfoModel supplier) async {
+    await Get.toNamed(Routes.BOOKING_SUPPLIER_DETAIL, arguments: supplier);
+  }
+
 
   Future<void> onBooking(SupplierInfoModel supplier) async {
     bookingPrepare.supplier = supplier;

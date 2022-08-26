@@ -1,7 +1,7 @@
 part of 'supplier_detail_screen.dart';
 
 extension BookingSupplierDetailComponents on BookingSupplierDetailScreen {
-  Widget  buildGeneralInfo() {
+  Widget buildGeneralInfo() {
     return Row(
       children: [
         if (controller.profile.value.avatarImage != null)
@@ -68,7 +68,7 @@ extension BookingSupplierDetailComponents on BookingSupplierDetailScreen {
         border: Border(
           bottom: BorderSide(
             color: AppColor.primaryColorLight,
-            width: 1,
+            width: 0.5,
           ),
         ),
       ),
@@ -172,14 +172,17 @@ extension BookingSupplierDetailComponents on BookingSupplierDetailScreen {
                 ? Wrap(
                     children: [
                       ...List.generate(
-                          list.length,
-                          (index) => _buildImageItem(
-                              onpress:() => controller.openLink(list[index].url!),
-                              image: list[index].extension == 'pdf' ? 'lib/resource/assets_resources/images/pdf_icon.jpeg' : list[index].url!,
-                              padding: true,
-                              file: list[index].extension == 'pdf' ? true: false,
-                              width: (Get.width - 40) / 2),
-                              ),
+                        list.length,
+                        (index) => _buildImageItem(
+                            onpress: () =>
+                                controller.openLink(list[index].url!),
+                            image: list[index].extension == 'pdf'
+                                ? 'lib/resource/assets_resources/images/pdf_icon.jpeg'
+                                : list[index].url!,
+                            padding: true,
+                            file: list[index].extension == 'pdf' ? true : false,
+                            width: (Get.width - 40) / 2),
+                      ),
                     ],
                   )
                 : null,
@@ -189,13 +192,14 @@ extension BookingSupplierDetailComponents on BookingSupplierDetailScreen {
     );
   }
 
-  Widget _buildImageItem(
-      {required String image,
-      String? title,
-      double? width,
-      bool? file = false,
-      bool? padding = false,
-      Function()? onpress,}) {
+  Widget _buildImageItem({
+    required String image,
+    String? title,
+    double? width,
+    bool? file = false,
+    bool? padding = false,
+    Function()? onpress,
+  }) {
     return InkWell(
       onTap: onpress,
       child: Container(
@@ -210,21 +214,25 @@ extension BookingSupplierDetailComponents on BookingSupplierDetailScreen {
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: file == false ?
-                 CachedNetworkImage(
-                  imageUrl: image,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
+                child: file == false
+                    ? CachedNetworkImage(
+                        imageUrl: image,
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      )
+                    : FCoreImage(
+                        image,
                       ),
-                    ),
-                  ),
-                  placeholder: (context, url) => const CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                ):
-                FCoreImage(image,),
               ),
             ),
             if (title != null)
@@ -260,87 +268,180 @@ extension BookingSupplierDetailComponents on BookingSupplierDetailScreen {
       ),
     );
   }
+
   Widget buildTitleComponent({
     required String title,
     bool prefixIcon = true,
     Alignment? alignment,
     Function()? onPress,
   }) {
-    return BoxDecorationWidget(
-      height: 47,
-      radius: 8,
-      shadow: true,
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.only(left: 14),
-              alignment: alignment,
-              child: Text(title, style: TextAppStyle().normalTextPink()),
-            ),
-          ),
-          const SizedBox(width: 16),
-        ],
-      ),
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: Text(title, style: TextAppStyle().normalTextStype()),
     );
   }
 
   Widget buildListService() {
     return Container(
-      padding: const EdgeInsets.symmetric(
-          horizontal: CommonConstants.paddingDefault),
       child: Column(
         children: [
-          const SizedBox(height: 30),
-          buildTitleComponent(title: 'service'.tr, prefixIcon: false),
-          const SizedBox(height: 14),
+          //Service
           Container(
-            child: controller.profile.value.customServices != null
-                ? Column(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                bottom: BorderSide(
+                  color: AppColor.primaryColorLight,
+                  width: 0.5,
+                ),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(right: 14, top: 4),
+                  child: FCoreImage(
+                    'lib/resource/assets_resources/images/diploma.png',
+                    //IconConstants.icProfileDiploma,
+                    width: 20,
+                    height: 20,
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ...List.generate(
-                          controller.profile.value.customServices!.length,
-                          (index) => buildServiceItem(
-                              item: controller.profile.value.customServices![index]))
+                      buildTitleComponent(
+                          title: 'service'.tr, prefixIcon: false),
+                      const SizedBox(height: 9),
+                      Container(
+                        child: controller.profile.value.customServices != null
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ...List.generate(
+                                      controller
+                                          .profile.value.customServices!.length,
+                                      (index) => buildServiceItem(
+                                          item: controller.profile.value
+                                              .customServices![index]))
+                                ],
+                              )
+                            : Container(),
+                      ),
+                      const SizedBox(height: 6),
                     ],
-                  )
-                : Container(),
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 16),
-          buildTitleComponent(title: 'service.address'.tr, prefixIcon: false),
-          const SizedBox(height: 14),
+          //Address
           Container(
-            child: controller.profile.value.customWorkplaces != null
-                ? Column(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                bottom: BorderSide(
+                  color: AppColor.primaryColorLight,
+                  width: 0.5,
+                ),
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(right: 14, top: 4),
+                  child: FCoreImage(
+                    IconConstants.icMap,
+                    width: 24,
+                    height: 24,
+                  ),
+                ),
+                Expanded(
+                  child: Column(
                     children: [
-                      ...List.generate(
-                          controller.profile.value.customWorkplaces!.length,
-                          (index) => buildAddressItem(
-                              workplacesItem:
-                                  controller.profile.value.customWorkplaces![index]))
+                      buildTitleComponent(
+                          title: 'supplier.filter.location'.tr,
+                          prefixIcon: false),
+                      const SizedBox(height: 9),
+                      Container(
+                        child: controller.profile.value.customWorkplaces != null
+                            ? Column(
+                                children: [
+                                  ...List.generate(
+                                      controller.profile.value.customWorkplaces!
+                                          .length,
+                                      (index) => buildAddressItem(
+                                          workplacesItem: controller.profile
+                                              .value.customWorkplaces![index]))
+                                ],
+                              )
+                            : Container(),
+                      ),
                     ],
-                  )
-                : Container(),
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 16),
-          buildTitleComponent(title: 'service.time_slot'.tr, prefixIcon: false),
-          const SizedBox(height: 14),
+          //User time
           Container(
-            child: controller.profile.value.userTime != null
-                ? Column(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                bottom: BorderSide(
+                  color: AppColor.primaryColorLight,
+                  width: 0.5,
+                ),
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(right: 14, top: 4),
+                  child: FCoreImage(
+                    IconConstants.timeCircle,
+                    width: 20,
+                    height: 20,
+                  ),
+                ),
+                Expanded(
+                  child: Column(
                     children: [
-                      ...List.generate(
-                          controller.profile.value.userTime!.length,
-                          (index) => buildTimeItem(
-                              timeItem: controller.profile.value.userTime![index]))
+                      buildTitleComponent(
+                          title: 'service.time_slot'.tr, prefixIcon: false),
+                      const SizedBox(height: 9),
+                      Container(
+                        child: controller.profile.value.userTime != null
+                            ? Column(
+                                children: [
+                                  ...List.generate(
+                                      controller.profile.value.userTime!.length,
+                                      (index) => buildTimeItem(
+                                          timeItem: controller
+                                              .profile.value.userTime![index]))
+                                ],
+                              )
+                            : Container(),
+                      ),
                     ],
-                  )
-                : Container(),
+                  ),
+                ),
+              ],
+            ),
           ),
+          const SizedBox(height: 8),
         ],
       ),
     );
   }
+
   Widget buildServiceItem({required UserServicesCategoryModel item}) {
     return Container(
       child: Column(
@@ -353,13 +454,13 @@ extension BookingSupplierDetailComponents on BookingSupplierDetailScreen {
                 style: TextAppStyle().normalTextPink(),
               ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   controller.changeServiceArrow(item);
                 },
                 child: FCoreImage(
-                  item.openChild! ? 
-                          IconConstants.icArrowDown: 
-                          IconConstants.icArrowForwardIos,
+                  item.openChild!
+                      ? IconConstants.icArrowDown
+                      : IconConstants.icArrowForwardIos,
                   width: 18,
                   height: 18,
                   fit: BoxFit.cover,
@@ -367,7 +468,7 @@ extension BookingSupplierDetailComponents on BookingSupplierDetailScreen {
               ),
             ],
           ),
-          const SizedBox(height: 11),
+          const SizedBox(height: 5),
           Container(
             child: item.openChild! && item.list!.isNotEmpty
                 ? Column(
@@ -422,13 +523,13 @@ extension BookingSupplierDetailComponents on BookingSupplierDetailScreen {
                 style: TextAppStyle().normalTextPink(),
               ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   controller.changeArrow(workplacesItem);
                 },
                 child: FCoreImage(
-                  workplacesItem.openChild! ? 
-                          IconConstants.icArrowDown: 
-                          IconConstants.icArrowForwardIos,
+                  workplacesItem.openChild!
+                      ? IconConstants.icArrowDown
+                      : IconConstants.icArrowForwardIos,
                   width: 18,
                   height: 18,
                   fit: BoxFit.cover,
@@ -438,7 +539,8 @@ extension BookingSupplierDetailComponents on BookingSupplierDetailScreen {
           ),
           const SizedBox(height: 11),
           Container(
-            child: workplacesItem.openChild! && workplacesItem.districts!.isNotEmpty
+            child: workplacesItem.openChild! &&
+                    workplacesItem.districts!.isNotEmpty
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -467,23 +569,26 @@ extension BookingSupplierDetailComponents on BookingSupplierDetailScreen {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-              child: Row(
-            children: [
-              FCoreImage(
-                IconConstants.icCalendarPink,
-                width: 18,
-              ),
-              const SizedBox(width: 6),
-              Text(
-                timeItem.date ?? '',
-                style: TextAppStyle().normalTextStype(),
-              ),
-            ],
-          )),
+          Expanded(
+            flex: 2,
+            child: Container(
+                child: Row(
+              children: [
+                FCoreImage(
+                  IconConstants.icCalendarPink,
+                  width: 18,
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  timeItem.date ?? '',
+                  style: TextAppStyle().normalTextStype(),
+                ),
+              ],
+            )),
+          ),
           const SizedBox(width: 17),
           Expanded(
-              flex: 2,
+              flex: 3,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -491,7 +596,7 @@ extension BookingSupplierDetailComponents on BookingSupplierDetailScreen {
                     padding: const EdgeInsets.only(top: 3),
                     child: FCoreImage(
                       IconConstants.icTimeCircle,
-                      width: 18,
+                      width: 16,
                     ),
                   ),
                   const SizedBox(width: 6),
@@ -519,5 +624,4 @@ extension BookingSupplierDetailComponents on BookingSupplierDetailScreen {
       ),
     );
   }
-
 }

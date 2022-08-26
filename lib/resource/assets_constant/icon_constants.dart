@@ -288,7 +288,7 @@ class IconConstants {
   static const String icCalendar =
       'lib/resource/assets_resources/icons/ic_calendar.png';
   static const String icCalendarPink =
-      'lib/resource/assets_resources/icons/ic_calendar_color.png';
+      'lib/resource/assets_resources/icons/calendar.svg';
   static const String icCalendarWhite =
       'lib/resource/assets_resources/icons/ic_calendar_w.png';
   static const String icBankIcon =
@@ -328,9 +328,9 @@ class IconConstants {
       'lib/resource/assets_resources/icons/ic_money_pink.png';
 
   static const String icExpandMore =
-      'lib/resource/assets_resources/icons/ic_expand_more.png';
+      'lib/resource/assets_resources/icons/keyboard_arrow_down.svg';
   static const String icArrowDown =
-      'lib/resource/assets_resources/icons/ic_arrow_down.png';
+      'lib/resource/assets_resources/icons/arrow_down.svg';
 
   static const String icArrowForwardIos =
       'lib/resource/assets_resources/icons/ic_arrow_forward.svg';
@@ -389,4 +389,5 @@ class IconConstants {
 
   static const String icTimeCircle =
       'lib/resource/assets_resources/icons/time_circle.svg';
+  static const String icMap = 'lib/resource/assets_resources/icons/map.svg';
 }

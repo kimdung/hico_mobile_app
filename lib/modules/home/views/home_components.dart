@@ -331,7 +331,7 @@ extension HomeComponents on HomeScreen {
     final width = (Get.width - 60) / 2;
     return InkWell(
       onTap: () {
-        controller.supplierDetail(item.memberCode??'');
+        controller.supplierDetail(item);
       },
       child: Container(
         margin: const EdgeInsets.only(right: 15),

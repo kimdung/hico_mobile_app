@@ -55,7 +55,7 @@ class BookingSupplierDetailScreen
                 children: [
                   const SizedBox(height: 24),
                   buildGeneralInfo(),
-                  const SizedBox(height: 29),
+                  const SizedBox(height: 32),
                   buildListService(),
                   const SizedBox(height: 8),
                   buildItem(

@@ -302,7 +302,8 @@ const Map<String, String> ja_JP = {
   'service.add': 'サービス追加・修正',
   'service.empty': '条件に会う通訳者が見つけていません。絞り込み条件を変更してください。',
   'service.title': '提供できるサービスを選んでください。',
-
+  'service.address': '通訳場所',
+  'service.time_slot': '時間',
   // service category
   'service.category.title_bar': 'サービスリスト',
   'service.category.search_field': 'サービス検索',
@@ -332,6 +333,7 @@ const Map<String, String> ja_JP = {
   'supplier.filter.choose_date': 'サービス利用時間',
   'supplier.filter.location_required': '場所を選んでください。',
   'supplier.filter.move_fee': '費用には旅費は含まれていません',
+  'supplier.filter.suggestion': '別の時間帯については通訳者に確認してください',
 
   //supplier
   'supplier.title': '通訳者腱索',

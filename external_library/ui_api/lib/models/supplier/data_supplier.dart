@@ -8,8 +8,10 @@ part 'data_supplier.g.dart';
 class DataSupplierModel {
   ServiceModel? service;
   List<SupplierInfoModel>? suppliers;
+  @JsonKey(name: 'suppliers_other')
+  List<SupplierInfoModel>? suppliersOther;
 
-  DataSupplierModel({this.service, this.suppliers});
+  DataSupplierModel({this.service, this.suppliers, this.suppliersOther});
 
   factory DataSupplierModel.fromJson(Map<String, dynamic> json) =>
       _$DataSupplierModelFromJson(json);

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -51,7 +50,9 @@ class SupplierListScreen extends GetView<SupplierListController> {
                           return SupplierWidget(
                             invoice: controller.suppliers[i],
                             onPress: () {
-                              controller.viewDetail(controller.suppliers[i].memberCode??'');
+                              controller.viewDetail(
+                                controller.suppliers[i],
+                              );
                             },
                           );
                         },

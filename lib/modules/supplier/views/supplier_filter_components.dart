@@ -79,32 +79,36 @@ extension SupplierFilterComponents on SupplierFilterScreen {
     required String title,
     bool prefixIcon = true,
     Alignment? alignment,
+    Function()? onPress,
   }) {
-    return BoxDecorationWidget(
-      height: 47,
-      radius: 8,
-      shadow: true,
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.only(left: 14),
-              alignment: alignment,
-              child: Text(
-                title,
-                style: TextAppStyle().genaralTextStyle().copyWith(
-                      color: AppColor.primaryTextColorLight,
-                    ),
+    return InkWell(
+      onTap: onPress,
+      child: BoxDecorationWidget(
+        height: 47,
+        radius: 8,
+        shadow: true,
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.only(left: 14),
+                alignment: alignment,
+                child: Text(
+                  title,
+                  style: TextAppStyle().genaralTextStyle().copyWith(
+                        color: AppColor.primaryTextColorLight,
+                      ),
+                ),
               ),
             ),
-          ),
-          if (prefixIcon)
-            FCoreImage(
-              IconConstants.icArrowDown,
-              width: 24,
-            ),
-          const SizedBox(width: 16),
-        ],
+            if (prefixIcon)
+              FCoreImage(
+                IconConstants.icArrowDown,
+                width: 24,
+              ),
+            const SizedBox(width: 16),
+          ],
+        ),
       ),
     );
   }

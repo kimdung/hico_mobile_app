@@ -3,9 +3,11 @@ part 'workplaces_model.g.dart';
 
 @JsonSerializable()
 class WorkplacesModel {
+  @JsonKey(name: 'province_id', defaultValue: 0)
   int? provinceId;
   String? name;
   List<DistrictsModel>? districts;
+  @JsonKey(name: 'open_child', defaultValue: false)
   bool? openChild;
 
   WorkplacesModel({this.provinceId, this.name, this.districts, this.openChild});

@@ -24,14 +24,14 @@ UserTimeListModel _$UserTimeListModelFromJson(Map<String, dynamic> json) =>
     UserTimeListModel(
       id: json['id'] as int?,
       date: json['date'] as String?,
-      beginTime: json['beginTime'] as String?,
-      endTime: json['endTime'] as String?,
+      beginTime: json['begin_time'] as String? ?? '',
+      endTime: json['end_time'] as String? ?? '',
     );
 
 Map<String, dynamic> _$UserTimeListModelToJson(UserTimeListModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'date': instance.date,
-      'beginTime': instance.beginTime,
-      'endTime': instance.endTime,
+      'begin_time': instance.beginTime,
+      'end_time': instance.endTime,
     };

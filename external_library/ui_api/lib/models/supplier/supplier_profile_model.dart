@@ -8,6 +8,7 @@ part 'supplier_profile_model.g.dart';
 
 @JsonSerializable()
 class SupplierProfileModel {
+  int? id;
   String? name;
   @JsonKey(name: 'avatar_image', defaultValue: '')
   String? avatarImage;
@@ -34,6 +35,7 @@ class SupplierProfileModel {
   List<UserTimeModel>? userTime;
 
   SupplierProfileModel({
+    this.id,
     this.name,
     this.avatarImage,
     this.avgRating,

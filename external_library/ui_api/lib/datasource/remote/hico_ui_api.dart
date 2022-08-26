@@ -38,6 +38,7 @@ import 'package:ui_api/response/voucher/voucher_response.dart';
 import '../../request/invoice/extend_period_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/invoice/booking_checkdata_response.dart';
 import '../../response/invoice/extend_period_response.dart';
 import '../../response/notifications/notification_unread_response.dart';
 import '../../response/wallet/topup_history_response.dart';
@@ -167,6 +168,16 @@ abstract class HicoUIAPI {
     @Query('service_category_id') int id,
     @Query('searchWord') String searchWord,
   );
+
+  //service list by memberCode
+  @GET('/v1/customer/service/list/byMemberCode')
+  Future<ServiceListResponse> serviceListByCode(
+    @Query('member_code') String memberCode,
+  );
+
+  //service list all
+  @GET('/v1/customer/service/list/allService')
+  Future<ServiceListResponse> serviceListAll();
 
   //service new
   @GET('/v1/customer/service/list')
@@ -427,6 +438,10 @@ abstract class HicoUIAPI {
   //post extend
   @POST('/v1/customer/invoice/extendPeriod')
   Future<BaseResponse> extendInvoice(@Body() ExtendPeriodRequest request);
+
+  //post checkData
+  @POST('/v1/customer/invoice/checkData')
+  Future<BookingCheckDataResponse> bookingCheckData(@Body() BookingRequest request);
 
   //delete user
   @POST('/v1/user/deleteUser')

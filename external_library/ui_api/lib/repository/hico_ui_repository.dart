@@ -38,6 +38,7 @@ import '../request/invoice/extend_period_request.dart';
 import '../request/invoice/rating_request.dart';
 import '../response/call/call_token_response.dart';
 import '../response/chat/chat_token_response.dart';
+import '../response/invoice/booking_checkdata_response.dart';
 import '../response/notifications/notification_unread_response.dart'; 
 import '../response/wallet/topup_history_response.dart';
 import '../response/wallet/topup_komaju_response.dart';
@@ -117,6 +118,13 @@ abstract class HicoUIRepository {
   //Service list
   Future<ServiceListResponse> serviceList(
       int limit, int offset, int id, String searchWord);
+
+  //Service list by code
+  Future<ServiceListResponse> serviceListByCode(String memberCode);
+
+  //Service list by code
+  Future<ServiceListResponse> serviceListAll();
+
   //Service new
   Future<ServiceListResponse> serviceNew(
       int limit, int offset, String searchWord);
@@ -266,5 +274,7 @@ abstract class HicoUIRepository {
   Future<BaseResponse> invoiceRating(RatingRequest request);
 
   Future<BaseResponse> invoiceCancelRating(int id); 
+  Future<BookingCheckDataResponse> bookingCheckData(BookingRequest request); 
+
   Future<BaseResponse> deleteUser();
 }

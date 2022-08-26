@@ -430,6 +430,38 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
+  Future<ServiceListResponse> serviceListByCode(memberCode) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'member_code': memberCode};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ServiceListResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/customer/service/list/byMemberCode',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ServiceListResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ServiceListResponse> serviceListAll() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ServiceListResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/customer/service/list/allService',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ServiceListResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<ServiceListResponse> serviceNew(limit, offset, searchWord) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -1184,6 +1216,23 @@ class _HicoUIAPI implements HicoUIAPI {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BaseResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<BookingCheckDataResponse> bookingCheckData(request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BookingCheckDataResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/customer/invoice/checkData',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BookingCheckDataResponse.fromJson(_result.data!);
     return value;
   }
 

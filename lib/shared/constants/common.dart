@@ -38,6 +38,11 @@ class CommonConstants {
   static const String CALL_TOKEN = 'CALL_TOKEN';
   static const String TOPUP_DATA = 'TOPUP_DATA';
   static const String TOPUP_ISORDER = 'TOPUP_ISORDER';
+
+  //Booking key
+  static const String MEMBER_CODE = 'MEMBER_CODE';
+  static const String SUPPLIER_ID = 'SUPPLIER_ID';
+
 }
 
 const APP_NAME = 'Hico';

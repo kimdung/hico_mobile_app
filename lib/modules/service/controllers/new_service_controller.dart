@@ -48,7 +48,7 @@ class NewServiceController extends BaseController {
   Future<void> viewService(ServiceModel item) async {
     request.service = item;
     await _uiRepository.serviceView(item.id!).then((response) {});
-    await Get.toNamed(Routes.SUPPLIER_LIST, arguments: item.id);
+    await Get.toNamed(Routes.SUPPLIER_LIST, arguments: item);
   }
 
   @override

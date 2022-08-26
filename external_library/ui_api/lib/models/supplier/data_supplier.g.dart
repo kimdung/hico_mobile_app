@@ -14,10 +14,14 @@ DataSupplierModel _$DataSupplierModelFromJson(Map<String, dynamic> json) =>
       suppliers: (json['suppliers'] as List<dynamic>?)
           ?.map((e) => SupplierInfoModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      suppliersOther: (json['suppliers_other'] as List<dynamic>?)
+          ?.map((e) => SupplierInfoModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$DataSupplierModelToJson(DataSupplierModel instance) =>
     <String, dynamic>{
       'service': instance.service,
       'suppliers': instance.suppliers,
+      'suppliers_other': instance.suppliersOther,
     };

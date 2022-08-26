@@ -78,15 +78,15 @@ class HomeController extends BaseController {
   Future<void> viewDetail(int id) async {
     await Get.toNamed(Routes.SERVICE, arguments: id);
   }
-
+  //goto service page
   Future<void> viewService(ServiceModel item) async {
     request.service = item;
     await _uiRepository.serviceView(item.id!).then((response) {});
-    await Get.toNamed(Routes.SUPPLIER_LIST, arguments: item.id);
+    await Get.toNamed(Routes.SUPPLIER_LIST, arguments: item);
   }
 
-  Future<void> supplierDetail(String code) async {
-    await Get.toNamed(Routes.BOOKING_SUPPLIER_DETAIL, arguments: code);
+  Future<void> supplierDetail(SupplierInfoModel item) async {
+    await Get.toNamed(Routes.BOOKING_SUPPLIER_DETAIL, arguments: item);
   }
   Future<void> viewAllSuppliers() async {
     await Get.toNamed(Routes.SUPPLIER_LIST);
