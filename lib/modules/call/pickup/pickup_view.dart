@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -24,15 +27,26 @@ class PickupView extends StatefulWidget {
 
 class _PickupViewState extends State<PickupView> {
   final CallMethods callMethods = CallMethods();
+  Timer? timer;
 
   @override
   void initState() {
-    FlutterRingtonePlayer.playRingtone();
     super.initState();
+
+    if (Platform.isAndroid) {
+      FlutterRingtonePlayer.playRingtone();
+    } else if (Platform.isIOS) {
+      FlutterRingtonePlayer.playRingtone();
+      timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+        FlutterRingtonePlayer.playRingtone();
+      });
+    }
   }
 
   @override
   void dispose() {
+    timer?.cancel();
+    timer = null;
     FlutterRingtonePlayer.stop();
     super.dispose();
   }
@@ -122,6 +136,8 @@ class _PickupViewState extends State<PickupView> {
   }
 
   Future<void> onAcceptCall() async {
+    timer?.cancel();
+    timer = null;
     if (widget.call.channelId == null) {
       await callMethods.endCall(call: widget.call);
       return;
@@ -156,7 +172,9 @@ class _PickupViewState extends State<PickupView> {
   }
 
   Future<void> onDeniedCall() async {
-        await FlutterRingtonePlayer.stop();
+    timer?.cancel();
+    timer = null;
+    await FlutterRingtonePlayer.stop();
 
     await callMethods.endCall(call: widget.call);
   }

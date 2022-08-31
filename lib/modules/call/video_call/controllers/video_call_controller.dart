@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ui_api/models/call/call_model.dart';
@@ -32,6 +34,8 @@ class VideoCallController extends BaseController {
   Timer? _durationTimer;
   final RxInt dutationCall = RxInt(0);
 
+  Timer? _timerRingwait;
+
   VideoCallController(this.isCaller, this.token, this.call);
 
   @override
@@ -45,6 +49,15 @@ class VideoCallController extends BaseController {
     await _joinChannel();
 
     if (isCaller) {
+      if (Platform.isAndroid) {
+        await FlutterRingtonePlayer.playRingtone();
+      } else if (Platform.isIOS) {
+        await FlutterRingtonePlayer.playRingtone();
+        _timerRingwait = Timer.periodic(const Duration(seconds: 3), (timer) {
+          FlutterRingtonePlayer.playRingtone();
+        });
+      }
+
       await _sendCallNotification();
     }
   }
@@ -92,6 +105,7 @@ class VideoCallController extends BaseController {
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
     await _engine?.setParameters('{"che.audio.opensl":true}');
     await _engine?.enableVideo();
+
     _engine?.setEventHandler(RtcEngineEventHandler(
       warning: (warningCode) {
         printError(info: 'warning $warningCode');
@@ -102,6 +116,11 @@ class VideoCallController extends BaseController {
       userJoined: (uid, elapsed) {
         printInfo(info: 'userJoined $uid $elapsed');
         remoteUid.value = uid;
+
+        _timerRingwait?.cancel();
+        _timerRingwait = null;
+        FlutterRingtonePlayer.stop();
+
         _callBeginCall();
         _durationTimer ??= Timer.periodic(
           const Duration(seconds: 1),
@@ -149,6 +168,10 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> onEndCall() async {
+    _timerRingwait?.cancel();
+    _timerRingwait = null;
+    await FlutterRingtonePlayer.stop();
+
     printInfo(info: 'onEndCall');
     await callMethods.endCall(call: call);
     await _callEndCall();

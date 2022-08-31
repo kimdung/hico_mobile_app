@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ui_api/models/call/call_model.dart';
@@ -23,7 +25,7 @@ class VoiceCallController extends BaseController {
   RxBool isRemoted = RxBool(false);
   RxBool isJoined = RxBool(false);
 
-  RxBool enableSpeakerphone = RxBool(true);
+  RxBool enableSpeakerphone = RxBool(false);
   RxBool openMicrophone = RxBool(true);
 
   final bool isCaller;
@@ -32,6 +34,8 @@ class VoiceCallController extends BaseController {
 
   Timer? _durationTimer;
   final RxInt durationCall = RxInt(0);
+
+  Timer? _timerRingwait;
 
   VoiceCallController(this.isCaller, this.call, this.token);
 
@@ -46,6 +50,16 @@ class VoiceCallController extends BaseController {
     await _joinChannel();
 
     if (isCaller) {
+      if (Platform.isAndroid) {
+        await FlutterRingtonePlayer.playRingtone();
+      } else if (Platform.isIOS) {
+        await FlutterRingtonePlayer.playRingtone();
+        _timerRingwait = Timer.periodic(const Duration(seconds: 3), (timer) {
+          printInfo(info: 'FlutterRingtonePlayer.playRingtone(volume: 0.1);');
+          FlutterRingtonePlayer.playRingtone();
+        });
+      }
+
       await _sendCallNotification();
     }
   }
@@ -57,6 +71,10 @@ class VoiceCallController extends BaseController {
     _engine?.destroy();
     _callStreamSubscription?.cancel();
     _durationTimer?.cancel();
+
+    // _timerRingwait?.cancel();
+    _durationTimer = null;
+
     Wakelock.disable();
 
     super.onClose();
@@ -83,6 +101,9 @@ class VoiceCallController extends BaseController {
 
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
     await _engine?.setParameters('{"che.audio.opensl":true}');
+
+    // await _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
+    // await _engine?.enableInEarMonitoring(true);
     _engine?.setEventHandler(RtcEngineEventHandler(
       warning: (warningCode) {
         printError(info: 'warning $warningCode');
@@ -93,7 +114,13 @@ class VoiceCallController extends BaseController {
       userJoined: (uid, elapsed) {
         printInfo(info: 'userJoined $uid $elapsed');
         isRemoted.value = true;
+
         _callBeginCall();
+
+        _timerRingwait?.cancel();
+        _timerRingwait = null;
+        FlutterRingtonePlayer.stop();
+
         _durationTimer ??= Timer.periodic(
           const Duration(seconds: 1),
           (Timer timer) {
@@ -104,6 +131,8 @@ class VoiceCallController extends BaseController {
       joinChannelSuccess: (channel, uid, elapsed) {
         printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
         isJoined.value = true;
+
+        _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
       },
       leaveChannel: (stats) async {
         printError(info: 'leaveChannel ${stats.toJson()}');
@@ -111,6 +140,7 @@ class VoiceCallController extends BaseController {
       },
     ));
 
+    // await _engine?.enableInEarMonitoring(true);
     await _engine?.enableAudio();
     await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
     await _engine?.setClientRole(ClientRole.Broadcaster);
@@ -143,6 +173,10 @@ class VoiceCallController extends BaseController {
   }
 
   Future<void> onEndCall() async {
+    _timerRingwait?.cancel();
+    _timerRingwait = null;
+    await FlutterRingtonePlayer.stop();
+
     await callMethods.endCall(call: call);
     await _callEndCall();
   }
