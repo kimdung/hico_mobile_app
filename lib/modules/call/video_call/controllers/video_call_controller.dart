@@ -77,6 +77,11 @@ class VideoCallController extends BaseController {
     _engine?.destroy();
     _durationTimer?.cancel();
     _callStreamSubscription?.cancel();
+
+    _timerRingwait?.cancel();
+    _timerRingwait = null;
+    FlutterRingtonePlayer.stop();
+
     Wakelock.disable();
 
     super.onClose();
