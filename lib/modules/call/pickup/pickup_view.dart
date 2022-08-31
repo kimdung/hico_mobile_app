@@ -48,6 +48,7 @@ class _PickupViewState extends State<PickupView> {
     timer?.cancel();
     timer = null;
     FlutterRingtonePlayer.stop();
+
     super.dispose();
   }
 
@@ -138,6 +139,8 @@ class _PickupViewState extends State<PickupView> {
   Future<void> onAcceptCall() async {
     timer?.cancel();
     timer = null;
+    await FlutterRingtonePlayer.stop();
+
     if (widget.call.channelId == null) {
       await callMethods.endCall(call: widget.call);
       return;
