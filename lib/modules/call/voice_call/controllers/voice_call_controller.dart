@@ -70,10 +70,13 @@ class VoiceCallController extends BaseController {
     _engine?.leaveChannel();
     _engine?.destroy();
     _callStreamSubscription?.cancel();
-    _durationTimer?.cancel();
 
-    // _timerRingwait?.cancel();
+    _durationTimer?.cancel();
     _durationTimer = null;
+
+    _timerRingwait?.cancel();
+    _timerRingwait = null;
+    FlutterRingtonePlayer.stop();
 
     Wakelock.disable();
 
