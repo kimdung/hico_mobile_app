@@ -1,5 +1,6 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:ui_api/models/home/services_model.dart';
 import 'package:ui_api/models/supplier/supplier_info_model.dart';
 import 'package:ui_api/models/supplier/supplier_profile_model.dart';
 import 'package:ui_api/models/user/services_model.dart';
@@ -18,9 +19,17 @@ class BookingSupplierDetailController extends BaseController {
 
   BookingPrepareRequest bookingPrepare = BookingPrepareRequest();
   SupplierInfoModel supplier = SupplierInfoModel();
+  ServiceModel? service;
+
   BookingSupplierDetailController() {
-    supplier = Get.arguments;
-    _loadData(supplier.memberCode??'');
+    //supplier = Get.arguments;
+    final arguments = Get.arguments as Map;
+    supplier = arguments[CommonConstants.SUPPLIER_KEY];
+    if (arguments[CommonConstants.SERVICE_KEY] != null) {
+      service = ServiceModel();
+      service = arguments[CommonConstants.SERVICE_KEY];
+    }
+    _loadData(supplier.memberCode ?? '');
   }
 
   @override
@@ -46,7 +55,10 @@ class BookingSupplierDetailController extends BaseController {
   }
 
   Future<void> onBooking() async {
-    await Get.toNamed(Routes.BOOKING_SUPPLIER_BOOKING, arguments: supplier);
+    await Get.toNamed(Routes.BOOKING_SUPPLIER_BOOKING, arguments: {
+      CommonConstants.SUPPLIER_KEY: supplier,
+      CommonConstants.SERVICE_KEY: service,
+    });
   }
 
   Future<void> openLink(String url) async {

@@ -188,7 +188,7 @@ class SupplierBookingController extends BaseController {
             }
           });
           Get.toNamed(Routes.SUPPLIER_BOOKING_SUCCESS,
-              arguments: response.data!.detail!.code!);
+              arguments: response.message);
         } else {
           DialogUtil.showPopup(
             dialogSize: DialogSize.Popup,

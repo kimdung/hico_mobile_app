@@ -130,6 +130,7 @@ const Map<String, String> ja_JP = {
   //order
   'order.hello': 'こんにちは',
   'order.search_title': '予約腱索',
+  'order.cancel_confirm': '予約をキャンセルします。よろしいですか。',
 
   //profile
   'profile.add_avatar': 'プロファイル写真変更',
@@ -368,6 +369,7 @@ const Map<String, String> ja_JP = {
   'invoice.detail.hint_cancel': '予約キャンセルを入力してください。',
   'invoice.detail.hint_rating': '通訳者に対して評価を入力してください',
   'invoice.detail.error_rating': '通訳者に対して評価を入力してください',
+  'invoice.detail.cancel': '注文のキャンセル',
 
   //booking
   'booking.title': '予約詳細',

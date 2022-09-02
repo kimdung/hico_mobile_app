@@ -40,8 +40,8 @@ class CommonConstants {
   static const String TOPUP_ISORDER = 'TOPUP_ISORDER';
 
   //Booking key
-  static const String MEMBER_CODE = 'MEMBER_CODE';
-  static const String SUPPLIER_ID = 'SUPPLIER_ID';
+  static const String SERVICE_KEY = 'SERVICE_KEY';
+  static const String SUPPLIER_KEY = 'SUPPLIER_KEY';
 
 }
 

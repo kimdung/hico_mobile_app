@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:ui_api/models/user/user_time_model.dart';
 
 import '../../../../resource/assets_constant/icon_constants.dart';
 import '../../../../shared/constants/colors.dart';
@@ -17,7 +18,8 @@ import '../controllers/supplier_booking_controller.dart';
 
 part 'supplier_booking_components.dart';
 
-class BookingSupplierBookingScreen extends GetView<BookingSupplierBookingController> {
+class BookingSupplierBookingScreen
+    extends GetView<BookingSupplierBookingController> {
   @override
   Widget build(BuildContext context) {
     return PickupLayout(
@@ -34,7 +36,7 @@ class BookingSupplierBookingScreen extends GetView<BookingSupplierBookingControl
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            'supplier.filter.title_bar'.tr,
+            'booking.info'.tr,
             style: TextAppStyle().titleAppBarStyle(),
           ),
           elevation: 4,
@@ -45,7 +47,7 @@ class BookingSupplierBookingScreen extends GetView<BookingSupplierBookingControl
           child: Column(
             children: [
               buildNoteSection(),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               Expanded(
                 child: SingleChildScrollView(
                   child: Obx(
@@ -53,22 +55,42 @@ class BookingSupplierBookingScreen extends GetView<BookingSupplierBookingControl
                       padding: const EdgeInsets.symmetric(
                           horizontal: CommonConstants.paddingDefault),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text('booking.detail.time_work'.tr,
+                              style: TextAppStyle().normalTextPink()),
+                          const SizedBox(height: 9),
+                          Container(
+                            child: controller.profile.value.userTime != null
+                                ? Column(
+                                    children: [
+                                      ...List.generate(
+                                          controller
+                                              .profile.value.userTime!.length,
+                                          (index) => buildTimeItem(
+                                              timeItem: controller.profile.value
+                                                  .userTime![index]))
+                                    ],
+                                  )
+                                : Container(),
+                          ),
+                          const SizedBox(height: 10),
                           buildTitleComponent(
-                            title: controller.serviceName.value ,
-                            onPress: (){controller.selectService(context);},
+                            title: controller.serviceName.value,
+                            onPress: () {
+                              controller.selectService(context);
+                            },
                           ),
                           const SizedBox(height: 24),
                           buildDateComponent(
                             onPress: () {
-                              controller.selectFromDate(context);
+                              controller.selectDate(context);
                             },
                             date: controller.date,
                             hintText:
-                                DateFormatter.formatDate(controller.fromDate),
+                                'service.time_slot'.tr,
                           ),
                           const SizedBox(height: 24),
-                          
                           Row(
                             children: [
                               Expanded(

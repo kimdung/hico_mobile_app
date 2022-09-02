@@ -1,8 +1,5 @@
-import 'dart:developer';
 import 'dart:io';
 
-import 'package:data_infrastructure/data_infrastructure.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,31 +7,24 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:hico/shared/widget_hico/data_general/banks.dart';
-import 'package:hico/shared/widget_hico/data_general/date_picker.dart';
-import 'package:hico/shared/widget_hico/data_general/district.dart';
-import 'package:hico/shared/widget_hico/data_general/province.dart';
-import 'package:hico/shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ui_api/models/master_data/master_data_model.dart';
-import 'package:ui_api/models/master_data/provinces_model.dart';
+import 'package:ui_api/models/master_data/bank_model.dart';
 import 'package:ui_api/models/user/address_model.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
-import 'package:ui_api/request/user/avatar_request.dart';
 import 'package:ui_api/request/user/update_info_request.dart';
-import 'package:ui_api/models/master_data/bank_model.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
-import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/date_formatter.dart';
 import '../../../shared/utils/dialog_util.dart';
+import '../../../shared/widget_hico/data_general/banks.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 import '../../../shared/widgets/image_widget/image_widget.dart';
+import '../../../shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 
 class ProfileController extends BaseController {
   Rx<UserInfoModel> info = Rx(UserInfoModel());

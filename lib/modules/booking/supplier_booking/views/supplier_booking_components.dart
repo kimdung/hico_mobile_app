@@ -240,6 +240,68 @@ extension BookingSupplierBookingComponents on BookingSupplierBookingScreen {
     );
   }
 
+  Widget buildTimeItem({required UserTimeModel timeItem}) {
+    return Container(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Container(
+                child: Row(
+              children: [
+                FCoreImage(
+                  IconConstants.icCalendarPink,
+                  width: 18,
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  timeItem.date ?? '',
+                  style: TextAppStyle().normalTextStype(),
+                ),
+              ],
+            )),
+          ),
+          const SizedBox(width: 17),
+          Expanded(
+              flex: 3,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 3),
+                    child: FCoreImage(
+                      IconConstants.icTimeCircle,
+                      width: 16,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: RichText(
+                      text: TextSpan(
+                        text: '',
+                        style: TextAppStyle().normalTextStype(),
+                        children: <TextSpan>[
+                          ...List.generate(
+                            timeItem.list!.length,
+                            (int index) => TextSpan(
+                              text:
+                                  '${timeItem.list![index].beginTime}-${timeItem.list![index].endTime}${(index + 1) == timeItem.list!.length ? '' : ', '}',
+                              style: TextAppStyle().normalTextStype(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+        ],
+      ),
+    );
+  }
+
   Widget _image(String asset) {
     return Image.asset(
       asset,

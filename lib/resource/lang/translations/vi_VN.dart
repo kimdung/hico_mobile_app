@@ -133,6 +133,7 @@ const Map<String, String> vi_VN = {
   //order
   'order.hello': 'Xin chào,',
   'order.search_title': 'Tìm kiếm đơn hàng',
+  'order.cancel_confirm': 'Bạn chắc chắn muốn huỷ đơn?',
 
   //profile
   'profile.add_avatar': 'Chỉnh sửa ảnh đại diện',
@@ -385,6 +386,7 @@ const Map<String, String> vi_VN = {
   'invoice.detail.cancel': 'Huỷ đơn hàng',
 
   //booking
+  'booking.info': 'Thông tin đặt lịch',
   'booking.title': 'Chi tiết đặt lịch',
   'booking.voucher': 'Hico Voucher',
   'booking.voucher_select': 'Chọn hoặc nhập mã',

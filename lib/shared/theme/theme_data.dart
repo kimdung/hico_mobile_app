@@ -211,7 +211,7 @@ class ThemeConfig {
         fourthTextColor: AppColor.fourthTextColorLight,
         fifthTextColor: AppColor.fifthTextColorLight,
         hintText: AppColor.primaryHintColorLight,
-        accentColor: AppColor.accentColorLight,
+        accentColor: AppColor.primarySelectedColorLight,
         cursorColor: AppColor.cursorColor,
         divider: AppColor.dividerColorLight,
         disabled: AppColor.disabledColorLight,

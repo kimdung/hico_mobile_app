@@ -86,7 +86,9 @@ class HomeController extends BaseController {
   }
 
   Future<void> supplierDetail(SupplierInfoModel item) async {
-    await Get.toNamed(Routes.BOOKING_SUPPLIER_DETAIL, arguments: item);
+    await Get.toNamed(Routes.BOOKING_SUPPLIER_DETAIL, arguments: {
+      CommonConstants.SUPPLIER_KEY: item,
+    });
   }
   Future<void> viewAllSuppliers() async {
     await Get.toNamed(Routes.SUPPLIER_LIST);

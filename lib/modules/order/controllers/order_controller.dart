@@ -16,6 +16,7 @@ import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
+import '../../../shared/widget_hico/dialog/dialog_confirm_widget.dart';
 import '../../../shared/widget_hico/dialog/order_extend_widget.dart';
 import '../../../shared/widget_hico/dialog/time_extend_widget.dart';
 import '../../../shared/utils/call_utilities.dart';
@@ -62,8 +63,9 @@ class OrderController extends BaseController {
             response.data != null &&
             response.data!.detail != null) {
           invoice.value = response.data!.detail!;
-          isCommennt.value = response.data!.isComment??0;
-          if(response.data!.dataReview != null && response.data!.dataReview!.content!.isNotEmpty){
+          isCommennt.value = response.data!.isComment ?? 0;
+          if (response.data!.dataReview != null &&
+              response.data!.dataReview!.content!.isNotEmpty) {
             myReview = response.data!.dataReview;
           }
 
@@ -348,10 +350,18 @@ class OrderController extends BaseController {
     }
   }
 
-Future<void> cancelInvoice() async {
+  Future<void> cancelInvoice() async {
     try {
-      await EasyLoading.show();
-     await _uiRepository.invoiceCancelInvoice(id).then((response) {
+      await DialogUtil.showPopup(
+        dialogSize: DialogSize.Popup,
+        barrierDismissible: false,
+        backgroundColor: Colors.transparent,
+        child: DialogConfirmWidget(
+          description: 'order.cancel_confirm'.tr,
+        ),
+        onVaLue: (_value) {
+          if (_value == true) {
+            _uiRepository.invoiceCancelInvoice(id).then((response) {
               EasyLoading.dismiss();
               DialogUtil.showPopup(
                 dialogSize: DialogSize.Popup,
@@ -363,15 +373,22 @@ Future<void> cancelInvoice() async {
                       : IconConstants.icFail,
                   title: response.message,
                 ),
-                onVaLue: (value) {},
+                onVaLue: (value) {
+                  _loadData();
+                },
               );
               return;
             });
+          }
+        },
+      );
+
       return;
     } catch (e) {
       await EasyLoading.dismiss();
     }
   }
+
   @override
   void onClose() {}
 

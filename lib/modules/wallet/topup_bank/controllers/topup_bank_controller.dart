@@ -12,8 +12,10 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../../base/base_controller.dart';
 import '../../../../data/app_data_global.dart';
+import '../../../../resource/assets_constant/icon_constants.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../shared/constants/common.dart';
+import '../../../../shared/widget_hico/dialog/normal_widget.dart';
 import '../../../../shared/widgets/image_widget/image_widget.dart';
 
 class TopupBankController extends BaseController {
@@ -28,7 +30,7 @@ class TopupBankController extends BaseController {
   final imageBill = Rxn<File>();
   bool isOrder = false;
 
-  TopupBankController(){
+  TopupBankController() {
     final arguments = Get.arguments as Map;
     isOrder = arguments[CommonConstants.TOPUP_ISORDER];
     topup = arguments[CommonConstants.TOPUP_DATA];
@@ -84,12 +86,23 @@ class TopupBankController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null &&
             response.data!.row != null) {
-              if(isOrder){
-                Get.back(result: isOrder);
-              }else{
-                Get.offAndToNamed(Routes.TOPUP_DETAIL, arguments: response.data!.row);
-              }
-          
+          if (isOrder) {
+            Get.back(result: isOrder);
+          } else {
+            DialogUtil.showPopup(
+              dialogSize: DialogSize.Popup,
+              barrierDismissible: false,
+              backgroundColor: Colors.transparent,
+              child: NormalWidget(
+                icon: IconConstants.icFail,
+                title: response.message ?? 'topup.failure'.tr,
+              ),
+              onVaLue: (value) {
+                Get.offAndToNamed(Routes.TOPUP_DETAIL,
+                    arguments: response.data!.row);
+              },
+            );
+          }
         }
       });
     } catch (e) {

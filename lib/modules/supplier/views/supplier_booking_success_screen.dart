@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:getwidget/components/border/gf_border.dart';
+import 'package:getwidget/types/gf_border_type.dart';
 import 'package:ui_api/models/master_data/master_data_model.dart';
 
 import '../../../resource/assets_constant/icon_constants.dart';
@@ -63,6 +65,31 @@ class SupplierBookingSuccessScreen
                       ],
                     ),
                   ),
+                ),    
+                const SizedBox(height: 24),
+                Container(
+                  child: GFBorder(
+                    dashedLine: const [4, 6],
+                    strokeWidth: 2,
+                    type: GFBorderType.rect,
+                    color: AppColor.primaryColorLight,
+                    child: Center(
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text: '${'note'.tr} ',
+                          style: TextAppStyle().smallTextPink().copyWith(
+                              color: Colors.red, fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: controller.code,
+                              style: TextAppStyle().smallTextBlack(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 80),
                 GeneralButton(
@@ -77,31 +104,6 @@ class SupplierBookingSuccessScreen
                     style: TextAppStyle().titleButtonStyle(),
                   ),
                 ),
-                const SizedBox(height: 24),
-                // Container(
-                //   child: GFBorder(
-                //     dashedLine: const [4, 6],
-                //     strokeWidth: 2,
-                //     type: GFBorderType.rect,
-                //     color: AppColor.primaryColorLight,
-                //     child: Center(
-                //       child: RichText(
-                //         textAlign: TextAlign.center,
-                //         text: TextSpan(
-                //           text: '${'note'.tr} ',
-                //           style: TextAppStyle().smallTextPink().copyWith(
-                //               color: Colors.red, fontWeight: FontWeight.bold),
-                //           children: <TextSpan>[
-                //             TextSpan(
-                //               text: 'booking.note'.tr,
-                //               style: TextAppStyle().smallTextBlack(),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 // const SizedBox(height: 31),
                 // Container(color: AppColor.greyBackgroundColor, height: 4),
                 // ...List.generate(

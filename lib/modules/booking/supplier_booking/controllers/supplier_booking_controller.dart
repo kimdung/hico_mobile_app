@@ -7,6 +7,7 @@ import 'package:ui_api/models/home/services_model.dart';
 import 'package:ui_api/models/master_data/districts_model.dart';
 import 'package:ui_api/models/master_data/provinces_model.dart';
 import 'package:ui_api/models/supplier/supplier_info_model.dart';
+import 'package:ui_api/models/supplier/supplier_profile_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/booking_prepare_request.dart';
 import 'package:ui_api/request/invoice/booking_request.dart';
@@ -21,6 +22,7 @@ import '../../../../shared/constants/common.dart';
 import '../../../../shared/utils/date_formatter.dart';
 import '../../../../shared/utils/dialog_util.dart';
 import '../../../../shared/widget_hico/data_general/date_picker.dart';
+import '../../../../shared/widget_hico/data_general/date_selected.dart';
 import '../../../../shared/widget_hico/data_general/district.dart';
 import '../../../../shared/widget_hico/data_general/province.dart';
 import '../../../../shared/widget_hico/data_general/service.dart';
@@ -30,6 +32,7 @@ import '../../../../shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 
 class BookingSupplierBookingController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
+  final profile = Rx(SupplierProfileModel());
 
   BookingRequest bookingRequest = BookingRequest();
 
@@ -54,11 +57,22 @@ class BookingSupplierBookingController extends BaseController {
 
   //tranfer data
   SupplierInfoModel supplier = SupplierInfoModel();
+  ServiceModel? service;
 
   BookingSupplierBookingController() {
-    supplier = Get.arguments;
+    //supplier = Get.arguments;
 
-    date.value = TextEditingValue(text: DateFormatter.formatDate(fromDate));
+    final arguments = Get.arguments as Map;
+    supplier = arguments[CommonConstants.SUPPLIER_KEY];
+    if (arguments[CommonConstants.SERVICE_KEY] != null) {
+      service = ServiceModel();
+      service = arguments[CommonConstants.SERVICE_KEY];
+      request.serviceId = service?.id;
+      serviceName.value = service?.name ?? '';
+      bookingPrepare.service = service;
+    }
+
+    //date.value = TextEditingValue(text: DateFormatter.formatDate(fromDate));
     request.filterIsOnline = isOnline.value;
     request.filterLevelId = 0;
     _loadData();
@@ -80,6 +94,17 @@ class BookingSupplierBookingController extends BaseController {
             response.dataService != null &&
             response.dataService!.services != null) {
           serviceList.value = response.dataService!.services!;
+          return;
+        }
+      });
+      await _uiRepository
+          .supplierDetail(supplier.memberCode ?? '')
+          .then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.data != null &&
+            response.data!.profile != null) {
+          profile.value = response.data!.profile!;
           return;
         }
       });
@@ -108,6 +133,25 @@ class BookingSupplierBookingController extends BaseController {
             serviceName.value = _value.name ?? '';
             bookingPrepare.service = _value;
           }
+        }
+      },
+    );
+  }
+
+  Future<void> selectDate(BuildContext context) async {
+    await ShowBottomSheet().showBottomSheet(
+      child: Container(
+        height: Get.height / 2,
+        child: DateSelectedWidget(
+          date: profile.value.userTime!,
+          currentID: request.filterDate ?? '',
+        ),
+      ),
+      context: context,
+      onValue: (_value) {
+        if (_value != null && _value is String) {
+          date.text = _value;
+          request.filterDate = _value;
         }
       },
     );
@@ -156,7 +200,7 @@ class BookingSupplierBookingController extends BaseController {
       height: 300,
       backgroundColor: AppColor.primaryBackgroundColorLight,
       child: TimeSpinerWidget(
-        currentTime: tmpToTime,
+        currentTime: tmpFromTime,
       ),
       onVaLue: (_value) {
         if (_value != null && _value is DateTime) {
@@ -290,7 +334,8 @@ class BookingSupplierBookingController extends BaseController {
           if (response.status == CommonConstants.statusOk) {
             //router
             bookingPrepare.supplier = response.data;
-            Get.toNamed(Routes.BOOKING_SUPPLIER_CHECKOUT, arguments: bookingPrepare);
+            Get.toNamed(Routes.BOOKING_SUPPLIER_CHECKOUT,
+                arguments: bookingPrepare);
           } else {
             DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,

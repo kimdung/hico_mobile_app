@@ -20,12 +20,13 @@ class SupplierListController extends BaseController {
   Rx<int> currentOrder = Rx(SortType.Random.id);
   int limit = CommonConstants.limit;
   int offset = 0;
-  ServiceModel service = ServiceModel();
+  ServiceModel? service;
 
   SupplierListController() {
     if (Get.arguments != null) {
+      service = ServiceModel();
       service = Get.arguments;
-      serviceId.value = service.id!;
+      serviceId.value = service!.id!;
     }
     loadData();
     scrollController.addListener(() {
@@ -83,7 +84,10 @@ class SupplierListController extends BaseController {
   }
 
   Future<void> viewDetail(SupplierInfoModel item) async {
-    await Get.toNamed(Routes.BOOKING_SUPPLIER_DETAIL, arguments: item);
+    await Get.toNamed(Routes.BOOKING_SUPPLIER_DETAIL, arguments: {
+      CommonConstants.SUPPLIER_KEY: item,
+      CommonConstants.SERVICE_KEY: service,
+    });
   }
 
   Future<void> sortOrder(BuildContext context) async {

@@ -154,6 +154,17 @@ class SupplierBookingCheckoutController extends BaseController {
         bookingRequest.value.hospitalName = address.text;
       }
 
+      await _uiRepository.getInfo().then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.data != null &&
+            response.data!.info != null) {
+          info.value = response.data!.info!;
+          AppDataGlobal.userInfo = response.data!.info!;
+          return;
+        }
+      });
+
       if (info.value.accountBalance! < totalPay.value) {
         await EasyLoading.dismiss();
         await DialogUtil.showPopup(
@@ -187,7 +198,7 @@ class SupplierBookingCheckoutController extends BaseController {
             }
           });
           Get.toNamed(Routes.SUPPLIER_BOOKING_SUCCESS,
-              arguments: response.data!.detail!.code!);
+              arguments: response.message);
         } else {
           DialogUtil.showPopup(
             dialogSize: DialogSize.Popup,
