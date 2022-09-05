@@ -49,15 +49,6 @@ class VideoCallController extends BaseController {
     await _joinChannel();
 
     if (isCaller) {
-      if (Platform.isAndroid) {
-        await FlutterRingtonePlayer.playRingtone();
-      } else if (Platform.isIOS) {
-        await FlutterRingtonePlayer.playRingtone();
-        _timerRingwait = Timer.periodic(const Duration(seconds: 3), (timer) {
-          FlutterRingtonePlayer.playRingtone();
-        });
-      }
-
       await _sendCallNotification();
     }
   }
@@ -72,7 +63,10 @@ class VideoCallController extends BaseController {
   @override
   void onClose() {
     printInfo(info: 'onClose');
+    _endRingtone();
+
     onEndCall();
+
     _engine?.leaveChannel();
     _engine?.destroy();
     _durationTimer?.cancel();
@@ -120,6 +114,9 @@ class VideoCallController extends BaseController {
       },
       userJoined: (uid, elapsed) {
         printInfo(info: 'userJoined $uid $elapsed');
+
+        _endRingtone();
+
         remoteUid.value = uid;
 
         _timerRingwait?.cancel();
@@ -136,14 +133,23 @@ class VideoCallController extends BaseController {
       },
       userOffline: (int uid, UserOfflineReason reason) {
         printInfo(info: 'remote user $uid left channel');
+
+        _endRingtone();
+
         remoteUid.value = null;
       },
       joinChannelSuccess: (channel, uid, elapsed) {
         printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
+
+        _startRingtone();
+
         isJoined.value = true;
       },
       leaveChannel: (stats) async {
         printError(info: 'leaveChannel ${stats.toJson()}');
+
+        _endRingtone();
+
         isJoined.value = false;
       },
     ));
@@ -180,6 +186,23 @@ class VideoCallController extends BaseController {
     printInfo(info: 'onEndCall');
     await callMethods.endCall(call: call);
     await _callEndCall();
+  }
+
+  void _startRingtone() {
+    if (Platform.isAndroid) {
+      FlutterRingtonePlayer.playRingtone();
+    } else if (Platform.isIOS) {
+      FlutterRingtonePlayer.playRingtone(looping: false);
+      _timerRingwait = Timer.periodic(const Duration(seconds: 3), (timer) {
+        FlutterRingtonePlayer.playRingtone(looping: false);
+      });
+    }
+  }
+
+  void _endRingtone() {
+    _timerRingwait?.cancel();
+    _timerRingwait = null;
+    FlutterRingtonePlayer.stop();
   }
 
   /* API */
