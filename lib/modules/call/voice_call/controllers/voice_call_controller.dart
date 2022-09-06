@@ -137,7 +137,7 @@ class VoiceCallController extends BaseController {
 
     await _engine?.enableAudio();
     await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    // await _engine?.setClientRole(ClientRole.Broadcaster);
+    await _engine?.setClientRole(ClientRole.Broadcaster);
   }
 
   Future<void> _joinChannel() async {
@@ -176,7 +176,7 @@ class VoiceCallController extends BaseController {
       FlutterRingtonePlayer.playRingtone();
     } else if (Platform.isIOS) {
       FlutterRingtonePlayer.playRingtone(looping: false);
-      _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
+      _timerRingwait = Timer.periodic(const Duration(seconds: 3), (timer) {
         printInfo(info: 'playRingtone');
         FlutterRingtonePlayer.playRingtone(looping: false);
       });
