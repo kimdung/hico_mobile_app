@@ -50,6 +50,8 @@ class VoiceCallController extends BaseController {
     await _joinChannel();
 
     if (isCaller) {
+      _startRingtone();
+
       await _sendCallNotification();
     }
   }
@@ -65,10 +67,6 @@ class VoiceCallController extends BaseController {
 
     _durationTimer?.cancel();
     _durationTimer = null;
-
-    _timerRingwait?.cancel();
-    _timerRingwait = null;
-    FlutterRingtonePlayer.stop();
 
     Wakelock.disable();
 
@@ -98,11 +96,19 @@ class VoiceCallController extends BaseController {
     await _engine?.setParameters('{"che.audio.opensl":true}');
 
     _engine?.setEventHandler(RtcEngineEventHandler(
-      warning: (warningCode) {
-        printError(info: 'warning $warningCode');
+      joinChannelSuccess: (channel, uid, elapsed) {
+        printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
+
+        isJoined.value = true;
+
+        _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
       },
-      error: (errorCode) {
-        printError(info: 'error $errorCode');
+      leaveChannel: (stats) {
+        printError(info: 'leaveChannel ${stats.toJson()}');
+
+        _endRingtone();
+
+        isJoined.value = false;
       },
       userJoined: (uid, elapsed) {
         printInfo(info: 'userJoined $uid $elapsed');
@@ -113,35 +119,22 @@ class VoiceCallController extends BaseController {
 
         _callBeginCall();
 
-        _timerRingwait?.cancel();
-        _timerRingwait = null;
-        FlutterRingtonePlayer.stop();
-
         _durationTimer ??= Timer.periodic(
           const Duration(seconds: 1),
           (Timer timer) {
             durationCall.value++;
+            printInfo(info: '_durationTimer $durationCall');
           },
         );
       },
-      joinChannelSuccess: (channel, uid, elapsed) {
-        printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
-        _startRingtone();
-
-        isJoined.value = true;
-
-        _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
+      warning: (warningCode) {
+        printError(info: 'warning $warningCode');
       },
-      leaveChannel: (stats) async {
-        printError(info: 'leaveChannel ${stats.toJson()}');
-
-        _endRingtone();
-
-        isJoined.value = false;
+      error: (errorCode) {
+        printError(info: 'error $errorCode');
       },
     ));
 
-    // await _engine?.enableInEarMonitoring(true);
     await _engine?.enableAudio();
     await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
     // await _engine?.setClientRole(ClientRole.Broadcaster);
@@ -182,10 +175,10 @@ class VoiceCallController extends BaseController {
     if (Platform.isAndroid) {
       FlutterRingtonePlayer.playRingtone();
     } else if (Platform.isIOS) {
-      FlutterRingtonePlayer.playRingtone();
+      FlutterRingtonePlayer.playRingtone(looping: false);
       _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
         printInfo(info: 'playRingtone');
-        FlutterRingtonePlayer.playRingtone();
+        FlutterRingtonePlayer.playRingtone(looping: false);
       });
     }
   }

@@ -49,6 +49,8 @@ class VideoCallController extends BaseController {
     await _joinChannel();
 
     if (isCaller) {
+      _startRingtone();
+
       await _sendCallNotification();
     }
   }
@@ -71,10 +73,6 @@ class VideoCallController extends BaseController {
     _engine?.destroy();
     _durationTimer?.cancel();
     _callStreamSubscription?.cancel();
-
-    _timerRingwait?.cancel();
-    _timerRingwait = null;
-    FlutterRingtonePlayer.stop();
 
     Wakelock.disable();
 
@@ -106,11 +104,17 @@ class VideoCallController extends BaseController {
     await _engine?.enableVideo();
 
     _engine?.setEventHandler(RtcEngineEventHandler(
-      warning: (warningCode) {
-        printError(info: 'warning $warningCode');
+      joinChannelSuccess: (channel, uid, elapsed) {
+        printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
+
+        isJoined.value = true;
       },
-      error: (errorCode) {
-        printError(info: 'error $errorCode');
+      leaveChannel: (stats) async {
+        printError(info: 'leaveChannel ${stats.toJson()}');
+
+        _endRingtone();
+
+        isJoined.value = false;
       },
       userJoined: (uid, elapsed) {
         printInfo(info: 'userJoined $uid $elapsed');
@@ -118,10 +122,6 @@ class VideoCallController extends BaseController {
         _endRingtone();
 
         remoteUid.value = uid;
-
-        _timerRingwait?.cancel();
-        _timerRingwait = null;
-        FlutterRingtonePlayer.stop();
 
         _callBeginCall();
         _durationTimer ??= Timer.periodic(
@@ -138,19 +138,11 @@ class VideoCallController extends BaseController {
 
         remoteUid.value = null;
       },
-      joinChannelSuccess: (channel, uid, elapsed) {
-        printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
-
-        _startRingtone();
-
-        isJoined.value = true;
+      warning: (warningCode) {
+        printError(info: 'warning $warningCode');
       },
-      leaveChannel: (stats) async {
-        printError(info: 'leaveChannel ${stats.toJson()}');
-
-        _endRingtone();
-
-        isJoined.value = false;
+      error: (errorCode) {
+        printError(info: 'error $errorCode');
       },
     ));
   }
