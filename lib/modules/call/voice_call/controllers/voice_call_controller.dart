@@ -141,9 +141,7 @@ class VoiceCallController extends BaseController {
     await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
     await _engine?.setClientRole(ClientRole.Broadcaster);
 
-    if (isCaller) {
-      await _engine?.enableLocalAudio(false);
-    }
+    await _engine?.enableLocalAudio(false);
   }
 
   Future<void> _joinChannel() async {
