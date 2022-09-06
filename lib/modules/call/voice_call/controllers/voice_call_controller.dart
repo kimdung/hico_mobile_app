@@ -113,6 +113,8 @@ class VoiceCallController extends BaseController {
       userJoined: (uid, elapsed) {
         printInfo(info: 'userJoined $uid $elapsed');
 
+        _engine?.enableLocalAudio(true);
+
         _endRingtone();
 
         isRemoted.value = true;
@@ -138,6 +140,10 @@ class VoiceCallController extends BaseController {
     await _engine?.enableAudio();
     await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
     await _engine?.setClientRole(ClientRole.Broadcaster);
+
+    if (isCaller) {
+      await _engine?.enableLocalAudio(false);
+    }
   }
 
   Future<void> _joinChannel() async {
