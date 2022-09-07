@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -12,7 +11,6 @@ import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../resource/lang/translation_service.dart';
-import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/constants/storage.dart';
 import '../../../shared/styles/text_style/text_style.dart';
