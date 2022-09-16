@@ -390,7 +390,8 @@ abstract class HicoUIAPI {
 
   //Get Call Token
   @POST('/v1/agoraCall/createToken')
-  Future<CallTokenResponse> getCallToken(@Query('channel') String channel);
+  Future<CallTokenResponse> getCallToken(
+      @Query('channel') String channel, @Query('invoice_id') int? invoiceId);
 
   @POST('/v1/customer/invoice/begin')
   Future<BaseResponse> beginCall(@Query('invoice_id') int invoiceId);
@@ -400,6 +401,9 @@ abstract class HicoUIAPI {
 
   @POST('/v1/agoraCall/sendFCMToCall')
   Future<BaseResponse> sendCallNotification(@Query('invoice_id') int invoiceId);
+
+  @POST('/v1/agoraCall/sendFCMMissedCall')
+  Future<BaseResponse> sendMissCall(@Query('invoice_id') int invoiceId);
 
   /* Wallet */
   @GET('/v1/payIn/list')
@@ -441,7 +445,8 @@ abstract class HicoUIAPI {
 
   //post checkData
   @POST('/v1/customer/invoice/checkData')
-  Future<BookingCheckDataResponse> bookingCheckData(@Body() BookingRequest request);
+  Future<BookingCheckDataResponse> bookingCheckData(
+      @Body() BookingRequest request);
 
   //delete user
   @POST('/v1/user/deleteUser')

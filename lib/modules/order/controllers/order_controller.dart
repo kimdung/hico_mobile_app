@@ -194,7 +194,9 @@ class OrderController extends BaseController {
 
     try {
       await EasyLoading.show();
-      await _uiRepository.getCallToken(channelId).then((response) {
+      await _uiRepository
+          .getCallToken(channelId, invoice.value.id ?? 0)
+          .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
@@ -224,7 +226,9 @@ class OrderController extends BaseController {
     final channelId = invoice.value.getCallChannel();
     try {
       await EasyLoading.show();
-      await _uiRepository.getCallToken(channelId).then((response) {
+      await _uiRepository
+          .getCallToken(channelId, invoice.value.id)
+          .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {

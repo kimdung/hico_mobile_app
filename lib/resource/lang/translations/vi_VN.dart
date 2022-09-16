@@ -51,6 +51,7 @@ const Map<String, String> vi_VN = {
   // error
   'error': 'Có lỗi xẩy ra',
   'error.expires': 'Phiên làm việc hết hạn!',
+  'error.call': 'Không thể thực hiện cuộc gọi lúc này!',
 
   //register
   'register.comfirm': 'Xác thực tài khoản',
@@ -310,8 +311,7 @@ const Map<String, String> vi_VN = {
   //service
   'service.titlebar': 'Danh Sách Dịch Vụ Cung Cấp',
   'service.add': 'Thêm/Sửa Dịch Vụ',
-  'service.empty':
-      'Không có Phiên dịch viên nào phù hợp với yêu cầu của bạn.',
+  'service.empty': 'Không có Phiên dịch viên nào phù hợp với yêu cầu của bạn.',
   'service.title':
       'Chọn dịch vụ bạn có thể cung cấp đến khách hàng tương ứng với điều kiệm đính kèm.',
 

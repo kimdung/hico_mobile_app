@@ -39,7 +39,7 @@ import '../request/invoice/rating_request.dart';
 import '../response/call/call_token_response.dart';
 import '../response/chat/chat_token_response.dart';
 import '../response/invoice/booking_checkdata_response.dart';
-import '../response/notifications/notification_unread_response.dart'; 
+import '../response/notifications/notification_unread_response.dart';
 import '../response/wallet/topup_history_response.dart';
 import '../response/wallet/topup_komaju_response.dart';
 import '../response/wallet/topup_response.dart';
@@ -106,7 +106,7 @@ abstract class HicoUIRepository {
   Future<NotificationDetailResponse> notificationDetail(int id);
 
   //notification unread
-  Future<NotificationUnreadResponse> notificationUnRead();  
+  Future<NotificationUnreadResponse> notificationUnRead();
 
   //home
   Future<HomeResponse> home();
@@ -150,7 +150,7 @@ abstract class HicoUIRepository {
     int offset,
   );
 
-   //Supplier list customer
+  //Supplier list customer
   Future<SupplierResponse> customerSuppliers(
     int sortType,
     int serviceId,
@@ -192,7 +192,7 @@ abstract class HicoUIRepository {
     String reason,
   );
 
-   //invoice detail: cancel
+  //invoice detail: cancel
   Future<BaseResponse> invoiceCancelInvoice(
     int id,
   );
@@ -244,13 +244,15 @@ abstract class HicoUIRepository {
   Future<ChatTokenResponse> createChatToken();
 
   // Create call token
-  Future<CallTokenResponse> getCallToken(String channel);
+  Future<CallTokenResponse> getCallToken(String channel, int? invoiceId);
 
   Future<BaseResponse> beginCall(int invoiceId);
 
   Future<BaseResponse> endCall(int invoiceId);
 
   Future<BaseResponse> sendCallNotification(int invoiceId);
+
+  Future<BaseResponse> sendMissCall(int invoiceId);
 
   /* Wallet */
 
@@ -273,8 +275,8 @@ abstract class HicoUIRepository {
 
   Future<BaseResponse> invoiceRating(RatingRequest request);
 
-  Future<BaseResponse> invoiceCancelRating(int id); 
-  Future<BookingCheckDataResponse> bookingCheckData(BookingRequest request); 
+  Future<BaseResponse> invoiceCancelRating(int id);
+  Future<BookingCheckDataResponse> bookingCheckData(BookingRequest request);
 
   Future<BaseResponse> deleteUser();
 }

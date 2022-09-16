@@ -27,7 +27,7 @@ class TopupStripeController extends BaseController {
   // final TextEditingController validDateController = TextEditingController();
   // final TextEditingController cvvController = TextEditingController();
 
-  TopupStripeController(){
+  TopupStripeController() {
     final arguments = Get.arguments as Map;
     isOrder = arguments['TOPUP_ISORDER'];
     amount = arguments['TOPUP_DATA'];
@@ -102,13 +102,12 @@ class TopupStripeController extends BaseController {
             }
           });
           await EasyLoading.dismiss();
-          if(isOrder){
-              Get.back(result: isOrder);
-          }else{
+          if (isOrder) {
+            Get.back(result: isOrder);
+          } else {
             await Get.offAndToNamed(Routes.TOPUP_DETAIL,
-              arguments: response.data!.row);
-          }   
-
+                arguments: response.data!.row);
+          }
         } else {
           await EasyLoading.dismiss();
           await DialogUtil.showPopup(

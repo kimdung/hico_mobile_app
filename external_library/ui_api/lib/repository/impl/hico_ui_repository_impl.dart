@@ -398,8 +398,8 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   }
 
   @override
-  Future<CallTokenResponse> getCallToken(String channel) {
-    return _api.getCallToken(channel);
+  Future<CallTokenResponse> getCallToken(String channel, int? invoiceId) {
+    return _api.getCallToken(channel, invoiceId);
   }
 
   @override
@@ -464,7 +464,12 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     return _api.sendCallNotification(invoiceId);
   }
 
-   @override
+  @override
+  Future<BaseResponse> sendMissCall(int invoiceId) {
+    return _api.sendMissCall(invoiceId);
+  }
+
+  @override
   Future<BookingCheckDataResponse> bookingCheckData(BookingRequest request) {
     return _api.bookingCheckData(request);
   }

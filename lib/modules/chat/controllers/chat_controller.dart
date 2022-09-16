@@ -42,7 +42,7 @@ class ChatController extends BaseController {
     }
     try {
       await EasyLoading.show();
-      await _uiRepository.getCallToken(channelId).then((response) {
+      await _uiRepository.getCallToken(channelId, invoiceId).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
@@ -75,7 +75,7 @@ class ChatController extends BaseController {
     }
     try {
       await EasyLoading.show();
-      await _uiRepository.getCallToken(channelId).then((response) {
+      await _uiRepository.getCallToken(channelId, invoiceId).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {

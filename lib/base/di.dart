@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -12,6 +13,7 @@ import 'package:ui_api/network/interceptor/token_interceptor.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/repository/impl/hico_ui_repository_impl.dart';
 
+import '../data/app_data_global.dart';
 import '../data/hive_database/dao/image_cache_dao.dart';
 import '../data/hive_database/hive_database.dart';
 import '../routes/app_pages.dart';
@@ -24,14 +26,19 @@ class DependencyInjection {
   static Future<void> init(String environment) async {
     HttpOverrides.global = MyHttpOverrides();
 
-
     final config = await ConfigService().init(environment);
     Get.put(() => config);
     await Get.putAsync(() => StorageService().init());
     await Get.putAsync(() => LocateService().init());
 
     await LineSDK.instance.setup(config.value[LineChannelId]!);
-    
+
+    try {
+      AppDataGlobal.androidDeviceInfo = await DeviceInfoPlugin().androidInfo;
+    } catch (e) {
+      //
+    }
+
     Stripe.publishableKey = config.value[StripePublishableKey]!;
     await Stripe.instance.applySettings();
 
@@ -57,7 +64,6 @@ class DependencyInjection {
     await _hive.init();
     Get.put(ImageCacheDAO(_hive.imageCacheBox), permanent: true);
   }
-  
 }
 
 class MyHttpOverrides extends HttpOverrides {

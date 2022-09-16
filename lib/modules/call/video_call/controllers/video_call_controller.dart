@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,6 +23,7 @@ class VideoCallController extends BaseController {
 
   RxnInt remoteUid = RxnInt();
   RxBool isJoined = RxBool(false);
+  RxBool isCalling = RxBool(false);
 
   RxBool muteLocalAudio = RxBool(false);
 
@@ -51,7 +51,7 @@ class VideoCallController extends BaseController {
     if (isCaller) {
       _startRingtone();
 
-      await _sendCallNotification();
+      _sendCallNotification();
     }
   }
 
@@ -66,11 +66,12 @@ class VideoCallController extends BaseController {
   void onClose() {
     printInfo(info: 'onClose');
     _endRingtone();
-
-    onEndCall();
+    _callEndCall();
+    callMethods.endCall(call: call);
 
     _engine?.leaveChannel();
     _engine?.destroy();
+
     _durationTimer?.cancel();
     _callStreamSubscription?.cancel();
 
@@ -121,6 +122,7 @@ class VideoCallController extends BaseController {
 
         _endRingtone();
 
+        isCalling.value = true;
         remoteUid.value = uid;
 
         _callBeginCall();
@@ -171,9 +173,10 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> onEndCall() async {
-    _timerRingwait?.cancel();
-    _timerRingwait = null;
-    await FlutterRingtonePlayer.stop();
+    if (isCaller && !isCalling.value) {
+      _sendMissCall();
+    }
+    _endRingtone();
 
     printInfo(info: 'onEndCall');
     await callMethods.endCall(call: call);
@@ -181,13 +184,22 @@ class VideoCallController extends BaseController {
   }
 
   void _startRingtone() {
-    if (Platform.isAndroid) {
-      FlutterRingtonePlayer.playRingtone(asAlarm: true);
-    } else if (Platform.isIOS) {
+    if (AppDataGlobal.androidDeviceInfo?.version.sdkInt != null &&
+        AppDataGlobal.androidDeviceInfo!.version.sdkInt! >= 28) {
+      FlutterRingtonePlayer.play(
+        fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+        looping: true,
+        asAlarm: true,
+      );
+    } else {
       FlutterRingtonePlayer.playRingtone(asAlarm: true);
       _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
         printInfo(info: 'playRingtone');
-        FlutterRingtonePlayer.playRingtone(asAlarm: true);
+        FlutterRingtonePlayer.play(
+          fromAsset: '',
+          looping: false,
+          asAlarm: true,
+        );
       });
     }
   }
@@ -200,9 +212,17 @@ class VideoCallController extends BaseController {
 
   /* API */
 
-  Future<void> _sendCallNotification() async {
+  void _sendCallNotification() {
     try {
-      await _uiRepository.sendCallNotification(call.invoiceId ?? -1);
+      _uiRepository.sendCallNotification(call.invoiceId ?? -1);
+    } catch (e) {
+      printError(info: e.toString());
+    }
+  }
+
+  void _sendMissCall() {
+    try {
+      _uiRepository.sendMissCall(call.invoiceId ?? -1);
     } catch (e) {
       printError(info: e.toString());
     }

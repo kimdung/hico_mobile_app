@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
+import '../../../data/app_data_global.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
@@ -27,27 +27,18 @@ class PickupView extends StatefulWidget {
 
 class _PickupViewState extends State<PickupView> {
   final CallMethods callMethods = CallMethods();
-  Timer? timer;
+  Timer? _timerRingwait;
 
   @override
   void initState() {
     super.initState();
 
-    if (Platform.isAndroid) {
-      FlutterRingtonePlayer.playRingtone();
-    } else if (Platform.isIOS) {
-      FlutterRingtonePlayer.playRingtone();
-      timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-        FlutterRingtonePlayer.playRingtone();
-      });
-    }
+    _startRingtone();
   }
 
   @override
   void dispose() {
-    timer?.cancel();
-    timer = null;
-    FlutterRingtonePlayer.stop();
+    _endRingtone();
 
     super.dispose();
   }
@@ -137,48 +128,74 @@ class _PickupViewState extends State<PickupView> {
   }
 
   Future<void> onAcceptCall() async {
-    timer?.cancel();
-    timer = null;
-    await FlutterRingtonePlayer.stop();
+    _endRingtone();
 
     if (widget.call.channelId == null) {
       await callMethods.endCall(call: widget.call);
       return;
     }
     final _uiRepository = Get.find<HicoUIRepository>();
-    try {
-      await EasyLoading.show();
-      await _uiRepository.getCallToken(widget.call.channelId!).then((response) {
-        EasyLoading.dismiss();
-
-        if (response.status == CommonConstants.statusOk &&
-            response.data?.token != null) {
-          FlutterRingtonePlayer.stop();
-          if (widget.call.isVideo ?? false) {
-            Get.toNamed(Routes.VIDEO_CALL, arguments: {
-              CommonConstants.IS_CALLER: false,
-              CommonConstants.CALL_MODEL: widget.call,
-              CommonConstants.CALL_TOKEN: response.data!.token!,
-            });
-          } else {
-            Get.toNamed(Routes.VOICE_CALL, arguments: {
-              CommonConstants.IS_CALLER: false,
-              CommonConstants.CALL_MODEL: widget.call,
-              CommonConstants.CALL_TOKEN: response.data!.token!,
-            });
-          }
+    await EasyLoading.show();
+    await _uiRepository
+        .getCallToken(widget.call.channelId ?? '', widget.call.invoiceId)
+        .then((response) {
+      EasyLoading.dismiss();
+      if (response.status == CommonConstants.statusOk) {
+        if (widget.call.isVideo ?? false) {
+          Get.toNamed(Routes.VIDEO_CALL, arguments: {
+            CommonConstants.IS_CALLER: false,
+            CommonConstants.CALL_MODEL: widget.call,
+            CommonConstants.CALL_TOKEN: response.data?.token ?? '',
+          });
+        } else {
+          Get.toNamed(Routes.VOICE_CALL, arguments: {
+            CommonConstants.IS_CALLER: false,
+            CommonConstants.CALL_MODEL: widget.call,
+            CommonConstants.CALL_TOKEN: response.data?.token ?? '',
+          });
         }
-      });
-    } catch (e) {
-      await EasyLoading.dismiss();
-    }
+      } else {
+        callMethods.endCall(call: widget.call);
+      }
+    }).catchError((error) {
+      printError(info: error.toString());
+
+      EasyLoading.dismiss();
+
+      callMethods.endCall(call: widget.call);
+    });
   }
 
   Future<void> onDeniedCall() async {
-    timer?.cancel();
-    timer = null;
-    await FlutterRingtonePlayer.stop();
+    _endRingtone();
 
     await callMethods.endCall(call: widget.call);
+  }
+
+  void _startRingtone() {
+    if (AppDataGlobal.androidDeviceInfo?.version.sdkInt != null &&
+        AppDataGlobal.androidDeviceInfo!.version.sdkInt! >= 28) {
+      FlutterRingtonePlayer.play(
+        fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+        looping: true,
+        asAlarm: true,
+      );
+    } else {
+      FlutterRingtonePlayer.playRingtone(asAlarm: true);
+      _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
+        printInfo(info: 'playRingtone');
+        FlutterRingtonePlayer.play(
+          fromAsset: '',
+          looping: false,
+          asAlarm: true,
+        );
+      });
+    }
+  }
+
+  void _endRingtone() {
+    _timerRingwait?.cancel();
+    _timerRingwait = null;
+    FlutterRingtonePlayer.stop();
   }
 }

@@ -80,6 +80,7 @@ dependencies:
   flutter_rating_bar: ^4.0.0 
   pin_code_fields: ^7.3.0
   flutter_app_badger: ^1.4.0
+  device_info_plus: ^4.0.0
 
   # Border dotted
   getwidget: ^2.0.4
@@ -135,6 +136,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - lib/resource/assets_resources/bell/
     - lib/resource/assets_resources/icons/
     - lib/resource/assets_resources/images/
     - lib/resource/assets_resources/images/service_book_online/

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import 'package:ui_api/models/call/call_model.dart';
 
 class CallMethods {
@@ -22,7 +23,7 @@ class CallMethods {
           .set(hasNotDialledMap);
       return true;
     } catch (e) {
-      print(e);
+      printError(info: e.toString());
       return false;
     }
   }
@@ -33,7 +34,7 @@ class CallMethods {
       await callCollection.doc(call.receiverId.toString()).delete();
       return true;
     } catch (e) {
-      print(e);
+      printError(info: e.toString());
       return false;
     }
   }
