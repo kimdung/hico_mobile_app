@@ -185,7 +185,7 @@ class _PickupViewState extends State<PickupView> {
       _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
         printInfo(info: 'playRingtone');
         FlutterRingtonePlayer.play(
-          fromAsset: '',
+          fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
           looping: false,
           asAlarm: true,
         );

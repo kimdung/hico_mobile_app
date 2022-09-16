@@ -12,9 +12,12 @@ import 'package:ui_api/request/invoice/invoice_request.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
+import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/call_utilities.dart';
+import '../../../shared/utils/dialog_util.dart';
+import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class OrderListController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
@@ -169,8 +172,7 @@ class OrderListController extends BaseController {
       await EasyLoading.show();
       await _uiRepository.getCallToken(channelId, invoice.id).then((response) {
         EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.data != null) {
+        if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
             invoiceId: invoice.id,
             callerId: AppDataGlobal.userInfo?.id,
@@ -184,8 +186,16 @@ class OrderListController extends BaseController {
             isVideo: false,
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
-        } else if (response.message?.isNotEmpty ?? false) {
-          EasyLoading.showToast(response.message ?? '');
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {
@@ -199,8 +209,7 @@ class OrderListController extends BaseController {
       await EasyLoading.show();
       await _uiRepository.getCallToken(channelId, invoice.id).then((response) {
         EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.data != null) {
+        if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
             invoiceId: invoice.id,
             callerId: AppDataGlobal.userInfo?.id,
@@ -214,8 +223,16 @@ class OrderListController extends BaseController {
             isVideo: true,
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
-        } else if (response.message?.isNotEmpty ?? false) {
-          EasyLoading.showToast(response.message ?? '');
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {

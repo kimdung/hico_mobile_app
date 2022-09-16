@@ -198,8 +198,7 @@ class OrderController extends BaseController {
           .getCallToken(channelId, invoice.value.id ?? 0)
           .then((response) {
         EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.data != null) {
+        if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
             invoiceId: invoice.value.id,
             callerId: AppDataGlobal.userInfo?.id,
@@ -213,8 +212,16 @@ class OrderController extends BaseController {
             isVideo: false,
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
-        } else if (response.message?.isNotEmpty ?? false) {
-          EasyLoading.showToast(response.message ?? '');
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {
@@ -230,8 +237,7 @@ class OrderController extends BaseController {
           .getCallToken(channelId, invoice.value.id)
           .then((response) {
         EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.data != null) {
+        if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
             invoiceId: invoice.value.id,
             callerId: AppDataGlobal.userInfo?.id,
@@ -245,8 +251,16 @@ class OrderController extends BaseController {
             isVideo: true,
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
-        } else if (response.message?.isNotEmpty ?? false) {
-          EasyLoading.showToast(response.message ?? '');
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {

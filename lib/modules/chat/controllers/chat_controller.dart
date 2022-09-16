@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:stream_chat/stream_chat.dart';
@@ -6,8 +7,11 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
+import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/call_utilities.dart';
+import '../../../shared/utils/dialog_util.dart';
+import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class ChatController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
@@ -44,8 +48,7 @@ class ChatController extends BaseController {
       await EasyLoading.show();
       await _uiRepository.getCallToken(channelId, invoiceId).then((response) {
         EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.data != null) {
+        if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
             invoiceId: invoiceId,
             callerId: AppDataGlobal.userInfo?.id,
@@ -59,8 +62,16 @@ class ChatController extends BaseController {
             isVideo: false,
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
-        } else if (response.message?.isNotEmpty ?? false) {
-          EasyLoading.showToast(response.message ?? '');
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {
@@ -77,8 +88,7 @@ class ChatController extends BaseController {
       await EasyLoading.show();
       await _uiRepository.getCallToken(channelId, invoiceId).then((response) {
         EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.data != null) {
+        if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
             invoiceId: invoiceId,
             callerId: AppDataGlobal.userInfo?.id,
@@ -92,8 +102,16 @@ class ChatController extends BaseController {
             isVideo: true,
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
-        } else if (response.message?.isNotEmpty ?? false) {
-          EasyLoading.showToast(response.message ?? '');
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {
