@@ -136,6 +136,7 @@ class TopupView extends GetView<TopupController> {
                     controller: controller.moneyController,
                     cursorColor: AppColor.fifthTextColorLight,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: 'topup.amount.hint'.tr,
                       hintStyle: TextAppStyle().normalTextGrey(),

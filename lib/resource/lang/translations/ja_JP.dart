@@ -186,6 +186,7 @@ const Map<String, String> ja_JP = {
   'topup.balance': '	残高.',
   'topup.amount': 'チャージ金額（¥）',
   'topup.amount.hint': 'チャージ金額入力してください。',
+  'topup.amount.validate': '入金金額が正しくありません。',
   'topup.method.title': 'チャージ方法',
   'topup.bank': '銀行振込',
   'topup.bank.description': 'HICOの銀行口座振込',
@@ -226,7 +227,8 @@ const Map<String, String> ja_JP = {
   'topup.cancel': 'キャンセル',
 
   'topup.error': 'チャージ中にエラーが発生します。',
-  'topup.failure': 'チャージ失敗しました！',
+  'topup.success': 'リチャージ成功。',
+  'topup.failure': 'チャージ失敗しました。',
   'topup.empty': 'まだ取引セッションはありません',
 
   //statistic screen

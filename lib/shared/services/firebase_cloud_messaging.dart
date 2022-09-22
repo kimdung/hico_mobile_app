@@ -1,14 +1,15 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/request/invoice/invoice_request.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../data/app_data_global.dart';
 import '../../routes/app_pages.dart';
@@ -16,6 +17,51 @@ import '../constants/common.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
+  // await showCallkitIncoming(Uuid().v4());
+}
+
+Future<void> showCallkitIncoming(String uuid) async {
+  final params = <String, dynamic>{
+    'id': uuid,
+    'nameCaller': 'Hien Nguyen',
+    'appName': 'Callkit',
+    'avatar': 'https://i.pravatar.cc/100',
+    'handle': '0123456789',
+    'type': 0,
+    'duration': 30000,
+    'textAccept': 'Accept',
+    'textDecline': 'Decline',
+    'textMissedCall': 'Missed call',
+    'textCallback': 'Call back',
+    'extra': <String, dynamic>{'userId': '1a2b3c4d'},
+    'headers': <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
+    'android': <String, dynamic>{
+      'isCustomNotification': true,
+      'isShowLogo': false,
+      'isShowCallback': false,
+      'ringtonePath': 'system_ringtone_default',
+      'backgroundColor': '#0955fa',
+      'backgroundUrl': 'https://i.pravatar.cc/500',
+      'actionColor': '#4CAF50'
+    },
+    'ios': <String, dynamic>{
+      'iconName': 'CallKitLogo',
+      'handleType': '',
+      'supportsVideo': true,
+      'maximumCallGroups': 2,
+      'maximumCallsPerCallGroup': 1,
+      'audioSessionMode': 'default',
+      'audioSessionActive': true,
+      'audioSessionPreferredSampleRate': 44100.0,
+      'audioSessionPreferredIOBufferDuration': 0.005,
+      'supportsDTMF': true,
+      'supportsHolding': true,
+      'supportsGrouping': false,
+      'supportsUngrouping': false,
+      'ringtonePath': 'system_ringtone_default'
+    }
+  };
+  await FlutterCallkitIncoming.showCallkitIncoming(params);
 }
 
 /// https://firebase.flutter.dev/docs/messaging/usage/

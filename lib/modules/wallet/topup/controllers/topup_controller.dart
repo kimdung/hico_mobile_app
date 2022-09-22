@@ -48,7 +48,7 @@ class TopupController extends GetxController {
     FocusScope.of(Get.context!).requestFocus(FocusNode());
     final amount = double.tryParse(moneyController.text) ?? 0;
     if (amount == 0) {
-      await EasyLoading.showToast('status'.tr);
+      await EasyLoading.showToast('topup.amount.validate'.tr);
       return;
     }
 
