@@ -1,7 +1,10 @@
 part of 'my_voucher_screen.dart';
 
 extension MyVoucherComponent on MyVoucherScreen {
-  Widget buidItem({required VoucherModel item,required BuildContext context,}) {
+  Widget buidItem({
+    required VoucherModel item,
+    required BuildContext context,
+  }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       child: InkWell(
@@ -29,7 +32,8 @@ extension MyVoucherComponent on MyVoucherScreen {
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 13),
-                        child: (item.displayImage != null && item.displayImage!.isNotEmpty)
+                        child: (item.displayImage != null &&
+                                item.displayImage!.isNotEmpty)
                             ? NetWorkImage(
                                 image: item.displayImage!,
                                 width: 75,
@@ -69,7 +73,9 @@ extension MyVoucherComponent on MyVoucherScreen {
                                 ),
                               ),
                               InkWell(
-                                onTap: (){controller.getDetail(context, item);},
+                                onTap: () {
+                                  controller.getDetail(context, item);
+                                },
                                 child: FCoreImage(
                                   IconConstants.icInfo,
                                   width: 18,

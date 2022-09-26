@@ -53,6 +53,8 @@ class VoiceCallController extends BaseController {
 
       _sendCallNotification();
     }
+
+    printInfo(info: 'AppDataGlobal.acceptCall ${AppDataGlobal.acceptCall}');
   }
 
   @override

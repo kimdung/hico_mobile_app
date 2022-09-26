@@ -27,7 +27,6 @@ class VoucherController extends BaseController {
 
   final TextEditingController code = TextEditingController();
 
-
   VoucherController() {
     total = Get.arguments;
     loadData();
@@ -47,7 +46,7 @@ class VoucherController extends BaseController {
   }
 
   void selected(int id) {
-    voucherId.value = id == voucherId.value ? 0: id;
+    voucherId.value = id == voucherId.value ? 0 : id;
     print(id);
   }
 
@@ -123,19 +122,19 @@ class VoucherController extends BaseController {
 
   Future<void> addVoucher() async {
     try {
-      if(code.text.isNotEmpty){
+      if (code.text.isNotEmpty) {
         await EasyLoading.show();
         await _uiRepository.voucherAdd(code.text).then((response) {
           EasyLoading.dismiss();
           if (response.status == CommonConstants.statusOk &&
               response.data != null &&
               response.data!.rows != null) {
-              EasyLoading.dismiss();
-              if (response.data!.rows!.isNotEmpty) {
-                offset = response.data!.rows!.length;
-                voucherList.value = response.data!.rows!;
-              }
-          }else{
+            EasyLoading.dismiss();
+            if (response.data!.rows!.isNotEmpty) {
+              offset = response.data!.rows!.length;
+              voucherList.value = response.data!.rows!;
+            }
+          } else {
             DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,
               barrierDismissible: false,
@@ -152,15 +151,15 @@ class VoucherController extends BaseController {
           }
         });
       }
-      
     } catch (e) {
       await EasyLoading.dismiss();
     }
   }
 
-  void changeText(String value){
-    enableButton.value = value.isNotEmpty ? true: false;
+  void changeText(String value) {
+    enableButton.value = value.isNotEmpty ? true : false;
   }
+
   @override
   void onClose() {}
 }

@@ -24,18 +24,21 @@ class CallMethods {
       return true;
     } catch (e) {
       printError(info: e.toString());
+      await endCall(call: call);
       return false;
     }
   }
 
-  Future<bool> endCall({required CallModel call}) async {
+  Future endCall({required CallModel call}) async {
     try {
       await callCollection.doc(call.callerId.toString()).delete();
-      await callCollection.doc(call.receiverId.toString()).delete();
-      return true;
     } catch (e) {
       printError(info: e.toString());
-      return false;
+    }
+    try {
+      await callCollection.doc(call.receiverId.toString()).delete();
+    } catch (e) {
+      printError(info: e.toString());
     }
   }
 }

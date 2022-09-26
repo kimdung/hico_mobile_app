@@ -93,22 +93,20 @@ class ConsultingController extends BaseController {
 
   Future<void> send() async {
     try {
-      
       if (consultingForm.currentState?.validate() ?? false) {
-        if(provinceId == null || districtId == null)
-          {
-            await DialogUtil.showPopup(
-                  dialogSize: DialogSize.Popup,
-                  barrierDismissible: false,
-                  backgroundColor: Colors.transparent,
-                  child: NormalWidget(
-                    icon: IconConstants.icFail,
-                    title: 'consulting.address'.tr,
-                  ),
-                  onVaLue: (value) {},
-                );
-                return;
-          }
+        if (provinceId == null || districtId == null) {
+          await DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: 'consulting.address'.tr,
+            ),
+            onVaLue: (value) {},
+          );
+          return;
+        }
 
         await EasyLoading.show();
         await _uiRepository

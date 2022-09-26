@@ -29,7 +29,8 @@ extension VoucherComponent on VoucherScreen {
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 13),
-                        child: (item.displayImage != null && item.displayImage!.isNotEmpty)
+                        child: (item.displayImage != null &&
+                                item.displayImage!.isNotEmpty)
                             ? NetWorkImage(
                                 image: item.displayImage!,
                                 width: 75,

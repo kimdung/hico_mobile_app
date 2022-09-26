@@ -49,8 +49,7 @@ class SupplierListController extends BaseController {
       await EasyLoading.show();
       offset = 0;
       await _uiRepository
-          .customerSuppliers(
-              currentOrder.value, serviceId.value, limit, offset)
+          .customerSuppliers(currentOrder.value, serviceId.value, limit, offset)
           .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
@@ -68,8 +67,7 @@ class SupplierListController extends BaseController {
     try {
       await EasyLoading.show();
       await _uiRepository
-          .customerSuppliers(
-              currentOrder.value, serviceId.value, limit, offset)
+          .customerSuppliers(currentOrder.value, serviceId.value, limit, offset)
           .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
@@ -113,9 +111,9 @@ class SupplierListController extends BaseController {
   }
 
   Future<void> filter() async {
-    if(serviceId.value != 0){
+    if (serviceId.value != 0) {
       await Get.toNamed(Routes.SUPPLIER_FILTER, arguments: service);
-    }else{
+    } else {
       await Get.toNamed(Routes.SUPPLIER_FILTER);
     }
   }

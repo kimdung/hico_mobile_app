@@ -30,22 +30,22 @@ class SupplierInfoModel {
   @JsonKey(name: 'nearest_station')
   String? nearestStation;
 
-  SupplierInfoModel(
-      {this.id,
-      this.memberCode,
-      this.avatarImage,
-      this.name,
-      this.taskCompleteNumber,
-      this.serviceId,
-      this.serviceName,
-      this.servicePrice,
-      this.serviceOfflineMinHours,
-      this.serviceOfflineMinPrice,
-      this.levelName,
-      this.levelId,
-      this.isOnline,
-      this.nearestStation,
-      });
+  SupplierInfoModel({
+    this.id,
+    this.memberCode,
+    this.avatarImage,
+    this.name,
+    this.taskCompleteNumber,
+    this.serviceId,
+    this.serviceName,
+    this.servicePrice,
+    this.serviceOfflineMinHours,
+    this.serviceOfflineMinPrice,
+    this.levelName,
+    this.levelId,
+    this.isOnline,
+    this.nearestStation,
+  });
 
   factory SupplierInfoModel.fromJson(Map<String, dynamic> json) =>
       _$SupplierInfoModelFromJson(json);

@@ -18,7 +18,7 @@ class ItemExtendWidget extends StatelessWidget {
         onTap: () {},
         child: Container(
           decoration: BoxDecoration(
-            color:Colors.white,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(8.0),
             boxShadow: [
               BoxShadow(

@@ -22,6 +22,7 @@ part 'booking_detail_children.dart';
 class BookingDetailScreen extends GetView<BookingDetailController> {
   const BookingDetailScreen({Key? key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return PickupLayout(
       controller.callMethods,
@@ -69,10 +70,12 @@ class BookingDetailScreen extends GetView<BookingDetailController> {
                     const SizedBox(height: 18),
                     Container(color: AppColor.greyBackgroundColor, height: 6),
                     const SizedBox(height: 14),
-                    buildOrderDetail(),       
+                    buildOrderDetail(),
                     const SizedBox(height: 32),
-                    Padding(padding: const EdgeInsets.symmetric(horizontal: CommonConstants.paddingDefault),
-                    child: GeneralButton(
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: CommonConstants.paddingDefault),
+                      child: GeneralButton(
                         onPressed: () {
                           controller.onSubmit();
                         },
@@ -83,8 +86,8 @@ class BookingDetailScreen extends GetView<BookingDetailController> {
                           'extend.title.button'.tr,
                           style: TextAppStyle().normalTextWhite(),
                         ),
-                    ),),
-
+                      ),
+                    ),
                     const SizedBox(height: 20),
                   ],
                 ),

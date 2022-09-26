@@ -114,7 +114,7 @@ class TopupStripeScreen extends GetView<TopupStripeController> {
     //   ),
     // );
     return CardFormField(
-      controller: controller.cardEditController, 
+      controller: controller.cardEditController,
       onCardChanged: (card) {
         controller.card = card;
       },

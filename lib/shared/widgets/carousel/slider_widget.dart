@@ -16,7 +16,6 @@ class SliderItem {
   final String image;
   final String? title, description;
   Function()? onpress;
-
 }
 
 class SliderWidget extends StatefulWidget {

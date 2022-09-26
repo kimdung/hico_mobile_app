@@ -25,7 +25,7 @@ class NetWorkImage extends StatelessWidget {
       imageUrl: image,
       width: width,
       height: height ?? 48,
-      
+
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(radius ?? 0),

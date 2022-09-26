@@ -53,6 +53,12 @@ const Map<String, String> vi_VN = {
   'error.expires': 'Phiên làm việc hết hạn!',
   'error.call': 'Không thể thực hiện cuộc gọi lúc này!',
 
+  // Call
+  'call.accept': 'Chấp nhận',
+  'call.decline': 'Từ chối',
+  'call.missed': 'Có cuộc gọi nhỡ',
+  'call.back': 'Gọi lại',
+
   //register
   'register.comfirm': 'Xác thực tài khoản',
   'register.comfirm_email': 'Mã xác thực được gửi đến địa chỉ email',

@@ -28,7 +28,6 @@ class MyVoucherController extends BaseController {
 
   final TextEditingController code = TextEditingController();
 
-
   MyVoucherController() {
     loadData();
     scrollController.addListener(() {
@@ -47,7 +46,7 @@ class MyVoucherController extends BaseController {
   }
 
   void selected(int id) {
-    voucherId.value = id == voucherId.value ? 0: id;
+    voucherId.value = id == voucherId.value ? 0 : id;
     print(id);
   }
 
@@ -92,19 +91,19 @@ class MyVoucherController extends BaseController {
 
   Future<void> addVoucher() async {
     try {
-      if(code.text.isNotEmpty){
+      if (code.text.isNotEmpty) {
         await EasyLoading.show();
         await _uiRepository.voucherAdd(code.text).then((response) {
           EasyLoading.dismiss();
           if (response.status == CommonConstants.statusOk &&
               response.data != null &&
               response.data!.rows != null) {
-              EasyLoading.dismiss();
-              if (response.data!.rows!.isNotEmpty) {
-                offset = response.data!.rows!.length;
-                voucherList.value = response.data!.rows!;
-              }
-          }else{
+            EasyLoading.dismiss();
+            if (response.data!.rows!.isNotEmpty) {
+              offset = response.data!.rows!.length;
+              voucherList.value = response.data!.rows!;
+            }
+          } else {
             DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,
               barrierDismissible: false,
@@ -121,14 +120,13 @@ class MyVoucherController extends BaseController {
           }
         });
       }
-      
     } catch (e) {
       await EasyLoading.dismiss();
     }
   }
 
-  void changeText(String value){
-    enableButton.value = value.isNotEmpty ? true: false;
+  void changeText(String value) {
+    enableButton.value = value.isNotEmpty ? true : false;
   }
 
   Future<void> getDetail(BuildContext context, VoucherModel item) async {
@@ -136,16 +134,17 @@ class MyVoucherController extends BaseController {
     await ShowBottomSheet().showBottomSheet(
       child: Container(
         height: Get.height / 1.8,
-        child: VoucherDialogWidget(item: item,),
+        child: VoucherDialogWidget(
+          item: item,
+        ),
       ),
       context: context,
       onValue: (_value) {
-        if (_value != null && _value is double) {
-          
-        }
+        if (_value != null && _value is double) {}
       },
     );
   }
+
   @override
   void onClose() {}
 }

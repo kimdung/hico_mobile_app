@@ -94,7 +94,7 @@ class LoginController extends BaseController {
         storage.setString(StorageConstants.username, usernameController.text);
         storage.setString(StorageConstants.password, passwordController.text);
         storage.setBool(StorageConstants.isLogin, true);
-        
+
         _loadData(response.loginModel!);
       } else if (response.loginModel != null &&
           response.loginModel!.isResend == 1) {

@@ -115,7 +115,7 @@ class SupplierBookingController extends BaseController {
       // zipCode.text = '';
       province.text = '';
       district.text = '';
-      addressDetail.text='';
+      addressDetail.text = '';
       bookingRequest.value.addressId = 0;
       if (keyword != '') {
         await _uiRepository.addressList(20, 0, keyword).then((response) {

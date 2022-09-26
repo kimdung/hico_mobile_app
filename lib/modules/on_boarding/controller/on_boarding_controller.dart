@@ -10,13 +10,11 @@ import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class OnBoardingController extends BaseController {
-
-  OnBoardingController(){
+  OnBoardingController() {
     final error = Get.arguments;
-      if (error is String && error.isNotEmpty) {
-        EasyLoading.showToast(error);
-      }
-
+    if (error is String && error.isNotEmpty) {
+      EasyLoading.showToast(error);
+    }
   }
 
   @override
@@ -26,7 +24,6 @@ class OnBoardingController extends BaseController {
       await EasyLoading.showToast(error);
     }
     await super.onInit();
-
   }
 
   final lstSlider = [

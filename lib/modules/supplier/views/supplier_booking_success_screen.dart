@@ -65,7 +65,7 @@ class SupplierBookingSuccessScreen
                       ],
                     ),
                   ),
-                ),    
+                ),
                 const SizedBox(height: 24),
                 Container(
                   child: GFBorder(
@@ -143,11 +143,10 @@ class SupplierBookingSuccessScreen
                 //               )),
                 //         ],
                 //       ),
-                
+
                 //     ],
                 //   ),
                 // )
-                
               ],
             ),
           ),

@@ -6,6 +6,7 @@ class SupplierBookingCheckoutBinding extends BaseBinding {
   @override
   void dependencies() {
     super.dependencies();
-    Get.put<SupplierBookingCheckoutController>(SupplierBookingCheckoutController());
+    Get.put<SupplierBookingCheckoutController>(
+        SupplierBookingCheckoutController());
   }
 }

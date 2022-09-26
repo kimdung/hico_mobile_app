@@ -48,6 +48,12 @@ const Map<String, String> ja_JP = {
   'error.expires': '予約した時間を超過しました。',
   'error.call': '現在、通話はできません。',
 
+  // Call
+  'call.accept': '承認',
+  'call.decline': '却下',
+  'call.missed': '不在着信',
+  'call.back': '不在着信',
+
   //register
   'register.comfirm': 'アカウント認証',
   'register.comfirm_email':

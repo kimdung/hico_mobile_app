@@ -87,12 +87,13 @@ class StatisticController extends BaseController {
       toDateController.value = TextEditingValue(text: toDate);
     }
   }
+
   Future<void> onChangeStatus(int index) async {
     try {
       indexStatus.value = index;
-      if(index != 0){
+      if (index != 0) {
         await loadInvoiceList();
-      }   
+      }
     } catch (e) {
       await EasyLoading.dismiss();
     }
@@ -103,13 +104,14 @@ class StatisticController extends BaseController {
       await EasyLoading.show();
       offset = 0;
       await _uiRepository
-          .statisticsInvoice(limit, offset, keywordController.text, fromDate, toDate, indexStatus.value)
+          .statisticsInvoice(limit, offset, keywordController.text, fromDate,
+              toDate, indexStatus.value)
           .then((response) {
         EasyLoading.dismiss();
         if (response.data!.rows!.isNotEmpty) {
           offset = response.data!.rows!.length;
           invoiceList.value = response.data!.rows!;
-        }else{
+        } else {
           invoiceList.value = [];
         }
       });
@@ -122,7 +124,8 @@ class StatisticController extends BaseController {
     try {
       await EasyLoading.show();
       await _uiRepository
-          .statisticsInvoice(limit, offset, keywordController.text, fromDate, toDate, indexStatus.value)
+          .statisticsInvoice(limit, offset, keywordController.text, fromDate,
+              toDate, indexStatus.value)
           .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
@@ -140,7 +143,7 @@ class StatisticController extends BaseController {
   }
 
   Future<void> onDetail(int id) async {
-    await Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id:id));
+    await Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id: id));
   }
 
   @override

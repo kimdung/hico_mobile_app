@@ -54,8 +54,10 @@ class SupplierFilterScreen extends GetView<SupplierFilterController> {
                       child: Column(
                         children: [
                           buildTitleComponent(
-                            title: controller.serviceName.value ,
-                            onPress: (){controller.selectService(context);},
+                            title: controller.serviceName.value,
+                            onPress: () {
+                              controller.selectService(context);
+                            },
                           ),
                           const SizedBox(height: 24),
                           buildDateComponent(

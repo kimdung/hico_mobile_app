@@ -31,8 +31,6 @@ class BaseController extends FullLifeCycleController
     // },);
   }
 
-  
-
   Future<void> checkConnectNetwork() async {
     // // Check Network
     // if (!await hasConnectNetwork()) {

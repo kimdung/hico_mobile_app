@@ -1,7 +1,7 @@
 part of 'supplier_detail_screen.dart';
 
 extension SupplierDetailComponents on SupplierDetailScreen {
-  Widget  buildGeneralInfo() {
+  Widget buildGeneralInfo() {
     return Row(
       children: [
         if (controller.profile.value.avatarImage != null)
@@ -172,14 +172,17 @@ extension SupplierDetailComponents on SupplierDetailScreen {
                 ? Wrap(
                     children: [
                       ...List.generate(
-                          list.length,
-                          (index) => _buildImageItem(
-                              onpress:() => controller.openLink(list[index].url!),
-                              image: list[index].extension == 'pdf' ? 'lib/resource/assets_resources/images/pdf_icon.jpeg' : list[index].url!,
-                              padding: true,
-                              file: list[index].extension == 'pdf' ? true: false,
-                              width: (Get.width - 40) / 2),
-                              ),
+                        list.length,
+                        (index) => _buildImageItem(
+                            onpress: () =>
+                                controller.openLink(list[index].url!),
+                            image: list[index].extension == 'pdf'
+                                ? 'lib/resource/assets_resources/images/pdf_icon.jpeg'
+                                : list[index].url!,
+                            padding: true,
+                            file: list[index].extension == 'pdf' ? true : false,
+                            width: (Get.width - 40) / 2),
+                      ),
                     ],
                   )
                 : null,
@@ -189,13 +192,14 @@ extension SupplierDetailComponents on SupplierDetailScreen {
     );
   }
 
-  Widget _buildImageItem(
-      {required String image,
-      String? title,
-      double? width,
-      bool? file = false,
-      bool? padding = false,
-      Function()? onpress,}) {
+  Widget _buildImageItem({
+    required String image,
+    String? title,
+    double? width,
+    bool? file = false,
+    bool? padding = false,
+    Function()? onpress,
+  }) {
     return InkWell(
       onTap: onpress,
       child: Container(
@@ -210,21 +214,25 @@ extension SupplierDetailComponents on SupplierDetailScreen {
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: file == false ?
-                 CachedNetworkImage(
-                  imageUrl: image,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
+                child: file == false
+                    ? CachedNetworkImage(
+                        imageUrl: image,
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      )
+                    : FCoreImage(
+                        image,
                       ),
-                    ),
-                  ),
-                  placeholder: (context, url) => const CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                ):
-                FCoreImage(image,),
               ),
             ),
             if (title != null)

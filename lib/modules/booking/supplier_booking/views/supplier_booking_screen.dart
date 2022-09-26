@@ -87,8 +87,7 @@ class BookingSupplierBookingScreen
                               controller.selectDate(context);
                             },
                             date: controller.date,
-                            hintText:
-                                'service.time_slot'.tr,
+                            hintText: 'service.time_slot'.tr,
                           ),
                           const SizedBox(height: 24),
                           Row(

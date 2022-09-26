@@ -46,7 +46,7 @@ class MainController extends BaseController {
     ];
     homeController.loadData();
     countNotifyUnread();
-    if(tab != null){
+    if (tab != null) {
       changeIndex(1);
     }
   }

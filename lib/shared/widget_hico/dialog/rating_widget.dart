@@ -36,7 +36,6 @@ class RatingDialogWidget extends StatefulWidget {
   RatingRequest? ratingRequest;
   final ratingForm = GlobalKey<FormState>();
 
-
   @override
   State<RatingDialogWidget> createState() => _RatingDialogWidgetState();
 }
@@ -66,18 +65,20 @@ class _RatingDialogWidgetState extends State<RatingDialogWidget> {
                 ),
               ),
               Positioned(
-                right: 20,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('X', style: TextAppStyle().normalTextStype(),)))
+                  right: 20,
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        'X',
+                        style: TextAppStyle().normalTextStype(),
+                      )))
             ],
           ),
           const SizedBox(height: 15),
           Container(
-            padding:
-                EdgeInsets.symmetric(horizontal: widget.padding ?? 32),
+            padding: EdgeInsets.symmetric(horizontal: widget.padding ?? 32),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -97,8 +98,7 @@ class _RatingDialogWidgetState extends State<RatingDialogWidget> {
                   direction: Axis.horizontal,
                   allowHalfRating: false,
                   itemCount: 5,
-                  itemPadding:
-                      const EdgeInsets.symmetric(horizontal: 0),
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 0),
                   itemBuilder: (context, _) =>
                       _image(IconConstants.icStarColor),
                   onRatingUpdate: (rating) {
@@ -132,15 +132,16 @@ class _RatingDialogWidgetState extends State<RatingDialogWidget> {
                     color: AppColor.dividerColorLight,
                     fontSize: 12.0,
                     fontWeight: FontWeight.w400),
-                validator: (value) =>
-                  (value == null || value.isEmpty) ? 'invoice.detail.error_rating'.tr : null,
+                validator: (value) => (value == null || value.isEmpty)
+                    ? 'invoice.detail.error_rating'.tr
+                    : null,
               ),
             ),
           ),
           const SizedBox(height: 26),
           Container(
             padding: const EdgeInsets.symmetric(
-                horizontal: CommonConstants.paddingDefault*2),
+                horizontal: CommonConstants.paddingDefault * 2),
             child: GeneralButton(
               // ignore: sort_child_properties_last
               child: Text(
@@ -151,7 +152,7 @@ class _RatingDialogWidgetState extends State<RatingDialogWidget> {
               backgroundColor: AppColor.primaryColorLight,
               borderRadius: BorderRadius.circular(24),
               onPressed: () {
-                onSubmit(star,contents);
+                onSubmit(star, contents);
               },
             ),
           ),
@@ -170,7 +171,7 @@ class _RatingDialogWidgetState extends State<RatingDialogWidget> {
   }
 
   void onSubmit(int star, String contents) {
-    if (widget.ratingForm.currentState?.validate() ?? false){
+    if (widget.ratingForm.currentState?.validate() ?? false) {
       Navigator.pop(context, RatingRequest(widget.id, star, contents));
     }
   }

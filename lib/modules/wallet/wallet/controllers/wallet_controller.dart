@@ -11,14 +11,12 @@ class WalletController extends BaseController {
   Rx<int> indexPage = Rx(0);
   bool isOrder = false;
   StreamSubscription? _streamSubscription;
-  WalletController(){
+  WalletController() {
     isOrder = Get.arguments ?? false;
   }
   @override
   Future<void> onInit() async {
     await super.onInit();
-
-    
 
     printInfo(info: 'init listner Komaju');
     _streamSubscription = linkStream.listen((String? link) {

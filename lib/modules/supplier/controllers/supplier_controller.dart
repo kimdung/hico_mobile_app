@@ -71,10 +71,9 @@ class SupplierController extends BaseController {
     await Get.toNamed(Routes.SUPPLIER_DETAIL, arguments: bookingPrepare);
   }
 
-   Future<void> viewSupplierDetail(SupplierInfoModel supplier) async {
+  Future<void> viewSupplierDetail(SupplierInfoModel supplier) async {
     await Get.toNamed(Routes.BOOKING_SUPPLIER_DETAIL, arguments: supplier);
   }
-
 
   Future<void> onBooking(SupplierInfoModel supplier) async {
     bookingPrepare.supplier = supplier;

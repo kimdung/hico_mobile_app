@@ -22,14 +22,14 @@ class SupplierBookingSuccessController extends BaseController {
 
   Future<void> goHome() async {
     await _uiRepository.getInfo().then((response) {
-        EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.data != null &&
-            response.data!.info != null) {
-          AppDataGlobal.userInfo = response.data!.info!;
-          return;
-        }
-      });
+      EasyLoading.dismiss();
+      if (response.status == CommonConstants.statusOk &&
+          response.data != null &&
+          response.data!.info != null) {
+        AppDataGlobal.userInfo = response.data!.info!;
+        return;
+      }
+    });
     await Get.offAllNamed(Routes.MAIN, arguments: 1);
   }
 }

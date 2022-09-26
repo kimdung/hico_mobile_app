@@ -44,96 +44,103 @@ class VoucherScreen extends GetView<VoucherController> {
           backgroundColor: Colors.white,
           shadowColor: AppColor.appbarColorLight.withOpacity(0.8),
         ),
-        body: Obx(()=> Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              Row(
+        body: Obx(() => Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
                 children: [
-                  Expanded(
-                    flex: 4,
-                    child: TextFormField(
-                      controller: controller.code,
-                      onChanged: (value){controller.changeText(value);},
-                      keyboardType: TextInputType.text,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      cursorColor: AppColor.fifthTextColorLight,
-                      decoration: TextFieldDecoration.borderOutline(
-                        backgroundColor: AppColor.primaryBackgroundColorLight,
-                        borderColor: AppColor.sixTextColorLight,
-                        hintText: ' ${'voucher.hint'.tr}',
-                        hintStype: TextAppStyle().normalTextGrey(),
-                        radius: 6,
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: TextFormField(
+                          controller: controller.code,
+                          onChanged: (value) {
+                            controller.changeText(value);
+                          },
+                          keyboardType: TextInputType.text,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          cursorColor: AppColor.fifthTextColorLight,
+                          decoration: TextFieldDecoration.borderOutline(
+                            backgroundColor:
+                                AppColor.primaryBackgroundColorLight,
+                            borderColor: AppColor.sixTextColorLight,
+                            hintText: ' ${'voucher.hint'.tr}',
+                            hintStype: TextAppStyle().normalTextGrey(),
+                            radius: 6,
+                          ),
+                          style: TextAppStyle().normalTextGrey(),
+                        ),
                       ),
-                      style: TextAppStyle().normalTextGrey(),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        flex: 2,
+                        child: GeneralButton(
+                          onPressed: () {
+                            if (controller.code.text.isNotEmpty) {
+                              controller.addVoucher();
+                            }
+                          },
+                          borderColor: controller.enableButton.value
+                              ? AppColor.primaryColorLight
+                              : Color(0xFFCCCCCC),
+                          backgroundColor: controller.enableButton.value
+                              ? AppColor.primaryColorLight
+                              : Color(0xFFCCCCCC),
+                          borderRadius: BorderRadius.circular(4),
+                          child: Text(
+                            'voucher.apply'.tr,
+                            style: TextAppStyle().titleButtonStyle(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('booking.voucher_sub_title'.tr,
+                          style: TextAppStyle().smallTextBlack()),
+                      Text(
+                        '${'booking.voucher_approve'.tr}: 1',
+                        style: TextAppStyle().smallTextBlack(),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 14),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      controller: controller.scrollController,
+                      child: Obx(
+                        () => Column(
+                          children: [
+                            ...List.generate(
+                                controller.voucherList.length,
+                                (int index) => buidItem(
+                                    item: controller.voucherList[index])),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                  const SizedBox(width:10),
-                  Expanded(
-                    flex: 2,
-                    child: GeneralButton(
-                      onPressed: () {
-                        if(controller.code.text.isNotEmpty){
-                          controller.addVoucher();
-                        }
-                      },
-                      borderColor: controller.enableButton.value ? AppColor.primaryColorLight: Color(0xFFCCCCCC),
-                      backgroundColor:controller.enableButton.value ? AppColor.primaryColorLight: Color(0xFFCCCCCC),
-                      borderRadius: BorderRadius.circular(4),
-                      child: Text(
-                        'voucher.apply'.tr,
-                        style: TextAppStyle().titleButtonStyle(),
-                      ),
+                  const SizedBox(height: 14),
+                  GeneralButton(
+                    onPressed: () {
+                      controller.approve();
+                    },
+                    borderColor: AppColor.primaryColorLight,
+                    backgroundColor: AppColor.primaryColorLight,
+                    borderRadius: BorderRadius.circular(24),
+                    child: Text(
+                      'voucher.apply'.tr,
+                      style: TextAppStyle().titleButtonStyle(),
                     ),
                   ),
+                  const SizedBox(height: 14),
                 ],
               ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('booking.voucher_sub_title'.tr,
-                      style: TextAppStyle().smallTextBlack()),
-                  Text(
-                    '${'booking.voucher_approve'.tr}: 1',
-                    style: TextAppStyle().smallTextBlack(),
-                  )
-                ],
-              ),
-              const SizedBox(height: 14),
-              Expanded(
-                child: SingleChildScrollView(
-                  controller: controller.scrollController,
-                  child: Obx(
-                    () => Column(
-                      children: [
-                        ...List.generate(
-                            controller.voucherList.length,
-                            (int index) =>
-                                buidItem(item: controller.voucherList[index])),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 14),
-              GeneralButton(
-                onPressed: () {
-                  controller.approve();
-                },
-                borderColor: AppColor.primaryColorLight,
-                backgroundColor: AppColor.primaryColorLight,
-                borderRadius: BorderRadius.circular(24),
-                child: Text(
-                  'voucher.apply'.tr,
-                  style: TextAppStyle().titleButtonStyle(),
-                ),
-              ),
-              const SizedBox(height: 14),
-            ],
-          ),
-        )) ,
+            )),
       ),
     );
   }

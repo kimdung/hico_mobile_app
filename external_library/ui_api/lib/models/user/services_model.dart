@@ -39,7 +39,8 @@ class UserServicesCategoryModel {
   @JsonKey(name: 'open_child', defaultValue: false)
   bool? openChild;
 
-  UserServicesCategoryModel({this.serviceCategoryId, this.name, this.list, this.openChild});
+  UserServicesCategoryModel(
+      {this.serviceCategoryId, this.name, this.list, this.openChild});
 
   factory UserServicesCategoryModel.fromJson(Map<String, dynamic> json) =>
       _$UserServicesCategoryModelFromJson(json);

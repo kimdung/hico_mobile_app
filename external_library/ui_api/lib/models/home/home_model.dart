@@ -19,8 +19,7 @@ class HomeModel {
   List<ServiceModel>? serviceViews;
 
   HomeModel(
-      {
-      this.invoiceId,
+      {this.invoiceId,
       this.avatarSupplier,
       this.sliders,
       this.serviceCategories,

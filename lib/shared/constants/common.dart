@@ -42,7 +42,6 @@ class CommonConstants {
   //Booking key
   static const String SERVICE_KEY = 'SERVICE_KEY';
   static const String SUPPLIER_KEY = 'SUPPLIER_KEY';
-
 }
 
 const APP_NAME = 'Hico';
@@ -169,7 +168,7 @@ extension SortTypeId on SortType {
 }
 
 extension SortTypeName on SortType {
-  String get name{
+  String get name {
     switch (this) {
       case SortType.Random:
         return 'Ngẫu nhiên';
