@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:stream_chat/stream_chat.dart';
 import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
@@ -50,6 +51,7 @@ class ChatController extends BaseController {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
+            id: const Uuid().v4(),
             invoiceId: invoiceId,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
@@ -90,6 +92,7 @@ class ChatController extends BaseController {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
+            id: const Uuid().v4(),
             invoiceId: invoiceId,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',

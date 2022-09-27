@@ -33,10 +33,6 @@ class _PickupViewState extends State<PickupView> {
   @override
   void initState() {
     super.initState();
-
-    _currentCall();
-
-    // _startRingtone();
   }
 
   @override
@@ -128,16 +124,6 @@ class _PickupViewState extends State<PickupView> {
         ],
       ),
     );
-  }
-
-  Future _currentCall() async {
-    //check current call from pushkit if possible
-    final activeCalls = await FlutterCallkitIncoming.activeCalls();
-    if (activeCalls is List && activeCalls.isNotEmpty) {
-      printInfo(info: 'DATA: $activeCalls');
-    } else {
-      _startRingtone();
-    }
   }
 
   Future<void> onAcceptCall() async {

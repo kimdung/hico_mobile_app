@@ -59,7 +59,9 @@ class VoiceCallController extends BaseController {
 
   @override
   void onClose() {
+    Wakelock.disable();
     _endRingtone();
+
     _callEndCall();
     callMethods.endCall(call: call);
 
@@ -69,8 +71,6 @@ class VoiceCallController extends BaseController {
 
     _durationTimer?.cancel();
     _durationTimer = null;
-
-    Wakelock.disable();
 
     super.onClose();
   }

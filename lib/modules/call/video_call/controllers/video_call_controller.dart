@@ -56,16 +56,17 @@ class VideoCallController extends BaseController {
   }
 
   @override
-  void onResumed() {
-    _engine?.disableVideo();
-    _engine?.enableVideo();
-    super.onResumed();
+  Future<void> onResumed() async {
+    await _engine?.disableVideo();
+    await _engine?.enableVideo();
+    await super.onResumed();
   }
 
   @override
   void onClose() {
-    printInfo(info: 'onClose');
+    Wakelock.disable();
     _endRingtone();
+
     _callEndCall();
     callMethods.endCall(call: call);
 
@@ -74,8 +75,6 @@ class VideoCallController extends BaseController {
 
     _durationTimer?.cancel();
     _callStreamSubscription?.cancel();
-
-    Wakelock.disable();
 
     super.onClose();
   }

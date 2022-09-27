@@ -7,6 +7,7 @@ part of 'call_model.dart';
 // **************************************************************************
 
 CallModel _$CallModelFromJson(Map<String, dynamic> json) => CallModel(
+      id: json['id'] as String?,
       callerId: json['callerId'] as int?,
       invoiceId: json['invoiceId'] as int?,
       callerName: json['callerName'] as String?,
@@ -20,6 +21,7 @@ CallModel _$CallModelFromJson(Map<String, dynamic> json) => CallModel(
     );
 
 Map<String, dynamic> _$CallModelToJson(CallModel instance) => <String, dynamic>{
+      'id': instance.id,
       'callerId': instance.callerId,
       'invoiceId': instance.invoiceId,
       'callerName': instance.callerName,

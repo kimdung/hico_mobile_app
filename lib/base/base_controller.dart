@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../data/app_data_global.dart';
 import '../data/interceptors/listen_error_graphql_interceptor.dart';
 import '../shared/dialog_manager/data_models/request/common_dialog_request.dart';
 import '../shared/dialog_manager/services/dialog_service.dart';
@@ -25,11 +28,25 @@ class BaseController extends FullLifeCycleController
 
     // check network
     await checkConnectNetwork();
-
-    // await firebaseMessageConfig.handleMessage(log: (p0) {
-    //   printInfo(info: p0);
-    // },);
   }
+
+  @override
+  void onClose() {
+    super.onClose();
+    _hasNetworkSubject.close();
+  }
+
+  @override
+  void onDetached() {}
+
+  @override
+  void onInactive() {}
+
+  @override
+  void onPaused() {}
+
+  @override
+  Future<void> onResumed() async {}
 
   Future<void> checkConnectNetwork() async {
     // // Check Network
@@ -75,31 +92,5 @@ class BaseController extends FullLifeCycleController
 
   CommonDialogRequest handleErrorResponse(Object e) {
     return handleErrorGraphQLResponse(e);
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-    _hasNetworkSubject.close();
-  }
-
-  @override
-  void onDetached() {
-    // TODO: implement onDetached
-  }
-
-  @override
-  void onInactive() {
-    // TODO: implement onInactive
-  }
-
-  @override
-  void onPaused() {
-    // TODO: implement onPaused
-  }
-
-  @override
-  void onResumed() {
-    // TODO: implement onResumed
   }
 }
