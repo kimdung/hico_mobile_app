@@ -17,5 +17,8 @@ class AppDataGlobal {
   static AndroidDeviceInfo? androidDeviceInfo;
 
   static StreamChatClient? client;
+
+  static bool acceptCall = false;
+
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 }

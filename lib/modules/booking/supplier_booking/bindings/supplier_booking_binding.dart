@@ -6,6 +6,7 @@ class BookingSupplierBookingBinding extends BaseBinding {
   @override
   void dependencies() {
     super.dependencies();
-    Get.lazyPut<BookingSupplierBookingController>(() => BookingSupplierBookingController());
+    Get.lazyPut<BookingSupplierBookingController>(
+        () => BookingSupplierBookingController());
   }
 }

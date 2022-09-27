@@ -33,8 +33,8 @@ class SearchScreen extends GetView<SearchController> {
                           decoration: BoxDecoration(
                               color: AppColor.primaryBackgroundColorLight,
                               borderRadius: BorderRadius.circular(6),
-                              border:
-                                  Border.all(color: AppColor.primaryColorLight)),
+                              border: Border.all(
+                                  color: AppColor.primaryColorLight)),
                           child: TextField(
                             onSubmitted: (value) {
                               controller.search();
@@ -47,11 +47,11 @@ class SearchScreen extends GetView<SearchController> {
                                 focusedBorder: InputBorder.none,
                                 hintText: 'service.category.search_field'.tr,
                                 hintStyle: TextAppStyle().genaralTextStyle(),
-                                suffixIcon:  InkWell(
-                                              onTap: (){
-                                                controller.search();
-                                              },
-                                              child: Image.asset(IconConstants.icSearch)),
+                                suffixIcon: InkWell(
+                                    onTap: () {
+                                      controller.search();
+                                    },
+                                    child: Image.asset(IconConstants.icSearch)),
                                 contentPadding:
                                     const EdgeInsets.symmetric(vertical: 7)),
                           ),
@@ -89,11 +89,11 @@ class SearchScreen extends GetView<SearchController> {
                               ...List.generate(
                                 controller.serviceList.length,
                                 (index) => ServiceItem(
-                                  image:
-                                      controller.serviceList[index].displayImage!,
+                                  image: controller
+                                      .serviceList[index].displayImage!,
                                   title: controller.serviceList[index].name!,
-                                  shadowColor:
-                                      AppColor.dividerColorLight.withOpacity(0.2),
+                                  shadowColor: AppColor.dividerColorLight
+                                      .withOpacity(0.2),
                                   fit: BoxFit.cover,
                                   onPress: () {
                                     controller.viewService(

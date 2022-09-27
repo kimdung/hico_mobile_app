@@ -9,5 +9,4 @@ class TopupBankBinding extends Bindings {
       () => TopupBankController(),
     );
   }
-
 }

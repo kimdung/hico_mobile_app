@@ -19,4 +19,3 @@ class BookingCheckDataResponse extends BaseResponse {
 
   Map<String, dynamic> toJson() => _$BookingCheckDataResponseToJson(this);
 }
-

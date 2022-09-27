@@ -39,9 +39,9 @@ class ForgotPasswordChangeScreen extends GetView<ForgotPasswordController> {
       ),
       body: SafeArea(
         child: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
           child: SingleChildScrollView(
             child: Column(
               children: [

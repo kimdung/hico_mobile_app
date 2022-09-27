@@ -85,13 +85,12 @@ class RegisterScreen extends GetView<RegisterController> {
                                   style: TextAppStyle().smallTextPink(),
                                 ),
                                 EasyRichTextPattern(
-                                  targetString: 'privacy_policy'.tr,
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      controller.privatePolicy();
-                                    },
-                                  style: TextAppStyle().smallTextPink()
-                                ),
+                                    targetString: 'privacy_policy'.tr,
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        controller.privatePolicy();
+                                      },
+                                    style: TextAppStyle().smallTextPink()),
                               ],
                             ),
                           ),

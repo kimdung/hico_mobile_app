@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
@@ -33,7 +34,9 @@ class _PickupViewState extends State<PickupView> {
   void initState() {
     super.initState();
 
-    _startRingtone();
+    _currentCall();
+
+    // _startRingtone();
   }
 
   @override
@@ -86,7 +89,7 @@ class _PickupViewState extends State<PickupView> {
         ),
         const SizedBox(height: 15),
         Text(
-          widget.call.getName() ?? '',
+          '${widget.call.getName()} ${AppDataGlobal.acceptCall}',
           style: TextAppStyle().mediumTextStype().copyWith(
                 fontSize: 18,
               ),
@@ -125,6 +128,16 @@ class _PickupViewState extends State<PickupView> {
         ],
       ),
     );
+  }
+
+  Future _currentCall() async {
+    //check current call from pushkit if possible
+    final activeCalls = await FlutterCallkitIncoming.activeCalls();
+    if (activeCalls is List && activeCalls.isNotEmpty) {
+      printInfo(info: 'DATA: $activeCalls');
+    } else {
+      _startRingtone();
+    }
   }
 
   Future<void> onAcceptCall() async {

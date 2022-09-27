@@ -25,7 +25,7 @@ class TopupKomojuController extends BaseController {
       Completer<WebViewController>();
   bool isOrder = false;
 
-  TopupKomojuController(){
+  TopupKomojuController() {
     final arguments = Get.arguments as Map;
     isOrder = arguments[CommonConstants.TOPUP_ISORDER];
     payUrl = arguments[CommonConstants.TOPUP_DATA];
@@ -81,12 +81,12 @@ class TopupKomojuController extends BaseController {
             }
           });
           await EasyLoading.dismiss();
-          if(isOrder){
-              Get.back(result: isOrder);
-          }else{
+          if (isOrder) {
+            Get.back(result: isOrder);
+          } else {
             await Get.offAndToNamed(Routes.TOPUP_DETAIL,
-              arguments: response.data!.row);
-          }   
+                arguments: response.data!.row);
+          }
         } else {
           await EasyLoading.dismiss();
           await DialogUtil.showPopup(

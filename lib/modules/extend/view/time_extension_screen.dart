@@ -36,24 +36,28 @@ class TimeExtensionScreen extends GetView<TimeExtensionController> {
         ),
       ),
       body: Obx(() => Column(
-        children: [
-          _buildHeader(),
-          const SizedBox(height: 28.0,),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ...List.generate(controller.extendPeriodList.length, (index) => 
-                    buildExtendItem(controller.extendPeriodList[index]),
-                  )
-                ],
+            children: [
+              _buildHeader(),
+              const SizedBox(
+                height: 28.0,
               ),
-            ),
-          ),
-          //_buildExtendList(),
-          _buildExtendButton()
-        ],
-      )) ,
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ...List.generate(
+                        controller.extendPeriodList.length,
+                        (index) =>
+                            buildExtendItem(controller.extendPeriodList[index]),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              //_buildExtendList(),
+              _buildExtendButton()
+            ],
+          )),
       //bottomSheet: _buildExtendButton(),
     );
   }

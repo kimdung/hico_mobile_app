@@ -57,7 +57,7 @@ extension BookingDetailChildren on BookingDetailScreen {
             title: 'order.detail.order_type'.tr,
             type: OrderInfoViewType.Button,
             value: controller.invoice.value.workingForm.toString(),
-          ),    
+          ),
         ],
       ),
     );
@@ -185,7 +185,6 @@ extension BookingDetailChildren on BookingDetailScreen {
                           style: TextAppStyle().genaralTextStyle().copyWith(
                                 color: Colors.black,
                               )),
-                      
                     ],
                   ),
                 ),
@@ -216,7 +215,7 @@ extension BookingDetailChildren on BookingDetailScreen {
             titleColor: AppColor.blueTextColor,
             titleFontWeight: FontWeight.w500,
             type: OrderInfoViewType.Text,
-            value: ''), 
+            value: ''),
       ]),
     );
   }
@@ -229,12 +228,9 @@ extension BookingDetailChildren on BookingDetailScreen {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Expanded(child: _buildTitleSection(title: 'booking.wallet'.tr)),
             Expanded(
-                child: _buildTitleSection(
-                    title: 'booking.wallet'.tr)),
-            Expanded(
-              child: Text(
-                  '${AppDataGlobal.userInfo!.accountBalance} JPY',
+              child: Text('${AppDataGlobal.userInfo!.accountBalance} JPY',
                   textAlign: TextAlign.right,
                   style: TextAppStyle().normalTextStype()),
             )
@@ -286,14 +282,13 @@ extension BookingDetailChildren on BookingDetailScreen {
                     fontSize: sizeTitle ?? 12,
                   )),
           Text(value,
-                  style: TextAppStyle().genaralTextStyle().copyWith(
-                        color: colorValue ?? AppColor.sixTextColorLight,
-                        fontWeight: fweightValue ?? FontWeight.w500,
-                        fontSize: sizeValue ?? 14,
-                      ))
+              style: TextAppStyle().genaralTextStyle().copyWith(
+                    color: colorValue ?? AppColor.sixTextColorLight,
+                    fontWeight: fweightValue ?? FontWeight.w500,
+                    fontSize: sizeValue ?? 14,
+                  ))
         ],
       ),
     );
   }
-  
 }

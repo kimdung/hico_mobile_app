@@ -51,13 +51,12 @@ class SupplierFilterController extends BaseController {
   Rx<String> serviceName = Rx('service'.tr);
   final serviceList = RxList<ServiceModel>();
 
-
   SupplierFilterController() {
     //bookingPrepare = Get.arguments;
     //request.serviceId = bookingPrepare.service?.id;
-    if(Get.arguments != null){
+    if (Get.arguments != null) {
       bookingPrepare.service = Get.arguments;
-      serviceName.value = bookingPrepare.service?.name ??'';
+      serviceName.value = bookingPrepare.service?.name ?? '';
       request.serviceId = bookingPrepare.service?.id;
     }
     _loadService();
@@ -71,12 +70,10 @@ class SupplierFilterController extends BaseController {
     await super.onInit();
   }
 
-Future<void> _loadService() async {
+  Future<void> _loadService() async {
     try {
       await EasyLoading.show();
-      await _uiRepository
-          .serviceListAll()
-          .then((response) {
+      await _uiRepository.serviceListAll().then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.dataService != null &&
@@ -301,9 +298,9 @@ Future<void> _loadService() async {
       hours += 0.25;
     } else if (tmpMinutes > 15 && tmpMinutes <= 30) {
       hours += 0.5;
-    }else if (tmpMinutes > 30 && tmpMinutes <= 45) {
+    } else if (tmpMinutes > 30 && tmpMinutes <= 45) {
       hours += 0.75;
-    }else if (tmpMinutes > 45) {
+    } else if (tmpMinutes > 45) {
       hours += 1;
     }
     bookingPrepare.totalTime = hours;
@@ -311,8 +308,9 @@ Future<void> _loadService() async {
     var validater = false;
     var message = '';
 
-    if (request.filterIsOnline == CommonConstants.offline && (request.filterLocationProvinceId == null ||
-        request.filterLocationDistrictId == null)) {
+    if (request.filterIsOnline == CommonConstants.offline &&
+        (request.filterLocationProvinceId == null ||
+            request.filterLocationDistrictId == null)) {
       validater = true;
       message = 'supplier.filter.location_required'.tr;
     }

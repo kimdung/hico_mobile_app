@@ -161,12 +161,12 @@ extension StatisticExtension on StatisticScreen {
                         Row(
                           children: [
                             _buildTotalItem(
-                                      margin: 1,
-                                      icon: IconConstants.icMoneyGreen,
-                                      title: 'statistic.bonus'.tr,
-                                      price:
-                                          '${controller.statistic.value.refundsBySupplier ?? 0} JPY ',
-                                      textColor: AppColor.blueTextColor),
+                                margin: 1,
+                                icon: IconConstants.icMoneyGreen,
+                                title: 'statistic.bonus'.tr,
+                                price:
+                                    '${controller.statistic.value.refundsBySupplier ?? 0} JPY ',
+                                textColor: AppColor.blueTextColor),
                           ],
                         ),
                       ])
@@ -436,7 +436,7 @@ extension StatisticExtension on StatisticScreen {
 
   Widget _buildOrderItem({required StatisticInvoiceModel item}) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         controller.onDetail(item.id!);
       },
       child: Container(
@@ -459,19 +459,20 @@ extension StatisticExtension on StatisticScreen {
           children: [
             Container(
                 margin: const EdgeInsets.only(right: 20),
-                child: (item.supplierAvatar!= null && item.supplierAvatar != '')
-                    ? NetWorkImage(
-                        image: item.supplierAvatar!,
-                        height: 60,
-                        width: 60,
-                        fit: BoxFit.cover,
-                      )
-                    : FCoreImage(
-                        ImageConstants.imageDefault,
-                        height: 60,
-                        width: 60,
-                        fit: BoxFit.cover,
-                      )),
+                child:
+                    (item.supplierAvatar != null && item.supplierAvatar != '')
+                        ? NetWorkImage(
+                            image: item.supplierAvatar!,
+                            height: 60,
+                            width: 60,
+                            fit: BoxFit.cover,
+                          )
+                        : FCoreImage(
+                            ImageConstants.imageDefault,
+                            height: 60,
+                            width: 60,
+                            fit: BoxFit.cover,
+                          )),
             Expanded(
                 child: Column(
               children: [

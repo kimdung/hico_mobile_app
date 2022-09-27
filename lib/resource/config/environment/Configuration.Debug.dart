@@ -5,7 +5,7 @@ final Map<String, String> debugAppSettings = {
   GraphQLServiceUrl: 'https://hico.dev.bluebolt.software/api/',
   WebSocketGraphQLUrl: 'wss://hasura.io/learn/graphql',
   MediaApiEnvironment: 'DEV',
-  DefaultLanguageCode: 'vi-VN', 
+  DefaultLanguageCode: 'vi-VN',
   UIAPIDomain: 'https://hico.dev.bluebolt.software/api/',
   // GraphQLAuthUrl: 'https://hico.co.jp/api/',
   // GraphQLServiceUrl: 'https://hico.co.jp/api/',
@@ -15,5 +15,5 @@ final Map<String, String> debugAppSettings = {
   // UIAPIDomain: 'https://hico.co.jp/api/',
   LineChannelId: '1656878196',
   StripePublishableKey:
-    'pk_test_51Gt542F8AuNSUurPybikIpGB7NGK3HNGszLZ39WgCAZ3JzpzFFYJbHh1l2rNxq9tBnDvcM6Ex4nslrUTji2iJy4Y005VdvVXoN',
+      'pk_test_51Gt542F8AuNSUurPybikIpGB7NGK3HNGszLZ39WgCAZ3JzpzFFYJbHh1l2rNxq9tBnDvcM6Ex4nslrUTji2iJy4Y005VdvVXoN',
 };

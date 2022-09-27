@@ -23,7 +23,7 @@ class BookingRequest {
   String? address;
   @JsonKey(name: 'nearest_station')
   String? nearestStation;
-   @JsonKey(name: 'hospital_name')
+  @JsonKey(name: 'hospital_name')
   String? hospitalName;
 
   BookingRequest({

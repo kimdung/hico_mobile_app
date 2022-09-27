@@ -58,7 +58,9 @@ class HomeController extends BaseController {
           return;
         }
       });
-      await _uiRepository.customerSuppliers(SortType.Random.id, 0,10,0).then((response) {
+      await _uiRepository
+          .customerSuppliers(SortType.Random.id, 0, 10, 0)
+          .then((response) {
         if (response.status == CommonConstants.statusOk &&
             response.data?.suppliers != null) {
           listSuppliers.value = response.data!.suppliers!;
@@ -78,6 +80,7 @@ class HomeController extends BaseController {
   Future<void> viewDetail(int id) async {
     await Get.toNamed(Routes.SERVICE, arguments: id);
   }
+
   //goto service page
   Future<void> viewService(ServiceModel item) async {
     request.service = item;
@@ -90,6 +93,7 @@ class HomeController extends BaseController {
       CommonConstants.SUPPLIER_KEY: item,
     });
   }
+
   Future<void> viewAllSuppliers() async {
     await Get.toNamed(Routes.SUPPLIER_LIST);
   }
@@ -180,21 +184,18 @@ class HomeController extends BaseController {
   }
 
   Future<void> routerSlider(SliderModel item) async {
-    if(item.type == SliderType.Link.id){
-      final _url = Uri.parse(item.urlLink??'');
+    if (item.type == SliderType.Link.id) {
+      final _url = Uri.parse(item.urlLink ?? '');
       await launchUrl(_url);
-    }else if(item.type == SliderType.Chat.id){
+    } else if (item.type == SliderType.Chat.id) {
       await onChatAdmin();
-    }else if (item.type == SliderType.News.id){
+    } else if (item.type == SliderType.News.id) {
       await Get.toNamed(Routes.NEWS_DETAIL, arguments: item.itemId);
     }
   }
-
-
 
   Future<void> openLink(String url) async {
     final _url = Uri.parse(url);
     await launchUrl(_url);
   }
-
 }

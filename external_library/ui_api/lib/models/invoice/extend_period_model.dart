@@ -4,7 +4,7 @@ part 'extend_period_model.g.dart';
 
 @JsonSerializable()
 class ExtendPeriodModel {
-   int? id;
+  int? id;
   int? minutes;
   int? price;
   int? status;

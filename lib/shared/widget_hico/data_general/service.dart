@@ -24,7 +24,6 @@ class ServiceWidget extends StatefulWidget {
 }
 
 class _ServiceWidgetState extends State<ServiceWidget> {
-
   @override
   void initState() {
     super.initState();

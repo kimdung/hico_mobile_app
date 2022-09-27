@@ -18,20 +18,18 @@ class TimeExtensionController extends BaseController {
   RxList<ExtendPeriodModel> extendPeriodList = RxList<ExtendPeriodModel>();
   Rx<ExtendPeriodModel> currentIndex = Rx(ExtendPeriodModel());
   ExtendPrepareModel extendRPrepare = ExtendPrepareModel();
-  
-  TimeExtensionController(){
+
+  TimeExtensionController() {
     id = Get.arguments;
     loadData();
   }
 
-
-Future<void> loadData() async {
+  Future<void> loadData() async {
     try {
       await EasyLoading.show();
       await _uiRepository.extendPeriod().then((response) {
         EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk)
-        {
+        if (response.status == CommonConstants.statusOk) {
           extendPeriodList.value = response.data!;
         }
       });
@@ -43,7 +41,7 @@ Future<void> loadData() async {
   Future<void> selectExtend(ExtendPeriodModel id) async {
     currentIndex.value = id;
   }
-  
+
   void onHandleExtendButton() {
     extendRPrepare.invoiceId = id;
     extendRPrepare.extendPeriod = currentIndex.value;

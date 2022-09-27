@@ -41,34 +41,34 @@ class AccountScreen extends GetView<AccountController> {
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(120)),
                     child: controller.info.value.avatarImage == null ||
-                    controller.info.value.avatarImage!.isEmpty ?
-                    Container(
-                      width: 140,
-                      height: 140,
-                    ) :
-                    CachedNetworkImage(
-                      width: 140,
-                      height: 140,
-                      imageUrl: controller.info.value.avatarImage??'',
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(21),
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
+                            controller.info.value.avatarImage!.isEmpty
+                        ? Container(
+                            width: 140,
+                            height: 140,
+                          )
+                        : CachedNetworkImage(
+                            width: 140,
+                            height: 140,
+                            imageUrl: controller.info.value.avatarImage ?? '',
+                            imageBuilder: (context, imageProvider) => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(21),
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
                           ),
-                        ),
-                      ),
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  controller.info.value.name??'',
+                  controller.info.value.name ?? '',
                   style: TextAppStyle().largeTextStype(),
                 ),
                 const SizedBox(height: 14),
@@ -88,7 +88,7 @@ class AccountScreen extends GetView<AccountController> {
                 const SizedBox(height: 14),
                 buildItem(
                   icon: IconConstants.ticket,
-                  title: '  ${'booking.voucher_title'.tr}' ,
+                  title: '  ${'booking.voucher_title'.tr}',
                   onPress: () => Get.toNamed(Routes.MY_VOUCHER),
                 ),
                 const SizedBox(height: 14),
@@ -137,7 +137,9 @@ class AccountScreen extends GetView<AccountController> {
                 buildItem(
                   icon: IconConstants.icProfilePass,
                   title: 'account.delete'.tr,
-                  onPress: () {controller.deleteUser();},
+                  onPress: () {
+                    controller.deleteUser();
+                  },
                 ),
                 const SizedBox(height: 14),
                 buildItem(

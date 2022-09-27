@@ -45,10 +45,12 @@ class SupplierDetailController extends BaseController {
   Future<void> onBooking() async {
     await Get.toNamed(Routes.SUPPLIER_BOOKING, arguments: bookingPrepare);
   }
+
   Future<void> openLink(String url) async {
     final _url = Uri.parse(url);
     await launchUrl(_url);
   }
+
   @override
   void onClose() {}
 }

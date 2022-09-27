@@ -21,19 +21,19 @@ class ServiceModel {
   int? offlinePriceMin;
   double? hours;
 
-  ServiceModel(
-      {this.id,
-      this.code,
-      this.name,
-      this.displayImage,
-      this.categoryName,
-      this.serviceCategory,
-      this.description,
-      this.price,
-      this.minHours,
-      this.offlinePriceMin,
-      this.hours,
-      });
+  ServiceModel({
+    this.id,
+    this.code,
+    this.name,
+    this.displayImage,
+    this.categoryName,
+    this.serviceCategory,
+    this.description,
+    this.price,
+    this.minHours,
+    this.offlinePriceMin,
+    this.hours,
+  });
 
   factory ServiceModel.fromJson(Map<String, dynamic> json) =>
       _$ServiceModelFromJson(json);

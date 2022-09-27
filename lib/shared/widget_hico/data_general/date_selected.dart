@@ -24,7 +24,6 @@ class DateSelectedWidget extends StatefulWidget {
 }
 
 class _DateSelectedWidgetState extends State<DateSelectedWidget> {
-
   @override
   void initState() {
     super.initState();

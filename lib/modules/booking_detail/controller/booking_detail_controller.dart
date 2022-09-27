@@ -15,27 +15,27 @@ import '../../../shared/widget_hico/dialog/normal_widget.dart';
 import '../../../shared/widget_hico/dialog/topup_widget.dart';
 
 class BookingDetailController extends BaseController {
-  
   Rx<ExtendPrepareModel> result = Rx(ExtendPrepareModel());
   final _uiRepository = Get.find<HicoUIRepository>();
   final invoice = Rx(InvoiceInfoModel());
   var userInfo = Rx(AppDataGlobal.userInfo);
 
-
-  BookingDetailController(){
+  BookingDetailController() {
     result.value = Get.arguments;
   }
 
- @override
+  @override
   Future<void> onInit() async {
-    await super.onInit();  
+    await super.onInit();
     await _loadData();
   }
 
   Future<void> _loadData() async {
     try {
       await EasyLoading.show();
-      await _uiRepository.invoiceDetail(result.value.invoiceId!).then((response) {
+      await _uiRepository
+          .invoiceDetail(result.value.invoiceId!)
+          .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null &&
@@ -77,11 +77,12 @@ class BookingDetailController extends BaseController {
     }
   }
 
-    Future<void> onSubmit() async {
+  Future<void> onSubmit() async {
     try {
       await EasyLoading.show();
 
-      if(AppDataGlobal.userInfo!.accountBalance! < result.value.extendPeriod!.price!){
+      if (AppDataGlobal.userInfo!.accountBalance! <
+          result.value.extendPeriod!.price!) {
         await EasyLoading.dismiss();
         await DialogUtil.showPopup(
           dialogSize: DialogSize.Popup,
@@ -94,7 +95,8 @@ class BookingDetailController extends BaseController {
           onVaLue: (_value) {
             if (_value != null && _value is int) {
               if (_value == 1) {
-                Get.toNamed(Routes.WALLET)!.then((value) => userInfo.value = AppDataGlobal.userInfo);
+                Get.toNamed(Routes.WALLET)!
+                    .then((value) => userInfo.value = AppDataGlobal.userInfo);
               }
             }
           },
@@ -119,7 +121,7 @@ class BookingDetailController extends BaseController {
               title: response.message,
             ),
             onVaLue: (value) {
-              if(response.status == CommonConstants.statusOk){
+              if (response.status == CommonConstants.statusOk) {
                 _uiRepository.getInfo().then((response) {
                   if (response.status == CommonConstants.statusOk &&
                       response.data != null &&
@@ -128,7 +130,7 @@ class BookingDetailController extends BaseController {
                   }
                 });
                 Get.offAllNamed(Routes.MAIN);
-              }            
+              }
             },
           );
           return;
@@ -138,5 +140,4 @@ class BookingDetailController extends BaseController {
       await EasyLoading.dismiss();
     }
   }
-
 }

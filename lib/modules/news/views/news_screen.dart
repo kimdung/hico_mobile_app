@@ -31,14 +31,19 @@ class NewsScreen extends GetView<NewsController> {
       ),
       body: Obx(() => Container(
             child: controller.newsList.isEmpty
-                ? Center(child: Text('news.empty'.tr, style: TextAppStyle().normalTextGrey(),),)
-                :  ListView.builder(
-                controller: controller.scrollController,
-                itemCount: controller.newsList.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return buildItemNews(item: controller.newsList[index]);
-                }),
+                ? Center(
+                    child: Text(
+                      'news.empty'.tr,
+                      style: TextAppStyle().normalTextGrey(),
+                    ),
+                  )
+                : ListView.builder(
+                    controller: controller.scrollController,
+                    itemCount: controller.newsList.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return buildItemNews(item: controller.newsList[index]);
+                    }),
           )),
     );
   }

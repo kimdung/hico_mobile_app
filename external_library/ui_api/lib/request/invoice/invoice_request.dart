@@ -1,4 +1,4 @@
-class InvoiceRequest { 
+class InvoiceRequest {
   int? id;
   bool? extend = false;
   bool? rating = false;

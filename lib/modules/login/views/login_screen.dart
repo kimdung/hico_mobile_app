@@ -120,24 +120,26 @@ class LoginScreen extends GetView<LoginController> {
                               ),
                             ),
                             Container(
-                              child: AppDataGlobal.masterData?.loginSocial == 1 ? Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 83, vertical: 28),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    _buildSocialBtn(controller.loginFB,
-                                        ImageConstants.facebook),
-                                    // _buildSocialBtn(
-                                    //   controller.loginLine,
-                                    //   ImageConstants.line,
-                                    // ),
-                                    _buildSocialBtn(controller.loginGG,
-                                        ImageConstants.google),
-                                  ],
-                                ),
-                              ): Container(),
+                              child: AppDataGlobal.masterData?.loginSocial == 1
+                                  ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 83, vertical: 28),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          _buildSocialBtn(controller.loginFB,
+                                              ImageConstants.facebook),
+                                          // _buildSocialBtn(
+                                          //   controller.loginLine,
+                                          //   ImageConstants.line,
+                                          // ),
+                                          _buildSocialBtn(controller.loginGG,
+                                              ImageConstants.google),
+                                        ],
+                                      ),
+                                    )
+                                  : Container(),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,

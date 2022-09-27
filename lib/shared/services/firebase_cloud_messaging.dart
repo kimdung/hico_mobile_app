@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,8 @@ import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+import 'package:ui_api/models/call/call_model.dart';
+import 'package:ui_api/models/notifications/notification_data.dart';
 import 'package:ui_api/request/invoice/invoice_request.dart';
 import 'package:uuid/uuid.dart';
 
@@ -17,51 +21,169 @@ import '../constants/common.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  // await showCallkitIncoming(Uuid().v4());
+  final notificationData = NotificationData.fromJson(message.data);
+  if (notificationData.displayType == NotificationData.typeIncomingCall) {
+    await showCallkitIncoming(notificationData);
+  }
+
+  // await showCallkitIncoming1(message.data);
 }
 
-Future<void> showCallkitIncoming(String uuid) async {
-  final params = <String, dynamic>{
-    'id': uuid,
-    'nameCaller': 'Hien Nguyen',
-    'appName': 'Callkit',
-    'avatar': 'https://i.pravatar.cc/100',
-    'handle': '0123456789',
-    'type': 0,
-    'duration': 30000,
-    'textAccept': 'Accept',
-    'textDecline': 'Decline',
-    'textMissedCall': 'Missed call',
-    'textCallback': 'Call back',
-    'extra': <String, dynamic>{'userId': '1a2b3c4d'},
-    'headers': <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
-    'android': <String, dynamic>{
-      'isCustomNotification': true,
-      'isShowLogo': false,
-      'isShowCallback': false,
-      'ringtonePath': 'system_ringtone_default',
-      'backgroundColor': '#0955fa',
-      'backgroundUrl': 'https://i.pravatar.cc/500',
-      'actionColor': '#4CAF50'
-    },
-    'ios': <String, dynamic>{
-      'iconName': 'CallKitLogo',
-      'handleType': '',
-      'supportsVideo': true,
-      'maximumCallGroups': 2,
-      'maximumCallsPerCallGroup': 1,
-      'audioSessionMode': 'default',
-      'audioSessionActive': true,
-      'audioSessionPreferredSampleRate': 44100.0,
-      'audioSessionPreferredIOBufferDuration': 0.005,
-      'supportsDTMF': true,
-      'supportsHolding': true,
-      'supportsGrouping': false,
-      'supportsUngrouping': false,
-      'ringtonePath': 'system_ringtone_default'
+// Future<void> showCallkitIncoming1(Map<String, dynamic> data) async {
+//   String message = '';
+//   try {
+//     final notificationData = NotificationData.fromJson(data);
+//     message = notificationData.toString();
+//   } catch (e) {
+//     message = e.toString();
+//   }
+
+//   final params = <String, dynamic>{
+//     'id': const Uuid().v4(),
+//     'nameCaller': message,
+//     'appName': 'HICO',
+//     'avatar': '',
+//     'handle': '0123456789',
+//     'type': 1, //(call.isVideo ?? false) ? 1 : 0,
+//     // 'textAccept': 'call.accept'.tr,
+//     // 'textDecline': 'call.decline'.tr,
+//     // 'textMissedCall': 'call.missed'.tr,
+//     // 'textCallback': 'call.back'.tr,
+//     'extra': <String, dynamic>{'userId': '1a2b3c4d'},
+//     'headers': <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
+//     'android': <String, dynamic>{
+//       'isCustomNotification': true,
+//       'isShowLogo': false,
+//       'isShowCallback': false,
+//       'ringtonePath': 'lib/resource/assets_resources/bell/bell.mp3',
+//       'backgroundColor': '#0955fa',
+//       'backgroundUrl': 'https://i.pravatar.cc/500',
+//       'actionColor': '#4CAF50'
+//     },
+//     'ios': <String, dynamic>{
+//       'iconName': 'CallKitLogo',
+//       'handleType': '',
+//       'supportsVideo': true,
+//       'maximumCallGroups': 2,
+//       'maximumCallsPerCallGroup': 1,
+//       'audioSessionMode': 'default',
+//       'audioSessionActive': true,
+//       'audioSessionPreferredSampleRate': 44100.0,
+//       'audioSessionPreferredIOBufferDuration': 0.005,
+//       'supportsDTMF': true,
+//       'supportsHolding': true,
+//       'supportsGrouping': false,
+//       'supportsUngrouping': false,
+//       'ringtonePath': 'system_ringtone_default'
+//     }
+//   };
+//   await FlutterCallkitIncoming.showCallkitIncoming(params);
+// }
+
+Future<void> showCallkitIncoming(NotificationData notificationData) async {
+  if (notificationData.receiverId == null) {
+    return;
+  }
+  final callCollection = FirebaseFirestore.instance.collection('call');
+  final doc = await callCollection.doc(notificationData.receiverId).get();
+  final data = doc.data() as Map<String, dynamic>;
+  try {
+    final call = CallModel.fromJson(data);
+    if (call.hasDialled != null && !call.hasDialled!) {
+      callCollection
+          .doc(notificationData.receiverId)
+          .snapshots()
+          .listen((DocumentSnapshot ds) {
+        if (ds.data() == null) {
+          FlutterCallkitIncoming.endAllCalls();
+        }
+      });
+      final params = <String, dynamic>{
+        'id': const Uuid().v4(),
+        'appName': 'HICO',
+        'nameCaller': call.callerName ?? '',
+        'avatar': call.callerPic,
+        'handle': (call.isVideo ?? false)
+            ? 'Incoming video call...'
+            : 'Incoming voice call...',
+        'type': (call.isVideo ?? false) ? 1 : 0,
+        // 'textAccept': 'call.accept'.tr,
+        // 'textDecline': 'call.decline'.tr,
+        // 'textMissedCall': 'call.missed'.tr,
+        // 'textCallback': 'call.back'.tr,
+        // 'extra': <String, dynamic>{'userId': '1a2b3c4d'},
+        // 'headers': <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
+        'android': <String, dynamic>{
+          'isCustomNotification': true,
+          'isShowLogo': false,
+          'isShowCallback': false,
+          'ringtonePath': 'bell',
+          'backgroundColor': '#DF4D6F',
+          // 'backgroundUrl': 'https://i.pravatar.cc/500',
+          // 'actionColor': '#4CAF50'
+        },
+        'ios': <String, dynamic>{
+          'iconName': 'CallKitLogo',
+          'handleType': '',
+          'supportsVideo': true,
+          'maximumCallGroups': 2,
+          'maximumCallsPerCallGroup': 1,
+          'audioSessionMode': 'default',
+          'audioSessionActive': true,
+          'audioSessionPreferredSampleRate': 44100.0,
+          'audioSessionPreferredIOBufferDuration': 0.005,
+          'supportsDTMF': true,
+          'supportsHolding': true,
+          'supportsGrouping': false,
+          'supportsUngrouping': false,
+          'ringtonePath': 'system_ringtone_default'
+        }
+      };
+      FlutterCallkitIncoming.onEvent.listen((event) {
+        switch (event!.name) {
+          case CallEvent.ACTION_CALL_INCOMING:
+            break;
+          case CallEvent.ACTION_CALL_START:
+            break;
+          case CallEvent.ACTION_CALL_ACCEPT:
+            break;
+          case CallEvent.ACTION_CALL_DECLINE:
+            try {
+              callCollection.doc(call.callerId.toString()).delete();
+            } catch (e) {
+              debugPrint(e.toString());
+            }
+            try {
+              callCollection.doc(call.receiverId.toString()).delete();
+            } catch (e) {
+              debugPrint(e.toString());
+            }
+            break;
+          case CallEvent.ACTION_CALL_ENDED:
+            break;
+          case CallEvent.ACTION_CALL_TIMEOUT:
+            break;
+          case CallEvent.ACTION_CALL_CALLBACK:
+            break;
+          case CallEvent.ACTION_CALL_TOGGLE_HOLD:
+            break;
+          case CallEvent.ACTION_CALL_TOGGLE_MUTE:
+            break;
+          case CallEvent.ACTION_CALL_TOGGLE_DMTF:
+            break;
+          case CallEvent.ACTION_CALL_TOGGLE_GROUP:
+            break;
+          case CallEvent.ACTION_CALL_TOGGLE_AUDIO_SESSION:
+            break;
+          case CallEvent.ACTION_DID_UPDATE_DEVICE_PUSH_TOKEN_VOIP:
+            break;
+        }
+      });
+      await FlutterCallkitIncoming.showCallkitIncoming(params);
     }
-  };
-  await FlutterCallkitIncoming.showCallkitIncoming(params);
+  } catch (e) {
+    debugPrint(e.toString());
+  }
 }
 
 /// https://firebase.flutter.dev/docs/messaging/usage/
@@ -72,9 +194,16 @@ class FirebaseMessageConfig {
   factory FirebaseMessageConfig() {
     return _singleton;
   }
+
   FirebaseMessageConfig._internal();
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+  /// For fcm background message handler.
+  // final FlutterCallkeep _callKeep = FlutterCallkeep();
+  // bool _callKeepInited = false;
+  // Map<String, Call> calls = {};
+  // String newUUID() => const Uuid().v4();
 
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -125,6 +254,19 @@ class FirebaseMessageConfig {
       debugPrint('$e');
     }
   }
+
+  // Future<void> _initCallkeep() async {
+  //   _callKeep.on(CallKeepDidDisplayIncomingCall(), didDisplayIncomingCall);
+  //   _callKeep.on(CallKeepPerformAnswerCallAction(), answerCall);
+  //   _callKeep.on(CallKeepDidPerformDTMFAction(), didPerformDTMFAction);
+  //   _callKeep.on(
+  //       CallKeepDidReceiveStartCallAction(), didReceiveStartCallAction);
+  //   _callKeep.on(CallKeepDidToggleHoldAction(), didToggleHoldCallAction);
+  //   _callKeep.on(
+  //       CallKeepDidPerformSetMutedCallAction(), didPerformSetMutedCallAction);
+  //   _callKeep.on(CallKeepPerformEndCallAction(), endCall);
+  //   _callKeep.on(CallKeepPushKitToken(), onPushKitToken);
+  // }
 
   Future<void> _initLocalNotification() async {
     try {
@@ -274,7 +416,7 @@ class FirebaseMessageConfig {
     if (message.isEmpty) {
       return;
     }
-
+  
     /// ['id']: Key json chứa ID của thông báo server trả về.
     /// Dùng để điều hướng vào màn chi tiết thông báo
     /// Mặc định đang là ['id']
@@ -336,10 +478,8 @@ class FirebaseMessageConfig {
     });
     _firebaseMessaging.onTokenRefresh.listen((token) {
       debugPrint('TOKEN FIREBASE CHANGE: $token');
-      if (token != null) {
-        AppDataGlobal.firebaseToken = token;
-        AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
-      }
+      AppDataGlobal.firebaseToken = token;
+      AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
     });
   }
 

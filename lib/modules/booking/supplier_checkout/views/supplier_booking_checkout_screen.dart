@@ -17,7 +17,8 @@ import '../controllers/supplier_booking_checkout_controller.dart';
 
 part 'supplier_booking_checkout_components.dart';
 
-class SupplierBookingCheckoutScreen extends GetView<SupplierBookingCheckoutController> {
+class SupplierBookingCheckoutScreen
+    extends GetView<SupplierBookingCheckoutController> {
   @override
   Widget build(BuildContext context) {
     return PickupLayout(
@@ -80,7 +81,8 @@ class SupplierBookingCheckoutScreen extends GetView<SupplierBookingCheckoutContr
                           child: Column(
                             children: [
                               Container(
-                                  color: AppColor.greyBackgroundColor, height: 4),
+                                  color: AppColor.greyBackgroundColor,
+                                  height: 4),
                               const SizedBox(height: 14),
                               Padding(
                                 padding: const EdgeInsets.symmetric(

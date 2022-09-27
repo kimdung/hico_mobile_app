@@ -80,7 +80,8 @@ class SupplierBookingScreen extends GetView<SupplierBookingController> {
                           child: Column(
                             children: [
                               Container(
-                                  color: AppColor.greyBackgroundColor, height: 4),
+                                  color: AppColor.greyBackgroundColor,
+                                  height: 4),
                               const SizedBox(height: 14),
                               Padding(
                                 padding: const EdgeInsets.symmetric(

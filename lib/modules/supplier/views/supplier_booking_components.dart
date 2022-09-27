@@ -271,68 +271,74 @@ extension SupplierBookingComponents on SupplierBookingScreen {
                                 color: Colors.black,
                               )),
                       Container(
-                        child: controller.bookingPrepare.value.supplierRequest!.filterIsOnline == CommonConstants.online?        
-                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                                '${controller.bookingPrepare.value.supplier!.servicePrice} JPY/${'invoice.hours'.tr}',
-                                style:
-                                    TextAppStyle().genaralTextStyle().copyWith(
-                                          color: AppColor.blueTextColor,
-                                          fontWeight: FontWeight.w500,
-                                        )),
-                            Text(
-                                'x1 ${'invoice.hours'.tr}',
-                                style:
-                                    TextAppStyle().genaralTextStyle().copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
-                                        )),
-                          ],
-                        ): 
-                        Column(
-                          children:[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                    '${controller.bookingPrepare.value.supplier!.serviceOfflineMinPrice} JPY/0,5 - ${controller.bookingPrepare.value.supplier!.serviceOfflineMinHours} ${'invoice.hours'.tr}',
-                                    style:
-                                        TextAppStyle().genaralTextStyle().copyWith(
+                        child: controller.bookingPrepare.value.supplierRequest!
+                                    .filterIsOnline ==
+                                CommonConstants.online
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      '${controller.bookingPrepare.value.supplier!.servicePrice} JPY/${'invoice.hours'.tr}',
+                                      style: TextAppStyle()
+                                          .genaralTextStyle()
+                                          .copyWith(
+                                            color: AppColor.blueTextColor,
+                                            fontWeight: FontWeight.w500,
+                                          )),
+                                  Text('x1 ${'invoice.hours'.tr}',
+                                      style: TextAppStyle()
+                                          .genaralTextStyle()
+                                          .copyWith(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                          )),
+                                ],
+                              )
+                            : Column(children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        '${controller.bookingPrepare.value.supplier!.serviceOfflineMinPrice} JPY/0,5 - ${controller.bookingPrepare.value.supplier!.serviceOfflineMinHours} ${'invoice.hours'.tr}',
+                                        style: TextAppStyle()
+                                            .genaralTextStyle()
+                                            .copyWith(
                                               color: AppColor.blueTextColor,
                                               fontWeight: FontWeight.w500,
                                             )),
-                                Text(
-                                    'x 1',
-                                    style:
-                                        TextAppStyle().genaralTextStyle().copyWith(
+                                    Text('x 1',
+                                        style: TextAppStyle()
+                                            .genaralTextStyle()
+                                            .copyWith(
                                               color: Colors.black,
                                               fontWeight: FontWeight.w500,
                                             )),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                    '${'invoice.incurred'.tr}: ${controller.bookingPrepare.value.supplier!.servicePrice} JPY/ 1${'invoice.hours'.tr}',
-                                    style:
-                                        TextAppStyle().genaralTextStyle().copyWith(
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        '${'invoice.incurred'.tr}: ${controller.bookingPrepare.value.supplier!.servicePrice} JPY/ 1${'invoice.hours'.tr}',
+                                        style: TextAppStyle()
+                                            .genaralTextStyle()
+                                            .copyWith(
                                               color: AppColor.blueTextColor,
                                               fontWeight: FontWeight.w500,
                                             )),
-                                Text(
-                                    'x 1',
-                                    style:
-                                        TextAppStyle().genaralTextStyle().copyWith(
+                                    Text('x 1',
+                                        style: TextAppStyle()
+                                            .genaralTextStyle()
+                                            .copyWith(
                                               color: Colors.black,
                                               fontWeight: FontWeight.w500,
                                             )),
-                              ],
-                            )
-                          ]
-                        ),
+                                  ],
+                                )
+                              ]),
                       )
                     ],
                   ),
@@ -362,14 +368,15 @@ extension SupplierBookingComponents on SupplierBookingScreen {
         _buildOrderInfoItem(
             icon: IconConstants.icOrderTime,
             title:
-                '${(controller.bookingPrepare.value.supplierRequest!.filterIsOnline == CommonConstants.online ? controller.bookingPrepare.value.totalTime : controller.bookingPrepare.value.supplier!.serviceOfflineMinHours )} ${'invoice.hours'.tr}',
+                '${(controller.bookingPrepare.value.supplierRequest!.filterIsOnline == CommonConstants.online ? controller.bookingPrepare.value.totalTime : controller.bookingPrepare.value.supplier!.serviceOfflineMinHours)} ${'invoice.hours'.tr}',
             titleColor: AppColor.blueTextColor,
             titleFontWeight: FontWeight.w500,
             type: OrderInfoViewType.Text,
             value: controller
                     .bookingPrepare.value.supplierRequest?.filterTimeSlot ??
                 ''),
-        if(controller.bookingPrepare.value.supplierRequest!.filterIsOnline == CommonConstants.offline)
+        if (controller.bookingPrepare.value.supplierRequest!.filterIsOnline ==
+            CommonConstants.offline)
           _buildOrderInfoItem(
               icon: IconConstants.icOrderCode,
               title:
@@ -378,10 +385,7 @@ extension SupplierBookingComponents on SupplierBookingScreen {
               titleFontWeight: FontWeight.w500,
               type: OrderInfoViewType.Text,
               value: ''),
-          Text(
-            'time.note'.tr,
-            style: TextAppStyle().normalTextGrey())
-
+        Text('time.note'.tr, style: TextAppStyle().normalTextGrey())
       ]),
     );
   }
@@ -395,13 +399,13 @@ extension SupplierBookingComponents on SupplierBookingScreen {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              flex:2,
-              child: _buildTitleSection(
-              title: 'booking.voucher'.tr,
-              icon: IconConstants.ticket,
-            )),
+                flex: 2,
+                child: _buildTitleSection(
+                  title: 'booking.voucher'.tr,
+                  icon: IconConstants.ticket,
+                )),
             Expanded(
-              flex:3,
+              flex: 3,
               child: InkWell(
                 onTap: () {
                   controller.loadVoucher();
@@ -455,12 +459,12 @@ extension SupplierBookingComponents on SupplierBookingScreen {
               Expanded(
                 flex: 1,
                 child: Text(
-                      '${controller.info.value.accountBalance} JPY',
-                      textAlign: TextAlign.right,
-                      style: TextAppStyle().normalTextStype().copyWith(
-                            color: AppColor.blueTextColor,
-                          ),
-                    ),
+                  '${controller.info.value.accountBalance} JPY',
+                  textAlign: TextAlign.right,
+                  style: TextAppStyle().normalTextStype().copyWith(
+                        color: AppColor.blueTextColor,
+                      ),
+                ),
               )
             ],
           ),

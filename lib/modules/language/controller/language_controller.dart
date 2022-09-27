@@ -39,16 +39,16 @@ class LanguageController extends GetxController {
   @override
   Future<void> onReady() async {
     super.onReady();
-     await DialogUtil.showPopup(
-        dialogSize: DialogSize.Popup,
-        barrierDismissible: false,
-        backgroundColor: Colors.transparent,
-        child: NormalWidget(
-          icon: ImageConstants.appLogo,
-          title: 'notif'.tr ,
-        ),
-        onVaLue: (value) {},
-      );
+    await DialogUtil.showPopup(
+      dialogSize: DialogSize.Popup,
+      barrierDismissible: false,
+      backgroundColor: Colors.transparent,
+      child: NormalWidget(
+        icon: ImageConstants.appLogo,
+        title: 'notif'.tr,
+      ),
+      onVaLue: (value) {},
+    );
   }
 
   Future<void> selectLanguage() async {
@@ -76,7 +76,6 @@ class LanguageController extends GetxController {
         return;
       }
     });
-
   }
 
   Future<void> confirmLanguage() async {

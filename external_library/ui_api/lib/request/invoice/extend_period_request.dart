@@ -13,7 +13,6 @@ class ExtendPeriodRequest {
   @JsonKey(name: 'payment_type')
   int? paymentType;
 
-
   ExtendPeriodRequest({
     this.invoiceId,
     this.extendPeriodId,

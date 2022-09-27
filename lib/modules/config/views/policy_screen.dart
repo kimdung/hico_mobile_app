@@ -14,47 +14,47 @@ class PolicyScreen extends GetView<ConfigController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          centerTitle: true,
-          leading: IconButton(
-            icon: SvgPicture.asset(
-              IconConstants.icBack,
-              width: 11,
-            ),
-            onPressed: Get.back,
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        centerTitle: true,
+        leading: IconButton(
+          icon: SvgPicture.asset(
+            IconConstants.icBack,
+            width: 11,
           ),
-          title: Text(
-            'privacy_policy'.tr,
-            style: TextAppStyle().titleAppBarStyle(),
-          ),
-          elevation: 4,
-          backgroundColor: Colors.white,
-          shadowColor: AppColor.appbarColorLight.withOpacity(0.8),
+          onPressed: Get.back,
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            width: Get.width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 14),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Html(
-                    data: AppDataGlobal.masterData!.privacyPolicy,
-                    style: {
-                      'body': Style(
-                          fontSize: const FontSize(14.0),
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.sixTextColorLight),
-                    },
-                  ),
+        title: Text(
+          'privacy_policy'.tr,
+          style: TextAppStyle().titleAppBarStyle(),
+        ),
+        elevation: 4,
+        backgroundColor: Colors.white,
+        shadowColor: AppColor.appbarColorLight.withOpacity(0.8),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          width: Get.width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 14),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Html(
+                  data: AppDataGlobal.masterData!.privacyPolicy,
+                  style: {
+                    'body': Style(
+                        fontSize: const FontSize(14.0),
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.sixTextColorLight),
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }

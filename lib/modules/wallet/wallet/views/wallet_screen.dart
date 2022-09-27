@@ -55,7 +55,7 @@ class WalletScreen extends GetView<WalletController> {
     );
   }
 
-  Widget _buildStatusNavBar() { 
+  Widget _buildStatusNavBar() {
     return Container(
       height: 44,
       margin: const EdgeInsets.fromLTRB(20, 16, 20, 0),
