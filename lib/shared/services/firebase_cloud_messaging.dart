@@ -103,7 +103,9 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
         'appName': 'HICO',
         'nameCaller': call.callerName ?? '',
         'avatar': call.callerPic,
-        'handle': 'Incoming call...',
+        'handle': (call.isVideo ?? false)
+            ? 'Incoming video call...'
+            : 'Incoming voice call...',
         'type': (call.isVideo ?? false) ? 1 : 0,
         // 'textAccept': 'call.accept'.tr,
         // 'textDecline': 'call.decline'.tr,
@@ -143,7 +145,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
             break;
           case CallEvent.ACTION_CALL_START:
             break;
-          case CallEvent.ACTION_CALL_ACCEPT: 
+          case CallEvent.ACTION_CALL_ACCEPT:
             break;
           case CallEvent.ACTION_CALL_DECLINE:
             try {
@@ -157,9 +159,9 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
               debugPrint(e.toString());
             }
             break;
-          case CallEvent.ACTION_CALL_ENDED: 
+          case CallEvent.ACTION_CALL_ENDED:
             break;
-          case CallEvent.ACTION_CALL_TIMEOUT: 
+          case CallEvent.ACTION_CALL_TIMEOUT:
             break;
           case CallEvent.ACTION_CALL_CALLBACK:
             break;
@@ -414,7 +416,7 @@ class FirebaseMessageConfig {
     if (message.isEmpty) {
       return;
     }
-
+  
     /// ['id']: Key json chứa ID của thông báo server trả về.
     /// Dùng để điều hướng vào màn chi tiết thông báo
     /// Mặc định đang là ['id']
