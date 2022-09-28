@@ -18,8 +18,6 @@ class AppDataGlobal {
 
   static StreamChatClient? client;
 
-  static bool acceptCall = false;
-
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   // static List<Map<String, dynamic>> activeCalls = <Map<String, dynamic>>[];

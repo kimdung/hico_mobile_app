@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,8 +23,8 @@ class VideoCallController extends BaseController {
   StreamSubscription? _callStreamSubscription;
 
   RxnInt remoteUid = RxnInt();
-  RxBool isJoined = RxBool(false);
   RxBool isCalling = RxBool(false);
+  RxBool isJoined = RxBool(false);
 
   RxBool muteLocalAudio = RxBool(false);
 
@@ -45,36 +46,28 @@ class VideoCallController extends BaseController {
     await Wakelock.enable();
 
     _addPostFrameCallback();
+
     await _initAgora();
-    await _joinChannel();
-
-    if (isCaller) {
-      _startRingtone();
-
-      _sendCallNotification();
-    }
   }
 
   @override
-  Future<void> onResumed() async {
-    await _engine?.disableVideo();
-    await _engine?.enableVideo();
-    await super.onResumed();
+  void onResumed() {
+    _engine?.disableVideo();
+    _engine?.enableVideo();
+    super.onResumed();
   }
 
   @override
   void onClose() {
-    Wakelock.disable();
+    printInfo(info: 'onClose');
     _endRingtone();
-
-    _callEndCall();
-    callMethods.endCall(call: call);
 
     _engine?.leaveChannel();
     _engine?.destroy();
-
     _durationTimer?.cancel();
     _callStreamSubscription?.cancel();
+
+    Wakelock.disable();
 
     super.onClose();
   }
@@ -95,22 +88,35 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> _initAgora() async {
-    // Get permissions
-    await [Permission.microphone, Permission.camera].request();
-
     //create the engine
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
     await _engine?.setParameters('{"che.audio.opensl":true}');
-    await _engine?.enableVideo();
 
+    _addListeners();
+
+    await _engine?.enableVideo();
+    await _engine?.startPreview();
+    await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
+    await _engine?.setClientRole(ClientRole.Broadcaster);
+
+    await _joinChannel();
+  }
+
+  void _addListeners() {
     _engine?.setEventHandler(RtcEngineEventHandler(
+      warning: (warningCode) {
+        printInfo(info: 'warning $warningCode');
+      },
+      error: (errorCode) {
+        printInfo(info: 'error $errorCode');
+      },
       joinChannelSuccess: (channel, uid, elapsed) {
         printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
 
         isJoined.value = true;
       },
-      leaveChannel: (stats) async {
-        printError(info: 'leaveChannel ${stats.toJson()}');
+      leaveChannel: (stats) {
+        printInfo(info: 'leaveChannel ${stats.toJson()}');
 
         _endRingtone();
 
@@ -121,34 +127,30 @@ class VideoCallController extends BaseController {
 
         _endRingtone();
 
-        isCalling.value = true;
         remoteUid.value = uid;
+        isCalling.value = true;
 
         _callBeginCall();
-        _durationTimer ??= Timer.periodic(
-          const Duration(seconds: 1),
-          (Timer timer) {
-            dutationCall.value++;
-          },
-        );
       },
       userOffline: (int uid, UserOfflineReason reason) {
         printInfo(info: 'remote user $uid left channel');
         remoteUid.value = null;
       },
-      warning: (warningCode) {
-        printError(info: 'warning $warningCode');
-      },
-      error: (errorCode) {
-        printError(info: 'error $errorCode');
-      },
     ));
   }
 
   Future<void> _joinChannel() async {
+    if (Platform.isAndroid) {
+      await [Permission.microphone, Permission.camera].request();
+    }
     await _engine
         ?.joinChannel(token, call.channelId ?? '', null, call.getId() ?? 0)
-        .catchError((onError) {
+        .then((value) {
+      if (isCaller) {
+        _startRingtone();
+        _sendCallNotification();
+      }
+    }).catchError((onError) {
       printError(info: 'error ${onError.toString()}');
       Future.delayed(Duration.zero, Get.back);
     });
@@ -174,7 +176,6 @@ class VideoCallController extends BaseController {
     }
     _endRingtone();
 
-    printInfo(info: 'onEndCall');
     await callMethods.endCall(call: call);
     await _callEndCall();
   }
@@ -209,9 +210,9 @@ class VideoCallController extends BaseController {
 
   /* API */
 
-  void _sendCallNotification() {
+  Future<void> _sendCallNotification() async {
     try {
-      _uiRepository.sendCallNotification(call.invoiceId ?? -1);
+      await _uiRepository.sendCallNotification(call.invoiceId ?? -1);
     } catch (e) {
       printError(info: e.toString());
     }
@@ -226,6 +227,13 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> _callBeginCall() async {
+    _durationTimer ??= Timer.periodic(
+      const Duration(seconds: 1),
+      (Timer timer) {
+        dutationCall.value++;
+      },
+    );
+
     try {
       await _uiRepository.beginCall(call.invoiceId ?? -1);
     } catch (e) {

@@ -39,8 +39,12 @@ class DependencyInjection {
       //
     }
 
-    Stripe.publishableKey = config.value[StripePublishableKey]!;
-    await Stripe.instance.applySettings();
+    try {
+      Stripe.publishableKey = config.value[StripePublishableKey]!;
+      await Stripe.instance.applySettings();
+    } catch (e) {
+      debugPrint('init Stripe error ${e.toString()}');
+    }
 
     final _dioUIAPI =
         await DioClient.setup(baseUrl: config.value[UIAPIDomain]!);

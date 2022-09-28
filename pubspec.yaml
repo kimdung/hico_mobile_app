@@ -57,7 +57,10 @@ dependencies:
   google_sign_in: ^5.2.3
   flutter_facebook_auth: ^4.0.1
 
-  shared_preferences: ^2.0.6
+  shared_preferences: ^2.0.15
+  shared_preferences_android: ^2.0.13
+  shared_preferences_ios: ^2.1.1
+
   flutter_easyloading: ^3.0.0
   flutter_svg: ^1.0.3
   connectivity_plus: ^2.2.1

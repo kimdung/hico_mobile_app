@@ -46,7 +46,7 @@ class BaseController extends FullLifeCycleController
   void onPaused() {}
 
   @override
-  Future<void> onResumed() async {}
+  void onResumed() {}
 
   Future<void> checkConnectNetwork() async {
     // // Check Network
