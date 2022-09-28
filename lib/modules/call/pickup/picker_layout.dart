@@ -32,21 +32,31 @@ class PickupLayout extends GetView<BaseController> {
               if (snapshot.hasData &&
                   snapshot.data?.data() != null &&
                   snapshot.data?.data() is Map<String, dynamic>) {
-                final data = snapshot.data!.data() as Map<String, dynamic>;
-                try {
-                  final call = CallModel.fromJson(data);
-                  // final currentCall = getCurrentCall();
-                  // if (currentCall != null) {
-                  //   return scaffold;
-                  // }
-                  if (call.hasDialled != null && !call.hasDialled!) {
-                    return PickupView(call: call);
-                  }
-                } catch (e) {
-                  printError(info: e.toString());
-                }
+                // final data = snapshot.data!.data() as Map<String, dynamic>;
+                // try {
+                //   printInfo(info: 'incoming call ${data.toString()}');
+                //   final call = CallModel.fromJson(data);
+
+                //   if (call.hasDialled != null && !call.hasDialled!) {
+                //     return PickupView(call: call);
+                //   }
+                // } catch (e) {
+                //   printError(info: e.toString());
+                // }
+
+                return FutureBuilder<CallModel?>(
+                  future: _pickupCall(
+                      snapshot.data?.data() as Map<String, dynamic>),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<CallModel?> snapshot) {
+                    if (snapshot.hasData && snapshot.data != null) {
+                      return PickupView(call: snapshot.data!);
+                    } else {
+                      return scaffold;
+                    }
+                  },
+                );
               }
-              
               return scaffold;
             },
           )
@@ -55,17 +65,31 @@ class PickupLayout extends GetView<BaseController> {
           );
   }
 
-  getCurrentCall() async {
-    //check current call from pushkit if possible
-    final calls = await FlutterCallkitIncoming.activeCalls();
-    if (calls is List) {
-      if (calls.isNotEmpty) {
-        printInfo(info: 'DATA: $calls');
-        return calls[0];
-      } else {
-        return null;
+  Future<CallModel?>? _pickupCall(Map<String, dynamic> data) async {
+    try {
+      printInfo(info: 'incoming call ${data.toString()}');
+      final call = CallModel.fromJson(data);
+
+      final activeCalls = await FlutterCallkitIncoming.activeCalls();
+      printInfo(info: 'incoming activescall ${activeCalls.toString()}');
+
+      if (activeCalls is List) {
+        final activeCall = activeCalls.firstWhereOrNull(
+            (element) => (element as Map<dynamic, dynamic>?)?['id'] == call.id);
+        if (activeCall != null && (activeCall['isAccepted'] ?? false)) {
+          await onAcceptCall(call);
+          return null;
+        }
       }
+
+      if (call.hasDialled != null && !call.hasDialled!) {
+        return call;
+      }
+    } catch (e) {
+      printError(info: e.toString());
+      return null;
     }
+    return null;
   }
 
   Future<void> onAcceptCall(CallModel call) async {
@@ -103,5 +127,9 @@ class PickupLayout extends GetView<BaseController> {
 
       callMethods.endCall(call: call);
     });
+  }
+
+  Future<void> onDeniedCall(CallModel call) async {
+    await callMethods.endCall(call: call);
   }
 }

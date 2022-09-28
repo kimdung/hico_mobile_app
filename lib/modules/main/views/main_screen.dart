@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
-import '../../../shared/styles/text_style/app_text_style.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widgets/badge/badge_widget.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';

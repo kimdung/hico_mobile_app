@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
@@ -34,9 +33,7 @@ class _PickupViewState extends State<PickupView> {
   void initState() {
     super.initState();
 
-    _currentCall();
-
-    // _startRingtone();
+    _startRingtone();
   }
 
   @override
@@ -89,7 +86,7 @@ class _PickupViewState extends State<PickupView> {
         ),
         const SizedBox(height: 15),
         Text(
-          '${widget.call.getName()} ${AppDataGlobal.acceptCall}',
+          widget.call.getName() ?? '',
           style: TextAppStyle().mediumTextStype().copyWith(
                 fontSize: 18,
               ),
@@ -128,16 +125,6 @@ class _PickupViewState extends State<PickupView> {
         ],
       ),
     );
-  }
-
-  Future _currentCall() async {
-    //check current call from pushkit if possible
-    final activeCalls = await FlutterCallkitIncoming.activeCalls();
-    if (activeCalls is List && activeCalls.isNotEmpty) {
-      printInfo(info: 'DATA: $activeCalls');
-    } else {
-      _startRingtone();
-    }
   }
 
   Future<void> onAcceptCall() async {
@@ -191,16 +178,17 @@ class _PickupViewState extends State<PickupView> {
       FlutterRingtonePlayer.play(
         fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
         looping: true,
-        asAlarm: true,
       );
     } else {
-      FlutterRingtonePlayer.playRingtone(asAlarm: true);
+      FlutterRingtonePlayer.play(
+        fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+        looping: false,
+      );
       _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
         printInfo(info: 'playRingtone');
         FlutterRingtonePlayer.play(
           fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
           looping: false,
-          asAlarm: true,
         );
       });
     }

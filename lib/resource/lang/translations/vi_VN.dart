@@ -52,13 +52,7 @@ const Map<String, String> vi_VN = {
   // error
   'error': 'Có lỗi xẩy ra',
   'error.expires': 'Phiên làm việc hết hạn!',
-  'error.call': 'Không thể thực hiện cuộc gọi lúc này!',
-
-  // Call
-  'call.accept': 'Chấp nhận',
-  'call.decline': 'Từ chối',
-  'call.missed': 'Có cuộc gọi nhỡ',
-  'call.back': 'Gọi lại',
+  'error.call': 'Không thể thực hiện cuộc gọi lúc này!', 
 
   //register
   'register.comfirm': 'Xác thực tài khoản',
