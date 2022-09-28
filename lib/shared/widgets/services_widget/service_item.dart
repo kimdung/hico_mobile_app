@@ -35,7 +35,7 @@ class ServiceItem extends StatelessWidget {
             margin: padding
                 ? const EdgeInsets.symmetric(horizontal: 8)
                 : const EdgeInsets.all(0),
-            height: height ?? 90,
+            //height: height ?? 90,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Colors.white,
@@ -69,6 +69,7 @@ class ServiceItem extends StatelessWidget {
                     style: TextAppStyle().smallTextBlack(),
                     maxLines: 1,
                   ),
+                const SizedBox(height: 10),
               ],
             ),
           ),

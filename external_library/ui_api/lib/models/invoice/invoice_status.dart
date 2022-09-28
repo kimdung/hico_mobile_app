@@ -4,6 +4,7 @@ class InvoiceStatus {
   static InvoiceStatus accepted = InvoiceStatus('invoice.accepted', 2);
   static InvoiceStatus successed = InvoiceStatus('invoice.successed', 3);
   static InvoiceStatus canceled = InvoiceStatus('invoice.canceled', 4);
+  static InvoiceStatus extend = InvoiceStatus('invoice.extend', 5);
 
   static List<InvoiceStatus> status = [
     requested,

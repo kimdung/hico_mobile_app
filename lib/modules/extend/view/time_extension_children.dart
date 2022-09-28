@@ -5,18 +5,16 @@ extension TimeExtensionChildren on TimeExtensionScreen {
     return Container(
       margin:
           const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 24.0, top: 20),
-      child: Expanded(
-        child: GeneralButton(
-          backgroundColor: AppColor.primaryColorLight,
-          onPressed: () {
-            controller.onHandleExtendButton();
-          },
-          borderRadius: BorderRadius.circular(24),
-          borderColor: AppColor.primaryColorLight,
-          child: Text(
-            'Gia hạn',
-            style: TextAppStyle().titleButtonStyle(),
-          ),
+      child: GeneralButton(
+        backgroundColor: AppColor.primaryColorLight,
+        onPressed: () {
+          controller.onHandleExtendButton();
+        },
+        borderRadius: BorderRadius.circular(24),
+        borderColor: AppColor.primaryColorLight,
+        child: Text(
+          'Gia hạn',
+          style: TextAppStyle().titleButtonStyle(),
         ),
       ),
     );
@@ -70,7 +68,7 @@ extension TimeExtensionChildren on TimeExtensionScreen {
         padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
         width: double.infinity,
         child: Text(
-          '${item.minutes} phút - ${item.price} - JPY',
+          '${item.minutes} ${'invoice.minutes'.tr} - ${item.price} - JPY',
           style: TextAppStyle().normalTextPink(),
         ),
       ),

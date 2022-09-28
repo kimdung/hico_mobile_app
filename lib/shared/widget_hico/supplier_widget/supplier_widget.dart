@@ -46,14 +46,6 @@ class SupplierWidget extends StatelessWidget {
                     offset: Offset(0, 2),
                   ),
                 ],
-                // boxShadow: [
-                //   BoxShadow(
-                //     color: AppColor.secondColorLight.withOpacity(0.2),
-                //     spreadRadius: 3,
-                //     blurRadius: 7,
-                //     offset: const Offset(0, 3),
-                //   ),
-                // ],
               ),
               child: Column(
                 children: [
@@ -72,6 +64,7 @@ class SupplierWidget extends StatelessWidget {
                       Expanded(
                         flex: 3,
                         child: Container(
+                          padding:const EdgeInsets.only(right: 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

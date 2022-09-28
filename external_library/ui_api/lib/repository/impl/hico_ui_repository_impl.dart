@@ -377,6 +377,11 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   }
 
   @override
+  Future<BaseResponse> forgetPasswordOtp(String code, String email) {
+    return _api.forgetPasswordOtp(code, email);
+  }
+
+  @override
   Future<BaseResponse> resetPassword(
       String code, String email, String password) {
     return _api.resetPassword(code, email, password);

@@ -42,28 +42,30 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
             widget.title ?? 'supplier.filter.choose_date'.tr,
             style: TextAppStyle().normalTextPink(),
           ),
-          Container(
-            child: CalendarCarousel<Event>(
-              onDayPressed: (DateTime date, List<Event> events) {
-                onchange(date);
-              },
-              headerTextStyle: TextAppStyle().largeTextStype(),
-              weekdayTextStyle: const TextStyle(color: Colors.black),
-              weekendTextStyle: const TextStyle(color: Colors.black),
-              thisMonthDayBorderColor: Colors.grey,
-              weekFormat: false,
-              height: 450,
-              dayPadding: 1,
-              todayBorderColor: Colors.grey,
-              todayButtonColor: Colors.white,
-              todayTextStyle: TextAppStyle().normalTextStype(),
-              selectedDateTime: _dateTime,
-              selectedDayButtonColor: AppColor.primaryColorLight,
-              selectedDayBorderColor: AppColor.primaryColorLight,
-              daysHaveCircularBorder: false,
+          Expanded(
+            child: Container(
+              child: CalendarCarousel<Event>(
+                onDayPressed: (DateTime date, List<Event> events) {
+                  onchange(date);
+                },
+                headerTextStyle: TextAppStyle().largeTextStype(),
+                weekdayTextStyle: const TextStyle(color: Colors.black),
+                weekendTextStyle: const TextStyle(color: Colors.black),
+                thisMonthDayBorderColor: Colors.grey,
+                weekFormat: false,
+                height: 400,
+                dayPadding: 1,
+                todayBorderColor: Colors.grey,
+                todayButtonColor: Colors.white,
+                todayTextStyle: TextAppStyle().normalTextStype(),
+                selectedDateTime: _dateTime,
+                selectedDayButtonColor: AppColor.primaryColorLight,
+                selectedDayBorderColor: AppColor.primaryColorLight,
+                daysHaveCircularBorder: false,
+              ),
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 20),
           GeneralButton(
             borderColor: AppColor.primaryColorLight,
             backgroundColor: AppColor.primaryColorLight,
@@ -76,6 +78,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
               style: TextAppStyle().normalTextWhite(),
             ),
           ),
+          const SizedBox(height: 20),
         ],
       ),
     );

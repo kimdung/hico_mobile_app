@@ -19,7 +19,7 @@ class TopupController extends GetxController {
   List<TopupItem> get topupItems => TopupItem.topupItems;
   RxInt selectedMoneyIndex = RxInt(0);
 
-  final balance = RxInt(AppDataGlobal.userInfo?.accountBalance ?? 0);
+  final balance = RxDouble(AppDataGlobal.userInfo?.accountBalance ?? 0);
 
   final formState = GlobalKey<FormState>();
   final moneyController = TextEditingController()

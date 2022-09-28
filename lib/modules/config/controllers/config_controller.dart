@@ -11,6 +11,7 @@ import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../resource/lang/translation_service.dart';
+import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/constants/storage.dart';
 import '../../../shared/styles/text_style/text_style.dart';
@@ -167,11 +168,11 @@ class ConfigController extends BaseController {
                   ? Column(
                       children: [
                         Text(
-                          'Thay đổi mật khẩu',
+                          'change_pass'.tr,
                           style: TextAppStyle().normalTextStype(),
                         ),
                         Text(
-                          'Thành công',
+                          'success'.tr,
                           style: TextAppStyle().largeTextPink(),
                         ),
                       ],
@@ -180,7 +181,14 @@ class ConfigController extends BaseController {
             ),
             onVaLue: (value) {
               if (response.status == CommonConstants.statusOk) {
-                Get.back();
+                AppDataGlobal.client?.removeDevice(AppDataGlobal.firebaseToken);
+                _uiRepository.logout().then((response) {
+                  AppDataGlobal.accessToken = '';
+                  storage.setBool(StorageConstants.isLogin, false);
+                  storage.setBool(StorageConstants.isSocial, false);
+                  storage.setString(StorageConstants.token, '');
+                  Get.offAllNamed(Routes.ONBOARDING);
+                });
               }
             },
           );
