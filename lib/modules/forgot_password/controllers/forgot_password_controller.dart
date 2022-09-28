@@ -25,6 +25,9 @@ class ForgotPasswordController extends BaseController {
   final TextEditingController confirmPasswordController =
       TextEditingController();
 
+  final hideNewPassword = true.obs;
+  final hideRetypePassword = true.obs;
+
   bool showPassword = false;
   Rx<String> emailHidden = Rx('');
   String code = '';
@@ -35,6 +38,13 @@ class ForgotPasswordController extends BaseController {
     return super.onInit();
   }
 
+  void hideShowNewPassword() {
+    hideNewPassword.value = !hideNewPassword.value;
+  }
+  void hideShowRetypePassword() {
+    hideRetypePassword.value = !hideRetypePassword.value;
+  }
+  
   Future<void> onForgot() async {
     try {
       if (forgetGlobalKey.currentState?.validate() ?? false) {

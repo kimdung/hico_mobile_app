@@ -67,28 +67,6 @@ class ConfigController extends BaseController {
     return super.onInit();
   }
 
-  Future<void> selectLanguage() async {
-    try {
-      switch (currentLanguage.value) {
-        case LanguageCode.VN:
-          AppDataGlobal.languageCode = VIETNAMESE_LANG;
-          break;
-        case LanguageCode.EN:
-          AppDataGlobal.languageCode = ENGLISH_LANG;
-          break;
-        case LanguageCode.JA:
-          AppDataGlobal.languageCode = JAPANESE_LANG;
-          break;
-      }
-      TranslationService.changeLocale(currentLanguage.value.languageLocale);
-
-      await storage.setString(
-          StorageConstants.language, AppDataGlobal.languageCode);
-    } catch (e) {
-      await EasyLoading.dismiss();
-    }
-  }
-
   Future<void> confirmLanguage() async {
     try {
       await EasyLoading.show();

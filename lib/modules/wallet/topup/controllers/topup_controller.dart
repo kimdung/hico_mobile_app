@@ -12,6 +12,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../data/app_data_global.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../shared/constants/common.dart';
+import '../../../../shared/utils/dialog_util.dart';
+import '../../../../shared/widget_hico/dialog/dialog_confirm_widget.dart';
 
 class TopupController extends GetxController {
   final _uiRepository = Get.find<HicoUIRepository>();
@@ -51,30 +53,63 @@ class TopupController extends GetxController {
       await EasyLoading.showToast('topup.amount.validate'.tr);
       return;
     }
+    final amountTmp = amount + balance.value;
 
-    switch (selectedMethod.value) {
-      case 0:
-        await _topupBank(amount);
-        break;
-      // case 1:
-      //   await _topupKomaju(amount, 1);
-      //   break;
-      // case 2:
-      //   await _topupKomaju(amount, 2);
-      //   break;
-      case 1:
-        await Get.toNamed(Routes.TOPUP_STRIPE, arguments: {
-          CommonConstants.TOPUP_DATA: amount,
-          CommonConstants.TOPUP_ISORDER: _isOrder,
-        })?.then((value) {
-          balance.value = AppDataGlobal.userInfo?.accountBalance ?? 0;
-          if (value != null && value) {
-            Get.back();
+    if (amountTmp < 3000) {
+      await DialogUtil.showPopup(
+        dialogSize: DialogSize.Popup,
+        barrierDismissible: false,
+        backgroundColor: Colors.transparent,
+        child: DialogConfirmWidget(
+          title: 'note'.tr,
+          description: 'topup.notif'.tr,
+          cancelTxt: 'cancel'.tr,
+          acceptTxt: 'continue'.tr,
+        ),
+        onVaLue: (_value) {
+          if (_value != null && _value is bool) {
+            if (_value == true) {
+              switch (selectedMethod.value) {
+                case 0:
+                  _topupBank(amount);
+                  break;
+                case 1:
+                  Get.toNamed(Routes.TOPUP_STRIPE, arguments: {
+                    CommonConstants.TOPUP_DATA: amount,
+                    CommonConstants.TOPUP_ISORDER: _isOrder,
+                  })?.then((value) {
+                    balance.value = AppDataGlobal.userInfo?.accountBalance ?? 0;
+                    if (value != null && value) {
+                      Get.back();
+                    }
+                  });
+                  break;
+                default:
+                  break;
+              }
+            }
           }
-        });
-        break;
-      default:
-        break;
+        },
+      );
+    } else {
+      switch (selectedMethod.value) {
+        case 0:
+          await _topupBank(amount);
+          break;
+        case 1:
+          await Get.toNamed(Routes.TOPUP_STRIPE, arguments: {
+            CommonConstants.TOPUP_DATA: amount,
+            CommonConstants.TOPUP_ISORDER: _isOrder,
+          })?.then((value) {
+            balance.value = AppDataGlobal.userInfo?.accountBalance ?? 0;
+            if (value != null && value) {
+              Get.back();
+            }
+          });
+          break;
+        default:
+          break;
+      }
     }
   }
 
