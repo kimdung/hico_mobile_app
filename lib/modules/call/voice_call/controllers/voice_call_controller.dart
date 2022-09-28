@@ -187,16 +187,17 @@ class VoiceCallController extends BaseController {
       FlutterRingtonePlayer.play(
         fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
         looping: true,
-        asAlarm: true,
       );
     } else {
-      FlutterRingtonePlayer.playRingtone(asAlarm: true);
+      FlutterRingtonePlayer.play(
+        fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+        looping: false,
+      );
       _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
         printInfo(info: 'playRingtone');
         FlutterRingtonePlayer.play(
           fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
           looping: false,
-          asAlarm: true,
         );
       });
     }
@@ -215,25 +216,7 @@ class VoiceCallController extends BaseController {
       _uiRepository.sendCallNotification(call.invoiceId ?? -1);
     } catch (e) {
       printError(info: e.toString());
-    }
-    // _uiRepository.sendCallNotification(call.invoiceId ?? -1).then((response) {
-    //   if (response.status == CommonConstants.statusOk) {
-    //     return;
-    //   } else {
-    //     DialogUtil.showPopup(
-    //       dialogSize: DialogSize.Popup,
-    //       barrierDismissible: false,
-    //       backgroundColor: Colors.transparent,
-    //       child: NormalWidget(
-    //         icon: IconConstants.icFail,
-    //         title: response.message ?? 'error.call'.tr,
-    //       ),
-    //       onVaLue: (value) {
-    //         Get.back();
-    //       },
-    //     );
-    //   }
-    // });
+    } 
   }
 
   void _sendMissCall() {

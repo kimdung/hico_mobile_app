@@ -177,16 +177,17 @@ class _PickupViewState extends State<PickupView> {
       FlutterRingtonePlayer.play(
         fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
         looping: true,
-        asAlarm: true,
       );
     } else {
-      FlutterRingtonePlayer.playRingtone(asAlarm: true);
+      FlutterRingtonePlayer.play(
+        fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+        looping: false,
+      );
       _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
         printInfo(info: 'playRingtone');
         FlutterRingtonePlayer.play(
           fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
           looping: false,
-          asAlarm: true,
         );
       });
     }
