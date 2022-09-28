@@ -274,7 +274,7 @@ extension OrderListBody on OrderListScreen {
   Widget _buildListOrder() {
     return ListView.separated(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      //physics: const NeverScrollableScrollPhysics(),
       itemCount: controller.list.length,
       itemBuilder: (context, index) => ItemOrderWidget(
         invoice: controller.list[index],

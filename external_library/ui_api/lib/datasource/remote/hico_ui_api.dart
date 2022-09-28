@@ -369,6 +369,13 @@ abstract class HicoUIAPI {
   );
 
   //ResetPass
+  @POST('/v1/customer/password/checkOTPForgotPassword')
+  Future<BaseResponse> forgetPasswordOtp(
+    @Query('code') String code,
+    @Query('email') String email,
+  );
+
+  //ResetPass
   @POST('/v1/customer/password/reset')
   Future<BaseResponse> resetPassword(
     @Query('code') String code,

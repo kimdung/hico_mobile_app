@@ -229,9 +229,11 @@ abstract class HicoUIRepository {
     String symptom,
   );
 
-  //check UserTime
+  //forgot pass
   Future<BaseResponse> forgetPassword(String email);
-  //check UserTime
+  //check otp
+  Future<BaseResponse> forgetPasswordOtp(String code, String email);
+  //reset Password
   Future<BaseResponse> resetPassword(
       String code, String email, String password);
   //bank list

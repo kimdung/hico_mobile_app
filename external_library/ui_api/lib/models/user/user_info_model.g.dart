@@ -47,7 +47,7 @@ UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
           ? null
           : ConversationInfoModel.fromJson(
               json['conversation_info'] as Map<String, dynamic>),
-      accountBalance: json['account_balance'] as int?,
+      accountBalance: (json['account_balance'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>

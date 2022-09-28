@@ -74,8 +74,8 @@ class LoginController extends BaseController {
             password: passwordController.text,
             deviceIdentifier: AppDataGlobal.firebaseToken))
         .then((response) {
-      EasyLoading.dismiss();
       if (response.status == CommonConstants.statusFailed) {
+        EasyLoading.dismiss();
         DialogUtil.showPopup(
           dialogSize: DialogSize.Popup,
           barrierDismissible: false,
@@ -98,6 +98,8 @@ class LoginController extends BaseController {
         _loadData(response.loginModel!);
       } else if (response.loginModel != null &&
           response.loginModel!.isResend == 1) {
+                  EasyLoading.dismiss();
+
         DialogUtil.showPopup(
           dialogSize: DialogSize.Popup,
           barrierDismissible: false,
@@ -134,6 +136,8 @@ class LoginController extends BaseController {
         );
         return;
       } else {
+              EasyLoading.dismiss();
+
         DialogUtil.showPopup(
           dialogSize: DialogSize.Popup,
           barrierDismissible: false,

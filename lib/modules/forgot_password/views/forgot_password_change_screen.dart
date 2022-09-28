@@ -65,34 +65,36 @@ class ForgotPasswordChangeScreen extends GetView<ForgotPasswordController> {
                   padding: const EdgeInsets.symmetric(horizontal: 21),
                   child: Form(
                     key: controller.forgetChangeGlobalKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 40),
-                          child: _buildPassword(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: _buildConfirmPassword(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 94),
-                          child: GeneralButton(
-                            onPressed: () => controller.onChange(),
-                            borderRadius: BorderRadius.circular(24),
-                            backgroundColor: AppColor.primaryColorLight,
-                            borderColor: AppColor.primaryColorLight,
-                            child: Text(
-                              'forgot_password.recovery'.tr,
-                              style: TextStyle(
-                                  color: AppColor.secondTextColorLight,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500),
+                    child: Obx(
+                      () => Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 40),
+                            child: _buildPassword(),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: _buildConfirmPassword(),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 94),
+                            child: GeneralButton(
+                              onPressed: () => controller.onChange(),
+                              borderRadius: BorderRadius.circular(24),
+                              backgroundColor: AppColor.primaryColorLight,
+                              borderColor: AppColor.primaryColorLight,
+                              child: Text(
+                                'forgot_password.recovery'.tr,
+                                style: TextStyle(
+                                    color: AppColor.secondTextColorLight,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -109,7 +111,7 @@ class ForgotPasswordChangeScreen extends GetView<ForgotPasswordController> {
       controller: controller.passwordController,
       keyboardType: TextInputType.text,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      obscureText: !controller.showPassword,
+      obscureText: controller.hideNewPassword.value,
       cursorColor: AppColor.fifthTextColorLight,
       style: TextAppStyle().normalTextGrey(),
       decoration: TextFieldDecoration.borderLogin(
@@ -120,6 +122,17 @@ class ForgotPasswordChangeScreen extends GetView<ForgotPasswordController> {
           padding: const EdgeInsets.all(12),
           child: FCoreImage(
             IconConstants.icKey,
+          ),
+        ),
+        suffixIcon: IconButton(
+          onPressed: () {
+            controller.hideShowNewPassword();
+          },
+          icon: Icon(
+            !controller.hideNewPassword.value
+                ? Icons.visibility
+                : Icons.visibility_off,
+            color: AppColor.fifthTextColorLight,
           ),
         ),
       ),
@@ -133,7 +146,7 @@ class ForgotPasswordChangeScreen extends GetView<ForgotPasswordController> {
         controller: controller.confirmPasswordController,
         keyboardType: TextInputType.text,
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        obscureText: !controller.showPassword,
+        obscureText: controller.hideRetypePassword.value,
         cursorColor: AppColor.fifthTextColorLight,
         style: TextAppStyle().normalTextGrey(),
         decoration: TextFieldDecoration.borderLogin(
@@ -144,6 +157,17 @@ class ForgotPasswordChangeScreen extends GetView<ForgotPasswordController> {
             padding: const EdgeInsets.all(12),
             child: FCoreImage(
               IconConstants.icKey,
+            ),
+          ),
+          suffixIcon: IconButton(
+            onPressed: () {
+              controller.hideShowRetypePassword();
+            },
+            icon: Icon(
+              !controller.hideRetypePassword.value
+                  ? Icons.visibility
+                  : Icons.visibility_off,
+              color: AppColor.fifthTextColorLight,
             ),
           ),
         ),

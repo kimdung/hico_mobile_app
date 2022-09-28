@@ -516,8 +516,26 @@ extension OrderExtension on OrderScreen {
       return _btnSuccessStatus();
     } else if (status == InvoiceStatus.requested.id) {
       return _btnCancelInvoice();
+    }else if (status == InvoiceStatus.extend.id) {
+      return _btnExtendInvoice();
     }
     return Container();
+  }
+
+  Widget _btnExtendInvoice() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: GeneralButton(
+        onPressed: () => controller.showDialogNotification(),
+        borderRadius: BorderRadius.circular(24),
+        borderColor: AppColor.primaryColorLight,
+        backgroundColor: AppColor.primaryColorLight,
+        child: Text(
+          'order.detail.extend'.tr,
+          style: TextAppStyle().titleButtonStyle(),
+        ),
+      ),
+    );
   }
 
   Widget _btnCancelInvoice() {

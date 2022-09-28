@@ -60,7 +60,7 @@ class RegisterScreen extends GetView<RegisterController> {
                     const SizedBox(height: 40),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
+                      child: Obx(()=> Column(
                         children: [
                           const SizedBox(height: 20),
                           _buildUsername(),
@@ -111,7 +111,7 @@ class RegisterScreen extends GetView<RegisterController> {
                           ),
                           const SizedBox(height: 40),
                         ],
-                      ),
+                      )) ,
                     ),
                   ],
                 ),

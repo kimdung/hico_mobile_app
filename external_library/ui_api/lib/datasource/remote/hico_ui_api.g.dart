@@ -958,6 +958,23 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
+  Future<BaseResponse> forgetPasswordOtp(code, email) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'code': code, r'email': email};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse>(Options(
+                method: 'POST', headers: _headers, extra: _extra)
+            .compose(
+                _dio.options, '/v1/customer/password/checkOTPForgotPassword',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<BaseResponse> resetPassword(code, email, password) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{

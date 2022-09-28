@@ -50,7 +50,6 @@ class ConfigScreen extends GetView<ConfigController> {
                           code: LanguageCode.JA,
                           onPress: () {
                             controller.currentLanguage.value = LanguageCode.JA;
-                            controller.selectLanguage();
                           },
                         ),
                         buildLanguageItem(
@@ -59,7 +58,6 @@ class ConfigScreen extends GetView<ConfigController> {
                           code: LanguageCode.VN,
                           onPress: () {
                             controller.currentLanguage.value = LanguageCode.VN;
-                            controller.selectLanguage();
                           },
                         ),
                         // buildLanguageItem(
@@ -73,20 +71,24 @@ class ConfigScreen extends GetView<ConfigController> {
                       ],
                     )),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 24),
-                child: GeneralButton(
-                  onPressed: () => controller.confirmLanguage(),
-                  borderRadius: BorderRadius.circular(24),
-                  borderColor: AppColor.primaryColorLight,
-                  backgroundColor: AppColor.primaryColorLight,
-                  child: Text(
-                    'config'.tr,
-                    style: TextAppStyle().titleButtonStyle(),
-                  ),
-                ),
-              ),
             ],
+          ),
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+          child: GeneralButton(
+            onPressed: () => controller.confirmLanguage(),
+            borderRadius: BorderRadius.circular(24),
+            borderColor: AppColor.primaryColorLight,
+            backgroundColor: AppColor.primaryColorLight,
+            child: Obx(
+              () => Text(
+                controller.currentLanguage.value == LanguageCode.VN
+                    ? 'Thiết lập'
+                    : '設定',
+                style: TextAppStyle().titleButtonStyle(),
+              ),
+            ),
           ),
         ),
       ),

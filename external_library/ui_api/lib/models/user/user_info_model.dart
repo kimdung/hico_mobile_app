@@ -52,7 +52,7 @@ class UserInfoModel {
   @JsonKey(name: 'conversation_info')
   ConversationInfoModel? conversationInfo;
   @JsonKey(name: 'account_balance')
-  int? accountBalance;
+  double? accountBalance;
 
   UserInfoModel(
       {this.id,

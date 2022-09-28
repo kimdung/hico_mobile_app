@@ -25,6 +25,9 @@ class ForgotPasswordController extends BaseController {
   final TextEditingController confirmPasswordController =
       TextEditingController();
 
+  final hideNewPassword = true.obs;
+  final hideRetypePassword = true.obs;
+
   bool showPassword = false;
   Rx<String> emailHidden = Rx('');
   String code = '';
@@ -35,9 +38,13 @@ class ForgotPasswordController extends BaseController {
     return super.onInit();
   }
 
-  @override
-  void onClose() {}
-
+  void hideShowNewPassword() {
+    hideNewPassword.value = !hideNewPassword.value;
+  }
+  void hideShowRetypePassword() {
+    hideRetypePassword.value = !hideRetypePassword.value;
+  }
+  
   Future<void> onForgot() async {
     try {
       if (forgetGlobalKey.currentState?.validate() ?? false) {
@@ -98,9 +105,34 @@ class ForgotPasswordController extends BaseController {
     }
   }
 
-  Future<void> onConfirm(String v) async {
-    code = v;
-    await Get.toNamed(Routes.FORGOT_PASSWORD_CHANGE);
+  Future<void> onConfirmOtp(String value) async {
+    try {
+      code = value;
+      await _uiRepository
+          .forgetPasswordOtp(code, usernameController.text)
+          .then((response) {
+        EasyLoading.dismiss();
+        DialogUtil.showPopup(
+          dialogSize: DialogSize.Popup,
+          barrierDismissible: false,
+          backgroundColor: Colors.transparent,
+          child: NormalWidget(
+            icon: response.status == CommonConstants.statusOk
+                ? IconConstants.icSuccessOrder
+                : IconConstants.icFail,
+            title: response.message,
+          ),
+          onVaLue: (value) {
+            if (response.status == CommonConstants.statusOk) {
+              Get.toNamed(Routes.FORGOT_PASSWORD_CHANGE);
+            }
+          },
+        );
+        return;
+      });
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
   }
 
   Future<void> onChange() async {

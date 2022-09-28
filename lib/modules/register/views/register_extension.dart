@@ -24,7 +24,7 @@ extension _RegisterExtension on RegisterScreen {
     return TextFormField(
       controller: controller.passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      obscureText: !controller.showPassword,
+      obscureText: controller.hideNewPassword.value,
       cursorColor: AppColor.fifthTextColorLight,
       style: TextAppStyle().genaralTextStyle(),
       decoration: TextFieldDecoration.borderLogin(
@@ -32,6 +32,17 @@ extension _RegisterExtension on RegisterScreen {
         borderColor: AppColor.dividerColorLight,
         hintText: ' ${'password'.tr}',
         hintStype: TextAppStyle().genaralTextStyle(),
+        suffixIcon: IconButton(
+          onPressed: () {
+            controller.hideShowNewPassword();
+          },
+          icon: Icon(
+            !controller.hideNewPassword.value
+                ? Icons.visibility
+                : Icons.visibility_off,
+            color: AppColor.fifthTextColorLight,
+          ),
+        ),
       ),
       validator: (value) =>
           (value == null || value.isEmpty) ? 'data_requied'.tr : null,
@@ -42,7 +53,7 @@ extension _RegisterExtension on RegisterScreen {
     return TextFormField(
         controller: controller.confirmPasswordController,
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        obscureText: !controller.showPassword,
+        obscureText: controller.hideRetypePassword.value,
         cursorColor: AppColor.fifthTextColorLight,
         style: TextAppStyle().genaralTextStyle(),
         decoration: TextFieldDecoration.borderLogin(
@@ -50,6 +61,17 @@ extension _RegisterExtension on RegisterScreen {
           borderColor: AppColor.dividerColorLight,
           hintText: ' ${'confirm_password'.tr}',
           hintStype: TextAppStyle().genaralTextStyle(),
+          suffixIcon: IconButton(
+            onPressed: () {
+              controller.hideShowRetypePassword();
+            },
+            icon: Icon(
+              !controller.hideRetypePassword.value
+                  ? Icons.visibility
+                  : Icons.visibility_off,
+              color: AppColor.fifthTextColorLight,
+            ),
+          ),
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {

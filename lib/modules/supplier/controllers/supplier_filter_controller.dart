@@ -115,7 +115,7 @@ class SupplierFilterController extends BaseController {
   Future<void> selectFromDate(BuildContext context) async {
     await ShowBottomSheet().showBottomSheet(
       child: Container(
-        height: Get.height / 1.2,
+        height: Get.height / 1.5,
         child: DatePickerWidget(
           currentDate: fromDate,
         ),

@@ -6,13 +6,20 @@ import '../../styles/text_style/text_style.dart';
 import '../button/general_button.dart';
 
 class DialogConfirmWidget extends StatefulWidget {
-  const DialogConfirmWidget(
-      {Key? key, this.title, required this.description, this.height})
-      : super(key: key);
+  const DialogConfirmWidget({
+    Key? key,
+    this.title,
+    required this.description,
+    this.height,
+    this.cancelTxt,
+    this.acceptTxt,
+  }) : super(key: key);
 
   final double? height;
   final String? title;
   final String description;
+  final String? cancelTxt;
+  final String? acceptTxt;
 
   @override
   State<DialogConfirmWidget> createState() => _DialogConfirmWidgetState();
@@ -71,7 +78,7 @@ class _DialogConfirmWidgetState extends State<DialogConfirmWidget> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    'order.detail.cancel'.tr,
+                    widget.cancelTxt ?? 'order.detail.cancel'.tr,
                     style: TextAppStyle().normalTextWhite(),
                   ),
                 ),
@@ -88,7 +95,7 @@ class _DialogConfirmWidgetState extends State<DialogConfirmWidget> {
                     Navigator.pop(context, true);
                   },
                   child: Text(
-                    'accept'.tr,
+                    widget.acceptTxt ?? 'accept'.tr,
                     style: TextAppStyle().normalTextWhite(),
                   ),
                 ),
