@@ -101,7 +101,6 @@ class OrderScreen extends GetView<OrderController> {
                     if (controller.myReview != null &&
                         controller.myReview!.numberStar != null)
                       buildReview(controller.myReview!),
-                    const SizedBox(height: 32),
                     buildActionBtnBottom(controller.invoice.value.status),
                     const SizedBox(height: 20),
                   ],

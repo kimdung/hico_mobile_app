@@ -179,17 +179,14 @@ class BookingSupplierBookingScreen
                                   )
                                 : Container(),
                           ),
-                          const SizedBox(height: 60),
-                          GeneralButton(
-                            onPressed: () => controller.search(),
-                            borderRadius: BorderRadius.circular(24),
-                            borderColor: AppColor.primaryColorLight,
-                            backgroundColor: AppColor.primaryColorLight,
-                            child: Text(
-                              'confirm'.tr,
-                              style: TextAppStyle().titleButtonStyle(),
-                            ),
+                          Text(
+                            'note'.tr,
+                            style: TextAppStyle().normalTextPink(),
                           ),
+                          Text(
+                            'order.note'.tr,
+                            style: TextAppStyle().normalTextGrey(),
+                          ),                          
                           const SizedBox(height: 24),
                         ],
                       ),
@@ -199,6 +196,19 @@ class BookingSupplierBookingScreen
               ),
             ],
           ),
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 24, top: 10 ),
+          child: GeneralButton(
+                              onPressed: () => controller.search(),
+                              borderRadius: BorderRadius.circular(24),
+                              borderColor: AppColor.primaryColorLight,
+                              backgroundColor: AppColor.primaryColorLight,
+                              child: Text(
+                                'confirm'.tr,
+                                style: TextAppStyle().titleButtonStyle(),
+                              ),
+                            ),
         ),
       ),
     );

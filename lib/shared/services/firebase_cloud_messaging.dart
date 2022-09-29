@@ -15,6 +15,7 @@ import 'package:shared_preferences_ios/shared_preferences_ios.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/models/notifications/notification_data.dart';
+import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/invoice_request.dart';
 
 import '../../data/app_data_global.dart';
@@ -185,6 +186,8 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
 class FirebaseMessageConfig {
   static final FirebaseMessageConfig _singleton =
       FirebaseMessageConfig._internal();
+
+  final _uiRepository = Get.find<HicoUIRepository>();
 
   factory FirebaseMessageConfig() {
     return _singleton;
@@ -493,6 +496,15 @@ class FirebaseMessageConfig {
         CommonConstants.CHANNEL: channel,
         CommonConstants.CHAT_USER: response.users.first,
       });
+    });
+  }
+  Future<void> reloadBalance() async {
+    await _uiRepository.getInfo().then((response) {
+      if (response.status == CommonConstants.statusOk &&
+          response.data != null &&
+          response.data!.info != null) {
+        AppDataGlobal.userInfo = response.data!.info!;
+      }
     });
   }
 }

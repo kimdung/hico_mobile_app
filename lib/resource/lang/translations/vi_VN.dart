@@ -136,6 +136,7 @@ const Map<String, String> vi_VN = {
   'order.hello': 'Xin chào,',
   'order.search_title': 'Tìm kiếm đơn hàng',
   'order.cancel_confirm': 'Bạn chắc chắn muốn huỷ đơn?',
+  'order.note': 'Khách hàng đươc hỗ trợ thời gian chờ là 30 phút.\nVí dụ: Khi khách đặt phiên dịch trong 30 phút từ 10h ~ 10h30, khách hàng sẽ được hỗ trợ thời gian chờ đến 11h. Trong thời gian từ 10h ~ 11h khách có thể gọi cho phiên dịch viên không giới hạn số lần miễn là tổng thời gian đàm thoại không vượt quá 30 phút đã đặt. Đơn hàng sẽ kết thúc nếu quá 11h hoặc tổng thời gian đàm thoại vượt quá 30 phút.',
 
   //profile
   'profile.add_avatar': 'Chỉnh sửa ảnh đại diện',
@@ -437,6 +438,7 @@ const Map<String, String> vi_VN = {
   'extend.title': 'Gia hạn thời gian',
   'extend.title.appbar': 'Chi tiết đặt lịch',
   'extend.title.button': 'Xác Nhận Gia Hạn',
+  'extend.error' :'Chưa chọn thời gian gia hạn',
 
   //booking detail
   'booking.detail.order_infor': 'Thông tin đơn hàng',

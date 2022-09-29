@@ -34,7 +34,6 @@ class TimeExtensionScreen extends GetView<TimeExtensionController> {
             style: TextAppStyle().titleAppBarStyle(),
           ),
         ),
-
         body: Column(
           children: [
             _buildHeader(),

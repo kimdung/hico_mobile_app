@@ -510,13 +510,15 @@ extension OrderExtension on OrderScreen {
   Widget buildActionBtnBottom(int? status) {
     if (status == InvoiceStatus.accepted.id) {
       return _btnAcceptedStatus();
-    } else if (status == InvoiceStatus.canceled.id) {
+    } else if (status == InvoiceStatus.canceled.id &&
+        controller.invoice.value.cancel != null
+        && controller.invoice.value.cancel?.cancelParty == 1) {
       return _btnCancelStatus();
     } else if (status == InvoiceStatus.successed.id) {
       return _btnSuccessStatus();
     } else if (status == InvoiceStatus.requested.id) {
       return _btnCancelInvoice();
-    }else if (status == InvoiceStatus.extend.id) {
+    } else if (status == InvoiceStatus.extend.id) {
       return _btnExtendInvoice();
     }
     return Container();
@@ -670,8 +672,7 @@ extension OrderExtension on OrderScreen {
 
   Widget buildReview(InvoiceReviewModel review) {
     return Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: CommonConstants.paddingDefault),
+        padding: const EdgeInsets.only(left: 20, right:20, bottom: 32),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
