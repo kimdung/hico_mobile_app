@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -45,14 +46,8 @@ class VoiceCallController extends BaseController {
     await Wakelock.enable();
 
     _addPostFrameCallback();
+
     await _initEngine();
-    await _joinChannel();
-
-    if (isCaller) {
-      _startRingtone();
-
-      _sendCallNotification();
-    } 
   }
 
   @override
@@ -89,19 +84,26 @@ class VoiceCallController extends BaseController {
   }
 
   Future<void> _initEngine() async {
-    // Get microphone permission
-    await [Permission.microphone].request();
-
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
     await _engine?.setParameters('{"che.audio.opensl":true}');
 
+    await _addListeners();
+
+    await _engine?.enableAudio();
+    await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
+    await _engine?.setClientRole(ClientRole.Broadcaster);
+
+    await _engine?.enableLocalAudio(false);
+
+    await _joinChannel();
+  }
+
+  Future<void> _addListeners() async {
     _engine?.setEventHandler(RtcEngineEventHandler(
       joinChannelSuccess: (channel, uid, elapsed) {
         printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
 
         isJoined.value = true;
-
-        _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
       },
       leaveChannel: (stats) {
         printError(info: 'leaveChannel ${stats.toJson()}');
@@ -120,14 +122,6 @@ class VoiceCallController extends BaseController {
         isCalling.value = true;
 
         _callBeginCall();
-
-        _durationTimer ??= Timer.periodic(
-          const Duration(seconds: 1),
-          (Timer timer) {
-            durationCall.value++;
-            printInfo(info: '_durationTimer $durationCall');
-          },
-        );
       },
       warning: (warningCode) {
         printError(info: 'warning $warningCode');
@@ -136,18 +130,20 @@ class VoiceCallController extends BaseController {
         printError(info: 'error $errorCode');
       },
     ));
-
-    await _engine?.enableAudio();
-    await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    await _engine?.setClientRole(ClientRole.Broadcaster);
-
-    await _engine?.enableLocalAudio(false);
   }
 
   Future<void> _joinChannel() async {
+    if (Platform.isAndroid) {
+      await Permission.microphone.request();
+    }
     await _engine
         ?.joinChannel(token, call.channelId ?? '', null, call.getId() ?? 0)
-        .catchError((onError) {
+        .then((value) async {
+      if (isCaller) {
+        _startRingtone();
+        _sendCallNotification();
+      }
+    }).catchError((onError) {
       printError(info: 'error ${onError.toString()}');
       Future.delayed(Duration.zero, Get.back);
     });
@@ -214,7 +210,7 @@ class VoiceCallController extends BaseController {
       _uiRepository.sendCallNotification(call.invoiceId ?? -1);
     } catch (e) {
       printError(info: e.toString());
-    } 
+    }
   }
 
   void _sendMissCall() {
@@ -226,6 +222,13 @@ class VoiceCallController extends BaseController {
   }
 
   Future<void> _callBeginCall() async {
+    _durationTimer ??= Timer.periodic(
+      const Duration(seconds: 1),
+      (Timer timer) {
+        durationCall.value++;
+        printInfo(info: '_durationTimer $durationCall');
+      },
+    );
     try {
       await _uiRepository.beginCall(call.invoiceId ?? -1);
     } catch (e) {
