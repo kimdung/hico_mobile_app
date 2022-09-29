@@ -36,6 +36,7 @@ class VideoCallController extends BaseController {
   final RxInt dutationCall = RxInt(0);
 
   Timer? _timerRingwait;
+  Timer? _timerAutoEncall;
 
   VideoCallController(this.isCaller, this.token, this.call);
 
@@ -47,7 +48,7 @@ class VideoCallController extends BaseController {
 
     _addPostFrameCallback();
 
-    await _initAgora();
+    await _initAgoraEngine();
   }
 
   @override
@@ -59,15 +60,20 @@ class VideoCallController extends BaseController {
 
   @override
   void onClose() {
-    printInfo(info: 'onClose');
+    Wakelock.disable();
+
     _endRingtone();
+
+    _callEndCall();
 
     _engine?.leaveChannel();
     _engine?.destroy();
-    _durationTimer?.cancel();
+
     _callStreamSubscription?.cancel();
 
-    Wakelock.disable();
+    _durationTimer?.cancel();
+
+    _timerAutoEncall?.cancel();
 
     super.onClose();
   }
@@ -87,7 +93,7 @@ class VideoCallController extends BaseController {
     });
   }
 
-  Future<void> _initAgora() async {
+  Future<void> _initAgoraEngine() async {
     //create the engine
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
     await _engine?.setParameters('{"che.audio.opensl":true}');
@@ -104,9 +110,6 @@ class VideoCallController extends BaseController {
 
   void _addListeners() {
     _engine?.setEventHandler(RtcEngineEventHandler(
-      warning: (warningCode) {
-        printInfo(info: 'warning $warningCode');
-      },
       error: (errorCode) {
         printInfo(info: 'error $errorCode');
       },
@@ -125,6 +128,8 @@ class VideoCallController extends BaseController {
       userJoined: (uid, elapsed) {
         printInfo(info: 'userJoined $uid $elapsed');
 
+        _timerAutoEncall?.cancel();
+
         _endRingtone();
 
         remoteUid.value = uid;
@@ -135,6 +140,8 @@ class VideoCallController extends BaseController {
       userOffline: (int uid, UserOfflineReason reason) {
         printInfo(info: 'remote user $uid left channel');
         remoteUid.value = null;
+
+        onEndCall();
       },
     ));
   }
@@ -148,7 +155,12 @@ class VideoCallController extends BaseController {
         .then((value) {
       if (isCaller) {
         _startRingtone();
+
         _sendCallNotification();
+
+        _timerAutoEncall = Timer.periodic(const Duration(minutes: 1), (timer) {
+          onEndCall();
+        });
       }
     }).catchError((onError) {
       printError(info: 'error ${onError.toString()}');
@@ -174,9 +186,9 @@ class VideoCallController extends BaseController {
     if (isCaller && !isCalling.value) {
       _sendMissCall();
     }
+    
     _endRingtone();
 
-    await callMethods.endCall(call: call);
     await _callEndCall();
   }
 
@@ -242,6 +254,10 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> _callEndCall() async {
+    // Xóa cuộc gọi trên firebase
+    await callMethods.endCall(call: call);
+
+    // Gửi thông báo server kết thúc cuộc gọi
     try {
       await _uiRepository.endCall(call.invoiceId ?? -1);
     } catch (e) {

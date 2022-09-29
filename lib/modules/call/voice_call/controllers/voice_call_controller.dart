@@ -36,6 +36,7 @@ class VoiceCallController extends BaseController {
   final RxInt durationCall = RxInt(0);
 
   Timer? _timerRingwait;
+  Timer? _timerAutoEncall;
 
   VoiceCallController(this.isCaller, this.call, this.token);
 
@@ -47,23 +48,25 @@ class VoiceCallController extends BaseController {
 
     _addPostFrameCallback();
 
-    await _initEngine();
+    await _initAgoraEngine();
   }
 
   @override
   void onClose() {
     Wakelock.disable();
+
     _endRingtone();
 
-    _callEndCall();
-    callMethods.endCall(call: call);
+    _callEndCall(); 
 
     _engine?.leaveChannel();
     _engine?.destroy();
+
     _callStreamSubscription?.cancel();
 
     _durationTimer?.cancel();
-    _durationTimer = null;
+
+    _timerAutoEncall?.cancel();
 
     super.onClose();
   }
@@ -83,7 +86,7 @@ class VoiceCallController extends BaseController {
     });
   }
 
-  Future<void> _initEngine() async {
+  Future<void> _initAgoraEngine() async {
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
     await _engine?.setParameters('{"che.audio.opensl":true}');
 
@@ -100,6 +103,9 @@ class VoiceCallController extends BaseController {
 
   Future<void> _addListeners() async {
     _engine?.setEventHandler(RtcEngineEventHandler(
+      error: (errorCode) {
+        printError(info: 'error $errorCode');
+      },
       joinChannelSuccess: (channel, uid, elapsed) {
         printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
 
@@ -114,6 +120,7 @@ class VoiceCallController extends BaseController {
       },
       userJoined: (uid, elapsed) {
         printInfo(info: 'userJoined $uid $elapsed');
+        _timerAutoEncall?.cancel();
 
         _engine?.enableLocalAudio(true);
 
@@ -123,11 +130,10 @@ class VoiceCallController extends BaseController {
 
         _callBeginCall();
       },
-      warning: (warningCode) {
-        printError(info: 'warning $warningCode');
-      },
-      error: (errorCode) {
-        printError(info: 'error $errorCode');
+      userOffline: (int uid, UserOfflineReason reason) {
+        printInfo(info: 'userOffline $uid left channel');
+
+        onEndCall();
       },
     ));
   }
@@ -141,7 +147,12 @@ class VoiceCallController extends BaseController {
         .then((value) async {
       if (isCaller) {
         _startRingtone();
+
         _sendCallNotification();
+
+        _timerAutoEncall = Timer.periodic(const Duration(minutes: 1), (timer) {
+          onEndCall();
+        });
       }
     }).catchError((onError) {
       printError(info: 'error ${onError.toString()}');
@@ -171,7 +182,7 @@ class VoiceCallController extends BaseController {
       _sendMissCall();
     }
     _endRingtone();
-    await callMethods.endCall(call: call);
+
     await _callEndCall();
   }
 
@@ -206,6 +217,7 @@ class VoiceCallController extends BaseController {
   /* API */
 
   void _sendCallNotification() {
+    // Gửi thông báo cuộc gọi mới cho server
     try {
       _uiRepository.sendCallNotification(call.invoiceId ?? -1);
     } catch (e) {
@@ -214,6 +226,7 @@ class VoiceCallController extends BaseController {
   }
 
   void _sendMissCall() {
+    // Gửi thông báo server cuộc gọi nhỡ
     try {
       _uiRepository.sendMissCall(call.invoiceId ?? -1);
     } catch (e) {
@@ -222,6 +235,7 @@ class VoiceCallController extends BaseController {
   }
 
   Future<void> _callBeginCall() async {
+    // Bắt đầu bộ đếm thời gian cuộc gọi
     _durationTimer ??= Timer.periodic(
       const Duration(seconds: 1),
       (Timer timer) {
@@ -229,6 +243,8 @@ class VoiceCallController extends BaseController {
         printInfo(info: '_durationTimer $durationCall');
       },
     );
+
+    // Gửi thông báo server bắt đầu cuộc gọi
     try {
       await _uiRepository.beginCall(call.invoiceId ?? -1);
     } catch (e) {
@@ -237,6 +253,10 @@ class VoiceCallController extends BaseController {
   }
 
   Future<void> _callEndCall() async {
+    // Xóa cuộc gọi trên firebase
+    await callMethods.endCall(call: call);
+
+    // Gửi thông báo server kết thúc cuộc gọi
     try {
       await _uiRepository.endCall(call.invoiceId ?? -1);
     } catch (e) {
