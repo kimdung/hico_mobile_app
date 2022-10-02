@@ -42,6 +42,8 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
   final data = doc.data() as Map<String, dynamic>;
   try {
     final call = CallModel.fromJson(data);
+    debugPrint(
+        '[PickupLayout] showCallkitIncoming ${call.toJson().toString()}');
     if (call.hasDialled != null && !call.hasDialled!) {
       callCollection
           .doc(notificationData.receiverId)
@@ -82,8 +84,8 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           break;
         default:
           handle = (call.isVideo ?? false)
-              ? 'Có cuộc gọi âm thanh...'
-              : 'Có cuộc gọi video...';
+              ? 'Có cuộc gọi video...'
+              : 'Có cuộc gọi âm thanh...';
           textAccept = 'Chấp nhận';
           textDecline = 'Từ chối';
           textMissedCall = 'Có cuộc gọi nhỡ';
@@ -98,7 +100,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
         'nameCaller': call.callerName ?? '',
         'avatar': call.callerPic,
         'handle': handle,
-        'type': (call.isVideo ?? false) ? 1 : 0,
+        'type': (Platform.isIOS || (call.isVideo ?? false)) ? 1 : 0,
         'duration': 60000,
         'textAccept': textAccept,
         'textDecline': textDecline,
@@ -116,8 +118,8 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           // 'actionColor': '#4CAF50'
         },
         'ios': <String, dynamic>{
-          'iconName': 'CallKitLogo',
-          'handleType': '',
+          'iconName': 'AppIcon',
+          'handleType': 'generic',
           'supportsVideo': true,
           'maximumCallGroups': 2,
           'maximumCallsPerCallGroup': 1,
@@ -129,7 +131,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           'supportsHolding': true,
           'supportsGrouping': false,
           'supportsUngrouping': false,
-          'ringtonePath': 'system_ringtone_default'
+          'ringtonePath': 'bell'
         }
       };
       FlutterCallkitIncoming.onEvent.listen((event) async {
@@ -139,6 +141,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           case CallEvent.ACTION_CALL_START:
             break;
           case CallEvent.ACTION_CALL_ACCEPT:
+            AppDataGlobal.acceptCall = true;
             break;
           case CallEvent.ACTION_CALL_DECLINE:
             try {

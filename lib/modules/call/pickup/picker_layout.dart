@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
@@ -32,18 +34,6 @@ class PickupLayout extends GetView<BaseController> {
               if (snapshot.hasData &&
                   snapshot.data?.data() != null &&
                   snapshot.data?.data() is Map<String, dynamic>) {
-                // final data = snapshot.data!.data() as Map<String, dynamic>;
-                // try {
-                //   printInfo(info: 'incoming call ${data.toString()}');
-                //   final call = CallModel.fromJson(data);
-
-                //   if (call.hasDialled != null && !call.hasDialled!) {
-                //     return PickupView(call: call);
-                //   }
-                // } catch (e) {
-                //   printError(info: e.toString());
-                // }
-
                 return FutureBuilder<CallModel?>(
                   future: _pickupCall(
                       snapshot.data?.data() as Map<String, dynamic>),
@@ -71,9 +61,13 @@ class PickupLayout extends GetView<BaseController> {
       final call = CallModel.fromJson(data);
 
       final activeCalls = await FlutterCallkitIncoming.activeCalls();
-      printInfo(info: 'incoming activescall ${activeCalls.toString()}');
 
       if (activeCalls is List) {
+        if (Platform.isIOS && AppDataGlobal.acceptCall) {
+          AppDataGlobal.acceptCall = false;
+          await onAcceptCall(call);
+          return null;
+        }
         final activeCall = activeCalls.firstWhereOrNull(
             (element) => (element as Map<dynamic, dynamic>?)?['id'] == call.id);
         if (activeCall != null && (activeCall['isAccepted'] ?? false)) {
@@ -82,7 +76,7 @@ class PickupLayout extends GetView<BaseController> {
         }
       }
 
-      if (call.hasDialled != null && !call.hasDialled!) {
+      if (call.hasDialled != null && !call.hasDialled!) { 
         return call;
       }
     } catch (e) {

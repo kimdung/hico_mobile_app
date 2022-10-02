@@ -12,6 +12,8 @@ class AppDataGlobal {
   static String firebaseToken = '';
   static bool isLogin = false;
 
+  static bool acceptCall = false;
+
   static UserInfoModel? userInfo;
   static MasterDataModel? masterData;
   static AndroidDeviceInfo? androidDeviceInfo;
@@ -19,6 +21,4 @@ class AppDataGlobal {
   static StreamChatClient? client;
 
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-
-  // static List<Map<String, dynamic>> activeCalls = <Map<String, dynamic>>[];
 }
