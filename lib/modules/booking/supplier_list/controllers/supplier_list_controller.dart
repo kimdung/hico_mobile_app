@@ -17,7 +17,7 @@ class SupplierListController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
   RxList<SupplierInfoModel> suppliers = RxList<SupplierInfoModel>();
   Rx<int> serviceId = Rx(0);
-  Rx<int> currentOrder = Rx(SortType.Random.id);
+  Rx<int> currentOrder = Rx(SortType.Orders.id);
   int limit = CommonConstants.limit;
   int offset = 0;
   ServiceModel? service;
