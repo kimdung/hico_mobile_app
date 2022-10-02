@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/instance_manager.dart';
 
 import 'app.dart';
 import 'base/di.dart';
@@ -10,7 +11,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
-  await Firebase.initializeApp();
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    Get.log(e.toString(), isError: true);
+  }
   await DependencyInjection.init(DEV_ENVIRONMENT);
   runApp(App());
   configLoading();

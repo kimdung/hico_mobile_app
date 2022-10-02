@@ -42,8 +42,10 @@ class _ItemOrderWidgetState extends State<ItemOrderWidget> {
     try {
       await _channel?.watch();
       _channel?.state?.unreadCountStream.listen((event) {
-        setState(() {
-          _badge = event;
+        WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+          setState(() {
+            _badge = event;
+          });
         });
       });
     } catch (e) {

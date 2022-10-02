@@ -17,6 +17,7 @@ import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/models/notifications/notification_data.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/invoice_request.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../data/app_data_global.dart';
 import '../../routes/app_pages.dart';
@@ -25,6 +26,7 @@ import '../constants/storage.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
+
   final notificationData = NotificationData.fromJson(message.data);
   if (notificationData.displayType == NotificationData.typeIncomingCall) {
     await showCallkitIncoming(notificationData);
@@ -91,7 +93,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
       await Get.updateLocale(const Locale('vi', 'VN'));
 
       final params = <String, dynamic>{
-        'id': call.id ?? '',
+        'id': call.id ?? const Uuid().v4(),
         'appName': 'HICO',
         'nameCaller': call.callerName ?? '',
         'avatar': call.callerPic,
@@ -137,11 +139,6 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           case CallEvent.ACTION_CALL_START:
             break;
           case CallEvent.ACTION_CALL_ACCEPT:
-            //   final calls = await FlutterCallkitIncoming.activeCalls();
-            //   if (calls is List<Map<String, dynamic>>) {
-            //     debugPrint('incoming ${calls.toString()}');
-            //     AppDataGlobal.activeCalls = calls;
-            //   }
             break;
           case CallEvent.ACTION_CALL_DECLINE:
             try {
@@ -202,8 +199,8 @@ class FirebaseMessageConfig {
 
   final AndroidNotificationChannel _androidNotificationChannel =
       const AndroidNotificationChannel(
-    'high_importance_channel',
-    'High Importance Notifications',
+    'hico_high_importance_channel',
+    'Hico High Importance Notifications',
     importance: Importance.max,
     enableLights: true,
     enableVibration: true,
@@ -221,6 +218,7 @@ class FirebaseMessageConfig {
       FirebaseMessaging.onBackgroundMessage(
         _firebaseMessagingBackgroundHandler,
       );
+
       await _firebaseMessaging.requestPermission(
         alert: true,
         announcement: true,
@@ -246,19 +244,6 @@ class FirebaseMessageConfig {
       debugPrint('$e');
     }
   }
-
-  // Future<void> _initCallkeep() async {
-  //   _callKeep.on(CallKeepDidDisplayIncomingCall(), didDisplayIncomingCall);
-  //   _callKeep.on(CallKeepPerformAnswerCallAction(), answerCall);
-  //   _callKeep.on(CallKeepDidPerformDTMFAction(), didPerformDTMFAction);
-  //   _callKeep.on(
-  //       CallKeepDidReceiveStartCallAction(), didReceiveStartCallAction);
-  //   _callKeep.on(CallKeepDidToggleHoldAction(), didToggleHoldCallAction);
-  //   _callKeep.on(
-  //       CallKeepDidPerformSetMutedCallAction(), didPerformSetMutedCallAction);
-  //   _callKeep.on(CallKeepPerformEndCallAction(), endCall);
-  //   _callKeep.on(CallKeepPushKitToken(), onPushKitToken);
-  // }
 
   Future<void> _initLocalNotification() async {
     try {
@@ -498,6 +483,7 @@ class FirebaseMessageConfig {
       });
     });
   }
+
   Future<void> reloadBalance() async {
     await _uiRepository.getInfo().then((response) {
       if (response.status == CommonConstants.statusOk &&
