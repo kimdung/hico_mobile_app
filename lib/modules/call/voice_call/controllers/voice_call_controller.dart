@@ -57,7 +57,7 @@ class VoiceCallController extends BaseController {
 
     _endRingtone();
 
-    _callEndCall(); 
+    _callEndCall();
 
     _engine?.leaveChannel();
     _engine?.destroy();
@@ -240,7 +240,6 @@ class VoiceCallController extends BaseController {
       const Duration(seconds: 1),
       (Timer timer) {
         durationCall.value++;
-        printInfo(info: '_durationTimer $durationCall');
       },
     );
 
@@ -262,5 +261,7 @@ class VoiceCallController extends BaseController {
     } catch (e) {
       printError(info: e.toString());
     }
+
+    Get.back();
   }
 }

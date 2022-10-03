@@ -47,6 +47,7 @@ const Map<String, String> ja_JP = {
   'error': 'エラーが発生しました。',
   'error.expires': '予約した時間を超過しました。',
   'error.call': '現在、通話はできません。',
+  'notify.network.error': 'ネットワーク接続なし。',
 
   // Call
   'call.accept': '承認',

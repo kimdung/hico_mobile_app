@@ -52,10 +52,11 @@ class VideoCallController extends BaseController {
   }
 
   @override
-  void onResumed() {
-    _engine?.disableVideo();
-    _engine?.enableVideo();
-    super.onResumed();
+  Future<void> onResumed() async {
+    await _engine?.disableVideo();
+    await _engine?.enableVideo();
+
+    await super.onResumed();
   }
 
   @override
@@ -112,7 +113,7 @@ class VideoCallController extends BaseController {
     _engine?.setEventHandler(RtcEngineEventHandler(
       error: (errorCode) {
         printInfo(info: 'error $errorCode');
-      },
+      }, 
       joinChannelSuccess: (channel, uid, elapsed) {
         printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
 
@@ -186,7 +187,7 @@ class VideoCallController extends BaseController {
     if (isCaller && !isCalling.value) {
       _sendMissCall();
     }
-    
+
     _endRingtone();
 
     await _callEndCall();

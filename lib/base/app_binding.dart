@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 
-import '../shared/network/bindings/network_binding.dart';
+import '../shared/network/controllers/network_controller.dart';
 
 class AppBinding extends Bindings {
   @override
   Future<void> dependencies() async {
-    Get.put(NetworkBinding(), permanent: true);
+    Get.put<NetworkController>(NetworkController(), permanent: true);
   }
 }

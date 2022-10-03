@@ -53,6 +53,7 @@ const Map<String, String> vi_VN = {
   'error': 'Có lỗi xẩy ra',
   'error.expires': 'Phiên làm việc hết hạn!',
   'error.call': 'Không thể thực hiện cuộc gọi lúc này!', 
+  'notify.network.error': 'Không có kết nối mạng!', 
 
   //register
   'register.comfirm': 'Xác thực tài khoản',

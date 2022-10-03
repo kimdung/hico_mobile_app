@@ -38,6 +38,7 @@ const Map<String, String> en_US = {
   'light': 'Light',
   'error_login': 'Login is fail',
   'error_login_social': 'Login with social is fail',
+  'notify.network.error': 'No network connection!',
   'translate': 'Change language',
   'translate_app': 'Change language of app',
   'alert': 'Alert',
