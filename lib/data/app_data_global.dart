@@ -12,7 +12,7 @@ class AppDataGlobal {
   static String firebaseToken = '';
   static bool isLogin = false;
 
-  static bool acceptCall = false;
+  static bool acceptCall = false; 
 
   static UserInfoModel? userInfo;
   static MasterDataModel? masterData;

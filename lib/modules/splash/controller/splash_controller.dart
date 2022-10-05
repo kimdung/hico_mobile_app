@@ -14,12 +14,14 @@ import '../../../shared/utils/chat_util.dart';
 
 class SplashController extends GetxController {
   final _uiRepository = Get.find<HicoUIRepository>();
-  FirebaseMessageConfig config = FirebaseMessageConfig();
   final storage = Get.find<SharedPreferences>();
+
+  FirebaseMessageConfig config = FirebaseMessageConfig();
 
   @override
   Future<void> onInit() async {
     super.onInit();
+
     await config.initFirebaseMessageConfig();
     await config.handleMessage();
 

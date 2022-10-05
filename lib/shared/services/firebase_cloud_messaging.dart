@@ -62,7 +62,9 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
       }
       final sp = await SharedPreferences.getInstance();
       final locale = sp.getString(StorageConstants.language) ?? VIETNAMESE_LANG;
+
       final String handle,
+
           textAccept,
           textDecline,
           textMissedCall,
@@ -114,10 +116,9 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           'isCustomNotification': true,
           'isShowLogo': false,
           'isShowCallback': false,
+          'isShowMissedCallNotification': false,
           'ringtonePath': 'bell',
           'backgroundColor': '#DF4D6F',
-          // 'backgroundUrl': 'https://i.pravatar.cc/500',
-          // 'actionColor': '#4CAF50'
         },
         'ios': <String, dynamic>{
           'iconName': 'AppIcon',
@@ -133,7 +134,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           'supportsHolding': true,
           'supportsGrouping': false,
           'supportsUngrouping': false,
-          'ringtonePath': 'bell'
+          'ringtonePath': 'bell.caf'
         }
       };
       FlutterCallkitIncoming.onEvent.listen((event) async {
@@ -155,7 +156,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
               await callCollection.doc(call.receiverId.toString()).delete();
             } catch (e) {
               debugPrint(e.toString());
-            }
+            } 
             break;
           case CallEvent.ACTION_CALL_ENDED:
             break;

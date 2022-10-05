@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:hico/base/base_binding.dart';
-import 'package:hico/modules/account/controllers/account_controller.dart';
+import '../../../base/base_binding.dart';
+import '../controllers/account_controller.dart';
 
 class AccountBinding extends BaseBinding {
   @override
