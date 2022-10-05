@@ -143,6 +143,7 @@ extension OrderListBody on OrderListScreen {
               ),
               child: TextField(
                 onSubmitted: controller.onSearch,
+                onChanged: controller.onChangeSearch,
                 cursorColor: AppColor.primaryColorLight,
                 style: TextAppStyle().smallTextPink(),
                 decoration: InputDecoration(

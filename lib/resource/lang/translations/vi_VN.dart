@@ -138,6 +138,7 @@ const Map<String, String> vi_VN = {
   'order.search_title': 'Tìm kiếm đơn hàng',
   'order.cancel_confirm': 'Bạn chắc chắn muốn huỷ đơn?',
   'order.note': 'Khách hàng đươc hỗ trợ thời gian chờ là 30 phút.\nVí dụ: Khi khách đặt phiên dịch trong 30 phút từ 10h ~ 10h30, khách hàng sẽ được hỗ trợ thời gian chờ đến 11h. Trong thời gian từ 10h ~ 11h khách có thể gọi cho phiên dịch viên không giới hạn số lần miễn là tổng thời gian đàm thoại không vượt quá 30 phút đã đặt. Đơn hàng sẽ kết thúc nếu quá 11h hoặc tổng thời gian đàm thoại vượt quá 30 phút.',
+  'order.my_review': 'Đánh giá của tôi',
 
   //profile
   'profile.add_avatar': 'Chỉnh sửa ảnh đại diện',
@@ -176,7 +177,7 @@ const Map<String, String> vi_VN = {
   'logout': 'Đăng xuất',
   'payment_policy': 'Chính sách thanh toán',
 
-  'support': 'Hỗ trợ & góp ý',
+  'support': 'Hỗ Trợ & Góp Ý',
   'bank': 'Ngân hàng:',
   'branch': 'Chi nhánh:',
   'account_holder': 'Chủ tải khoản:',
@@ -268,6 +269,7 @@ const Map<String, String> vi_VN = {
   'statistic.wallet': 'Số dư ví',
   'statistic.bonus': 'Số tiền được hoàn lại khi PDV huỷ',
   'statistic.monney_used': 'Số tiền đã sử dụng',
+  'statistic.time_incorrect': 'Thời gian không hợp lệ',
 
   //support screen
   'support.title':

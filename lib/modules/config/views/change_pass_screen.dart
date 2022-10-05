@@ -57,17 +57,17 @@ class ChangePassScreen extends GetView<ConfigController> {
                   ),
                   Form(
                     key: controller.changePassForm,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(height: 14),
-                        _buildOldPassword(),
-                        const SizedBox(height: 4),
-                        _buildPassword(),
-                        const SizedBox(height: 4),
-                        _buildConfirmPassword(),
-                      ],
-                    ),
+                    child: Obx(() => Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(height: 14),
+                            _buildOldPassword(),
+                            const SizedBox(height: 4),
+                            _buildPassword(),
+                            const SizedBox(height: 4),
+                            _buildConfirmPassword(),
+                          ],
+                        )),
                   ),
                   const SizedBox(height: 40),
                   GeneralButton(
@@ -95,7 +95,7 @@ class ChangePassScreen extends GetView<ConfigController> {
       controller: controller.oldPasswordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: TextInputType.text,
-      obscureText: !controller.showPassword,
+      obscureText: controller.hidePassword.value,
       cursorColor: AppColor.fifthTextColorLight,
       style: TextAppStyle().normalTextGrey(),
       decoration: TextFieldDecoration.borderLogin(
@@ -107,6 +107,17 @@ class ChangePassScreen extends GetView<ConfigController> {
           margin: const EdgeInsets.only(right: 12),
           child: FCoreImage(
             IconConstants.icKey,
+          ),
+        ),
+        suffixIcon: IconButton(
+          onPressed: () {
+            controller.hideShowPassword();
+          },
+          icon: Icon(
+            !controller.hidePassword.value
+                ? Icons.visibility
+                : Icons.visibility_off,
+            color: AppColor.fifthTextColorLight,
           ),
         ),
       ),
@@ -121,7 +132,7 @@ class ChangePassScreen extends GetView<ConfigController> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       cursorColor: AppColor.fifthTextColorLight,
       keyboardType: TextInputType.text,
-      obscureText: !controller.showPassword,
+      obscureText: controller.hideNewPassword.value,
       style: TextAppStyle().normalTextGrey(),
       decoration: TextFieldDecoration.borderLogin(
         backgroundColor: AppColor.primaryBackgroundColorLight,
@@ -132,6 +143,17 @@ class ChangePassScreen extends GetView<ConfigController> {
           margin: const EdgeInsets.only(right: 12),
           child: FCoreImage(
             IconConstants.icKey,
+          ),
+        ),
+        suffixIcon: IconButton(
+          onPressed: () {
+            controller.hideShowNewPassword();
+          },
+          icon: Icon(
+            !controller.hideNewPassword.value
+                ? Icons.visibility
+                : Icons.visibility_off,
+            color: AppColor.fifthTextColorLight,
           ),
         ),
       ),
@@ -146,7 +168,7 @@ class ChangePassScreen extends GetView<ConfigController> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         keyboardType: TextInputType.text,
         cursorColor: AppColor.fifthTextColorLight,
-        obscureText: !controller.showPassword,
+        obscureText: controller.hideRetypePassword.value,
         style: TextAppStyle().normalTextGrey(),
         decoration: TextFieldDecoration.borderLogin(
           backgroundColor: AppColor.primaryBackgroundColorLight,
@@ -157,6 +179,17 @@ class ChangePassScreen extends GetView<ConfigController> {
             margin: const EdgeInsets.only(right: 12),
             child: FCoreImage(
               IconConstants.icKey,
+            ),
+          ),
+          suffixIcon: IconButton(
+            onPressed: () {
+              controller.hideShowRetypePassword();
+            },
+            icon: Icon(
+              !controller.hideRetypePassword.value
+                  ? Icons.visibility
+                  : Icons.visibility_off,
+              color: AppColor.fifthTextColorLight,
             ),
           ),
         ),

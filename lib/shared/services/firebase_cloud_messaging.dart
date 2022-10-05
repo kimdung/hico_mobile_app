@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,6 +21,7 @@ import 'package:ui_api/request/invoice/invoice_request.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../data/app_data_global.dart';
+import '../../modules/chat/controllers/chat_controller.dart';
 import '../../routes/app_pages.dart';
 import '../constants/common.dart';
 import '../constants/storage.dart';
@@ -232,14 +234,14 @@ class FirebaseMessageConfig {
         sound: true,
       );
 
-      // Hiển thị notification khi bật app cho ios
-      if (Platform.isIOS) {
-        await _firebaseMessaging.setForegroundNotificationPresentationOptions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
-      }
+      // // Hiển thị notification khi bật app cho ios
+      // if (Platform.isIOS) {
+      //   await _firebaseMessaging.setForegroundNotificationPresentationOptions(
+      //     alert: true,
+      //     badge: true,
+      //     sound: true,
+      //   );
+      // }
       await _firebaseMessaging.setAutoInitEnabled(true);
 
       await _handleTokenFirebase();
@@ -353,7 +355,24 @@ class FirebaseMessageConfig {
   void _showNotification(RemoteMessage message) {
     debugPrint('Got a message whilst in the foreground!');
     debugPrint('Message data: ${message.data}');
+    reloadBalance();
 
+    final channelId = message.data['channel_id'] ?? '';
+
+    if (Get.currentRoute == Routes.CHAT && channelId.isNotEmpty) {
+      final controller = Get.find<ChatController>();
+      if (controller.channel.id == channelId) {
+        return;
+      }
+    }
+
+    if (Platform.isIOS) {
+      _firebaseMessaging.setForegroundNotificationPresentationOptions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+    }
     try {
       debugPrint('FirebaseMessageConfig RemoteMessage $message');
 
@@ -400,47 +419,131 @@ class FirebaseMessageConfig {
     /// ['id']: Key json chứa ID của thông báo server trả về.
     /// Dùng để điều hướng vào màn chi tiết thông báo
     /// Mặc định đang là ['id']
-    // try {
-    //   final type = message['display_type']?.toString();
-    //   final id = message['invoice_id']?.toString();
-    //   if (type == DisplayType.Extend.id.toString()) {
-    //     await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-    //         .pushNamed(Routes.ORDER_DETAIL,
-    //             arguments: InvoiceRequest(id: int.parse(id!), extend: true));
-    //   } else if (type == DisplayType.Rating.id.toString()) {
-    //     await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-    //         .pushNamed(Routes.ORDER_DETAIL,
-    //             arguments: InvoiceRequest(id: int.parse(id!), rating: true));
-    //   }
-    // } catch (e) {
-    //   print(e);
-    // }
+    ///
+    final notificationData = NotificationData.fromJson(message);
 
     //FCM Firebase
-    final type = message['display_type']?.toString();
-    final id = message['invoice_id']?.toString();
+    final type = notificationData.displayType;
+    final id = int.tryParse(notificationData.invoiceId ?? '');
 
     //FCM GetStream
-    final sender = message['sender']?.toString();
+    final sender = notificationData.sender;
     final channelId = message['channel_id'] ?? '';
-
-    if (type == DisplayType.Order.id.toString() ||
-        type == DisplayType.Remind.id.toString()) {
-      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!).pushNamed(
-          Routes.ORDER_DETAIL,
-          arguments: InvoiceRequest(id: int.parse(id!)));
-    } else if (type == DisplayType.Extend.id.toString()) {
-      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!).pushNamed(
-          Routes.ORDER_DETAIL,
-          arguments: InvoiceRequest(id: int.parse(id!), extend: true));
-    } else if (type == DisplayType.Rating.id.toString()) {
-      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!).pushNamed(
-          Routes.ORDER_DETAIL,
-          arguments: InvoiceRequest(id: int.parse(id!), rating: true));
-    } else if (sender == 'stream.chat' && channelId.isNotEmpty) {
+    if (sender == 'stream.chat' && channelId.isNotEmpty) {
       //router chat screen
       debugPrint('router chat screen');
       await onChat(channelId);
+      return;
+    }
+
+    switch (type) {
+      case NotificationData.typeSupplierReviewProfile:
+        // do something else 2
+        await Get.toNamed(Routes.ACCOUNT);
+        break;
+      case NotificationData.typeSupplierAgreeCustomer:
+        // do something else 3
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeSupplierCancel:
+        // do something else 4
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeSupplierNewInvoice:
+        // do something else 5
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeCustomerCancel:
+        // do something else 6
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeCustomerExtendPeriod:
+        // do something else 7
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id, extend: true));
+        break;
+      case NotificationData.typeSupplierCompleted:
+        // do something else 8
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id, rating: true));
+        break;
+      case NotificationData.typeTravelingCosts:
+        // do something else 9
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeTimeReminder:
+        // do something else 10
+        await Get.toNamed(Routes.ACCOUNT);
+        break;
+      case NotificationData.typeAdminApproved:
+        // do something else 11
+        await Get.toNamed(Routes.MAIN);
+        break;
+      case NotificationData.typeSystemStart:
+        // do something else 12
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeSendNotifyTimeout:
+        // do something else 13
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeAdminApprovedWallet:
+        // do something else 14
+        await Get.toNamed(Routes.WALLET);
+        break;
+      case NotificationData.typeMissedCall:
+        // do something else 16
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeSupplierOvertime:
+        // do something else 17
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeSystemCancel:
+        // do something else 18
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeSystemSendBefore10:
+        // do something else 19
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeSystemSendBefore5:
+        // do something else 20
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeSupplierAgreeExtend:
+        // do something else 21
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeSupplierRefuseExtend:
+        // do something else 22
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeSupplierRefuseCustomer:
+        // do something else 23
+        await Get.toNamed(Routes.ORDER_DETAIL,
+            arguments: InvoiceRequest(id: id));
+        break;
+      case NotificationData.typeAdminTransferUser:
+        // do something else 24
+        await Get.toNamed(Routes.WALLET);
+        break;
+      default:
+        break;
     }
   }
 
@@ -474,6 +577,7 @@ class FirebaseMessageConfig {
     if (userId == null) {
       return;
     }
+    await EasyLoading.show();
     await AppDataGlobal.client
         ?.queryUsers(filter: Filter.autoComplete('id', userId))
         .then((response) {
@@ -485,6 +589,7 @@ class FirebaseMessageConfig {
         CommonConstants.CHAT_USER: response.users.first,
       });
     });
+    await EasyLoading.dismiss();
   }
 
   Future<void> reloadBalance() async {

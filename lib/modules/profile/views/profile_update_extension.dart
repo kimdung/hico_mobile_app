@@ -107,8 +107,9 @@ extension ProfileUpdateExtension on ProfileUpdateScreen {
       keyboardType: TextInputType.text,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       cursorColor: AppColor.fifthTextColorLight,
+      focusNode: AlwaysDisabledFocusNode(),
       decoration: TextFieldDecoration.borderOutline(
-        backgroundColor: AppColor.primaryBackgroundColorLight,
+        backgroundColor: AppColor.greyBackgroundColor,
         borderColor: AppColor.sixTextColorLight,
         hintText: 'support.hint_email'.tr,
         hintStype: TextAppStyle().smallTextGrey(),

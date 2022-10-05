@@ -68,6 +68,13 @@ class OrderListController extends BaseController {
     await loadList();
   }
 
+  Future<void> onChangeSearch(String text) async {
+    if(text.isEmpty){
+      keyword = text;
+      await loadList();
+    }
+  }
+
   Future<void> onSearch(String text) async {
     keyword = text;
     await loadList();

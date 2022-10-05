@@ -677,7 +677,7 @@ extension OrderExtension on OrderScreen {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Đánh giá của tôi',
+              'order.my_review'.tr,
               style: TextAppStyle().largeTextStype().copyWith(
                     fontWeight: FontWeight.bold,
                   ),

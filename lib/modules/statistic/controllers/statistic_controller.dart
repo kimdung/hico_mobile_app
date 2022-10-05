@@ -7,9 +7,12 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/invoice_request.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/date_formatter.dart';
+import '../../../shared/utils/dialog_util.dart';
+import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class StatisticController extends BaseController {
   var scrollController = ScrollController();
@@ -19,6 +22,8 @@ class StatisticController extends BaseController {
   int offset = 0;
   String fromDate = '';
   String toDate = '';
+  DateTime dteToDate = DateTime.now();
+  DateTime dteFromDate = DateTime.now().add(const Duration(days: -7));
   final TextEditingController fromDateController = TextEditingController();
   final TextEditingController toDateController = TextEditingController();
   final TextEditingController keywordController = TextEditingController();
@@ -29,9 +34,8 @@ class StatisticController extends BaseController {
   Rx<int> totalInvoice = Rx(20);
 
   StatisticController() {
-    fromDate =
-        DateFormatter.formatDate(DateTime.now().add(const Duration(days: -7)));
-    toDate = DateFormatter.formatDate(DateTime.now());
+    fromDate = DateFormatter.formatDate(dteFromDate);
+    toDate = DateFormatter.formatDate(dteToDate);
     loadData();
   }
 
@@ -71,8 +75,23 @@ class StatisticController extends BaseController {
         firstDate: DateTime(1901, 1),
         lastDate: DateTime(2100));
     if (picked != null) {
-      fromDate = DateFormatter.formatDate(picked);
-      fromDateController.value = TextEditingValue(text: fromDate);
+      if (dteToDate.isBefore(picked)) {
+        await EasyLoading.dismiss();
+        await DialogUtil.showPopup(
+          dialogSize: DialogSize.Popup,
+          barrierDismissible: false,
+          backgroundColor: Colors.transparent,
+          child: NormalWidget(
+            icon: IconConstants.icFail,
+            title: 'statistic.time_incorrect'.tr,
+          ),
+          onVaLue: (value) {},
+        );
+      } else {
+        dteFromDate = picked;
+        fromDate = DateFormatter.formatDate(picked);
+        fromDateController.value = TextEditingValue(text: fromDate);
+      }
     }
   }
 
@@ -83,8 +102,23 @@ class StatisticController extends BaseController {
         firstDate: DateTime(1901, 1),
         lastDate: DateTime(2100));
     if (picked != null) {
-      toDate = DateFormatter.formatDate(picked);
-      toDateController.value = TextEditingValue(text: toDate);
+      if (dteFromDate.isAfter(picked)) {
+        await EasyLoading.dismiss();
+        await DialogUtil.showPopup(
+          dialogSize: DialogSize.Popup,
+          barrierDismissible: false,
+          backgroundColor: Colors.transparent,
+          child: NormalWidget(
+            icon: IconConstants.icFail,
+            title: 'statistic.time_incorrect'.tr,
+          ),
+          onVaLue: (value) {},
+        );
+      } else {
+        dteToDate = picked;
+        toDate = DateFormatter.formatDate(picked);
+        toDateController.value = TextEditingValue(text: toDate);
+      }
     }
   }
 
@@ -102,19 +136,33 @@ class StatisticController extends BaseController {
   Future<void> loadInvoiceList() async {
     try {
       await EasyLoading.show();
-      offset = 0;
-      await _uiRepository
-          .statisticsInvoice(limit, offset, keywordController.text, fromDate,
-              toDate, indexStatus.value)
-          .then((response) {
-        EasyLoading.dismiss();
-        if (response.data!.rows!.isNotEmpty) {
-          offset = response.data!.rows!.length;
-          invoiceList.value = response.data!.rows!;
-        } else {
-          invoiceList.value = [];
-        }
-      });
+      if (dteToDate.isBefore(dteFromDate)) {
+        await EasyLoading.dismiss();
+        await DialogUtil.showPopup(
+          dialogSize: DialogSize.Popup,
+          barrierDismissible: false,
+          backgroundColor: Colors.transparent,
+          child: NormalWidget(
+            icon: IconConstants.icFail,
+            title: 'statistic.time_incorrect'.tr,
+          ),
+          onVaLue: (value) {},
+        );
+      } else {
+        offset = 0;
+        await _uiRepository
+            .statisticsInvoice(limit, offset, keywordController.text, fromDate,
+                toDate, indexStatus.value)
+            .then((response) {
+          EasyLoading.dismiss();
+          if (response.data!.rows!.isNotEmpty) {
+            offset = response.data!.rows!.length;
+            invoiceList.value = response.data!.rows!;
+          } else {
+            invoiceList.value = [];
+          }
+        });
+      }
     } catch (e) {
       await EasyLoading.dismiss();
     }
