@@ -57,8 +57,6 @@
 	<string>67a84402f8481e1ebb46e04f9d41979d</string>
 	<key>FacebookDisplayName</key>
 	<string>HICO</string>
-	<key>FirebaseAppDelegateProxyEnabled</key>
-	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tel</string>

@@ -187,6 +187,9 @@ class VoiceCallController extends BaseController {
   }
 
   void _startRingtone() {
+    if (isCalling.value) {
+      return;
+    }
     if (AppDataGlobal.androidDeviceInfo?.version.sdkInt != null &&
         AppDataGlobal.androidDeviceInfo!.version.sdkInt! >= 28) {
       FlutterRingtonePlayer.play(

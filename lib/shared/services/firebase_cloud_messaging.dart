@@ -60,7 +60,9 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
       }
       final sp = await SharedPreferences.getInstance();
       final locale = sp.getString(StorageConstants.language) ?? VIETNAMESE_LANG;
+
       final String handle,
+          channelName,
           textAccept,
           textDecline,
           textMissedCall,
@@ -70,6 +72,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           handle = (call.isVideo ?? false)
               ? 'Incoming video call...'
               : 'Incoming voice call...';
+          channelName = 'Hico incoming call';
           textAccept = 'Accept';
           textDecline = 'Decline';
           textMissedCall = 'Missed Call';
@@ -77,6 +80,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           break;
         case JAPANESE_LANG:
           handle = (call.isVideo ?? false) ? 'ビデオ通話の着信...' : '音声通話の着信...';
+          channelName = 'Hico 着信';
           textAccept = '承認';
           textDecline = '却下';
           textMissedCall = '不在着信';
@@ -86,6 +90,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           handle = (call.isVideo ?? false)
               ? 'Có cuộc gọi video...'
               : 'Có cuộc gọi âm thanh...';
+          channelName = 'Hico có cuộc gọi đến';
           textAccept = 'Chấp nhận';
           textDecline = 'Từ chối';
           textMissedCall = 'Có cuộc gọi nhỡ';
@@ -112,10 +117,10 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           'isCustomNotification': true,
           'isShowLogo': false,
           'isShowCallback': false,
+          'isShowMissedCallNotification': false,
           'ringtonePath': 'bell',
           'backgroundColor': '#DF4D6F',
-          // 'backgroundUrl': 'https://i.pravatar.cc/500',
-          // 'actionColor': '#4CAF50'
+          'incomingCallNotificationChannelName': channelName,
         },
         'ios': <String, dynamic>{
           'iconName': 'AppIcon',
@@ -131,7 +136,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           'supportsHolding': true,
           'supportsGrouping': false,
           'supportsUngrouping': false,
-          'ringtonePath': 'bell'
+          'ringtonePath': 'bell.caf'
         }
       };
       FlutterCallkitIncoming.onEvent.listen((event) async {
@@ -154,6 +159,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
             } catch (e) {
               debugPrint(e.toString());
             }
+            await FlutterCallkitIncoming.endAllCalls();
             break;
           case CallEvent.ACTION_CALL_ENDED:
             break;

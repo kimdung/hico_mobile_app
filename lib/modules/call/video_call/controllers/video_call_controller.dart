@@ -113,7 +113,7 @@ class VideoCallController extends BaseController {
     _engine?.setEventHandler(RtcEngineEventHandler(
       error: (errorCode) {
         printInfo(info: 'error $errorCode');
-      }, 
+      },
       joinChannelSuccess: (channel, uid, elapsed) {
         printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
 
@@ -194,6 +194,9 @@ class VideoCallController extends BaseController {
   }
 
   void _startRingtone() {
+    if (isCalling.value) {
+      return;
+    }
     if (AppDataGlobal.androidDeviceInfo?.version.sdkInt != null &&
         AppDataGlobal.androidDeviceInfo!.version.sdkInt! >= 28) {
       FlutterRingtonePlayer.play(
