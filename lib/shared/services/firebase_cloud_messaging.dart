@@ -234,14 +234,14 @@ class FirebaseMessageConfig {
         sound: true,
       );
 
-      // // Hiển thị notification khi bật app cho ios
-      // if (Platform.isIOS) {
-      //   await _firebaseMessaging.setForegroundNotificationPresentationOptions(
-      //     alert: true,
-      //     badge: true,
-      //     sound: true,
-      //   );
-      // }
+      // Hiển thị notification khi bật app cho ios
+      if (Platform.isIOS) {
+        await _firebaseMessaging.setForegroundNotificationPresentationOptions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+      }
       await _firebaseMessaging.setAutoInitEnabled(true);
 
       await _handleTokenFirebase();
@@ -364,14 +364,6 @@ class FirebaseMessageConfig {
       if (controller.channel.id == channelId) {
         return;
       }
-    }
-
-    if (Platform.isIOS) {
-      _firebaseMessaging.setForegroundNotificationPresentationOptions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
     }
     try {
       debugPrint('FirebaseMessageConfig RemoteMessage $message');
