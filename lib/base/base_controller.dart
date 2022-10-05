@@ -16,7 +16,7 @@ class BaseController extends FullLifeCycleController
   final _networkController = Get.find<NetworkController>();
   BuildContext? dialogErrorNetworkContext;
 
-  final CallMethods callMethods = CallMethods(); 
+  final CallMethods callMethods = CallMethods();
 
   @override
   Future<void> onInit() async {
@@ -27,32 +27,16 @@ class BaseController extends FullLifeCycleController
   }
 
   @override
-  void onDetached() {
-    printInfo(
-        info:
-            'FullLifeCycleMixin onDetached onDetached onDetached onDetached onDetached onDetached');
-  }
+  void onDetached() {}
 
   @override
-  void onInactive() {
-    printInfo(
-        info:
-            'FullLifeCycleMixin onInactive onInactive onInactive onInactive onInactive onInactive');
-  }
+  void onInactive() {}
 
   @override
-  void onPaused() {
-    printInfo(
-        info:
-            'FullLifeCycleMixin onPaused onPaused onPaused onPaused onPaused onPaused onPaused');
-  }
+  void onPaused() {}
 
   @override
   Future<void> onResumed() async {
-    printInfo(
-        info:
-            'FullLifeCycleMixin onResumed onResumed onResumed onResumed onResumed onResumed onResumed');
-
     // check network
     await checkConnectNetwork();
   }
