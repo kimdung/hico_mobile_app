@@ -47,6 +47,10 @@ class ConfigController extends BaseController {
       TextEditingController();
   bool showPassword = false;
 
+  final hidePassword = true.obs;
+  final hideNewPassword = true.obs;
+  final hideRetypePassword = true.obs;
+
   MasterDataModel masterData = MasterDataModel();
 
   @override
@@ -67,6 +71,16 @@ class ConfigController extends BaseController {
     return super.onInit();
   }
 
+void hideShowPassword() {
+    hidePassword.value = !hidePassword.value;
+  }
+  void hideShowNewPassword() {
+    hideNewPassword.value = !hideNewPassword.value;
+  }
+  void hideShowRetypePassword() {
+    hideRetypePassword.value = !hideRetypePassword.value;
+  }
+  
   Future<void> confirmLanguage() async {
     try {
       await EasyLoading.show();

@@ -139,6 +139,7 @@ const Map<String, String> ja_JP = {
   'order.search_title': '予約腱索',
   'order.cancel_confirm': '予約をキャンセルします。よろしいですか。',
   'order.note': '30 分の待ち時間でお客様をサポ​​ートします。\n例: 10:00 ～ 10:30 の 30 分間の通訳を注文した場合、午前 11 時までの待ち時間でお客様をサポ​​ートします。 午前10時から午前11時まで、合計通話時間が予約の30分を超えない限り、何度でも通訳を呼び出すことができます。 午前11時を過ぎるか、合計通話時間が30分を超えた場合、ご注文は終了となります。',
+  'order.my_review': '私の評価',
 
   //profile
   'profile.add_avatar': 'プロファイル写真変更',
@@ -265,6 +266,7 @@ const Map<String, String> ja_JP = {
   'statistic.wallet': '残高',
   'statistic.bonus': '通訳者がキャンセルより返金',
   'statistic.monney_used': '利用した金額',
+  'statistic.time_incorrect': '無効な時間',
 
   //support screen
   'support.title': '	お問い合わせ内容を入力してください。',
