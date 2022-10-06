@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
@@ -10,6 +11,7 @@ import '../../../../resource/assets_constant/icon_constants.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../shared/constants/common.dart' as common;
 import '../../../../shared/utils/dialog_util.dart';
+import '../../../../shared/utils/focus.dart';
 import '../../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class TopupStripeController extends BaseController {
@@ -22,10 +24,14 @@ class TopupStripeController extends BaseController {
   CardFieldInputDetails? card;
   bool isOrder = false;
 
-  // final TextEditingController accountHolderController = TextEditingController();
-  // final TextEditingController bankNumberController = TextEditingController();
-  // final TextEditingController validDateController = TextEditingController();
-  // final TextEditingController cvvController = TextEditingController();
+  final accountHolderController = TextEditingController();
+  final bankNumberController =
+      MaskedTextController(mask: '0000 0000 0000 0000 000');
+  final validDateController = MaskedTextController(mask: '00/00');
+  final cvvController = TextEditingController();
+
+  int? expirationMonth;
+  int? expirationYear;
 
   TopupStripeController() {
     final arguments = Get.arguments as Map;
@@ -41,13 +47,31 @@ class TopupStripeController extends BaseController {
   /* Action */
 
   Future<void> onConfirm() async {
-    if (!cardEditController.details.complete) {
+    // if (!cardEditController.details.complete) {
+    //   return;
+    // }
+    AppFocus.unFocus();
+
+    if (formState.currentState == null || !formState.currentState!.validate()) {
       return;
     }
+
+    await Stripe.instance.dangerouslyUpdateCardDetails(CardDetails(
+      number: bankNumberController.text,
+      cvc: cvvController.text,
+      expirationMonth: expirationMonth,
+      expirationYear: expirationYear == null ? null : 2000 + expirationYear!,
+    ));
+    final billingDetails =
+        BillingDetails(name: accountHolderController.text); // mocked data
     try {
       await EasyLoading.show();
+      // final paymentMethod = await Stripe.instance
+      //     .createPaymentMethod(
+      //         PaymentMethodParams.card(billingDetails: billingDetails))
       final paymentMethod = await Stripe.instance
-          .createPaymentMethod(const PaymentMethodParams.card())
+          .createPaymentMethod(
+              PaymentMethodParams.card(billingDetails: billingDetails))
           .catchError(
         (onError) async {
           printInfo(info: onError.toString());
@@ -57,11 +81,11 @@ class TopupStripeController extends BaseController {
             backgroundColor: Colors.transparent,
             child: NormalWidget(
               icon: IconConstants.icFail,
-              title: 'topup.failure'.tr,
+              title: '${'topup.failure'.tr}\n${onError?.error?.message ?? ''}',
             ),
-            onVaLue: (value) {
-              Get.back();
-            },
+            // onVaLue: (value) {
+            //   Get.back();
+            // },
           );
         },
       );

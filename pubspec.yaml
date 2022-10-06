@@ -88,6 +88,7 @@ dependencies:
   pin_code_fields: ^7.3.0
   flutter_app_badger: ^1.4.0
   device_info_plus: ^4.0.0
+  flutter_masked_text: ^0.8.0
 
   # Border dotted
   getwidget: ^2.0.4

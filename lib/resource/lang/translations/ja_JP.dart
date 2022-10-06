@@ -30,7 +30,7 @@ const Map<String, String> ja_JP = {
   'camera': '画像',
   'year': '年',
   'notif': 'システムは日本時間帯を使用しています',
-  'change_pass':'パスワードを変更する',
+  'change_pass': 'パスワードを変更する',
   //onboard
   'onboard.title1': 'HICOへようこそ',
   'onboard.title2': 'おもてなしサービス',
@@ -138,7 +138,8 @@ const Map<String, String> ja_JP = {
   'order.hello': 'こんにちは',
   'order.search_title': '予約腱索',
   'order.cancel_confirm': '予約をキャンセルします。よろしいですか。',
-  'order.note': '30 分の待ち時間でお客様をサポ​​ートします。\n例: 10:00 ～ 10:30 の 30 分間の通訳を注文した場合、午前 11 時までの待ち時間でお客様をサポ​​ートします。 午前10時から午前11時まで、合計通話時間が予約の30分を超えない限り、何度でも通訳を呼び出すことができます。 午前11時を過ぎるか、合計通話時間が30分を超えた場合、ご注文は終了となります。',
+  'order.note':
+      '30 分の待ち時間でお客様をサポ​​ートします。\n例: 10:00 ～ 10:30 の 30 分間の通訳を注文した場合、午前 11 時までの待ち時間でお客様をサポ​​ートします。 午前10時から午前11時まで、合計通話時間が予約の30分を超えない限り、何度でも通訳を呼び出すことができます。 午前11時を過ぎるか、合計通話時間が30分を超えた場合、ご注文は終了となります。',
   'order.my_review': '私の評価',
 
   //profile
@@ -222,7 +223,7 @@ const Map<String, String> ja_JP = {
   'topup.card.name': 'クレジットカード名義人',
   'topup.card.number': 'クレジットカード番号',
   'topup.card.date': '有効期限（月/年）',
-  'topup.card.cvv': 'セキュリティコード',
+  'topup.card.cvc': 'セキュリティコード',
 
   'topup.wallet': 'チャージ',
   'topup.code': '取引コード',
@@ -427,7 +428,7 @@ const Map<String, String> ja_JP = {
   'extend.title': '時間延長',
   'extend.title.appbar': '予約詳細',
   'extend.title.button': '延長確認',
-  'extend.error' :'延長期間が選択されていません',
+  'extend.error': '延長期間が選択されていません',
 
   //booking detail
   'booking.detail.order_infor': '予約内容詳細',
