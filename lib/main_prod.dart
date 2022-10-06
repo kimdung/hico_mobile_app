@@ -7,7 +7,7 @@ import 'app.dart';
 import 'base/di.dart';
 import 'shared/constants/common.dart';
 
-Future<void> main() async {
+Future<void> main() async { 
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,
@@ -16,6 +16,7 @@ Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle.light.copyWith(
       statusBarColor: Colors.transparent, // Color for Android
+      statusBarIconBrightness: Brightness.dark,
       statusBarBrightness: Brightness.light, // for IOS.
     ),
   );
