@@ -32,7 +32,7 @@ const Map<String, String> vi_VN = {
   'year': 'năm',
   'accept': 'Chấp nhận',
   'notif': 'Hệ thống đang sử dụng múi giờ Nhật Bản.',
-  'change_pass':'Thay đổi mật khẩu',
+  'change_pass': 'Thay đổi mật khẩu',
 
   //onboard
   'onboard.title1': 'Welcome to Hico',
@@ -52,8 +52,8 @@ const Map<String, String> vi_VN = {
   // error
   'error': 'Có lỗi xẩy ra',
   'error.expires': 'Phiên làm việc hết hạn!',
-  'error.call': 'Không thể thực hiện cuộc gọi lúc này!', 
-  'notify.network.error': 'Không có kết nối mạng!', 
+  'error.call': 'Không thể thực hiện cuộc gọi lúc này!',
+  'notify.network.error': 'Không có kết nối mạng!',
 
   //register
   'register.comfirm': 'Xác thực tài khoản',
@@ -137,7 +137,8 @@ const Map<String, String> vi_VN = {
   'order.hello': 'Xin chào,',
   'order.search_title': 'Tìm kiếm đơn hàng',
   'order.cancel_confirm': 'Bạn chắc chắn muốn huỷ đơn?',
-  'order.note': 'Khách hàng đươc hỗ trợ thời gian chờ là 30 phút.\nVí dụ: Khi khách đặt phiên dịch trong 30 phút từ 10h ~ 10h30, khách hàng sẽ được hỗ trợ thời gian chờ đến 11h. Trong thời gian từ 10h ~ 11h khách có thể gọi cho phiên dịch viên không giới hạn số lần miễn là tổng thời gian đàm thoại không vượt quá 30 phút đã đặt. Đơn hàng sẽ kết thúc nếu quá 11h hoặc tổng thời gian đàm thoại vượt quá 30 phút.',
+  'order.note':
+      'Khách hàng đươc hỗ trợ thời gian chờ là 30 phút.\nVí dụ: Khi khách đặt phiên dịch trong 30 phút từ 10h ~ 10h30, khách hàng sẽ được hỗ trợ thời gian chờ đến 11h. Trong thời gian từ 10h ~ 11h khách có thể gọi cho phiên dịch viên không giới hạn số lần miễn là tổng thời gian đàm thoại không vượt quá 30 phút đã đặt. Đơn hàng sẽ kết thúc nếu quá 11h hoặc tổng thời gian đàm thoại vượt quá 30 phút.',
   'order.my_review': 'Đánh giá của tôi',
 
   //profile
@@ -222,10 +223,10 @@ const Map<String, String> vi_VN = {
   'topup.stripe.title': 'Thông tin thẻ',
 
   'topup.detail.title': 'Chi Tiết Nạp Tiền',
-  'topup.card.name': 'Chủ tài khoản',
+  'topup.card.name': 'Tên chủ thẻ',
   'topup.card.number': 'Số thẻ',
   'topup.card.date': 'Ngày hết hạn (MM/YY)',
-  'topup.card.cvv': 'CVV',
+  'topup.card.cvc': 'CVC',
 
   'topup.wallet': 'Nạp tiền vào ví',
   'topup.code': 'Mã giao dịch: ',
@@ -441,7 +442,7 @@ const Map<String, String> vi_VN = {
   'extend.title': 'Gia hạn thời gian',
   'extend.title.appbar': 'Chi tiết đặt lịch',
   'extend.title.button': 'Xác Nhận Gia Hạn',
-  'extend.error' :'Chưa chọn thời gian gia hạn',
+  'extend.error': 'Chưa chọn thời gian gia hạn',
 
   //booking detail
   'booking.detail.order_infor': 'Thông tin đơn hàng',

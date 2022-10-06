@@ -126,7 +126,7 @@ class OrderListController extends BaseController {
     await Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id: id))!
         .then((value) => loadList());
   }
-
+ 
   Future<void> onChatAdmin() async {
     if (AppDataGlobal.client == null) {
       return;
