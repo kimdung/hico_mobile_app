@@ -179,14 +179,20 @@ class BookingSupplierBookingScreen
                                   )
                                 : Container(),
                           ),
-                          Text(
-                            'note'.tr,
-                            style: TextAppStyle().normalTextPink(),
-                          ),
-                          Text(
-                            'order.note'.tr,
-                            style: TextAppStyle().normalTextGrey(),
-                          ),                          
+                          (controller.isOnline.value
+                                  .isEqual(CommonConstants.online))
+                              ? Text(
+                                  'note'.tr,
+                                  style: TextAppStyle().normalTextPink(),
+                                )
+                              : Container(),
+                          (controller.isOnline.value
+                                  .isEqual(CommonConstants.online))
+                              ? Text(
+                                  'order.note'.tr,
+                                  style: TextAppStyle().normalTextGrey(),
+                                )
+                              : Container(),
                           const SizedBox(height: 24),
                         ],
                       ),
@@ -198,17 +204,18 @@ class BookingSupplierBookingScreen
           ),
         ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 24, top: 10 ),
+          padding:
+              const EdgeInsets.only(left: 20, right: 20, bottom: 24, top: 10),
           child: GeneralButton(
-                              onPressed: () => controller.search(),
-                              borderRadius: BorderRadius.circular(24),
-                              borderColor: AppColor.primaryColorLight,
-                              backgroundColor: AppColor.primaryColorLight,
-                              child: Text(
-                                'confirm'.tr,
-                                style: TextAppStyle().titleButtonStyle(),
-                              ),
-                            ),
+            onPressed: () => controller.search(),
+            borderRadius: BorderRadius.circular(24),
+            borderColor: AppColor.primaryColorLight,
+            backgroundColor: AppColor.primaryColorLight,
+            child: Text(
+              'confirm'.tr,
+              style: TextAppStyle().titleButtonStyle(),
+            ),
+          ),
         ),
       ),
     );

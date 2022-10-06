@@ -129,7 +129,7 @@ class ForgotPasswordChangeScreen extends GetView<ForgotPasswordController> {
             controller.hideShowNewPassword();
           },
           icon: Icon(
-            !controller.hideNewPassword.value
+            controller.hideNewPassword.value
                 ? Icons.visibility
                 : Icons.visibility_off,
             color: AppColor.fifthTextColorLight,
@@ -164,7 +164,7 @@ class ForgotPasswordChangeScreen extends GetView<ForgotPasswordController> {
               controller.hideShowRetypePassword();
             },
             icon: Icon(
-              !controller.hideRetypePassword.value
+              controller.hideRetypePassword.value
                   ? Icons.visibility
                   : Icons.visibility_off,
               color: AppColor.fifthTextColorLight,

@@ -15,7 +15,7 @@ extension HomeComponents on HomeScreen {
               child: CachedNetworkImage(
                 width: 42,
                 height: 42,
-                imageUrl: AppDataGlobal.userInfo?.avatarImage ?? '',
+                imageUrl: controller.userInfo.value.avatarImage ?? '',
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(21),

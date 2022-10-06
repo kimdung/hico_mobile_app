@@ -37,7 +37,7 @@ extension _RegisterExtension on RegisterScreen {
             controller.hideShowNewPassword();
           },
           icon: Icon(
-            !controller.hideNewPassword.value
+            controller.hideNewPassword.value
                 ? Icons.visibility
                 : Icons.visibility_off,
             color: AppColor.fifthTextColorLight,
@@ -66,7 +66,7 @@ extension _RegisterExtension on RegisterScreen {
               controller.hideShowRetypePassword();
             },
             icon: Icon(
-              !controller.hideRetypePassword.value
+              controller.hideRetypePassword.value
                   ? Icons.visibility
                   : Icons.visibility_off,
               color: AppColor.fifthTextColorLight,
