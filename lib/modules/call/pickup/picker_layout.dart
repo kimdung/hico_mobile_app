@@ -64,21 +64,19 @@ class PickupLayout extends GetView<BaseController> {
     try {
       printInfo(info: 'incoming call ${data.toString()}');
       final call = CallModel.fromJson(data);
+      if (AppDataGlobal.acceptCall) {
+        AppDataGlobal.acceptCall = false;
+        await onAcceptCall(call);
+        return null;
+      }
 
       final activeCalls = await FlutterCallkitIncoming.activeCalls();
 
-      if (activeCalls is List) {
+      if (activeCalls is List && activeCalls.isNotEmpty) {
         final activeCall = activeCalls.firstWhereOrNull(
             (element) => (element as Map<dynamic, dynamic>?)?['id'] == call.id);
-
-        if (activeCall != null) {
-          if (Platform.isIOS && AppDataGlobal.acceptCall) {
-            AppDataGlobal.acceptCall = false;
-            await onAcceptCall(call);
-          } else if (activeCall != null &&
-              (activeCall['isAccepted'] ?? false)) {
-            await onAcceptCall(call);
-          }
+        if (activeCall != null && (activeCall['isAccepted'] ?? false)) {
+          await onAcceptCall(call);
           return null;
         }
       }
