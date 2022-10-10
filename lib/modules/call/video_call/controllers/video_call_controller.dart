@@ -28,6 +28,8 @@ class VideoCallController extends BaseController {
 
   RxBool muteLocalAudio = RxBool(false);
 
+  bool isChangeCall = false;
+
   final bool isCaller;
   final String token;
   final CallModel call;
@@ -86,8 +88,18 @@ class VideoCallController extends BaseController {
       }
       _callStreamSubscription = callMethods
           .callStream(uid: AppDataGlobal.userInfo!.id.toString())
-          .listen((DocumentSnapshot ds) {
-        if (ds.data() == null) {
+          .listen((DocumentSnapshot snapshot) {
+        // if (snapshot.data() == null) {
+        //   Get.back();
+        // }
+        final data = snapshot.data();
+        if (data != null && data is Map<String, dynamic>) {
+          final callModel = CallModel.fromJson(data);
+          if (call.channelId != callModel.channelId) {
+            isChangeCall = true;
+            Get.back();
+          }
+        } else {
           Get.back();
         }
       });
@@ -258,6 +270,10 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> _callEndCall() async {
+    if (isChangeCall) {
+      return;
+    }
+
     // Xóa cuộc gọi trên firebase
     await callMethods.endCall(call: call);
 

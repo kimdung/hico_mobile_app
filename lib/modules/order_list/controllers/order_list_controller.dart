@@ -69,7 +69,7 @@ class OrderListController extends BaseController {
   }
 
   Future<void> onChangeSearch(String text) async {
-    if(text.isEmpty){
+    if (text.isEmpty) {
       keyword = text;
       await loadList();
     }
@@ -126,7 +126,7 @@ class OrderListController extends BaseController {
     await Get.toNamed(Routes.ORDER_DETAIL, arguments: InvoiceRequest(id: id))!
         .then((value) => loadList());
   }
- 
+
   Future<void> onChatAdmin() async {
     if (AppDataGlobal.client == null) {
       return;
@@ -175,14 +175,16 @@ class OrderListController extends BaseController {
   }
 
   Future<void> onCall(InvoiceHistoryModel invoice) async {
-    final channelId = invoice.getCallChannel();
+    var channelId = invoice.getCallChannel();
     try {
       await EasyLoading.show();
+      final id = const Uuid().v4();
+      channelId = '$channelId-$id';
       await _uiRepository.getCallToken(channelId, invoice.id).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
-            id: const Uuid().v4(),
+            id: id,
             invoiceId: invoice.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
@@ -213,14 +215,16 @@ class OrderListController extends BaseController {
   }
 
   Future<void> onVideo(InvoiceHistoryModel invoice) async {
-    final channelId = invoice.getCallChannel();
+    var channelId = invoice.getCallChannel();
     try {
       await EasyLoading.show();
+      final id = const Uuid().v4();
+      channelId = '$channelId-$id';
       await _uiRepository.getCallToken(channelId, invoice.id).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
-             id: const Uuid().v4(),
+            id: id,
             invoiceId: invoice.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',

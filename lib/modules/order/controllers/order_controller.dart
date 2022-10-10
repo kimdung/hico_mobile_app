@@ -191,17 +191,19 @@ class OrderController extends BaseController {
     if (AppDataGlobal.userInfo == null) {
       return;
     }
-    final channelId = invoice.value.getCallChannel();
+    var channelId = invoice.value.getCallChannel();
 
     try {
       await EasyLoading.show();
+      final id = const Uuid().v4();
+      channelId = '$channelId-$id';
       await _uiRepository
           .getCallToken(channelId, invoice.value.id ?? 0)
           .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
-            id: const Uuid().v4(),
+            id: id,
             invoiceId: invoice.value.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
@@ -232,16 +234,18 @@ class OrderController extends BaseController {
   }
 
   Future<void> onVideo() async {
-    final channelId = invoice.value.getCallChannel();
+    var channelId = invoice.value.getCallChannel();
     try {
       await EasyLoading.show();
+      final id = const Uuid().v4();
+      channelId = '$channelId-$id';
       await _uiRepository
           .getCallToken(channelId, invoice.value.id)
           .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
-            id: const Uuid().v4(),
+            id: id,
             invoiceId: invoice.value.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',

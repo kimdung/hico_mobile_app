@@ -98,6 +98,7 @@ class PickupLayout extends GetView<BaseController> {
     }
     final _uiRepository = Get.find<HicoUIRepository>();
     await EasyLoading.show();
+
     await _uiRepository
         .getCallToken(call.channelId ?? '', call.invoiceId)
         .then((response) {

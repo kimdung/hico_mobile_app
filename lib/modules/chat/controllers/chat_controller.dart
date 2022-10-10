@@ -41,17 +41,19 @@ class ChatController extends BaseController {
   }
 
   Future<void> onCall() async {
-    final channelId = channel.id;
+    var channelId = channel.id;
     if (channelId == null) {
       return;
     }
     try {
       await EasyLoading.show();
+      final id = const Uuid().v4();
+      channelId = '$channelId-$id';
       await _uiRepository.getCallToken(channelId, invoiceId).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
-            id: const Uuid().v4(),
+            id: id,
             invoiceId: invoiceId,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
@@ -82,17 +84,19 @@ class ChatController extends BaseController {
   }
 
   Future<void> onVideo() async {
-    final channelId = channel.id;
+    var channelId = channel.id;
     if (channelId == null) {
       return;
     }
     try {
       await EasyLoading.show();
+      final id = const Uuid().v4();
+      channelId = '$channelId-$id';
       await _uiRepository.getCallToken(channelId, invoiceId).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
-            id: const Uuid().v4(),
+            id: id,
             invoiceId: invoiceId,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
