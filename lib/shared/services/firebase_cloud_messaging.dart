@@ -64,7 +64,6 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
       final locale = sp.getString(StorageConstants.language) ?? VIETNAMESE_LANG;
 
       final String handle,
-
           textAccept,
           textDecline,
           textMissedCall,
@@ -96,8 +95,6 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           textCallback = 'Gọi lại';
       }
 
-      await Get.updateLocale(const Locale('vi', 'VN'));
-
       final params = <String, dynamic>{
         'id': call.id ?? const Uuid().v4(),
         'appName': 'HICO',
@@ -116,7 +113,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           'isCustomNotification': true,
           'isShowLogo': false,
           'isShowCallback': false,
-          'isShowMissedCallNotification': false,
+          'isShowMissedCallNotification': true,
           'ringtonePath': 'bell',
           'backgroundColor': '#DF4D6F',
         },
@@ -156,7 +153,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
               await callCollection.doc(call.receiverId.toString()).delete();
             } catch (e) {
               debugPrint(e.toString());
-            } 
+            }
             break;
           case CallEvent.ACTION_CALL_ENDED:
             break;
@@ -181,7 +178,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
       await FlutterCallkitIncoming.showCallkitIncoming(params);
     }
   } catch (e) {
-    debugPrint(e.toString());
+    debugPrint('[PickupLayout] $e');
   }
 }
 
@@ -341,7 +338,8 @@ class FirebaseMessageConfig {
 
       /// Tương tác với thông báo khi ứng dụng đang ở background và khi đang khóa màn hình
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        debugPrint('ONTAP onMessageOpenedApp: ${message.data.toString()}');
+        debugPrint(
+            '[FirebaseMessageConfig] ONTAP onMessageOpenedApp: ${message.data.toString()}');
 
         /// ['id']: Key json chứa ID của thông báo server trả về.
         /// Dùng để điều hướng vào màn chi tiết thông báo
@@ -354,8 +352,9 @@ class FirebaseMessageConfig {
   }
 
   void _showNotification(RemoteMessage message) {
-    debugPrint('Got a message whilst in the foreground!');
-    debugPrint('Message data: ${message.data}');
+    debugPrint(
+        '[FirebaseMessageConfig] Got a message whilst in the foreground!');
+    debugPrint('[FirebaseMessageConfig] Message data: ${message.toString()}');
     reloadBalance();
 
     final channelId = message.data['channel_id'] ?? '';
@@ -367,7 +366,7 @@ class FirebaseMessageConfig {
       }
     }
     try {
-      debugPrint('FirebaseMessageConfig RemoteMessage $message');
+      debugPrint('[FirebaseMessageConfig] RemoteMessage $message');
 
       final remoteNotification = message.notification;
       final android = message.notification?.android;
@@ -404,7 +403,7 @@ class FirebaseMessageConfig {
   }
 
   Future<void> _onSelectNotifcation(Map<String, dynamic> message) async {
-    debugPrint('ONTAP NOTIFICATION: $message');
+    debugPrint('[FirebaseMessageConfig] ONTAP NOTIFICATION: $message');
     if (message.isEmpty) {
       return;
     }
@@ -424,7 +423,7 @@ class FirebaseMessageConfig {
     final channelId = message['channel_id'] ?? '';
     if (sender == 'stream.chat' && channelId.isNotEmpty) {
       //router chat screen
-      debugPrint('router chat screen');
+      debugPrint('[FirebaseMessageConfig] router chat screen');
       await onChat(channelId);
       return;
     }
@@ -546,14 +545,14 @@ class FirebaseMessageConfig {
 
   Future<void> _handleTokenFirebase() async {
     await _firebaseMessaging.getToken().then((String? token) async {
-      debugPrint('FIREBASE TOKEN: $token');
+      debugPrint('[FirebaseMessageConfig] FIREBASE TOKEN: $token');
       if (token != null) {
         AppDataGlobal.firebaseToken = token;
         await AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
       }
     });
     _firebaseMessaging.onTokenRefresh.listen((token) {
-      debugPrint('TOKEN FIREBASE CHANGE: $token');
+      debugPrint('[FirebaseMessageConfig] TOKEN FIREBASE CHANGE: $token');
       AppDataGlobal.firebaseToken = token;
       AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
     });

@@ -195,7 +195,7 @@ abstract class HicoUIAPI {
     @Query('searchWord') String searchWord,
   );
 
-  //service view
+  // service view - Đánh dấu đã xem dịch vụ
   @POST('/v1/customer/serviceView/create')
   Future<BaseResponse> serviceView(
     @Query('service_id') int id,

@@ -68,7 +68,7 @@ class BaseController extends FullLifeCycleController
       await DialogUtil.showPopup(
         dialogSize: DialogSize.Popup,
         barrierDismissible: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.transparent, 
         child: NormalWidget(
           icon: IconConstants.icFail,
           title: 'notify.network.error'.tr,

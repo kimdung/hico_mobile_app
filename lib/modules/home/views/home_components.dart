@@ -15,7 +15,7 @@ extension HomeComponents on HomeScreen {
               child: CachedNetworkImage(
                 width: 42,
                 height: 42,
-                imageUrl: controller.userInfo.value.avatarImage ?? '',
+                imageUrl: controller.userInfo.value?.avatarImage ?? '',
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(21),
@@ -55,7 +55,7 @@ extension HomeComponents on HomeScreen {
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      '${controller.userInfo.value.accountBalance ?? 0} JPY',
+                      '${controller.userInfo.value?.accountBalance ?? 0} JPY',
                       style: TextAppStyle().smallTextPink(),
                     ),
                   ],
@@ -65,9 +65,7 @@ extension HomeComponents on HomeScreen {
           ),
           const SizedBox(width: 14),
           InkWell(
-            onTap: () {
-              controller.deposit();
-            },
+            onTap: controller.onTopup,
             child: Container(
               margin: const EdgeInsets.all(5),
               child: FCoreImage(

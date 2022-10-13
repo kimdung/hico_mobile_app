@@ -8,7 +8,6 @@ import 'package:ui_api/models/home/slider_model.dart';
 import 'package:ui_api/models/supplier/supplier_info_model.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
-import 'package:ui_api/request/invoice/booking_prepare_request.dart';
 import 'package:ui_api/request/invoice/rating_request.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -31,14 +30,11 @@ class HomeController extends BaseController {
   final homeModel = Rx(HomeModel());
   final listSuppliers = RxList<SupplierInfoModel>();
 
-  BookingPrepareRequest request = BookingPrepareRequest();
-  var userInfo = Rx(UserInfoModel());
+  final userInfo = Rxn<UserInfoModel>();
 
   Channel? adminChatChannel;
 
-  HomeController(this.adminChatChannel) {
-    //loadData();
-  }
+  HomeController(this.adminChatChannel);
 
   @override
   Future<void> onInit() async {
@@ -47,7 +43,7 @@ class HomeController extends BaseController {
 
   Future<void> loadData() async {
     try {
-      userInfo.value = AppDataGlobal.userInfo!;
+      userInfo.value = AppDataGlobal.userInfo;
       await _uiRepository.home().then((response) {
         if (response.status == CommonConstants.statusOk &&
             response.homeModel != null) {
@@ -72,9 +68,9 @@ class HomeController extends BaseController {
     }
   }
 
-  Future<void> deposit() async {
-    await Get.toNamed(Routes.WALLET)!
-        .then((value) => userInfo.value = AppDataGlobal.userInfo!);
+  Future onTopup() async {
+    await Get.toNamed(Routes.WALLET)
+        ?.then((value) => userInfo.value = AppDataGlobal.userInfo!);
   }
 
   Future<void> viewDetail(int id) async {
@@ -83,8 +79,7 @@ class HomeController extends BaseController {
 
   //goto service page
   Future<void> viewService(ServiceModel item) async {
-    request.service = item;
-    await _uiRepository.serviceView(item.id!).then((response) {});
+    await _uiRepository.serviceView(item.id!);
     await Get.toNamed(Routes.SUPPLIER_LIST, arguments: item);
   }
 
