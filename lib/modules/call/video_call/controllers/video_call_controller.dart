@@ -240,7 +240,13 @@ class VideoCallController extends BaseController {
 
   Future<void> _sendCallNotification() async {
     try {
-      await _uiRepository.sendCallNotification(call.invoiceId ?? -1);
+      await _uiRepository.sendCallNotification(
+        invoiceId: call.invoiceId,
+        callId: call.id,
+        callIsVideo: call.isVideo,
+        callerName: call.callerName,
+        callerPic: call.callerPic,
+      );
     } catch (e) {
       printError(info: e.toString());
     }

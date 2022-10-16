@@ -1095,9 +1095,17 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
-  Future<BaseResponse> sendCallNotification(invoiceId) async {
+  Future<BaseResponse> sendCallNotification(
+      invoiceId, callId, callIsVideo, callerName, callerPic) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'invoice_id': invoiceId};
+    final queryParameters = <String, dynamic>{
+      r'invoice_id': invoiceId,
+      r'callId': callId,
+      r'callIsVideo': callIsVideo,
+      r'callerName': callerName,
+      r'callerPic': callerPic
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(

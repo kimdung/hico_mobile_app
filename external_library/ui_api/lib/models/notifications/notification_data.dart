@@ -43,6 +43,10 @@ class NotificationData {
   String? sender;
   @JsonKey(name: 'channel_id')
   String? channelId;
+  String? callId; 
+  String? callIsVideo;
+  String? callerName;
+  String? callerPic;
 
   NotificationData({
     this.displayType,
@@ -54,6 +58,10 @@ class NotificationData {
     this.name,
     this.sender,
     this.channelId,
+    this.callId,
+    this.callIsVideo,
+    this.callerName,
+    this.callerPic,
   });
 
   factory NotificationData.fromJson(Map<String, dynamic> json) {

@@ -252,7 +252,12 @@ abstract class HicoUIRepository {
 
   Future<BaseResponse> endCall(int invoiceId);
 
-  Future<BaseResponse> sendCallNotification(int invoiceId);
+  Future<BaseResponse> sendCallNotification(
+      {int? invoiceId,
+      String? callId,
+      bool? callIsVideo,
+      String? callerName,
+      String? callerPic});
 
   Future<BaseResponse> sendMissCall(int invoiceId);
 

@@ -465,8 +465,14 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   }
 
   @override
-  Future<BaseResponse> sendCallNotification(int invoiceId) {
-    return _api.sendCallNotification(invoiceId);
+  Future<BaseResponse> sendCallNotification(
+      {int? invoiceId,
+      String? callId,
+      bool? callIsVideo,
+      String? callerName,
+      String? callerPic}) {
+    return _api.sendCallNotification(
+        invoiceId, callId, callIsVideo, callerName, callerPic);
   }
 
   @override

@@ -17,6 +17,10 @@ NotificationData _$NotificationDataFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String?,
       sender: json['sender'] as String?,
       channelId: json['channel_id'] as String?,
+      callId: json['callId'] as String?,
+      callIsVideo: json['callIsVideo'] as String?,
+      callerName: json['callerName'] as String?,
+      callerPic: json['callerPic'] as String?,
     );
 
 Map<String, dynamic> _$NotificationDataToJson(NotificationData instance) =>
@@ -30,4 +34,8 @@ Map<String, dynamic> _$NotificationDataToJson(NotificationData instance) =>
       'name': instance.name,
       'sender': instance.sender,
       'channel_id': instance.channelId,
+      'callId': instance.callId,
+      'callIsVideo': instance.callIsVideo,
+      'callerName': instance.callerName,
+      'callerPic': instance.callerPic,
     };

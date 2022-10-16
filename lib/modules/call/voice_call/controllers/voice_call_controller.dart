@@ -242,7 +242,13 @@ class VoiceCallController extends BaseController {
   void _sendCallNotification() {
     // Gửi thông báo cuộc gọi mới cho server
     try {
-      _uiRepository.sendCallNotification(call.invoiceId ?? -1);
+      _uiRepository.sendCallNotification(
+        invoiceId: call.invoiceId,
+        callId: call.id,
+        callIsVideo: call.isVideo,
+        callerName: call.callerName,
+        callerPic: call.callerPic,
+      );
     } catch (e) {
       printError(info: e.toString());
     }
