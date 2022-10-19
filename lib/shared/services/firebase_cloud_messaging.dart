@@ -29,11 +29,7 @@ import '../constants/storage.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 
-  debugPrint(
-      '[FirebaseMessageConfig] _firebaseMessagingBackgroundHandler ${message.toMap().toString()}}');
   final notificationData = NotificationData.fromJson(message.data);
-  debugPrint(
-      '[FirebaseMessageConfig] _firebaseMessagingBackgroundHandler ${notificationData.toJson().toString()}}');
   if (notificationData.displayType == NotificationData.typeIncomingCall) {
     await showCallkitIncoming(notificationData);
   }
@@ -210,8 +206,6 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
     debugPrint('[FirebaseMessageConfig] $e');
   }
   try {
-    debugPrint(
-        '[FirebaseMessageConfig] showCallkitIncoming ${call.toJson().toString()}');
     if (call.hasDialled != null && !call.hasDialled!) {
       if (Platform.isIOS) {
         SharedPreferencesIOS.registerWith();

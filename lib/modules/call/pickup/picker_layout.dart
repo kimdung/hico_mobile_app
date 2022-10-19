@@ -61,6 +61,7 @@ class PickupLayout extends GetView<BaseController> {
   Future<CallModel?>? _pickupCall(Map<String, dynamic> data) async {
     try {
       printInfo(info: '[PickupLayout] incoming call ${data.toString()}');
+      printInfo(info: '[PickupLayout] acceptCall ${AppDataGlobal.acceptCall}');
       final call = CallModel.fromJson(data);
       if (AppDataGlobal.acceptCall) {
         AppDataGlobal.acceptCall = false;

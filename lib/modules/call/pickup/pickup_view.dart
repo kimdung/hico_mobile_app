@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 
 import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:vibration/vibration.dart';
 
 import '../../../data/app_data_global.dart';
 import '../../../routes/app_pages.dart';
@@ -30,6 +31,7 @@ class PickupView extends StatefulWidget {
 class _PickupViewState extends State<PickupView> {
   final CallMethods callMethods = CallMethods();
   Timer? _timerRingwait;
+  Timer? _timerVibration;
 
   @override
   void initState() {
@@ -175,7 +177,7 @@ class _PickupViewState extends State<PickupView> {
     await callMethods.endCall(call: widget.call);
   }
 
-  void _startRingtone() { 
+  void _startRingtone() {
     if (AppDataGlobal.androidDeviceInfo?.version.sdkInt != null &&
         AppDataGlobal.androidDeviceInfo!.version.sdkInt! >= 28) {
       FlutterRingtonePlayer.play(
@@ -188,18 +190,23 @@ class _PickupViewState extends State<PickupView> {
         looping: false,
       );
       _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
-        printInfo(info: 'playRingtone');
         FlutterRingtonePlayer.play(
           fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
           looping: false,
         );
       });
     }
+
+    Vibration.vibrate();
+    _timerVibration = Timer.periodic(const Duration(seconds: 2), (timer) {
+      printInfo(info: 'playRingtone');
+      Vibration.vibrate();
+    });
   }
 
   void _endRingtone() {
     _timerRingwait?.cancel();
-    _timerRingwait = null;
+    _timerVibration?.cancel();
     FlutterRingtonePlayer.stop();
   }
 }
