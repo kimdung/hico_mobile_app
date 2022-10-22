@@ -97,8 +97,7 @@ dependencies:
   flutter_time_picker_spinner: ^2.0.0
 
   # Date picker
-  flutter_calendar_carousel: 2.1.0
-  # flutter_datetime_picker: ^1.5.1
+  flutter_calendar_carousel: 2.1.0  
   flutter_datetime_picker:
     git:
     
@@ -106,7 +105,7 @@ dependencies:
       ref: master
 
   # Chat  
-  stream_chat_flutter: ^3.6.1 
+  stream_chat_flutter: 4.1.0
 
   # Call
   agora_rtc_engine: 5.1.0

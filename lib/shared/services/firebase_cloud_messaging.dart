@@ -22,9 +22,12 @@ import 'package:uuid/uuid.dart';
 
 import '../../data/app_data_global.dart';
 import '../../modules/chat/controllers/chat_controller.dart';
+import '../../resource/assets_constant/icon_constants.dart';
 import '../../routes/app_pages.dart';
 import '../constants/common.dart';
 import '../constants/storage.dart';
+import '../utils/dialog_util.dart';
+import '../widget_hico/dialog/normal_widget.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -438,7 +441,6 @@ class FirebaseMessageConfig {
             return;
           }
           final message = jsonDecode(payload ?? '');
-          debugPrint('ONTAP onSelectNotification');
           _onSelectNotifcation(message);
         },
       );
@@ -471,14 +473,15 @@ class FirebaseMessageConfig {
       final initialMessage = await _firebaseMessaging.getInitialMessage();
       if (initialMessage != null) {
         if (initialMessage.data.isNotEmpty) {
-          /// ['id']: Key json chứa ID của thông báo server trả về.
-          /// Dùng để điều hướng vào màn chi tiết thông báo
-          /// Mặc định đang là ['id']
-          // Navigator.of(AppConfig.navigatorKey.currentContext).pushNamed(
-          //   DetailNotificationScreen.routeName,
-          //   arguments: int.tryParse(
-          //     initialMessage?.data['id']?.toString(),
+          // await DialogUtil.showPopup(
+          //   dialogSize: DialogSize.Popup,
+          //   barrierDismissible: false,
+          //   backgroundColor: Colors.transparent,
+          //   child: const NormalWidget(
+          //     icon: IconConstants.icFail,
+          //     title: 'Hiển thị dialog từ terminal',
           //   ),
+          //   onVaLue: (value) {},
           // );
         }
       }
@@ -490,9 +493,6 @@ class FirebaseMessageConfig {
 
       /// Tương tác với thông báo khi ứng dụng đang ở background và khi đang khóa màn hình
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        debugPrint(
-            '[FirebaseMessageConfig] ONTAP onMessageOpenedApp: ${message.data.toString()}');
-
         /// ['id']: Key json chứa ID của thông báo server trả về.
         /// Dùng để điều hướng vào màn chi tiết thông báo
         /// Mặc định đang là ['id']
@@ -504,9 +504,6 @@ class FirebaseMessageConfig {
   }
 
   void _showNotification(RemoteMessage message) {
-    debugPrint(
-        '[FirebaseMessageConfig] Got a message whilst in the foreground!');
-    debugPrint('[FirebaseMessageConfig] Message data: ${message.toString()}');
     reloadBalance();
 
     final channelId = message.data['channel_id'] ?? '';
@@ -517,9 +514,7 @@ class FirebaseMessageConfig {
         return;
       }
     }
-    try {
-      debugPrint('[FirebaseMessageConfig] RemoteMessage $message');
-
+    try {  
       final remoteNotification = message.notification;
       final android = message.notification?.android;
 
@@ -555,7 +550,6 @@ class FirebaseMessageConfig {
   }
 
   Future<void> _onSelectNotifcation(Map<String, dynamic> message) async {
-    debugPrint('[FirebaseMessageConfig] ONTAP NOTIFICATION: $message');
     if (message.isEmpty) {
       return;
     }
@@ -575,7 +569,6 @@ class FirebaseMessageConfig {
     final channelId = message['channel_id'] ?? '';
     if (sender == 'stream.chat' && channelId.isNotEmpty) {
       //router chat screen
-      debugPrint('[FirebaseMessageConfig] router chat screen');
       await onChat(channelId);
       return;
     }
@@ -697,14 +690,12 @@ class FirebaseMessageConfig {
 
   Future<void> _handleTokenFirebase() async {
     await _firebaseMessaging.getToken().then((String? token) async {
-      debugPrint('[FirebaseMessageConfig] FIREBASE TOKEN: $token');
       if (token != null) {
         AppDataGlobal.firebaseToken = token;
         await AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
       }
     });
     _firebaseMessaging.onTokenRefresh.listen((token) {
-      debugPrint('[FirebaseMessageConfig] TOKEN FIREBASE CHANGE: $token');
       AppDataGlobal.firebaseToken = token;
       AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
     });
