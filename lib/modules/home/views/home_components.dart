@@ -9,8 +9,8 @@ extension HomeComponents on HomeScreen {
       child: Row(
         children: [
           InkWell(
-            onTap: () {
-              controller.viewProfile;
+            onTap: () async {
+              await controller.viewProfile();
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(25),
