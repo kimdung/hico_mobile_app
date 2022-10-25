@@ -127,6 +127,10 @@ class OrderListController extends BaseController {
         .then((value) => loadList());
   }
 
+  Future<void> viewProfile() async {
+    await Get.toNamed(Routes.PROFILE_UPDATE)?.then((value) => loadList());
+  }
+
   Future<void> onChatAdmin() async {
     if (AppDataGlobal.client == null) {
       return;

@@ -9,7 +9,9 @@ extension OrderListBody on OrderListScreen {
       child: Row(
         children: [
           InkWell(
-            onTap: () => Get.toNamed(Routes.PROFILE_UPDATE),
+            onTap: () {
+              controller.viewProfile;
+            },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(25),
               child: CachedNetworkImage(

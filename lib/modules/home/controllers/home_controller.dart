@@ -77,6 +77,10 @@ class HomeController extends BaseController {
     await Get.toNamed(Routes.SERVICE, arguments: id);
   }
 
+  Future<void> viewProfile() async {
+    await Get.toNamed(Routes.PROFILE_UPDATE)?.then((value) => loadData());
+  }
+
   //goto service page
   Future<void> viewService(ServiceModel item) async {
     await _uiRepository.serviceView(item.id!);
