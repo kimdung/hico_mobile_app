@@ -7,7 +7,6 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
 import '../../../routes/app_pages.dart';
-import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/storage.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/dialog_confirm_widget.dart';
@@ -15,18 +14,14 @@ import '../../../shared/widget_hico/dialog/logout_widget.dart';
 
 class AccountController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
+  final _storage = Get.find<SharedPreferences>();
+
   Rx<UserInfoModel> info = Rx(UserInfoModel());
-  final storage = Get.find<SharedPreferences>();
 
   AccountController() {
     //loadData();
   }
-
-  @override
-  Future<void> onInit() {
-    return super.onInit();
-  }
-
+ 
   Future<void> loadData() async {
     info.value = AppDataGlobal.userInfo!;
   }
@@ -47,9 +42,9 @@ class AccountController extends BaseController {
             AppDataGlobal.client?.removeDevice(AppDataGlobal.firebaseToken);
             _uiRepository.logout().then((response) {
               AppDataGlobal.accessToken = '';
-              storage.setBool(StorageConstants.isLogin, false);
-              storage.setBool(StorageConstants.isSocial, false);
-              storage.setString(StorageConstants.token, '');
+              _storage.setBool(StorageConstants.isLogin, false);
+              _storage.setBool(StorageConstants.isSocial, false);
+              _storage.setString(StorageConstants.token, '');
 
               Get.offAllNamed(Routes.ONBOARDING);
             });
@@ -73,9 +68,9 @@ class AccountController extends BaseController {
           if (_value == true) {
             _uiRepository.deleteUser().then((response) {
               AppDataGlobal.accessToken = '';
-              storage.setBool(StorageConstants.isLogin, false);
-              storage.setBool(StorageConstants.isSocial, false);
-              storage.setString(StorageConstants.token, '');
+              _storage.setBool(StorageConstants.isLogin, false);
+              _storage.setBool(StorageConstants.isSocial, false);
+              _storage.setString(StorageConstants.token, '');
               Get.offAllNamed(Routes.ONBOARDING);
             });
           }

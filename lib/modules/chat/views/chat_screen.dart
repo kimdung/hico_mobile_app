@@ -10,7 +10,6 @@ import '../../../shared/constants/colors.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 import '../../call/pickup/picker_layout.dart';
 import '../controllers/chat_controller.dart';
-import 'channel_header_custom.dart';
 
 class ChatScreen extends GetView<ChatController> {
   @override
@@ -106,7 +105,7 @@ class ChatScreen extends GetView<ChatController> {
   Widget _buildBodyContent() {
     return Scaffold(
       backgroundColor: AppColor.secondBackgroundColorLight,
-      appBar: ChannelHeaderCustom(
+      appBar: StreamChannelHeader(
         backgroundColor: AppColor.secondBackgroundColorLight,
         leading: IconButton(
           icon: SvgPicture.asset(

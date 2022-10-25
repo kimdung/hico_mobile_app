@@ -80,15 +80,7 @@ class VoiceCallController extends BaseController {
       }
       _callStreamSubscription = callMethods
           .callStream(uid: AppDataGlobal.userInfo!.id.toString())
-          .listen((DocumentSnapshot snapshot) {
-        // if (ds.data() == null) {
-        //   Get.back();
-        // }
-
-        printInfo(
-            info: 'call info: ------------------------------------------');
-        printInfo(info: 'call info: ${call.toJson().toString()}');
-        printInfo(info: 'get call info: ${snapshot.data().toString()}');
+          .listen((DocumentSnapshot snapshot) { 
 
         final data = snapshot.data();
         if (data != null && data is Map<String, dynamic>) {

@@ -20,5 +20,5 @@ class AppDataGlobal {
 
   static StreamChatClient? client;
 
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey(); 
 }

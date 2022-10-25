@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
@@ -33,12 +32,20 @@ class _PickupViewState extends State<PickupView> {
   Timer? _timerRingwait;
   Timer? _timerVibration;
 
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   SchedulerBinding.instance?.addPostFrameCallback((_) {
+  //     _startRingtone();
+  //   });
+  // }
+
   @override
-  void initState() {
-    super.initState();
-    SchedulerBinding.instance?.addPostFrameCallback((_) {
-      _startRingtone();
-    });
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _startRingtone();
   }
 
   @override
