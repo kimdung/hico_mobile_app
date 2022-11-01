@@ -284,61 +284,75 @@ class SupplierFilterController extends BaseController {
   }
 
   Future<void> search() async {
-    request.filterDate = date.text;
-    request.filterTimeSlot = '$fromTime - $toTime';
-    request.limit = 20;
-    request.offset = 0;
-    bookingPrepare.supplierRequest = request;
-    log('Log: ${bookingPrepare.supplierRequest.toString()}');
-
-    var hours = tmpToTime.difference(tmpFromTime).inHours.toDouble();
-    final minutes = tmpToTime.difference(tmpFromTime).inMinutes;
-    final tmpMinutes = minutes - (hours * 60);
-    if (tmpMinutes > 0 && tmpMinutes <= 15) {
-      hours += 0.25;
-    } else if (tmpMinutes > 15 && tmpMinutes <= 30) {
-      hours += 0.5;
-    } else if (tmpMinutes > 30 && tmpMinutes <= 45) {
-      hours += 0.75;
-    } else if (tmpMinutes > 45) {
-      hours += 1;
-    }
-    bookingPrepare.totalTime = hours;
-
-    var validater = false;
-    var message = '';
-
-    if (request.filterIsOnline == CommonConstants.offline &&
-        (request.filterLocationProvinceId == null ||
-            request.filterLocationDistrictId == null)) {
-      validater = true;
-      message = 'supplier.filter.location_required'.tr;
-    }
-
-    if (fromTime.value == '' || toTime.value == '') {
-      validater = true;
-      message = 'supplier.filter.time_required'.tr;
-    }
-
-    if (request.serviceId == null) {
-      validater = true;
-      message = 'supplier.filter.service_required'.tr;
-    }
-
-    if (validater) {
+    if (tmpToTime.isBefore(tmpFromTime)) {
+      await EasyLoading.dismiss();
       await DialogUtil.showPopup(
         dialogSize: DialogSize.Popup,
         barrierDismissible: false,
         backgroundColor: Colors.transparent,
         child: NormalWidget(
           icon: IconConstants.icFail,
-          title: message,
+          title: 'statistic.time_incorrect'.tr,
         ),
         onVaLue: (value) {},
       );
-      return;
     } else {
-      await Get.toNamed(Routes.SUPPLIERS, arguments: bookingPrepare);
+      request.filterDate = date.text;
+      request.filterTimeSlot = '$fromTime - $toTime';
+      request.limit = 20;
+      request.offset = 0;
+      bookingPrepare.supplierRequest = request;
+      log('Log: ${bookingPrepare.supplierRequest.toString()}');
+
+      var hours = tmpToTime.difference(tmpFromTime).inHours.toDouble();
+      final minutes = tmpToTime.difference(tmpFromTime).inMinutes;
+      final tmpMinutes = minutes - (hours * 60);
+      if (tmpMinutes > 0 && tmpMinutes <= 15) {
+        hours += 0.25;
+      } else if (tmpMinutes > 15 && tmpMinutes <= 30) {
+        hours += 0.5;
+      } else if (tmpMinutes > 30 && tmpMinutes <= 45) {
+        hours += 0.75;
+      } else if (tmpMinutes > 45) {
+        hours += 1;
+      }
+      bookingPrepare.totalTime = hours;
+
+      var validater = false;
+      var message = '';
+
+      if (request.filterIsOnline == CommonConstants.offline &&
+          (request.filterLocationProvinceId == null ||
+              request.filterLocationDistrictId == null)) {
+        validater = true;
+        message = 'supplier.filter.location_required'.tr;
+      }
+
+      if (fromTime.value == '' || toTime.value == '') {
+        validater = true;
+        message = 'supplier.filter.time_required'.tr;
+      }
+
+      if (request.serviceId == null) {
+        validater = true;
+        message = 'supplier.filter.service_required'.tr;
+      }
+
+      if (validater) {
+        await DialogUtil.showPopup(
+          dialogSize: DialogSize.Popup,
+          barrierDismissible: false,
+          backgroundColor: Colors.transparent,
+          child: NormalWidget(
+            icon: IconConstants.icFail,
+            title: message,
+          ),
+          onVaLue: (value) {},
+        );
+        return;
+      } else {
+        await Get.toNamed(Routes.SUPPLIERS, arguments: bookingPrepare);
+      }
     }
   }
 

@@ -5,6 +5,7 @@ import 'package:ui_api/models/notifications/notification_data.dart';
 import 'package:ui_api/models/notifications/notification_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/invoice_request.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
@@ -89,7 +90,8 @@ class NotificationController extends BaseController {
     });
   }
 
-  Future<void> viewDetail(int id, int displayType, int? invoiceId) async {
+  Future<void> viewDetail(
+      int id, int displayType, int? invoiceId, String? typeLink) async {
     await reloadBalance();
     //Router
     await _uiRepository.notificationDetail(id).then((response) {
@@ -125,14 +127,14 @@ class NotificationController extends BaseController {
           break;
         case NotificationData.typeCustomerExtendPeriod:
           // do something else 7
-         Get.toNamed(Routes.ORDER_DETAIL,
-                  arguments: InvoiceRequest(id: invoiceId,extend: true))
+          Get.toNamed(Routes.ORDER_DETAIL,
+                  arguments: InvoiceRequest(id: invoiceId, extend: true))
               ?.then((value) => loadData());
           break;
         case NotificationData.typeSupplierCompleted:
           // do something else 8
           Get.toNamed(Routes.ORDER_DETAIL,
-                  arguments: InvoiceRequest(id: invoiceId,rating: true))
+                  arguments: InvoiceRequest(id: invoiceId, rating: true))
               ?.then((value) => loadData());
           break;
         case NotificationData.typeTravelingCosts:
@@ -218,6 +220,17 @@ class NotificationController extends BaseController {
         case NotificationData.typeAdminTransferUser:
           // do something else 24
           Get.toNamed(Routes.WALLET);
+          break;
+        case NotificationData.typeUrlLink:
+          // do something else 26
+          final _url = Uri.parse(typeLink ?? '');
+          launchUrl(_url);
+          break;
+        case NotificationData.typeNews:
+          // do something else 27
+          if (typeLink != null && typeLink.isNotEmpty) {
+            Get.toNamed(Routes.NEWS_DETAIL, arguments: int.parse(typeLink));
+          }
           break;
         default:
           Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)

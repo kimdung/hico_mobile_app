@@ -28,6 +28,10 @@ class NotificationData {
   static const String typeSupplierRefuseExtend = '22';
   static const String typeSupplierRefuseCustomer = '23';
   static const String typeAdminTransferUser = '24';
+  static const String typeCustomerCreateInvoice = '25';
+  static const String typeUrlLink = '26';
+  static const String typeNews = '27';
+  static const String typePromotion = '28';
 
   @JsonKey(name: 'display_type')
   String? displayType;
