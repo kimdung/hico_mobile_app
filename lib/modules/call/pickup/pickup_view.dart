@@ -36,7 +36,7 @@ class _PickupViewState extends State<PickupView> {
   // void initState() {
   //   super.initState();
 
-  //   SchedulerBinding.instance?.addPostFrameCallback((_) {
+  //   SchedulerBinding.instance.addPostFrameCallback((_) {
   //     _startRingtone();
   //   });
   // }

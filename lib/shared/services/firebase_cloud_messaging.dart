@@ -403,7 +403,7 @@ class FirebaseMessageConfig {
     try {
       const initialzationSettingsAndroid =
           AndroidInitializationSettings('app_icon');
-      final initializationSettingsIOS = IOSInitializationSettings(
+      final initializationSettingsIOS = DarwinInitializationSettings(
         requestAlertPermission: true,
         requestBadgePermission: true,
         requestSoundPermission: true,
@@ -432,11 +432,25 @@ class FirebaseMessageConfig {
       );
       await _flutterLocalNotificationsPlugin.initialize(
         initializationSettings,
-        onSelectNotification: (payload) {
-          if (payload?.isEmpty ?? true) {
+        // onSelectNotification: (payload) {
+        //   if (payload?.isEmpty ?? true) {
+        //     return;
+        //   }
+        //   final message = jsonDecode(payload ?? '');
+        //   _onSelectNotifcation(message);
+        // },
+        onDidReceiveBackgroundNotificationResponse: (details) {
+          if (details.payload?.isEmpty ?? true) {
             return;
           }
-          final message = jsonDecode(payload ?? '');
+          final message = jsonDecode(details.payload ?? '');
+          _onSelectNotifcation(message);
+        },
+        onDidReceiveNotificationResponse: (details) {
+          if (details.payload?.isEmpty ?? true) {
+            return;
+          }
+          final message = jsonDecode(details.payload ?? '');
           _onSelectNotifcation(message);
         },
       );
@@ -530,7 +544,7 @@ class FirebaseMessageConfig {
               enableLights: true,
               enableVibration: true,
             ),
-            iOS: IOSNotificationDetails(
+            iOS: DarwinNotificationDetails(
               presentAlert: true,
               presentBadge: true,
               presentSound: true,

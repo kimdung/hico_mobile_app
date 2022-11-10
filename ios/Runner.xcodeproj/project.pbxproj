@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,8 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		9C63D4C8291C0EB200DBC86C /* FBSDKCoreKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C63D4C7291C0EB200DBC86C /* FBSDKCoreKit.xcframework */; };
+		9C63D4C9291C0EB200DBC86C /* FBSDKCoreKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C63D4C7291C0EB200DBC86C /* FBSDKCoreKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9CF2112228ED84CB006556CC /* bell.caf in Resources */ = {isa = PBXBuildFile; fileRef = 9CF2112028ED84CB006556CC /* bell.caf */; };
 		CEAB9C97815D174B15A5C90F /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED0EF799865CA9B488EA01E7 /* Pods_Runner.framework */; };
 /* End PBXBuildFile section */
@@ -25,6 +27,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				9C63D4C9291C0EB200DBC86C /* FBSDKCoreKit.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,6 +55,7 @@
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C53A412D068170393A8AF98 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
+		9C63D4C7291C0EB200DBC86C /* FBSDKCoreKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit.xcframework; path = Pods/FBSDKCoreKit/XCFrameworks/FBSDKCoreKit.xcframework; sourceTree = "<group>"; };
 		9C68DBEF2850574D0042A039 /* Runner.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		9CF2112028ED84CB006556CC /* bell.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = bell.caf; path = Runner/bell.caf; sourceTree = "<group>"; };
 		ED0EF799865CA9B488EA01E7 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C63D4C8291C0EB200DBC86C /* FBSDKCoreKit.xcframework in Frameworks */,
 				CEAB9C97815D174B15A5C90F /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -72,6 +77,7 @@
 		0A41C02F6DE8E0CF728C7E68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9C63D4C7291C0EB200DBC86C /* FBSDKCoreKit.xcframework */,
 				ED0EF799865CA9B488EA01E7 /* Pods_Runner.framework */,
 			);
 			name = Frameworks;

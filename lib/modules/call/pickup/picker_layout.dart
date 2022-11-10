@@ -31,8 +31,8 @@ class PickupLayout extends GetView<BaseController> {
         ? StreamBuilder<DocumentSnapshot>(
             stream: callMethods.callStream(uid: userInfo.id.toString()),
             builder: (context, snapshot) {
-              if (WidgetsBinding.instance?.lifecycleState == null ||
-                  WidgetsBinding.instance?.lifecycleState !=
+              if (WidgetsBinding.instance.lifecycleState == null ||
+                  WidgetsBinding.instance.lifecycleState !=
                       AppLifecycleState.resumed) {
                 return scaffold;
               }

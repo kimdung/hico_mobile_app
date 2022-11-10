@@ -1,5 +1,4 @@
-import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
-import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,7 +31,15 @@ class VideoCallView extends GetView<VideoCallController> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: controller.isJoined.value
-                      ? const RtcLocalView.SurfaceView()
+                      // ? const RtcLocalView.SurfaceView()
+                      ? AgoraVideoView(
+                          controller: VideoViewController(
+                            rtcEngine: controller.engine!,
+                            canvas: const VideoCanvas(uid: 0),
+                            useFlutterTexture: false,
+                            useAndroidSurfaceView: false,
+                          ),
+                        )
                       : Container(
                           alignment: Alignment.center,
                           child: const SizedBox(
@@ -57,10 +64,18 @@ class VideoCallView extends GetView<VideoCallController> {
   Widget _remoteVideo() {
     return Obx(() {
       if (controller.remoteUid.value != null) {
-        return RtcRemoteView.SurfaceView(
-          uid: controller.remoteUid.value!,
-          channelId: controller.call.channelId ?? '',
+        return AgoraVideoView(
+          controller: VideoViewController(
+            rtcEngine: controller.engine!,
+            canvas: VideoCanvas(uid: controller.remoteUid.value!),
+            useFlutterTexture: false,
+            useAndroidSurfaceView: false,
+          ),
         );
+        // return RtcRemoteView.SurfaceView(
+        //   uid: controller.remoteUid.value!,
+        //   channelId: controller.call.channelId ?? '',
+        // );
       } else {
         return Text(
           'calling'.tr,

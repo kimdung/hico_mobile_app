@@ -69,7 +69,7 @@ class ChatScreen extends GetView<ChatController> {
                 FlutterLocalNotificationsPlugin();
             const initializationSettings = InitializationSettings(
               android: AndroidInitializationSettings('app_icon'),
-              iOS: IOSInitializationSettings(),
+              iOS: DarwinInitializationSettings(),
             );
             await flutterLocalNotificationsPlugin
                 .initialize(initializationSettings);
@@ -89,7 +89,7 @@ class ChatScreen extends GetView<ChatController> {
                   priority: Priority.high,
                   importance: Importance.high,
                 ),
-                iOS: IOSNotificationDetails(),
+                iOS: DarwinNotificationDetails(),
               ),
             );
           },
@@ -166,11 +166,11 @@ class ChatScreen extends GetView<ChatController> {
           StreamMessageInput(
             showCommandsButton: false,
             // actionsLocation: ActionsLocation.rightInside,
-            attachmentButtonBuilder: (context, icon) {
-              return icon.copyWith(
-                icon: SvgPicture.asset(IconConstants.icImage),
-              );
-            },
+            // attachmentButtonBuilder: (context, icon) {
+            //   return icon.copyWith(
+            //     icon: SvgPicture.asset(IconConstants.icImage),
+            //   );
+            // },
             idleSendButton: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: SvgPicture.asset(IconConstants.icSend),
