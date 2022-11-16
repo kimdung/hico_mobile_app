@@ -40,6 +40,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_screen.dart';
 import '../modules/main/bindings/main_binding.dart';
 import '../modules/main/views/main_screen.dart';
+import '../modules/main_guest/bindings/main_guest_binding.dart';
+import '../modules/main_guest/views/main_guest_screen.dart';
 import '../modules/news_detail/bindings/news_detail_binding.dart';
 import '../modules/news_detail/views/news_detail_screen.dart';
 import '../modules/news_list/bindings/news_list_binding.dart';
@@ -165,6 +167,12 @@ final routePages = [
     page: () => MainScreen(),
     binding: MainBinding(),
   ),
+  GetPage(
+    name: Routes.MAIN_GUEST,
+    page: () => MainGuestScreen(),
+    binding: MainGuestBinding(),
+  ),
+
   GetPage(
       name: Routes.ORDER_DETAIL,
       page: () => OrderScreen(),

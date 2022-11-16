@@ -11,7 +11,7 @@ extension NewsExtension on NewsScreen {
       child: Container(
         width: Get.width,
         color: AppColor.primaryBackgroundColorLight,
-        margin: const EdgeInsets.only(top: 24),
+        margin: const EdgeInsets.only(top: 20),
         child: Row(
           children: [
             Container(
@@ -41,24 +41,27 @@ extension NewsExtension on NewsScreen {
             ),
             Expanded(
                 flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.title ?? '',
-                      style: TextAppStyle().genaralTextStyle().copyWith(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(item.description ?? '',
-                        style: TextAppStyle().secondTextStyle()),
-                    const SizedBox(height: 12),
-                    Text(item.createdAt ?? '',
-                        style: TextAppStyle().secondTextStyle()),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.only(right:20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.title ?? '',
+                        style: TextAppStyle().genaralTextStyle().copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(item.description ?? '',
+                          style: TextAppStyle().secondTextStyle()),
+                      const SizedBox(height: 12),
+                      Text(item.createdAt ?? '',
+                          style: TextAppStyle().secondTextStyle()),
+                    ],
+                  ),
                 ))
           ],
         ),

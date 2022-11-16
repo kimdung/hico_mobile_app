@@ -14,6 +14,7 @@ abstract class Routes {
   static const FORGOT_PASSWORD_CHANGE = '/forgot_password_change';
 
   static const MAIN = '/main';
+  static const MAIN_GUEST = '/main_guest';
 
   static const HOME = '/home';
   static const ORDER_LIST = '/order_list';

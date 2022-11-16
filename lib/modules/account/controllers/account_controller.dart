@@ -46,7 +46,7 @@ class AccountController extends BaseController {
               _storage.setBool(StorageConstants.isSocial, false);
               _storage.setString(StorageConstants.token, '');
 
-              Get.offAllNamed(Routes.ONBOARDING);
+              Get.offAllNamed(Routes.MAIN_GUEST);
             });
           }
         }

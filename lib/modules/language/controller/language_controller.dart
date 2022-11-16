@@ -96,6 +96,10 @@ class LanguageController extends GetxController {
     await storage.setString(
         StorageConstants.language, AppDataGlobal.languageCode);
 
-    await Get.offAndToNamed(Routes.ONBOARDING);
+    if (AppDataGlobal.accessToken.isNotEmpty) {
+      await Get.offAndToNamed(Routes.MAIN);
+    } else {
+      await Get.offAndToNamed(Routes.MAIN_GUEST);
+    }
   }
 }
