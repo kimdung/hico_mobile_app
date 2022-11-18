@@ -96,7 +96,6 @@ class VoiceCallController extends BaseController {
   }
 
   Future<void> _initAgoraEngine() async {
-    // _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
     //create the engine
     _engine = createAgoraRtcEngine();
     await _engine?.initialize(RtcEngineContext(
@@ -119,6 +118,9 @@ class VoiceCallController extends BaseController {
                   'joinChannelSuccess ${connection.channelId} ${connection.localUid} $elapsed');
 
           isJoined.value = true;
+
+          _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
+          _engine?.enableLocalAudio(false);
         },
         onLeaveChannel: (connection, stats) {
           printError(info: 'leaveChannel ${stats.toJson()}');
@@ -132,6 +134,12 @@ class VoiceCallController extends BaseController {
           _timerAutoEncall?.cancel();
 
           _engine?.enableLocalAudio(true);
+          _engine?.enableAudio();
+          _engine?.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
+          _engine?.setAudioProfile(
+            profile: AudioProfileType.audioProfileDefault,
+            scenario: AudioScenarioType.audioScenarioGameStreaming,
+          );
 
           _endRingtone();
 
@@ -148,54 +156,16 @@ class VoiceCallController extends BaseController {
         onTokenPrivilegeWillExpire: (RtcConnection connection, String token) {},
       ),
     );
-    // _engine?.setEventHandler(RtcEngineEventHandler(
-    //   error: (errorCode) {
-    //     printError(info: 'error $errorCode');
-    //   },
-    //   joinChannelSuccess: (channel, uid, elapsed) {
-    //     printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
-
-    //     isJoined.value = true;
-    //   },
-    //   leaveChannel: (stats) {
-    //     printError(info: 'leaveChannel ${stats.toJson()}');
-
-    //     _endRingtone();
-
-    //     isJoined.value = false;
-    //   },
-    //   userJoined: (uid, elapsed) {
-    //     printInfo(info: 'userJoined $uid $elapsed');
-    //     _timerAutoEncall?.cancel();
-
-    //     _engine?.enableLocalAudio(true);
-
-    //     _endRingtone();
-
-    //     isCalling.value = true;
-
-    //     _callBeginCall();
-    //   },
-    //   userOffline: (int uid, UserOfflineReason reason) {
-    //     printInfo(info: 'userOffline $uid left channel');
-
-    //     onEndCall();
-    //   },
-    // ));
 
     // await _engine?.enableAudio();
-    // await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    // await _engine?.setClientRole(ClientRole.Broadcaster);
+    // await _engine?.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
+    // await _engine?.setAudioProfile(
+    //   profile: AudioProfileType.audioProfileDefault,
+    //   scenario: AudioScenarioType.audioScenarioGameStreaming,
+    // );
 
-    await _engine?.enableAudio();
-    await _engine?.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-    await _engine?.setAudioProfile(
-      profile: AudioProfileType.audioProfileDefault,
-      scenario: AudioScenarioType.audioScenarioGameStreaming,
-    );
-
-    await _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
-    await _engine?.enableLocalAudio(false);
+    // await _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
+    // await _engine?.enableLocalAudio(false);
   }
 
   Future<void> _joinChannel() async {

@@ -107,8 +107,11 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> _initAgoraEngine() async {
+    if (Platform.isAndroid) {
+      await [Permission.microphone, Permission.camera].request();
+    }
+
     //create the engine
-    // engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
     engine = createAgoraRtcEngine();
     await engine?.initialize(RtcEngineContext(appId: appId));
     await engine?.setParameters('{"che.audio.opensl":true}');
@@ -116,10 +119,7 @@ class VideoCallController extends BaseController {
     _addListeners();
 
     await engine?.enableVideo();
-
     await engine?.startPreview();
-    // await engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    // await engine?.setClientRole(ClientRole.Broadcaster);
 
     await _joinChannel();
   }
@@ -172,9 +172,9 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> _joinChannel() async {
-    if (Platform.isAndroid) {
-      await [Permission.microphone, Permission.camera].request();
-    }
+    // if (Platform.isAndroid) {
+    //   await [Permission.microphone, Permission.camera].request();
+    // }
     // await engine
     //     ?.joinChannel(token, call.channelId ?? '', null, call.getId() ?? 0)
     //     .then((value) {
@@ -192,15 +192,29 @@ class VideoCallController extends BaseController {
     //   Future.delayed(Duration.zero, Get.back);
     // });
 
-    await engine?.joinChannel(
-      token: token,
-      channelId: call.channelId ?? '',
-      uid: call.getId() ?? 0,
-      options: const ChannelMediaOptions(
-        channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
-        clientRoleType: ClientRoleType.clientRoleBroadcaster,
-      ),
-    );
+    await engine
+        ?.joinChannel(
+            token: token,
+            channelId: call.channelId ?? '',
+            uid: call.getId() ?? 0,
+            options: const ChannelMediaOptions(
+              channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
+              clientRoleType: ClientRoleType.clientRoleBroadcaster,
+            ))
+        .then((value) {
+      if (isCaller) {
+        _startRingtone();
+
+        _sendCallNotification();
+
+        _timerAutoEncall = Timer.periodic(const Duration(minutes: 1), (timer) {
+          onEndCall();
+        });
+      }
+    }).catchError((onError) {
+      printError(info: 'error ${onError.toString()}');
+      Future.delayed(Duration.zero, Get.back);
+    });
   }
 
   Future<void> onToggleMute() async {
