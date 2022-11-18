@@ -37,8 +37,6 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
   if (notificationData.receiverId == null) {
     return;
   }
-  debugPrint(
-      '[FirebaseMessageConfig] showCallkitIncoming ${notificationData.toJson().toString()}');
 
   try {
     final callCollection = FirebaseFirestore.instance.collection('call');
@@ -180,171 +178,11 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
   }
 }
 
-// Future<void> showCallkitIncoming(NotificationData notificationData) async {
-//   if (notificationData.receiverId == null) {
-//     return;
-//   }
-//   final callCollection = FirebaseFirestore.instance.collection('call');
-//   final doc = await callCollection.doc(notificationData.receiverId).get();
-//   if (doc.data() == null) {
-//     return;
-//   }
-//   final call = CallModel.fromJson(doc.data()!);
-//   try {
-//     if (call.hasDialled != null && !call.hasDialled!) {
-//       callCollection
-//           .doc(notificationData.receiverId)
-//           .snapshots()
-//           .listen((DocumentSnapshot ds) {
-//         if (ds.data() == null) {
-//           FlutterCallkitIncoming.endAllCalls();
-//         }
-//       });
-//     }
-//   } catch (e) {
-//     debugPrint('[FirebaseMessageConfig] $e');
-//   }
-//   try {
-//     if (call.hasDialled != null && !call.hasDialled!) {
-//       if (Platform.isIOS) {
-//         SharedPreferencesIOS.registerWith();
-//       } else if (Platform.isAndroid) {
-//         SharedPreferencesAndroid.registerWith();
-//       }
-//       final sp = await SharedPreferences.getInstance();
-//       final locale = sp.getString(StorageConstants.language) ?? VIETNAMESE_LANG;
-
-//       final String handle,
-//           textAccept,
-//           textDecline,
-//           textMissedCall,
-//           textCallback;
-//       switch (locale) {
-//         case ENGLISH_LANG:
-//           handle = (call.isVideo ?? false)
-//               ? 'Incoming video call...'
-//               : 'Incoming voice call...';
-//           textAccept = 'Accept';
-//           textDecline = 'Decline';
-//           textMissedCall = 'Missed Call';
-//           textCallback = 'Callback';
-//           break;
-//         case JAPANESE_LANG:
-//           handle = (call.isVideo ?? false) ? 'ビデオ通話の着信...' : '音声通話の着信...';
-//           textAccept = '承認';
-//           textDecline = '却下';
-//           textMissedCall = '不在着信';
-//           textCallback = '折り返し電話';
-//           break;
-//         default:
-//           handle = (call.isVideo ?? false)
-//               ? 'Có cuộc gọi video...'
-//               : 'Có cuộc gọi âm thanh...';
-//           textAccept = 'Chấp nhận';
-//           textDecline = 'Từ chối';
-//           textMissedCall = 'Có cuộc gọi nhỡ';
-//           textCallback = 'Gọi lại';
-//       }
-
-//       final params = <String, dynamic>{
-//         'id': call.id ?? const Uuid().v4(),
-//         'appName': 'HICO',
-//         'nameCaller': call.callerName ?? '',
-//         'avatar': call.callerPic,
-//         'handle': handle,
-//         'type': (Platform.isIOS || (call.isVideo ?? false)) ? 1 : 0,
-//         'duration': 60000,
-//         'textAccept': textAccept,
-//         'textDecline': textDecline,
-//         'textMissedCall': textMissedCall,
-//         'textCallback': textCallback,
-//         // 'extra': <String, dynamic>{'userId': '1a2b3c4d'},
-//         // 'headers': <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
-//         'android': <String, dynamic>{
-//           'isCustomNotification': true,
-//           'isShowLogo': false,
-//           'isShowCallback': false,
-//           'isShowMissedCallNotification': true,
-//           'ringtonePath': 'bell',
-//           'backgroundColor': '#DF4D6F',
-//         },
-//         'ios': <String, dynamic>{
-//           'iconName': 'AppIcon',
-//           'handleType': 'generic',
-//           'supportsVideo': true,
-//           'maximumCallGroups': 2,
-//           'maximumCallsPerCallGroup': 1,
-//           'audioSessionMode': 'default',
-//           'audioSessionActive': true,
-//           'audioSessionPreferredSampleRate': 44100.0,
-//           'audioSessionPreferredIOBufferDuration': 0.005,
-//           'supportsDTMF': true,
-//           'supportsHolding': true,
-//           'supportsGrouping': false,
-//           'supportsUngrouping': false,
-//           'ringtonePath': 'bell.caf'
-//         }
-//       };
-//       FlutterCallkitIncoming.onEvent.listen((event) async {
-//         switch (event!.name) {
-//           case CallEvent.ACTION_CALL_INCOMING:
-//             break;
-//           case CallEvent.ACTION_CALL_START:
-//             break;
-//           case CallEvent.ACTION_CALL_ACCEPT:
-//             AppDataGlobal.acceptCall = true;
-//             break;
-//           case CallEvent.ACTION_CALL_DECLINE:
-//             try {
-//               await callCollection.doc(call.callerId.toString()).delete();
-//             } catch (e) {
-//               debugPrint(e.toString());
-//             }
-//             try {
-//               await callCollection.doc(call.receiverId.toString()).delete();
-//             } catch (e) {
-//               debugPrint(e.toString());
-//             }
-//             break;
-//           case CallEvent.ACTION_CALL_ENDED:
-//             break;
-//           case CallEvent.ACTION_CALL_TIMEOUT:
-//             break;
-//           case CallEvent.ACTION_CALL_CALLBACK:
-//             break;
-//           case CallEvent.ACTION_CALL_TOGGLE_HOLD:
-//             break;
-//           case CallEvent.ACTION_CALL_TOGGLE_MUTE:
-//             break;
-//           case CallEvent.ACTION_CALL_TOGGLE_DMTF:
-//             break;
-//           case CallEvent.ACTION_CALL_TOGGLE_GROUP:
-//             break;
-//           case CallEvent.ACTION_CALL_TOGGLE_AUDIO_SESSION:
-//             break;
-//           case CallEvent.ACTION_DID_UPDATE_DEVICE_PUSH_TOKEN_VOIP:
-//             break;
-//         }
-//       });
-//       await FlutterCallkitIncoming.showCallkitIncoming(params);
-//     }
-//   } catch (e) {
-//     debugPrint('[FirebaseMessageConfig] $e');
-//   }
-// }
-
 /// https://firebase.flutter.dev/docs/messaging/usage/
 class FirebaseMessageConfig {
-  static final FirebaseMessageConfig _singleton =
-      FirebaseMessageConfig._internal();
+  FirebaseMessageConfig._();
 
-  final _uiRepository = Get.find<HicoUIRepository>();
-
-  factory FirebaseMessageConfig() {
-    return _singleton;
-  }
-
-  FirebaseMessageConfig._internal();
+  static final instance = FirebaseMessageConfig._();
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
@@ -432,27 +270,10 @@ class FirebaseMessageConfig {
       );
       await _flutterLocalNotificationsPlugin.initialize(
         initializationSettings,
-        // onSelectNotification: (payload) {
-        //   if (payload?.isEmpty ?? true) {
-        //     return;
-        //   }
-        //   final message = jsonDecode(payload ?? '');
-        //   _onSelectNotifcation(message);
-        // },
-        onDidReceiveBackgroundNotificationResponse: (details) {
-          if (details.payload?.isEmpty ?? true) {
-            return;
-          }
-          final message = jsonDecode(details.payload ?? '');
-          _onSelectNotifcation(message);
-        },
-        onDidReceiveNotificationResponse: (details) {
-          if (details.payload?.isEmpty ?? true) {
-            return;
-          }
-          final message = jsonDecode(details.payload ?? '');
-          _onSelectNotifcation(message);
-        },
+        onDidReceiveBackgroundNotificationResponse:
+            didReceiveBackgroundNotificationResponseCallback,
+        onDidReceiveNotificationResponse:
+            didReceiveNotificationResponseCallback,
       );
 
       if (Platform.isIOS) {
@@ -497,17 +318,15 @@ class FirebaseMessageConfig {
       }
 
       /// Khi đang mở ứng dụng, thông báo Firebase sẽ vào hàm onMessage
-      /// Android sẽ block toàn bộ thông báo đẩy, cần cấu hình thêm thư viện flutter_local_notifications để hiển thị thông báo cũng như tương tác thông báo
-      /// IOS cần call hàm setForegroundNotificationPresentationOptions để nhận thông báo khi đang mở ứng dụng
+      /// Android sẽ block toàn bộ thông báo đẩy, cần cấu hình thêm thư viện
+      /// flutter_local_notifications để hiển thị thông báo cũng như tương tác
+      /// thông báo IOS cần call setForegroundNotificationPresentationOptions
+      /// để nhận thông báo khi đang mở ứng dụng
       FirebaseMessaging.onMessage.listen(_showNotification);
 
-      /// Tương tác với thông báo khi ứng dụng đang ở background và khi đang khóa màn hình
-      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        /// ['id']: Key json chứa ID của thông báo server trả về.
-        /// Dùng để điều hướng vào màn chi tiết thông báo
-        /// Mặc định đang là ['id']
-        _onSelectNotifcation(message.data);
-      });
+      /// Tương tác với thông báo khi ứng dụng đang ở background và khi đang
+      /// khóa màn hình
+      FirebaseMessaging.onMessageOpenedApp.listen(onMessageOpenedApp);
     } catch (e) {
       debugPrint('$e');
     }
@@ -559,7 +378,39 @@ class FirebaseMessageConfig {
     }
   }
 
-  Future<void> _onSelectNotifcation(Map<String, dynamic> message) async {
+  static Future didReceiveBackgroundNotificationResponseCallback(
+      NotificationResponse details) async {
+    debugPrint(
+        '[FirebaseMessageConfig] onDidReceiveBackgroundNotificationResponse $details');
+
+    if (details.payload?.isEmpty ?? true) {
+      return;
+    }
+    final message = jsonDecode(details.payload ?? '');
+    await onSelectNotifcation(message);
+  }
+
+  static Future didReceiveNotificationResponseCallback(
+      NotificationResponse details) async {
+    if (details.payload?.isEmpty ?? true) {
+      return;
+    }
+    final message = jsonDecode(details.payload ?? '');
+    await onSelectNotifcation(message);
+  }
+
+  static Future onMessageOpenedApp(RemoteMessage message) async {
+    /// ['id']: Key json chứa ID của thông báo server trả về.
+    /// Dùng để điều hướng vào màn chi tiết thông báo
+    /// Mặc định đang là ['id']
+    if (message.data.isEmpty) {
+      return;
+    }
+    debugPrint('[FirebaseMessageConfig] onMessageOpenedApp');
+    await onSelectNotifcation(message.data);
+  }
+
+  static Future<void> onSelectNotifcation(Map<String, dynamic> message) async {
     if (message.isEmpty) {
       return;
     }
@@ -711,7 +562,7 @@ class FirebaseMessageConfig {
     });
   }
 
-  Future<void> onChat(String channelId) async {
+  static Future<void> onChat(String channelId) async {
     if (AppDataGlobal.client == null) {
       return;
     }
@@ -738,6 +589,7 @@ class FirebaseMessageConfig {
   }
 
   Future<void> reloadBalance() async {
+    final _uiRepository = Get.find<HicoUIRepository>();
     await _uiRepository.getInfo().then((response) {
       if (response.status == CommonConstants.statusOk &&
           response.data != null &&

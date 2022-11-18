@@ -17,10 +17,10 @@ class LoginSocialServices {
     Function(FirebaseAuthException)? onVerificationFailed,
     Function(PhoneAuthCredential)? onVerificationCompleted,
   }) async {
-    await _firebaseAuth.setLanguageCode("vi");
-    return await FirebaseAuth.instance.verifyPhoneNumber(
+    await _firebaseAuth.setLanguageCode('vi');
+    await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: '$phone',
-      timeout: Duration(seconds: 90),
+      timeout: const Duration(seconds: 90),
       verificationCompleted: (PhoneAuthCredential credential) {
         onVerificationCompleted?.call(credential);
       },
@@ -28,11 +28,11 @@ class LoginSocialServices {
         onVerificationFailed?.call(e);
       },
       codeSent: (String? verificationId, int? resendToken) {
-        this._verificationIdController = verificationId;
+        _verificationIdController = verificationId;
         onCodeSent?.call();
       },
       codeAutoRetrievalTimeout: (String verificationId) {
-        this._verificationIdController = verificationId;
+        _verificationIdController = verificationId;
       },
     );
   }
@@ -40,11 +40,10 @@ class LoginSocialServices {
   /// OTP Phone Authentication
   Future<UserCredential> authenPhoneCode({required String opt}) async {
     final AuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: this._verificationIdController!,
+      verificationId: _verificationIdController!,
       smsCode: opt,
     );
-    final UserCredential userCredential =
-        await _firebaseAuth.signInWithCredential(credential);
+    final userCredential = await _firebaseAuth.signInWithCredential(credential);
     return userCredential;
   }
 
@@ -65,7 +64,7 @@ class LoginSocialServices {
 
   /// Login With Facebook Account
   Future<LoginResult> loginWithFacebook() async {
-    return await _facebookAuth.login();
+    return _facebookAuth.login();
   }
 
   /// LogOut With Facebook Account
@@ -78,15 +77,14 @@ class LoginSocialServices {
 
   /// Login With Google Account
   Future<GoogleSignInAuthentication> loginWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
+    final googleUser = await _googleSignIn.signIn();
+    final googleAuth = await googleUser!.authentication;
     return googleAuth;
   }
 
   /// Logout Google Account
   Future<void> logOutGoogle() async {
-    final bool rs = await _googleSignIn.isSignedIn();
+    final rs = await _googleSignIn.isSignedIn();
     if (rs) {
       await _googleSignIn.signOut();
     }
