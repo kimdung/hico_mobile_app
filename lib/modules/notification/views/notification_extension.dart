@@ -50,22 +50,25 @@ extension NotificationExtension on NotificationScreen {
             ),
             Expanded(
                 flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.title ?? '',
-                      style: TextAppStyle().genaralTextStyle().copyWith(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColor.primaryColorLight,
-                          ),
-                    ),
-                    Text(item.description ?? '',
-                        style: TextAppStyle().secondTextStyle()),
-                    Text(item.createdAt ?? '',
-                        style: TextAppStyle().secondTextStyle()),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.title ?? '',
+                        style: TextAppStyle().genaralTextStyle().copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppColor.primaryColorLight,
+                            ),
+                      ),
+                      Text(item.description ?? '',
+                          style: TextAppStyle().secondTextStyle()),
+                      Text(item.createdAt ?? '',
+                          style: TextAppStyle().secondTextStyle()),
+                    ],
+                  ),
                 ))
           ],
         ),

@@ -52,16 +52,16 @@ class SplashController extends GetxController {
             _loadData(response.data!.info!);
             return;
           } else {
-            Get.offAndToNamed(Routes.LANGUAGE);
+            Get.offAndToNamed(Routes.MAIN_GUEST);
           }
         }).catchError((error) {
-          Get.offAndToNamed(Routes.LANGUAGE);
+          Get.offAndToNamed(Routes.MAIN_GUEST);
         });
       } catch (e) {
-        await Get.offAndToNamed(Routes.LANGUAGE);
+        await Get.offAndToNamed(Routes.MAIN_GUEST);
       }
     } else {
-      await Get.offAndToNamed(Routes.LANGUAGE);
+      await Get.offAndToNamed(Routes.MAIN_GUEST);
     }
   }
 
@@ -81,10 +81,10 @@ class SplashController extends GetxController {
         _loadData(response.loginModel!.info!);
       } else {
         storage.setBool(StorageConstants.isLogin.toString(), false);
-        Get.offAndToNamed(Routes.LANGUAGE);
+        Get.offAndToNamed(Routes.MAIN);
       }
     }).catchError((error) {
-      Get.offAndToNamed(Routes.LANGUAGE);
+      Get.offAndToNamed(Routes.MAIN_GUEST);
     });
   }
 
@@ -93,7 +93,7 @@ class SplashController extends GetxController {
     if (language == null) {
       AppDataGlobal.languageCode = VIETNAMESE_LANG;
       Get.updateLocale(const Locale('vi', 'VN'));
-      return;
+      Get.offAndToNamed(Routes.LANGUAGE);
     } else {
       AppDataGlobal.languageCode = language;
 

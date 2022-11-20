@@ -219,7 +219,7 @@ class NotificationController extends BaseController {
           break;
         case NotificationData.typeAdminTransferUser:
           // do something else 24
-          Get.toNamed(Routes.WALLET);
+          Get.toNamed(Routes.STATISTIC);
           break;
         case NotificationData.typeUrlLink:
           // do something else 26

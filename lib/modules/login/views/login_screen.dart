@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../../data/app_data_global.dart';
 import '/resource/assets_constant/images_constants.dart';
+import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/decoration/text_field_decoration.dart';
@@ -112,12 +110,15 @@ class LoginScreen extends GetView<LoginController> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                child: Text(
-                                  'login_with'.tr,
-                                  style: TextAppStyle().secondTextStyle(),
-                                ),
-                              ),
+                              child: (AppDataGlobal.masterData?.loginSocial ==
+                                      1)
+                                  ? Center(
+                                      child: Text(
+                                        'login_with'.tr,
+                                        style: TextAppStyle().secondTextStyle(),
+                                      ),
+                                    )
+                                  : Container(),
                             ),
                             Container(
                               child: AppDataGlobal.masterData?.loginSocial == 1
