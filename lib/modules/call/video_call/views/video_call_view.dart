@@ -34,7 +34,7 @@ class VideoCallView extends GetView<VideoCallController> {
                       // ? const RtcLocalView.SurfaceView()
                       ? AgoraVideoView(
                           controller: VideoViewController(
-                            rtcEngine: controller.engine!,
+                            rtcEngine: controller.engine,
                             canvas: const VideoCanvas(uid: 0),
                             useFlutterTexture: false,
                             useAndroidSurfaceView: false,
@@ -66,7 +66,7 @@ class VideoCallView extends GetView<VideoCallController> {
       if (controller.remoteUid.value != null) {
         return AgoraVideoView(
           controller: VideoViewController(
-            rtcEngine: controller.engine!,
+            rtcEngine: controller.engine,
             canvas: VideoCanvas(uid: controller.remoteUid.value!),
             useFlutterTexture: false,
             useAndroidSurfaceView: false,

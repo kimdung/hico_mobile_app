@@ -19,7 +19,7 @@ class VideoCallController extends BaseController {
 
   final _uiRepository = Get.find<HicoUIRepository>();
 
-  RtcEngine? engine;
+  late final RtcEngine engine;
   StreamSubscription? _callStreamSubscription;
 
   RxnInt remoteUid = RxnInt();
@@ -55,8 +55,8 @@ class VideoCallController extends BaseController {
 
   @override
   Future<void> onResumed() async {
-    await engine?.disableVideo();
-    await engine?.enableVideo();
+    await engine.disableVideo();
+    await engine.enableVideo();
 
     await super.onResumed();
   }
@@ -69,8 +69,8 @@ class VideoCallController extends BaseController {
 
     _callEndCall();
 
-    engine?.leaveChannel();
-    engine?.release();
+    engine.leaveChannel();
+    engine.release();
 
     _callStreamSubscription?.cancel();
 
@@ -113,87 +113,51 @@ class VideoCallController extends BaseController {
 
     //create the engine
     engine = createAgoraRtcEngine();
-    await engine?.initialize(RtcEngineContext(appId: appId));
-    await engine?.setParameters('{"che.audio.opensl":true}');
+    await engine.initialize(RtcEngineContext(appId: appId));
+    await engine.setParameters('{"che.audio.opensl":true}');
 
-    _addListeners();
+    engine.registerEventHandler(RtcEngineEventHandler(
+      onError: (ErrorCodeType err, String msg) {
+        printInfo(info: 'error $msg');
+      },
+      onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
+        printInfo(
+            info:
+                'joinChannelSuccess ${connection.channelId} ${connection.localUid} $elapsed');
 
-    await engine?.enableVideo();
-    await engine?.startPreview();
+        isJoined.value = true;
+      },
+      onUserJoined: (RtcConnection connection, int rUid, int elapsed) {
+        printInfo(info: 'userJoined $rUid $elapsed');
+
+        _timerAutoEncall?.cancel();
+
+        _endRingtone();
+
+        remoteUid.value = rUid;
+        isCalling.value = true;
+
+        _callBeginCall();
+      },
+      onUserOffline:
+          (RtcConnection connection, int rUid, UserOfflineReasonType reason) {},
+      onLeaveChannel: (RtcConnection connection, RtcStats stats) {
+        printInfo(info: 'remote user ${connection.localUid} left channel');
+        remoteUid.value = null;
+
+        onEndCall();
+      },
+    ));
+
+    await engine.enableVideo();
+    await engine.startPreview();
 
     await _joinChannel();
   }
 
-  void _addListeners() {
-    // engine?.setEventHandler(RtcEngineEventHandler(
-    //   error: (errorCode) {
-    //     printInfo(info: 'error $errorCode');
-    //   },
-    //   joinChannelSuccess: (channel, uid, elapsed) {
-    //     printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
-
-    //     isJoined.value = true;
-    //   },
-    //   leaveChannel: (stats) {
-    //     printInfo(info: 'leaveChannel ${stats.toJson()}');
-
-    //     _endRingtone();
-
-    //     isJoined.value = false;
-    //   },
-    //   userJoined: (uid, elapsed) {
-    //     printInfo(info: 'userJoined $uid $elapsed');
-
-    //     _timerAutoEncall?.cancel();
-
-    //     _endRingtone();
-
-    //     remoteUid.value = uid;
-    //     isCalling.value = true;
-
-    //     _callBeginCall();
-    //   },
-    //   userOffline: (int uid, UserOfflineReason reason) {
-    //     printInfo(info: 'remote user $uid left channel');
-    //     remoteUid.value = null;
-
-    //     onEndCall();
-    //   },
-    // ));
-
-    engine?.registerEventHandler(RtcEngineEventHandler(
-      onError: (ErrorCodeType err, String msg) {},
-      onJoinChannelSuccess: (RtcConnection connection, int elapsed) {},
-      onUserJoined: (RtcConnection connection, int rUid, int elapsed) {},
-      onUserOffline:
-          (RtcConnection connection, int rUid, UserOfflineReasonType reason) {},
-      onLeaveChannel: (RtcConnection connection, RtcStats stats) {},
-    ));
-  }
-
   Future<void> _joinChannel() async {
-    // if (Platform.isAndroid) {
-    //   await [Permission.microphone, Permission.camera].request();
-    // }
-    // await engine
-    //     ?.joinChannel(token, call.channelId ?? '', null, call.getId() ?? 0)
-    //     .then((value) {
-    //   if (isCaller) {
-    //     _startRingtone();
-
-    //     _sendCallNotification();
-
-    //     _timerAutoEncall = Timer.periodic(const Duration(minutes: 1), (timer) {
-    //       onEndCall();
-    //     });
-    //   }
-    // }).catchError((onError) {
-    //   printError(info: 'error ${onError.toString()}');
-    //   Future.delayed(Duration.zero, Get.back);
-    // });
-
     await engine
-        ?.joinChannel(
+        .joinChannel(
             token: token,
             channelId: call.channelId ?? '',
             uid: call.getId() ?? 0,
@@ -218,7 +182,7 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> onToggleMute() async {
-    await engine?.muteLocalAudioStream(!muteLocalAudio.value).then((value) {
+    await engine.muteLocalAudioStream(!muteLocalAudio.value).then((value) {
       muteLocalAudio.value = !muteLocalAudio.value;
     }).catchError((err) {
       printError(info: 'muteLocalAudio $err');
@@ -226,7 +190,7 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> onSwitchCamera() async {
-    await engine?.switchCamera().catchError((err) {
+    await engine.switchCamera().catchError((err) {
       printError(info: 'onSwitchCamera $err');
     });
   }
