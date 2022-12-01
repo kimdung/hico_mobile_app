@@ -59,6 +59,8 @@
 	<string>HICO</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<true/>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<true/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tel</string>
@@ -92,7 +94,6 @@
 	<array>
 		<string>audio</string>
 		<string>fetch</string>
-		<string>processing</string>
 		<string>remote-notification</string>
 		<string>voip</string>
 	</array>

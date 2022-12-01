@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
@@ -19,7 +19,7 @@ class VideoCallController extends BaseController {
 
   final _uiRepository = Get.find<HicoUIRepository>();
 
-  RtcEngine? _engine;
+  late final RtcEngine engine;
   StreamSubscription? _callStreamSubscription;
 
   RxnInt remoteUid = RxnInt();
@@ -55,8 +55,8 @@ class VideoCallController extends BaseController {
 
   @override
   Future<void> onResumed() async {
-    await _engine?.disableVideo();
-    await _engine?.enableVideo();
+    await engine.disableVideo();
+    await engine.enableVideo();
 
     await super.onResumed();
   }
@@ -69,8 +69,8 @@ class VideoCallController extends BaseController {
 
     _callEndCall();
 
-    _engine?.leaveChannel();
-    _engine?.destroy();
+    engine.leaveChannel();
+    engine.release();
 
     _callStreamSubscription?.cancel();
 
@@ -82,7 +82,7 @@ class VideoCallController extends BaseController {
   }
 
   void _addPostFrameCallback() {
-    SchedulerBinding.instance?.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       if (AppDataGlobal.userInfo?.id == null) {
         return;
       }
@@ -107,64 +107,64 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> _initAgoraEngine() async {
+    if (Platform.isAndroid) {
+      await [Permission.microphone, Permission.camera].request();
+    }
+
     //create the engine
-    _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
-    await _engine?.setParameters('{"che.audio.opensl":true}');
+    engine = createAgoraRtcEngine();
+    await engine.initialize(RtcEngineContext(appId: appId));
+    await engine.setParameters('{"che.audio.opensl":true}');
 
-    _addListeners();
-
-    await _engine?.enableVideo();
-    await _engine?.startPreview();
-    await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    await _engine?.setClientRole(ClientRole.Broadcaster);
-
-    await _joinChannel();
-  }
-
-  void _addListeners() {
-    _engine?.setEventHandler(RtcEngineEventHandler(
-      error: (errorCode) {
-        printInfo(info: 'error $errorCode');
+    engine.registerEventHandler(RtcEngineEventHandler(
+      onError: (ErrorCodeType err, String msg) {
+        printInfo(info: 'error $msg');
       },
-      joinChannelSuccess: (channel, uid, elapsed) {
-        printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
+      onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
+        printInfo(
+            info:
+                'joinChannelSuccess ${connection.channelId} ${connection.localUid} $elapsed');
 
         isJoined.value = true;
       },
-      leaveChannel: (stats) {
-        printInfo(info: 'leaveChannel ${stats.toJson()}');
-
-        _endRingtone();
-
-        isJoined.value = false;
-      },
-      userJoined: (uid, elapsed) {
-        printInfo(info: 'userJoined $uid $elapsed');
+      onUserJoined: (RtcConnection connection, int rUid, int elapsed) {
+        printInfo(info: 'userJoined $rUid $elapsed');
 
         _timerAutoEncall?.cancel();
 
         _endRingtone();
 
-        remoteUid.value = uid;
+        remoteUid.value = rUid;
         isCalling.value = true;
 
         _callBeginCall();
       },
-      userOffline: (int uid, UserOfflineReason reason) {
-        printInfo(info: 'remote user $uid left channel');
+      onUserOffline:
+          (RtcConnection connection, int rUid, UserOfflineReasonType reason) {},
+      onLeaveChannel: (RtcConnection connection, RtcStats stats) {
+        printInfo(info: 'remote user ${connection.localUid} left channel');
         remoteUid.value = null;
 
         onEndCall();
       },
     ));
+
+    await engine.enableVideo();
+    await engine.startPreview();
+
+    await _joinChannel();
   }
 
   Future<void> _joinChannel() async {
-    if (Platform.isAndroid) {
-      await [Permission.microphone, Permission.camera].request();
-    }
-    await _engine
-        ?.joinChannel(token, call.channelId ?? '', null, call.getId() ?? 0)
+    await engine
+        .joinChannel(
+            token: token,
+            channelId: call.channelId ?? '',
+            uid: call.getId() ?? 0,
+            options: const ChannelMediaOptions(
+              channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
+              clientRoleType: ClientRoleType.clientRoleBroadcaster,
+            ))
         .then((value) {
       if (isCaller) {
         _startRingtone();
@@ -182,7 +182,7 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> onToggleMute() async {
-    await _engine?.muteLocalAudioStream(!muteLocalAudio.value).then((value) {
+    await engine.muteLocalAudioStream(!muteLocalAudio.value).then((value) {
       muteLocalAudio.value = !muteLocalAudio.value;
     }).catchError((err) {
       printError(info: 'muteLocalAudio $err');
@@ -190,7 +190,7 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> onSwitchCamera() async {
-    await _engine?.switchCamera().catchError((err) {
+    await engine.switchCamera().catchError((err) {
       printError(info: 'onSwitchCamera $err');
     });
   }

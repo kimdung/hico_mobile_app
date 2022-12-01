@@ -7,7 +7,7 @@ import 'app.dart';
 import 'base/di.dart';
 import 'shared/constants/common.dart';
 
-Future<void> main() async { 
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,

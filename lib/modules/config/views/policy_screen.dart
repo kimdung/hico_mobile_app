@@ -7,7 +7,6 @@ import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/styles/text_style/text_style.dart';
-import '../../call/pickup/picker_layout.dart';
 import '../controllers/config_controller.dart';
 
 class PolicyScreen extends GetView<ConfigController> {
@@ -45,7 +44,7 @@ class PolicyScreen extends GetView<ConfigController> {
                   data: AppDataGlobal.masterData!.privacyPolicy,
                   style: {
                     'body': Style(
-                        fontSize: const FontSize(14.0),
+                        fontSize: FontSize(14.0),
                         fontWeight: FontWeight.w400,
                         color: AppColor.sixTextColorLight),
                   },

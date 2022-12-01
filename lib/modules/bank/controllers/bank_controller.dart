@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:hico/shared/widget_hico/data_general/banks.dart';
-import 'package:hico/shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 import 'package:ui_api/models/master_data/bank_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/user/update_bank_request.dart';
@@ -13,10 +9,11 @@ import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
-import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/dialog_util.dart';
+import '../../../shared/widget_hico/data_general/banks.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
+import '../../../shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 
 class BankController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
@@ -30,13 +27,7 @@ class BankController extends BaseController {
 
   Rx<String> bankName = Rx('');
   int? bankId;
-  List<BankLocalModel> lstBanks = [];
-  BankController() {}
-
-  @override
-  Future<void> onInit() {
-    return super.onInit();
-  }
+  List<BankLocalModel> lstBanks = []; 
 
   Future _loadData() async {
     try {
@@ -142,8 +133,5 @@ class BankController extends BaseController {
 
   Future<void> next() async {
     await Get.toNamed(Routes.SERVICE);
-  }
-
-  @override
-  void onClose() {}
+  } 
 }

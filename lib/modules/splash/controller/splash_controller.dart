@@ -16,14 +16,12 @@ class SplashController extends GetxController {
   final _uiRepository = Get.find<HicoUIRepository>();
   final storage = Get.find<SharedPreferences>();
 
-  FirebaseMessageConfig config = FirebaseMessageConfig();
-
   @override
   Future<void> onInit() async {
     super.onInit();
 
-    await config.initFirebaseMessageConfig();
-    await config.handleMessage();
+    await FirebaseMessageConfig.instance.initFirebaseMessageConfig();
+    await FirebaseMessageConfig.instance.handleMessage();
 
     await loadInitSplashScreen();
   }

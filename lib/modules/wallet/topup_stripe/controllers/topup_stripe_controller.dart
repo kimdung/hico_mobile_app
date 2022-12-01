@@ -1,6 +1,6 @@
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart'; 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
@@ -66,12 +66,11 @@ class TopupStripeController extends BaseController {
         BillingDetails(name: accountHolderController.text); // mocked data
     try {
       await EasyLoading.show();
-      // final paymentMethod = await Stripe.instance
-      //     .createPaymentMethod(
-      //         PaymentMethodParams.card(billingDetails: billingDetails))
       final paymentMethod = await Stripe.instance
           .createPaymentMethod(
-              PaymentMethodParams.card(billingDetails: billingDetails))
+              params: PaymentMethodParams.card(
+                  paymentMethodData:
+                      PaymentMethodData(billingDetails: billingDetails)))
           .catchError(
         (onError) async {
           printInfo(info: onError.toString());
@@ -89,6 +88,26 @@ class TopupStripeController extends BaseController {
           );
         },
       );
+      // final paymentMethod = await Stripe.instance
+      //     .createPaymentMethod(
+      //         params: PaymentMethodParams.card(billingDetails: billingDetails))
+      //     .catchError(
+      //   (onError) async {
+      //     printInfo(info: onError.toString());
+      //     await DialogUtil.showPopup(
+      //       dialogSize: DialogSize.Popup,
+      //       barrierDismissible: false,
+      //       backgroundColor: Colors.transparent,
+      //       child: NormalWidget(
+      //         icon: IconConstants.icFail,
+      //         title: '${'topup.failure'.tr}\n${onError?.error?.message ?? ''}',
+      //       ),
+      //       // onVaLue: (value) {
+      //       //   Get.back();
+      //       // },
+      //     );
+      //   },
+      // );
       await _requestPayment(paymentMethod);
     } on StripeError catch (error) {
       await EasyLoading.dismiss();
