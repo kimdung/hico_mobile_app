@@ -33,6 +33,7 @@ const Map<String, String> vi_VN = {
   'accept': 'Chấp nhận',
   'notif': 'Hệ thống đang sử dụng múi giờ Nhật Bản.',
   'change_pass': 'Thay đổi mật khẩu',
+  'guest' :'Khách vãng lai',
 
   //onboard
   'onboard.title1': 'Welcome to Hico',

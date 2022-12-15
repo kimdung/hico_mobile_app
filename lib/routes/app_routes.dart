@@ -15,6 +15,7 @@ abstract class Routes {
 
   static const MAIN = '/main';
   static const MAIN_GUEST = '/main_guest';
+  static const EMPTY_PAGE = '/empty_page';
 
   static const HOME = '/home';
   static const ORDER_LIST = '/order_list';

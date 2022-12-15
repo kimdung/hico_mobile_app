@@ -28,6 +28,8 @@ import '../modules/config/views/policy_screen.dart';
 import '../modules/config/views/terms_of_use_screen.dart';
 import '../modules/consulting/bindings/consulting_binding.dart';
 import '../modules/consulting/views/consulting_screen.dart';
+import '../modules/empty_page/bindings/empty_page_binding.dart';
+import '../modules/empty_page/views/empty_page_screen.dart';
 import '../modules/extend/binding/time_extension_binding.dart';
 import '../modules/extend/view/time_extension_screen.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
@@ -171,6 +173,11 @@ final routePages = [
     name: Routes.MAIN_GUEST,
     page: () => MainGuestScreen(),
     binding: MainGuestBinding(),
+  ),
+  GetPage(
+    name: Routes.EMPTY_PAGE,
+    page: () => EmptyPageScreen(),
+    binding: EmptyPageBinding(),
   ),
 
   GetPage(

@@ -13,7 +13,7 @@ class MainGuestScreen extends GetView<MainGuestController> {
     return Scaffold(
         body: Obx(
           () => IndexedStack(
-              index: 1, children: controller.tabs),
+              index: controller.index.value, children: controller.tabs),
         ),
         bottomNavigationBar: Obx(
           () => Container(
