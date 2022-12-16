@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
@@ -21,6 +23,8 @@ import '../shared/constants/common.dart';
 import '../shared/services/config_service.dart';
 import '../shared/services/locator_service.dart';
 import '../shared/services/storage_service.dart';
+import '../shared/utils/dialog_util.dart';
+import '../shared/widget_hico/dialog/dialog_confirm_widget.dart';
 
 class DependencyInjection {
   static Future<void> init(String environment) async {
@@ -51,7 +55,9 @@ class DependencyInjection {
 
     _dioUIAPI.interceptors.add(TokenInterceptor(
       errorUnauthorized: () {
-        Get.offAndToNamed(Routes.ONBOARDING, arguments: 'error.expires'.tr);
+        EasyLoading.dismiss();
+        Get.offAndToNamed(Routes.EMPTY_PAGE);
+        // Get.offAndToNamed(Routes.ONBOARDING, arguments: 'error.expires'.tr);
       },
     ));
 

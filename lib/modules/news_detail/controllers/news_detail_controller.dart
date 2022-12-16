@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:hico/resource/assets_constant/icon_constants.dart';
-import 'package:hico/shared/utils/dialog_util.dart';
-import 'package:hico/shared/widget_hico/dialog/normal_widget.dart';
 import 'package:ui_api/models/news/news_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/common.dart';
+import '../../../shared/utils/dialog_util.dart';
+import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class NewsDetailController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
-  var news = Rx(NewsModel());
+  Rx<NewsModel> news = Rx(NewsModel());
 
   @override
   Future<void> onInit() {
-    int? id = Get.arguments;
+    final int? id = Get.arguments;
     _loadData(id);
     return super.onInit();
   }
