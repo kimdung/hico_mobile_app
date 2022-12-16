@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
@@ -20,7 +21,7 @@ class TermOfUseScreen extends GetView<ConfigController> {
             IconConstants.icBack,
             width: 11,
           ),
-          onPressed: Get.back, 
+          onPressed: Get.back,
         ),
         title: Text(
           'term_and_conditions'.tr,
@@ -43,9 +44,15 @@ class TermOfUseScreen extends GetView<ConfigController> {
                   data: AppDataGlobal.masterData!.termsOfUse,
                   style: {
                     'body': Style(
-                        fontSize: FontSize(14.0),
+                        fontSize: const FontSize(14.0),
                         fontWeight: FontWeight.w400,
                         color: AppColor.sixTextColorLight),
+                  },
+                  onLinkTap: (url, context, attributes, element) {
+                    if (url != null) {
+                      launchUrlString(url,
+                          mode: LaunchMode.externalApplication);
+                    }
                   },
                 ),
               ),
