@@ -7,6 +7,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:phone_state/phone_state.dart';
 import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:wakelock/wakelock.dart';
@@ -48,8 +49,7 @@ class VoiceCallController extends BaseController {
 
     await Wakelock.enable();
 
-    _addPostFrameCallback();
-
+    await _initStreamListener();
     await _initAgoraEngine();
   }
 
@@ -73,7 +73,8 @@ class VoiceCallController extends BaseController {
     super.onClose();
   }
 
-  void _addPostFrameCallback() {
+  Future<void> _initStreamListener() async {
+    // Call
     SchedulerBinding.instance.addPostFrameCallback((_) {
       if (AppDataGlobal.userInfo?.id == null) {
         return;
@@ -93,6 +94,23 @@ class VoiceCallController extends BaseController {
         }
       });
     });
+
+    if (Platform.isAndroid) {
+      final status = await Permission.phone.request();
+      if (status == PermissionStatus.granted) {
+        PhoneState.phoneStateStream.listen((event) {
+          if (event == PhoneStateStatus.CALL_STARTED) {
+            _callEndCall();
+          }
+        });
+      }
+    } else {
+      PhoneState.phoneStateStream.listen((event) {
+        if (event == PhoneStateStatus.CALL_STARTED) {
+          _callEndCall();
+        }
+      });
+    }
   }
 
   Future<void> _initAgoraEngine() async {
