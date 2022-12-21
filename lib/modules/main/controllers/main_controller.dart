@@ -43,7 +43,7 @@ class MainController extends BaseController {
   MainController() {
     homeController = HomeController(channel);
     orderListController = OrderListController(channel);
-    notificationController = NotificationController(this);
+    notificationController = NotificationController(mainController: this);
     tabs = [
       HomeScreen(homeController),
       OrderListScreen(orderListController),

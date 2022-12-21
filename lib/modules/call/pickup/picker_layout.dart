@@ -55,9 +55,7 @@ class PickupLayout extends GetView<BaseController> {
               return scaffold;
             },
           )
-        : const Scaffold(
-            body: Center(),
-          );
+        : scaffold;
   }
 
   Future<CallModel?>? _pickupCall(Map<String, dynamic> data) async {

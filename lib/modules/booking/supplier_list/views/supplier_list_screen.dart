@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../data/app_data_global.dart';
 import '../../../../resource/assets_constant/icon_constants.dart';
 import '../../../../resource/assets_constant/images_constants.dart';
 import '../../../../shared/constants/colors.dart';
@@ -40,8 +41,8 @@ class SupplierListScreen extends GetView<SupplierListController> {
             ? Container(
                 child: Column(
                   children: [
-                    const SizedBox(height: 15),
-                    buildFilter(context),
+                    if (AppDataGlobal.accessToken.isNotEmpty)
+                      buildFilter(context),
                     const SizedBox(height: 5),
                     Expanded(
                       child: ListView.builder(

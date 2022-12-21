@@ -37,61 +37,59 @@ class NotificationDetailScreen extends GetView<NotificationDetailController> {
           backgroundColor: Colors.white,
         ),
         body: SingleChildScrollView(
-          child: Obx(() => Container(
-                width: Get.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (controller.notification.value.displayImage != null &&
-                        controller.notification.value.displayImage != '')
-                      NetWorkImage(
-                        image: controller.notification.value.displayImage!,
-                        width: Get.width,
-                        height: Get.width * 0.5,
-                        fit: BoxFit.cover,
-                      ),
-                    const SizedBox(height: 14),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        controller.notification.value.title ?? '',
-                        style: TextAppStyle().genaralTextStyle().copyWith(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(controller.notification.value.createdAt ?? '',
-                          style: TextAppStyle()
-                              .secondTextStyle()
-                              .copyWith(fontWeight: FontWeight.w500)),
-                    ),
-                    const SizedBox(height: 25),
-                    if (controller.notification.value.content != null &&
-                        controller.notification.value.content != '')
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Html(
-                          data: controller.notification.value.content ?? '',
-                          style: {
-                            'body': Style(
-                                fontSize: const FontSize(14.0),
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.sixTextColorLight),
-                          },
-                          onLinkTap: (url, context, attributes, element) {
-                            if (url != null) {
-                              launchUrlString(url,
-                                  mode: LaunchMode.externalApplication);
-                            }
-                          },
-                        ),
-                      ),
-                  ],
+          child: Container(
+            width: Get.width,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (controller.notification?.displayImage?.isNotEmpty ?? false)
+                  NetWorkImage(
+                    image: controller.notification?.displayImage ?? '',
+                    width: Get.width,
+                    height: Get.width * 0.5,
+                    fit: BoxFit.cover,
+                  ),
+                const SizedBox(height: 14),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    controller.notification?.title ?? '',
+                    style: TextAppStyle().genaralTextStyle().copyWith(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
-              )),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(controller.notification?.createdAt ?? '',
+                      style: TextAppStyle()
+                          .secondTextStyle()
+                          .copyWith(fontWeight: FontWeight.w500)),
+                ),
+                const SizedBox(height: 25),
+                if (controller.notification?.content?.isNotEmpty ?? false)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Html(
+                      data: controller.notification?.content ?? '',
+                      style: {
+                        'body': Style(
+                            fontSize: const FontSize(14.0),
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.sixTextColorLight),
+                      },
+                      onLinkTap: (url, context, attributes, element) {
+                        if (url != null) {
+                          launchUrlString(url,
+                              mode: LaunchMode.externalApplication);
+                        }
+                      },
+                    ),
+                  ),
+              ],
+            ),
+          ),
         ),
       ),
     );

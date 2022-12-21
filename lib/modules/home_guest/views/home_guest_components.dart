@@ -50,36 +50,36 @@ extension HomeGuestComponents on HomeGuestScreen {
               ],
             ),
           ),
-          const SizedBox(width: 14),
-          InkWell(
-            onTap: controller.requiredLogin,
-            child: Container(
-              margin: const EdgeInsets.all(5),
-              child: FCoreImage(
-                IconConstants.icWallet2,
-                height: 24,
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: controller.requiredLogin,
-            child: Stack(
-              children: [
-                Container(
-                  margin: const EdgeInsets.all(5),
-                  child: FCoreImage(
-                    IconConstants.icChat,
-                    height: 24,
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  child: Obx(() =>
-                      BadgeWidget(badge: controller.badgeChatAdmin.value)),
-                ),
-              ],
-            ),
-          )
+          // const SizedBox(width: 14),
+          // InkWell(
+          //   onTap: controller.requiredLogin,
+          //   child: Container(
+          //     margin: const EdgeInsets.all(5),
+          //     child: FCoreImage(
+          //       IconConstants.icWallet2,
+          //       height: 24,
+          //     ),
+          //   ),
+          // ),
+          // InkWell(
+          //   onTap: controller.requiredLogin,
+          //   child: Stack(
+          //     children: [
+          //       Container(
+          //         margin: const EdgeInsets.all(5),
+          //         child: FCoreImage(
+          //           IconConstants.icChat,
+          //           height: 24,
+          //         ),
+          //       ),
+          //       Positioned(
+          //         right: 0,
+          //         child: Obx(() =>
+          //             BadgeWidget(badge: controller.badgeChatAdmin.value)),
+          //       ),
+          //     ],
+          //   ),
+          // )
         ],
       ),
     );
@@ -121,7 +121,8 @@ extension HomeGuestComponents on HomeGuestScreen {
         children: [
           _buildSectionTitle(
             title: 'home.service_categories'.tr,
-            onPress: controller.requiredLogin,
+            onPress: () => Get.toNamed(Routes.SERVICE_CATEGORIES),
+            // onPress: controller.requiredLogin,
           ),
           if (controller.homeModel.value.serviceCategories != null)
             _buildImageGrid(list: controller.homeModel.value.serviceCategories),
@@ -172,7 +173,7 @@ extension HomeGuestComponents on HomeGuestScreen {
     return Container(
       child: Column(
         children: [
-          _buildSectionTitle(title: title, onPress: controller.requiredLogin),
+          _buildSectionTitle(title: title, onPress: onPress),
           const SizedBox(height: 12),
           if (list != null)
             Padding(
@@ -265,7 +266,8 @@ extension HomeGuestComponents on HomeGuestScreen {
       required String name,
       required int price}) {
     return InkWell(
-      onTap: controller.requiredLogin,
+      // onTap: controller.requiredLogin,
+      onTap: () => controller.viewService(item),
       child: Container(
         margin: const EdgeInsets.only(right: 16),
         child: Column(
@@ -353,9 +355,7 @@ extension HomeGuestComponents on HomeGuestScreen {
     );
   }
 
-  Widget _buildImageGrid({
-    List<ServiceCategoryModel>? list,
-  }) {
+  Widget _buildImageGrid({List<ServiceCategoryModel>? list}) {
     return Container(
       child: Column(
         children: [
@@ -373,7 +373,10 @@ extension HomeGuestComponents on HomeGuestScreen {
                               image: list[index].displayImage!,
                               title: list[index].name!,
                               padding: true,
-                              onPress: controller.requiredLogin,
+                              onPress: () {
+                                controller.viewDetail(list[index].id!);
+                                // controller.requiredLogin();
+                              },
                               width: (Get.width - 88) / 3)),
                     ],
                   )

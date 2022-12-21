@@ -5,6 +5,7 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/booking_prepare_request.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../data/app_data_global.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 
@@ -48,7 +49,13 @@ class RecentServiceController extends BaseController {
 
   Future<void> viewService(ServiceModel item) async {
     request.service = item;
-    await _uiRepository.serviceView(item.id!).then((response) {});
+    if (AppDataGlobal.accessToken.isNotEmpty) {
+      try {
+        await _uiRepository.serviceView(item.id!);
+      } catch (e) {
+        printError(info: e.toString());
+      }
+    }
     await Get.toNamed(Routes.SUPPLIER_LIST, arguments: item);
   }
 

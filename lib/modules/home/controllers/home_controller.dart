@@ -83,7 +83,11 @@ class HomeController extends BaseController {
 
   //goto service page
   Future<void> viewService(ServiceModel item) async {
-    await _uiRepository.serviceView(item.id!);
+    try {
+      await _uiRepository.serviceView(item.id!);
+    } catch (e) {
+      printError(info: e.toString());
+    }
     await Get.toNamed(Routes.SUPPLIER_LIST, arguments: item);
   }
 
@@ -106,7 +110,11 @@ class HomeController extends BaseController {
   }
 
   Future<void> actContinue(int id) async {
-    await _uiRepository.serviceView(id).then((response) {});
+    try {
+      await _uiRepository.serviceView(id);
+    } catch (e) {
+      printError(info: e.toString());
+    }
     await Get.toNamed(Routes.SUPPLIER_FILTER, arguments: id);
   }
 

@@ -6,8 +6,10 @@ import 'package:ui_api/models/supplier/supplier_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../../base/base_controller.dart';
+import '../../../../data/app_data_global.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../shared/constants/common.dart';
+import '../../../../shared/utils/dialog_util.dart';
 import '../../../../shared/widget_hico/data_general/sort_order.dart';
 import '../../../../shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 
@@ -82,6 +84,10 @@ class SupplierListController extends BaseController {
   }
 
   Future<void> viewDetail(SupplierInfoModel item) async {
+    if (AppDataGlobal.accessToken.isEmpty) {
+      await DialogUtil.requiredLogin();
+      return;
+    }
     await Get.toNamed(Routes.BOOKING_SUPPLIER_DETAIL, arguments: {
       CommonConstants.SUPPLIER_KEY: item,
       CommonConstants.SERVICE_KEY: service,

@@ -383,9 +383,7 @@ extension HomeComponents on HomeScreen {
     );
   }
 
-  Widget _buildImageGrid({
-    List<ServiceCategoryModel>? list,
-  }) {
+  Widget _buildImageGrid({List<ServiceCategoryModel>? list}) {
     return Container(
       child: Column(
         children: [

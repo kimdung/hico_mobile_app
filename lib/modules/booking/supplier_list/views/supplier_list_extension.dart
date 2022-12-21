@@ -5,6 +5,7 @@ extension SupplierListExtension on SupplierListScreen {
     return Container(
       width: 200,
       height: 40,
+      margin: const EdgeInsets.only(top: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(40),
         boxShadow: const [

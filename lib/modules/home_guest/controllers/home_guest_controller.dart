@@ -102,7 +102,13 @@ class HomeGuestController extends BaseController {
 
   //goto service page
   Future<void> viewService(ServiceModel item) async {
-    await _uiRepository.serviceView(item.id!);
+    if (AppDataGlobal.accessToken.isNotEmpty) {
+      try {
+        await _uiRepository.serviceView(item.id!);
+      } catch (e) {
+        printError(info: e.toString());
+      }
+    }
     await Get.toNamed(Routes.SUPPLIER_LIST, arguments: item);
   }
 

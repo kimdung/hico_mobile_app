@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../routes/app_pages.dart';
 import '../constants/colors.dart';
 import '../styles/text_style/app_text_style.dart';
 import '../styles/text_style/text_style.dart';
+import '../widget_hico/dialog/dialog_confirm_widget.dart';
 
 enum DialogSize { FullWidth, HalfWidth, Popup }
 
@@ -198,6 +200,26 @@ class DialogUtil {
             ),
           ),
         );
+      },
+    );
+  }
+
+  static Future requiredLogin() async {
+    await DialogUtil.showPopup(
+      dialogSize: DialogSize.Popup,
+      barrierDismissible: false,
+      backgroundColor: Colors.transparent,
+      child: DialogConfirmWidget(
+        title: 'home.notification'.tr,
+        description: 'login.required'.tr,
+        acceptTxt: 'login'.tr,
+      ),
+      onVaLue: (_value) {
+        if (_value != null && _value is bool) {
+          if (_value == true) {
+            Get.offAndToNamed(Routes.ONBOARDING);
+          }
+        }
       },
     );
   }

@@ -16,14 +16,14 @@ import '../../main/controllers/main_controller.dart';
 class NotificationController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
 
-  final MainController mainController;
+  final MainController? mainController;
 
   final scrollController = ScrollController();
   RxList<NotificationModel> notificationList = RxList<NotificationModel>();
   int limit = CommonConstants.limit;
   int offset = 0;
 
-  NotificationController(this.mainController) {
+  NotificationController({this.mainController}) {
     //loadData();
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
@@ -35,15 +35,10 @@ class NotificationController extends BaseController {
     });
   }
 
-  @override
-  Future<void> onInit() {
-    return super.onInit();
-  }
-
   Future<void> loadData() async {
     try {
       await EasyLoading.show();
-      await mainController.countNotifyUnread();
+      await mainController?.countNotifyUnread();
       offset = 0;
       await _uiRepository.notificationList(limit, offset).then((response) {
         EasyLoading.dismiss();
@@ -81,6 +76,9 @@ class NotificationController extends BaseController {
   }
 
   Future<void> reloadBalance() async {
+    if (AppDataGlobal.accessToken.isEmpty) {
+      return;
+    }
     await _uiRepository.getInfo().then((response) {
       if (response.status == CommonConstants.statusOk &&
           response.data != null &&
@@ -233,13 +231,11 @@ class NotificationController extends BaseController {
           }
           break;
         default:
-          Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)
+          Get.toNamed(Routes.NOTIFICATION_DETAIL,
+                  arguments: response.detail?.detail)
               ?.then((value) => loadData());
           break;
       }
     });
   }
-
-  @override
-  void onClose() {}
 }

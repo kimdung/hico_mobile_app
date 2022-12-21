@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../resource/assets_constant/icon_constants.dart';
@@ -16,11 +16,17 @@ class EmptyPageScreen extends GetView<EmptyPageController> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          'home.notification'.tr,
-          style: TextAppStyle()
-              .titleAppBarStyle()
-        ),
+        leading: (ModalRoute.of(context)?.canPop ?? false)
+            ? IconButton(
+                icon: SvgPicture.asset(
+                  IconConstants.icBack,
+                  width: 11,
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+              )
+            : Container(),
+        title: Text('home.notification'.tr,
+            style: TextAppStyle().titleAppBarStyle()),
         elevation: 1,
         backgroundColor: Colors.white,
       ),
