@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
@@ -186,7 +185,7 @@ class _PickupViewState extends State<PickupView> {
 
   void _startRingtone() {
     if (AppDataGlobal.androidDeviceInfo?.version.sdkInt != null &&
-        AppDataGlobal.androidDeviceInfo!.version.sdkInt! >= 28) {
+        AppDataGlobal.androidDeviceInfo!.version.sdkInt >= 28) {
       FlutterRingtonePlayer.play(
         fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
         looping: true,

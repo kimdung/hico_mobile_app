@@ -45,7 +45,7 @@ class PolicyScreen extends GetView<ConfigController> {
                   data: AppDataGlobal.masterData!.privacyPolicy,
                   style: {
                     'body': Style(
-                        fontSize: const FontSize(14.0),
+                        fontSize: FontSize(14.0),
                         fontWeight: FontWeight.w400,
                         color: AppColor.sixTextColorLight),
                   },

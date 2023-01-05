@@ -40,7 +40,7 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C63D4C7291C0EB200DBC86C /* FBSDKCoreKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit.xcframework; path = Pods/FBSDKCoreKit/XCFrameworks/FBSDKCoreKit.xcframework; sourceTree = "<group>"; };
 		9C68DBEF2850574D0042A039 /* Runner.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
-		9CF2112028ED84CB006556CC /* bell.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = bell.caf; path = Runner/bell.caf; sourceTree = "<group>"; };
+		9CF2112028ED84CB006556CC /* bell.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bell.caf; sourceTree = "<group>"; };
 		F426B261D4352D84ED4057C4 /* Pods-Runner.debug-dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-dev.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-dev.xcconfig"; sourceTree = "<group>"; };
 		F51528CCDD92F0D5DA4BB43E /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,7 +93,6 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
-				9CF2112028ED84CB006556CC /* bell.caf */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
@@ -116,6 +115,7 @@
 				9C68DBEF2850574D0042A039 /* Runner.entitlements */,
 				729FD5AC26A13394005C4782 /* GoogleService-Info.plist */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
+				9CF2112028ED84CB006556CC /* bell.caf */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
 				97C147021CF9000F007C117D /* Info.plist */,
@@ -372,7 +372,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.10;
+				MARKETING_VERSION = 2.0.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wap.hico;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -461,7 +461,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.10;
+				MARKETING_VERSION = 2.0.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wap.hico;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -548,7 +548,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.10;
+				MARKETING_VERSION = 2.0.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wap.hico;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -632,7 +632,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.10;
+				MARKETING_VERSION = 2.0.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wap.hico;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -773,7 +773,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.10;
+				MARKETING_VERSION = 2.0.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wap.hico;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -808,7 +808,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.10;
+				MARKETING_VERSION = 2.0.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wap.hico;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

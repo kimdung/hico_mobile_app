@@ -3,9 +3,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_callkit_incoming/entities/android_params.dart';
+import 'package:flutter_callkit_incoming/entities/call_event.dart' as callevent;
+import 'package:flutter_callkit_incoming/entities/call_kit_params.dart';
+import 'package:flutter_callkit_incoming/entities/ios_params.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -25,7 +28,7 @@ import '../constants/common.dart';
 import '../constants/storage.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
 
   final notificationData = NotificationData.fromJson(message.data);
   if (notificationData.displayType == NotificationData.typeIncomingCall) {
@@ -89,56 +92,97 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
         textMissedCall = 'Có cuộc gọi nhỡ';
         textCallback = 'Gọi lại';
     }
+    final params = CallKitParams(
+      id: notificationData.callId ?? const Uuid().v4(),
+      nameCaller: notificationData.callerName ?? '',
+      appName: 'HICO',
+      avatar: notificationData.callerPic,
+      handle: handle,
+      type: notificationData.callIsVideo == 'true' ? 1 : 0,
+      duration: 60000,
+      textAccept: textAccept,
+      textDecline: textDecline,
+      textMissedCall: textMissedCall,
+      textCallback: textCallback,
+      android: const AndroidParams(
+        isCustomNotification: true,
+        isShowLogo: false,
+        isShowCallback: false,
+        isShowMissedCallNotification: true,
+        ringtonePath: 'bell',
+        backgroundColor: '#DF4D6F',
+        // incomingCallNotificationChannelName,
+        // missedCallNotificationChannelName,
+      ),
+      ios: IOSParams(
+        iconName: 'AppIcon',
+        handleType: 'generic',
+        supportsVideo: true,
+        maximumCallGroups: 2,
+        maximumCallsPerCallGroup: 1,
+        audioSessionMode: 'default',
+        audioSessionActive: true,
+        audioSessionPreferredSampleRate: 44100.0,
+        audioSessionPreferredIOBufferDuration: 0.005,
+        supportsDTMF: true,
+        supportsHolding: true,
+        supportsGrouping: false,
+        supportsUngrouping: false,
+        ringtonePath: 'bell',
+      ),
+    );
+    // final params = <String, dynamic>{
+    //   'id': notificationData.callId ?? const Uuid().v4(),
+    //   'appName': 'HICO',
+    //   'nameCaller': notificationData.callerName ?? '',
+    //   'avatar': notificationData.callerPic,
+    //   'handle': handle,
+    //   'type':
+    //       (Platform.isIOS || (notificationData.callIsVideo == 'true')) ? 1 : 0,
+    //   'duration': 60000,
+    //   'textAccept': textAccept,
+    //   'textDecline': textDecline,
+    //   'textMissedCall': textMissedCall,
+    //   'textCallback': textCallback,
+    //   'android': <String, dynamic>{
+    //     'isCustomNotification': true,
+    //     'isShowLogo': false,
+    //     'isShowCallback': false,
+    //     'isShowMissedCallNotification': true,
+    //     'ringtonePath': 'bell',
+    //     'backgroundColor': '#DF4D6F',
+    //   },
+    //   'ios': <String, dynamic>{
+    //     'iconName': 'AppIcon',
+    //     'handleType': 'generic',
+    //     'supportsVideo': true,
+    //     'maximumCallGroups': 2,
+    //     'maximumCallsPerCallGroup': 1,
+    //     'audioSessionMode': 'default',
+    //     'audioSessionActive': true,
+    //     'audioSessionPreferredSampleRate': 44100.0,
+    //     'audioSessionPreferredIOBufferDuration': 0.005,
+    //     'supportsDTMF': true,
+    //     'supportsHolding': true,
+    //     'supportsGrouping': false,
+    //     'supportsUngrouping': false,
+    //     'ringtonePath': 'bell.caf'
+    //   }
+    // };
 
-    final params = <String, dynamic>{
-      'id': notificationData.callId ?? const Uuid().v4(),
-      'appName': 'HICO',
-      'nameCaller': notificationData.callerName ?? '',
-      'avatar': notificationData.callerPic,
-      'handle': handle,
-      'type':
-          (Platform.isIOS || (notificationData.callIsVideo == 'true')) ? 1 : 0,
-      'duration': 60000,
-      'textAccept': textAccept,
-      'textDecline': textDecline,
-      'textMissedCall': textMissedCall,
-      'textCallback': textCallback,
-      'android': <String, dynamic>{
-        'isCustomNotification': true,
-        'isShowLogo': false,
-        'isShowCallback': false,
-        'isShowMissedCallNotification': true,
-        'ringtonePath': 'bell',
-        'backgroundColor': '#DF4D6F',
-      },
-      'ios': <String, dynamic>{
-        'iconName': 'AppIcon',
-        'handleType': 'generic',
-        'supportsVideo': true,
-        'maximumCallGroups': 2,
-        'maximumCallsPerCallGroup': 1,
-        'audioSessionMode': 'default',
-        'audioSessionActive': true,
-        'audioSessionPreferredSampleRate': 44100.0,
-        'audioSessionPreferredIOBufferDuration': 0.005,
-        'supportsDTMF': true,
-        'supportsHolding': true,
-        'supportsGrouping': false,
-        'supportsUngrouping': false,
-        'ringtonePath': 'bell.caf'
-      }
-    };
     FlutterCallkitIncoming.onEvent.listen((event) async {
-      switch (event!.name) {
-        case CallEvent.ACTION_CALL_INCOMING:
+      debugPrint(
+          '[FirebaseMessageConfig] FlutterCallkitIncoming.onEvent $event');
+      switch (event?.event) {
+        case callevent.Event.ACTION_CALL_INCOMING:
           break;
-        case CallEvent.ACTION_CALL_START:
+        case callevent.Event.ACTION_CALL_START:
           break;
-        case CallEvent.ACTION_CALL_ACCEPT:
+        case callevent.Event.ACTION_CALL_ACCEPT:
           AppDataGlobal.acceptCall = true;
           await sp.setBool(StorageConstants.isAcceptCall, true);
           break;
-        case CallEvent.ACTION_CALL_DECLINE:
+        case callevent.Event.ACTION_CALL_DECLINE:
           try {
             final callCollection =
                 FirebaseFirestore.instance.collection('call');
@@ -152,23 +196,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
             debugPrint(e.toString());
           }
           break;
-        case CallEvent.ACTION_CALL_ENDED:
-          break;
-        case CallEvent.ACTION_CALL_TIMEOUT:
-          break;
-        case CallEvent.ACTION_CALL_CALLBACK:
-          break;
-        case CallEvent.ACTION_CALL_TOGGLE_HOLD:
-          break;
-        case CallEvent.ACTION_CALL_TOGGLE_MUTE:
-          break;
-        case CallEvent.ACTION_CALL_TOGGLE_DMTF:
-          break;
-        case CallEvent.ACTION_CALL_TOGGLE_GROUP:
-          break;
-        case CallEvent.ACTION_CALL_TOGGLE_AUDIO_SESSION:
-          break;
-        case CallEvent.ACTION_DID_UPDATE_DEVICE_PUSH_TOKEN_VOIP:
+        default:
           break;
       }
     });

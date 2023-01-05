@@ -247,7 +247,7 @@ class VoiceCallController extends BaseController {
       return;
     }
     if (AppDataGlobal.androidDeviceInfo?.version.sdkInt != null &&
-        AppDataGlobal.androidDeviceInfo!.version.sdkInt! >= 28) {
+        AppDataGlobal.androidDeviceInfo!.version.sdkInt >= 28) {
       FlutterRingtonePlayer.play(
         fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
         looping: true,

@@ -20,12 +20,7 @@ import FirebaseMessaging
         voipRegistry.desiredPushTypes = [PKPushType.voIP]
         
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-    }
-    
-//    override func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-//       Messaging.messaging().apnsToken = deviceToken
-//       super.application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
-//     }
+    } 
      
     // Handle updated push credentials
     func pushRegistry(_ registry: PKPushRegistry, didUpdate credentials: PKPushCredentials, for type: PKPushType) {
